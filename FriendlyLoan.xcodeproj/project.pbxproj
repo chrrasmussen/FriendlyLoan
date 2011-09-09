@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6941FF73141A6D6B00FB3A24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF72141A6D6B00FB3A24 /* UIKit.framework */; };
+		6941FF75141A6D6B00FB3A24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF74141A6D6B00FB3A24 /* Foundation.framework */; };
+		6941FF77141A6D6B00FB3A24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */; };
+		6941FF79141A6D6B00FB3A24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF78141A6D6B00FB3A24 /* CoreData.framework */; };
+		6941FF7F141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF7D141A6D6B00FB3A24 /* InfoPlist.strings */; };
+		6941FF81141A6D6B00FB3A24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF80141A6D6B00FB3A24 /* main.m */; };
+		6941FF85141A6D6B00FB3A24 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF84141A6D6B00FB3A24 /* AppDelegate.m */; };
+		6941FF88141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */; };
+		6941FF90141A6D6B00FB3A24 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */; };
+		6941FF91141A6D6B00FB3A24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF72141A6D6B00FB3A24 /* UIKit.framework */; };
+		6941FF92141A6D6B00FB3A24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF74141A6D6B00FB3A24 /* Foundation.framework */; };
+		6941FF93141A6D6B00FB3A24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF78141A6D6B00FB3A24 /* CoreData.framework */; };
+		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
+		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6941FF94141A6D6B00FB3A24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6941FF65141A6D6B00FB3A24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6941FF6D141A6D6B00FB3A24;
+			remoteInfo = FriendlyLoan;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6941FF6E141A6D6B00FB3A24 /* FriendlyLoan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyLoan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6941FF72141A6D6B00FB3A24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6941FF74141A6D6B00FB3A24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6941FF78141A6D6B00FB3A24 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6941FF7C141A6D6B00FB3A24 /* FriendlyLoan-Info.plist */ = {isa = PBXFileReference; path = "FriendlyLoan-Info.plist"; sourceTree = "<group>"; };
+		6941FF7E141A6D6B00FB3A24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6941FF80141A6D6B00FB3A24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6941FF82141A6D6B00FB3A24 /* FriendlyLoan-Prefix.pch */ = {isa = PBXFileReference; path = "FriendlyLoan-Prefix.pch"; sourceTree = "<group>"; };
+		6941FF83141A6D6B00FB3A24 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		6941FF84141A6D6B00FB3A24 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6941FF87141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
+		6941FF8E141A6D6B00FB3A24 /* FriendlyLoanTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendlyLoanTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		6941FF98141A6D6B00FB3A24 /* FriendlyLoanTests-Info.plist */ = {isa = PBXFileReference; path = "FriendlyLoanTests-Info.plist"; sourceTree = "<group>"; };
+		6941FF9A141A6D6B00FB3A24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
+		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6941FF6B141A6D6B00FB3A24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF73141A6D6B00FB3A24 /* UIKit.framework in Frameworks */,
+				6941FF75141A6D6B00FB3A24 /* Foundation.framework in Frameworks */,
+				6941FF77141A6D6B00FB3A24 /* CoreGraphics.framework in Frameworks */,
+				6941FF79141A6D6B00FB3A24 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6941FF8A141A6D6B00FB3A24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF90141A6D6B00FB3A24 /* SenTestingKit.framework in Frameworks */,
+				6941FF91141A6D6B00FB3A24 /* UIKit.framework in Frameworks */,
+				6941FF92141A6D6B00FB3A24 /* Foundation.framework in Frameworks */,
+				6941FF93141A6D6B00FB3A24 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6941FF63141A6D6B00FB3A24 = {
+			isa = PBXGroup;
+			children = (
+				6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */,
+				6941FF96141A6D6B00FB3A24 /* FriendlyLoanTests */,
+				6941FF71141A6D6B00FB3A24 /* Frameworks */,
+				6941FF6F141A6D6B00FB3A24 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6941FF6F141A6D6B00FB3A24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF6E141A6D6B00FB3A24 /* FriendlyLoan.app */,
+				6941FF8E141A6D6B00FB3A24 /* FriendlyLoanTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6941FF71141A6D6B00FB3A24 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF72141A6D6B00FB3A24 /* UIKit.framework */,
+				6941FF74141A6D6B00FB3A24 /* Foundation.framework */,
+				6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */,
+				6941FF78141A6D6B00FB3A24 /* CoreData.framework */,
+				6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF83141A6D6B00FB3A24 /* AppDelegate.h */,
+				6941FF84141A6D6B00FB3A24 /* AppDelegate.m */,
+				6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */,
+				6941FF7B141A6D6B00FB3A24 /* Supporting Files */,
+			);
+			path = FriendlyLoan;
+			sourceTree = "<group>";
+		};
+		6941FF7B141A6D6B00FB3A24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF7C141A6D6B00FB3A24 /* FriendlyLoan-Info.plist */,
+				6941FF7D141A6D6B00FB3A24 /* InfoPlist.strings */,
+				6941FF80141A6D6B00FB3A24 /* main.m */,
+				6941FF82141A6D6B00FB3A24 /* FriendlyLoan-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6941FF96141A6D6B00FB3A24 /* FriendlyLoanTests */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */,
+				6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */,
+				6941FF97141A6D6B00FB3A24 /* Supporting Files */,
+			);
+			path = FriendlyLoanTests;
+			sourceTree = "<group>";
+		};
+		6941FF97141A6D6B00FB3A24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6941FF98141A6D6B00FB3A24 /* FriendlyLoanTests-Info.plist */,
+				6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6941FF6D141A6D6B00FB3A24 /* FriendlyLoan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6941FFA1141A6D6B00FB3A24 /* Build configuration list for PBXNativeTarget "FriendlyLoan" */;
+			buildPhases = (
+				6941FF6A141A6D6B00FB3A24 /* Sources */,
+				6941FF6B141A6D6B00FB3A24 /* Frameworks */,
+				6941FF6C141A6D6B00FB3A24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FriendlyLoan;
+			productName = FriendlyLoan;
+			productReference = 6941FF6E141A6D6B00FB3A24 /* FriendlyLoan.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6941FF8D141A6D6B00FB3A24 /* FriendlyLoanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6941FFA4141A6D6B00FB3A24 /* Build configuration list for PBXNativeTarget "FriendlyLoanTests" */;
+			buildPhases = (
+				6941FF89141A6D6B00FB3A24 /* Sources */,
+				6941FF8A141A6D6B00FB3A24 /* Frameworks */,
+				6941FF8B141A6D6B00FB3A24 /* Resources */,
+				6941FF8C141A6D6B00FB3A24 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6941FF95141A6D6B00FB3A24 /* PBXTargetDependency */,
+			);
+			name = FriendlyLoanTests;
+			productName = FriendlyLoanTests;
+			productReference = 6941FF8E141A6D6B00FB3A24 /* FriendlyLoanTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6941FF65141A6D6B00FB3A24 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Rasmussen I/O";
+			};
+			buildConfigurationList = 6941FF68141A6D6B00FB3A24 /* Build configuration list for PBXProject "FriendlyLoan" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6941FF63141A6D6B00FB3A24;
+			productRefGroup = 6941FF6F141A6D6B00FB3A24 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6941FF6D141A6D6B00FB3A24 /* FriendlyLoan */,
+				6941FF8D141A6D6B00FB3A24 /* FriendlyLoanTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6941FF6C141A6D6B00FB3A24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF7F141A6D6B00FB3A24 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6941FF8B141A6D6B00FB3A24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6941FF8C141A6D6B00FB3A24 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6941FF6A141A6D6B00FB3A24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF81141A6D6B00FB3A24 /* main.m in Sources */,
+				6941FF85141A6D6B00FB3A24 /* AppDelegate.m in Sources */,
+				6941FF88141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6941FF89141A6D6B00FB3A24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6941FF95141A6D6B00FB3A24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6941FF6D141A6D6B00FB3A24 /* FriendlyLoan */;
+			targetProxy = 6941FF94141A6D6B00FB3A24 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6941FF7D141A6D6B00FB3A24 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6941FF7E141A6D6B00FB3A24 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6941FF9A141A6D6B00FB3A24 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6941FF9F141A6D6B00FB3A24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6941FFA0141A6D6B00FB3A24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6941FFA2141A6D6B00FB3A24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
+				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6941FFA3141A6D6B00FB3A24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
+				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		6941FFA5141A6D6B00FB3A24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FriendlyLoan.app/FriendlyLoan";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
+				INFOPLIST_FILE = "FriendlyLoanTests/FriendlyLoanTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		6941FFA6141A6D6B00FB3A24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FriendlyLoan.app/FriendlyLoan";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
+				INFOPLIST_FILE = "FriendlyLoanTests/FriendlyLoanTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6941FF68141A6D6B00FB3A24 /* Build configuration list for PBXProject "FriendlyLoan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6941FF9F141A6D6B00FB3A24 /* Debug */,
+				6941FFA0141A6D6B00FB3A24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6941FFA1141A6D6B00FB3A24 /* Build configuration list for PBXNativeTarget "FriendlyLoan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6941FFA2141A6D6B00FB3A24 /* Debug */,
+				6941FFA3141A6D6B00FB3A24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6941FFA4141A6D6B00FB3A24 /* Build configuration list for PBXNativeTarget "FriendlyLoanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6941FFA5141A6D6B00FB3A24 /* Debug */,
+				6941FFA6141A6D6B00FB3A24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6941FF87141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodel */,
+			);
+			currentVersion = 6941FF87141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodel */;
+			path = FriendlyLoan.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6941FF65141A6D6B00FB3A24 /* Project object */;
+}
