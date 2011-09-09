@@ -10,4 +10,6 @@
 
 @interface SummaryViewController : UITableViewController
 
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
 @end

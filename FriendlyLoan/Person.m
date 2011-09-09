@@ -7,12 +7,13 @@
 //
 
 #import "Person.h"
+#import "Transaction.h"
 
 
 @implementation Person
 
+@dynamic recordId;
 @dynamic name;
-@dynamic id;
 @dynamic transaction;
 
 @end

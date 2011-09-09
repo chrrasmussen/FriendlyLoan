@@ -22,16 +22,15 @@
 		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
 		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
-		697A94E4141AB10000E15EC5 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 697A94E3141AB10000E15EC5 /* Transaction.m */; };
-		69BA69A5141AB133008C4384 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69A4141AB133008C4384 /* Transaction.m */; };
+		69BA69A9141AB19E008C4384 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69A8141AB19E008C4384 /* Transaction.m */; };
+		69BA69AC141AB19F008C4384 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69AB141AB19F008C4384 /* Person.m */; };
 		69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* SummaryViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB7141A7B8800549213 /* SettingsViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
-		69C3CECD141A7EB400549213 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CECC141A7EB400549213 /* DetailsViewController.m */; };
+		69C3CECD141A7EB400549213 /* TransactionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */; };
 		69C3CED0141A812B00549213 /* Pig.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECE141A812B00549213 /* Pig.png */; };
 		69C3CED1141A812B00549213 /* Pig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECF141A812B00549213 /* Pig@2x.png */; };
-		69C3CEDE141AB0AA00549213 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEDD141AB0AA00549213 /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,10 +63,10 @@
 		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
 		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
-		697A94E2141AB10000E15EC5 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transaction.h; path = FriendlyLoan/Transaction.h; sourceTree = "<group>"; };
-		697A94E3141AB10000E15EC5 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Transaction.m; path = FriendlyLoan/Transaction.m; sourceTree = "<group>"; };
-		69BA69A3141AB133008C4384 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		69BA69A4141AB133008C4384 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		69BA69A7141AB19E008C4384 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
+		69BA69A8141AB19E008C4384 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		69BA69AA141AB19F008C4384 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		69BA69AB141AB19F008C4384 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		69C3CEAE141A7B4C00549213 /* SummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
 		69C3CEAF141A7B4C00549213 /* SummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
 		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -76,12 +75,10 @@
 		69C3CEB7141A7B8800549213 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		69C3CEC8141A7EA600549213 /* AddLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLoanViewController.h; sourceTree = "<group>"; };
 		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
-		69C3CECB141A7EB400549213 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
-		69C3CECC141A7EB400549213 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TransactionDetailsViewController.h; sourceTree = "<group>"; };
+		69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionDetailsViewController.m; sourceTree = "<group>"; };
 		69C3CECE141A812B00549213 /* Pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pig.png; sourceTree = "<group>"; };
 		69C3CECF141A812B00549213 /* Pig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pig@2x.png"; sourceTree = "<group>"; };
-		69C3CEDC141AB0AA00549213 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		69C3CEDD141AB0AA00549213 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */,
-				697A94E2141AB10000E15EC5 /* Transaction.h */,
-				697A94E3141AB10000E15EC5 /* Transaction.m */,
 				6941FF96141A6D6B00FB3A24 /* FriendlyLoanTests */,
 				6941FF71141A6D6B00FB3A24 /* Frameworks */,
 				6941FF6F141A6D6B00FB3A24 /* Products */,
@@ -146,11 +141,11 @@
 		6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */ = {
 			isa = PBXGroup;
 			children = (
-				69C3CED9141A880900549213 /* Resources */,
-				69C3CEDB141AB07400549213 /* View Controllers */,
-				69C3CEDA141AB06800549213 /* Models */,
 				6941FF83141A6D6B00FB3A24 /* AppDelegate.h */,
 				6941FF84141A6D6B00FB3A24 /* AppDelegate.m */,
+				69C3CEDB141AB07400549213 /* User Interface */,
+				69C3CEDA141AB06800549213 /* Models */,
+				69C3CED9141A880900549213 /* Resources */,
 				6941FF7B141A6D6B00FB3A24 /* Supporting Files */,
 			);
 			path = FriendlyLoan;
@@ -225,8 +220,8 @@
 		69C3CEC1141A7BF600549213 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				69C3CECB141A7EB400549213 /* DetailsViewController.h */,
-				69C3CECC141A7EB400549213 /* DetailsViewController.m */,
+				69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */,
+				69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */,
 			);
 			name = Details;
 			sourceTree = "<group>";
@@ -244,15 +239,15 @@
 			isa = PBXGroup;
 			children = (
 				6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */,
-				69BA69A3141AB133008C4384 /* Transaction.h */,
-				69BA69A4141AB133008C4384 /* Transaction.m */,
-				69C3CEDC141AB0AA00549213 /* Person.h */,
-				69C3CEDD141AB0AA00549213 /* Person.m */,
+				69BA69A7141AB19E008C4384 /* Transaction.h */,
+				69BA69A8141AB19E008C4384 /* Transaction.m */,
+				69BA69AA141AB19F008C4384 /* Person.h */,
+				69BA69AB141AB19F008C4384 /* Person.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
 		};
-		69C3CEDB141AB07400549213 /* View Controllers */ = {
+		69C3CEDB141AB07400549213 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
 				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
@@ -262,7 +257,7 @@
 				69C3CEBD141A7BA400549213 /* Add Loan */,
 				69C3CEC1141A7BF600549213 /* Details */,
 			);
-			name = "View Controllers";
+			name = "User Interface";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,10 +376,9 @@
 				69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */,
 				69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */,
 				69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */,
-				69C3CECD141A7EB400549213 /* DetailsViewController.m in Sources */,
-				69C3CEDE141AB0AA00549213 /* Person.m in Sources */,
-				697A94E4141AB10000E15EC5 /* Transaction.m in Sources */,
-				69BA69A5141AB133008C4384 /* Transaction.m in Sources */,
+				69C3CECD141A7EB400549213 /* TransactionDetailsViewController.m in Sources */,
+				69BA69A9141AB19E008C4384 /* Transaction.m in Sources */,
+				69BA69AC141AB19F008C4384 /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

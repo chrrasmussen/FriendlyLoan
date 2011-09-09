@@ -10,4 +10,6 @@
 
 @interface SettingsViewController : UIViewController
 
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
 @end

@@ -57,4 +57,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Core Data stack
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    id delegate = [[UIApplication sharedApplication] delegate];
+    return [delegate managedObjectContext];
+}
+
 @end

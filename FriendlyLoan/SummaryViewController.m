@@ -38,7 +38,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -150,6 +150,15 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+
+#pragma mark - Core Data stack
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    id delegate = [[UIApplication sharedApplication] delegate];
+    return [delegate managedObjectContext];
 }
 
 @end

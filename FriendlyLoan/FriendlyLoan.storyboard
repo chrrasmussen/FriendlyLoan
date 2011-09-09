@@ -17,7 +17,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="u9r-NZ-Uhk">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e9I-9R-4pd">
                             <connections>
-                                <segue destination="ZI5-bW-Wo6" kind="modal" id="5wM-4r-8Pt"/>
+                                <segue destination="ZI5-bW-Wo6" kind="modal" identifier="addLoanSegue" id="5wM-4r-8Pt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -109,7 +109,7 @@
                     <navigationItem key="navigationItem" title="Summary" id="i7u-Cf-cEz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="kz2-af-2gx">
                             <connections>
-                                <segue destination="ZI5-bW-Wo6" kind="modal" id="gm2-qW-HP9"/>
+                                <segue destination="ZI5-bW-Wo6" kind="modal" identifier="addLoanSegue" id="gm2-qW-HP9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -120,7 +120,7 @@
         <scene sceneID="Lwj-15-zrG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp2-GP-y5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="h0t-py-3wA" customClass="DetailsViewController" sceneMemberID="viewController">
+                <tableViewController id="h0t-py-3wA" customClass="TransactionDetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="hZY-lQ-z3A">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,7 +265,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lb4-Yk-u8J">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lb4-Yk-u8J">
                                                     <rect key="frame" x="10" y="15" width="67" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
@@ -319,6 +319,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="NtF-LR-pja"/>
+                    <connections>
+                        <outlet property="amountLabel" destination="5Ts-RK-jeL" id="0ke-pL-Xcm"/>
+                        <outlet property="categoryLabel" destination="sMR-n4-CFx" id="MYz-Ne-ZYh"/>
+                        <outlet property="lentLabel" destination="xoy-51-C9r" id="8TY-gT-c7p"/>
+                        <outlet property="locationlabel" destination="ceM-sq-fap" id="1ab-Ex-bIS"/>
+                        <outlet property="noteLabel" destination="NDa-bi-pdX" id="ZQO-Gc-4sJ"/>
+                        <outlet property="personLabel" destination="Wjl-BY-7O6" id="uTm-yA-fst"/>
+                        <outlet property="timeStampLabel" destination="fTL-uQ-L5l" id="iMN-mY-4Ot"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="2084" y="666"/>
@@ -443,8 +452,19 @@
                                 <action selector="cancel:" destination="BYs-JF-gLR" id="LUE-wQ-pRF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="5Ov-CT-543"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="5Ov-CT-543">
+                            <connections>
+                                <action selector="save:" destination="BYs-JF-gLR" id="iav-pV-J6s"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="amountField" destination="jAi-bu-cqX" id="oy4-Bf-tFZ"/>
+                        <outlet property="categorySelection" destination="rBn-nW-IoR" id="J9Z-tG-D83"/>
+                        <outlet property="lentSelection" destination="lxO-z6-OJz" id="KmE-Ie-ecS"/>
+                        <outlet property="noteField" destination="If5-p1-iyo" id="NwK-R6-wsp"/>
+                        <outlet property="personField" destination="002-F5-UNK" id="rWo-LB-hlz"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="2610" y="-478"/>
@@ -483,7 +503,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="h0t-py-3wA" kind="push" id="Ecp-wv-kKL"/>
+                                    <segue destination="h0t-py-3wA" kind="push" identifier="detailsSegue" id="Ecp-wv-kKL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -495,7 +515,7 @@
                     <navigationItem key="navigationItem" title="History" id="gMT-bD-VkO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="PxP-hj-ezS">
                             <connections>
-                                <segue destination="ZI5-bW-Wo6" kind="modal" id="cGl-EJ-1ZZ"/>
+                                <segue destination="ZI5-bW-Wo6" kind="modal" identifier="addLoanSegue" id="cGl-EJ-1ZZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -565,10 +585,13 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLoanViewController.h"/>
             <relationships>
                 <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="save:"/>
+                <relationship kind="outlet" name="amountField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="categorySelection" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="lentSelection" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="noteField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="personField" candidateClass="UITextField"/>
             </relationships>
-        </class>
-        <class className="DetailsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailsViewController.h"/>
         </class>
         <class className="HistoryViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HistoryViewController.h"/>

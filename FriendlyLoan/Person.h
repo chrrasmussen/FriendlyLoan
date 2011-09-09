@@ -9,18 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Transaction;
 
 @interface Person : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * recordId;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * id;
 @property (nonatomic, retain) NSSet *transaction;
 @end
 
 @interface Person (CoreDataGeneratedAccessors)
 
-- (void)addTransactionObject:(NSManagedObject *)value;
-- (void)removeTransactionObject:(NSManagedObject *)value;
+- (void)addTransactionObject:(Transaction *)value;
+- (void)removeTransactionObject:(Transaction *)value;
 - (void)addTransaction:(NSSet *)values;
 - (void)removeTransaction:(NSSet *)values;
 

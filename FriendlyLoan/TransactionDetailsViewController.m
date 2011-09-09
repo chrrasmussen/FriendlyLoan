@@ -1,19 +1,28 @@
 //
-//  AddLoanViewController.m
+//  DetailsViewController.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
-#import "AddLoanViewController.h"
+#import "TransactionDetailsViewController.h"
 
 #import "Transaction.h"
 #import "Person.h"
 
-@implementation AddLoanViewController
 
-@synthesize lentSelection, amountField, personField, categorySelection, noteField;
+@interface TransactionDetailsViewController ()
+
+- (void)updateTransactionDetails;
+
+@end
+
+
+@implementation TransactionDetailsViewController
+
+@synthesize transaction;
+@synthesize lentLabel, amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, locationlabel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,25 +41,14 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - Actions
-
-- (IBAction)cancel:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self createRecord];
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [self updateTransactionDetails];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -181,41 +179,18 @@
     return [delegate managedObjectContext];
 }
 
-#pragma mark - Fetched results controller
 
-- (void)createRecord
+#pragma mark - Private methods
+
+- (void)updateTransactionDetails
 {
-    NSLog(@"Creating a record...");
-    
-    NSEntityDescription *transactionEntity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:transactionEntity.name inManagedObjectContext:self.managedObjectContext];
-    
-    NSEntityDescription *personEntity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
-    Person *petter = [NSEntityDescription insertNewObjectForEntityForName:personEntity.name inManagedObjectContext:self.managedObjectContext];
-    petter.name = self.personField.text;
-    
-    transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountField.text];
-    transaction.lent = [NSNumber numberWithBool:[self.lentSelection selectedSegmentIndex]];
-    transaction.person = petter;
-    transaction.category = [NSNumber numberWithInt:[self.categorySelection selectedSegmentIndex]];
-    transaction.note = self.noteField.text;
-    transaction.timeStamp = [NSDate date];
-    transaction.location = @"Current Location"; // FIXME: Missing feature
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error])
-    {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    NSLog(@"Record created successfully!");
+    self.lentLabel.text = ([transaction.lent boolValue]) ? @"Lent": @"Borrowed";
+    self.amountLabel.text = [transaction.amount stringValue];
+    self.personLabel.text = transaction.person.name;
+    self.categoryLabel.text = [transaction.category stringValue];
+    self.noteLabel.text = transaction.note;
+    self.timeStampLabel.text = [transaction.timeStamp description];
+    self.locationlabel.text = transaction.location;
 }
 
 @end
