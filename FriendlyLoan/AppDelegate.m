@@ -17,6 +17,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"Creating a record");
+    
+    NSEntityDescription *transactionEntity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    [NSEntityDescription insertNewObjectForEntityForName:transactionEntity.name inManagedObjectContext:self.managedObjectContext];
+    
+    
     // Override point for customization after application launch.
     return YES;
 }
