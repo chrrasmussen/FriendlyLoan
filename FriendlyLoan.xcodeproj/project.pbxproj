@@ -21,6 +21,14 @@
 		6941FF93141A6D6B00FB3A24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF78141A6D6B00FB3A24 /* CoreData.framework */; };
 		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
+		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
+		69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* SummaryViewController.m */; };
+		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
+		69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB7141A7B8800549213 /* SettingsViewController.m */; };
+		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
+		69C3CECD141A7EB400549213 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CECC141A7EB400549213 /* DetailsViewController.m */; };
+		69C3CED0141A812B00549213 /* Pig.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECE141A812B00549213 /* Pig.png */; };
+		69C3CED1141A812B00549213 /* Pig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECF141A812B00549213 /* Pig@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,19 +47,32 @@
 		6941FF74141A6D6B00FB3A24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6941FF78141A6D6B00FB3A24 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		6941FF7C141A6D6B00FB3A24 /* FriendlyLoan-Info.plist */ = {isa = PBXFileReference; path = "FriendlyLoan-Info.plist"; sourceTree = "<group>"; };
+		6941FF7C141A6D6B00FB3A24 /* FriendlyLoan-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FriendlyLoan-Info.plist"; sourceTree = "<group>"; };
 		6941FF7E141A6D6B00FB3A24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6941FF80141A6D6B00FB3A24 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6941FF82141A6D6B00FB3A24 /* FriendlyLoan-Prefix.pch */ = {isa = PBXFileReference; path = "FriendlyLoan-Prefix.pch"; sourceTree = "<group>"; };
-		6941FF83141A6D6B00FB3A24 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		6941FF82141A6D6B00FB3A24 /* FriendlyLoan-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FriendlyLoan-Prefix.pch"; sourceTree = "<group>"; };
+		6941FF83141A6D6B00FB3A24 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6941FF84141A6D6B00FB3A24 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6941FF87141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
 		6941FF8E141A6D6B00FB3A24 /* FriendlyLoanTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendlyLoanTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		6941FF98141A6D6B00FB3A24 /* FriendlyLoanTests-Info.plist */ = {isa = PBXFileReference; path = "FriendlyLoanTests-Info.plist"; sourceTree = "<group>"; };
+		6941FF98141A6D6B00FB3A24 /* FriendlyLoanTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FriendlyLoanTests-Info.plist"; sourceTree = "<group>"; };
 		6941FF9A141A6D6B00FB3A24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
+		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
+		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
+		69C3CEAE141A7B4C00549213 /* SummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
+		69C3CEAF141A7B4C00549213 /* SummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
+		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		69C3CEB3141A7B6700549213 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		69C3CEB6141A7B8800549213 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		69C3CEB7141A7B8800549213 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		69C3CEC8141A7EA600549213 /* AddLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLoanViewController.h; sourceTree = "<group>"; };
+		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
+		69C3CECB141A7EB400549213 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		69C3CECC141A7EB400549213 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		69C3CECE141A812B00549213 /* Pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pig.png; sourceTree = "<group>"; };
+		69C3CECF141A812B00549213 /* Pig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pig@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +135,16 @@
 		6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */ = {
 			isa = PBXGroup;
 			children = (
+				69C3CEB1141A7B5000549213 /* Summary */,
+				69C3CEB5141A7B6A00549213 /* History */,
+				69C3CEB9141A7B8C00549213 /* Settings */,
+				69C3CEBD141A7BA400549213 /* Add Loan */,
+				69C3CEC1141A7BF600549213 /* Details */,
 				6941FF83141A6D6B00FB3A24 /* AppDelegate.h */,
 				6941FF84141A6D6B00FB3A24 /* AppDelegate.m */,
+				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
 				6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */,
+				69C3CED9141A880900549213 /* Resources */,
 				6941FF7B141A6D6B00FB3A24 /* Supporting Files */,
 			);
 			path = FriendlyLoan;
@@ -150,6 +178,60 @@
 				6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		69C3CEB1141A7B5000549213 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CEAE141A7B4C00549213 /* SummaryViewController.h */,
+				69C3CEAF141A7B4C00549213 /* SummaryViewController.m */,
+			);
+			name = Summary;
+			sourceTree = "<group>";
+		};
+		69C3CEB5141A7B6A00549213 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CEB2141A7B6700549213 /* HistoryViewController.h */,
+				69C3CEB3141A7B6700549213 /* HistoryViewController.m */,
+			);
+			name = History;
+			sourceTree = "<group>";
+		};
+		69C3CEB9141A7B8C00549213 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CEB6141A7B8800549213 /* SettingsViewController.h */,
+				69C3CEB7141A7B8800549213 /* SettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		69C3CEBD141A7BA400549213 /* Add Loan */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CEC8141A7EA600549213 /* AddLoanViewController.h */,
+				69C3CEC9141A7EA600549213 /* AddLoanViewController.m */,
+			);
+			name = "Add Loan";
+			sourceTree = "<group>";
+		};
+		69C3CEC1141A7BF600549213 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CECB141A7EB400549213 /* DetailsViewController.h */,
+				69C3CECC141A7EB400549213 /* DetailsViewController.m */,
+			);
+			name = Details;
+			sourceTree = "<group>";
+		};
+		69C3CED9141A880900549213 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				69C3CECE141A812B00549213 /* Pig.png */,
+				69C3CECF141A812B00549213 /* Pig@2x.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +306,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6941FF7F141A6D6B00FB3A24 /* InfoPlist.strings in Resources */,
+				6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */,
+				69C3CED0141A812B00549213 /* Pig.png in Resources */,
+				69C3CED1141A812B00549213 /* Pig@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +346,11 @@
 				6941FF81141A6D6B00FB3A24 /* main.m in Sources */,
 				6941FF85141A6D6B00FB3A24 /* AppDelegate.m in Sources */,
 				6941FF88141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld in Sources */,
+				69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */,
+				69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */,
+				69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */,
+				69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */,
+				69C3CECD141A7EB400549213 /* DetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +512,7 @@
 				6941FFA3141A6D6B00FB3A24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6941FFA4141A6D6B00FB3A24 /* Build configuration list for PBXNativeTarget "FriendlyLoanTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +521,7 @@
 				6941FFA6141A6D6B00FB3A24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
