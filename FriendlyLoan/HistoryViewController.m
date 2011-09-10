@@ -10,7 +10,6 @@
 
 #import "TransactionDetailsViewController.h"
 #import "Transaction+Custom.h"
-#import "Person.h"
 
 @interface HistoryViewController ()
 
@@ -101,7 +100,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"historyCell";
+    static NSString *CellIdentifier = @"HistoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
@@ -186,7 +185,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"detailsSegue"])
+    if ([[segue identifier] isEqualToString:@"DetailsSegue"])
     {
         Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
@@ -308,14 +307,14 @@
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    BOOL lent = ([transaction.amount floatValue] > 0) ? YES: NO;
+    BOOL lent = [transaction.lent boolValue];
     NSString *lentText = (lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
     NSString *lentPrepositionText = (lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
-    NSString *personText = transaction.person.name;
+    NSString *personText = transaction.personName;
     NSString *amountText = [transaction.amount stringValue];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ $%@", lentText, amountText];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
 }
 

@@ -7,5 +7,7 @@
 		<string>Other</string>
 		<string>Pig</string>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1001</string>
 </dict>
 </plist>

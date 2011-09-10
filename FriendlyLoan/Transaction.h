@@ -2,14 +2,13 @@
 //  Transaction.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 09.09.11.
+//  Created by Christian Rasmussen on 10.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Person;
 
 @interface Transaction : NSManagedObject
 
@@ -19,6 +18,7 @@
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSDate * timeStamp;
-@property (nonatomic, retain) Person *person;
+@property (nonatomic, retain) NSNumber * personId;
+@property (nonatomic, retain) NSString * personName;
 
 @end

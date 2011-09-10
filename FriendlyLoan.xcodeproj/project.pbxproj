@@ -22,8 +22,10 @@
 		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
 		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
-		69BA69A9141AB19E008C4384 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69A8141AB19E008C4384 /* Transaction.m */; };
-		69BA69AC141AB19F008C4384 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69AB141AB19F008C4384 /* Person.m */; };
+		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
+		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
+		6993473D141C0050004DFEF1 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473C141C0050004DFEF1 /* Transaction.m */; };
+		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
 		69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BA69BD141AD4E3008C4384 /* Categories.plist */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
@@ -66,10 +68,12 @@
 		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
 		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
-		69BA69A7141AB19E008C4384 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		69BA69A8141AB19E008C4384 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
-		69BA69AA141AB19F008C4384 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		69BA69AB141AB19F008C4384 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		6993473B141C0050004DFEF1 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
+		6993473C141C0050004DFEF1 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
+		6993473F141C19F7004DFEF1 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
 		69BA69BD141AD4E3008C4384 /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				6941FF75141A6D6B00FB3A24 /* Foundation.framework in Frameworks */,
 				6941FF77141A6D6B00FB3A24 /* CoreGraphics.framework in Frameworks */,
 				6941FF79141A6D6B00FB3A24 /* CoreData.framework in Frameworks */,
+				69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */,
+				69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +147,8 @@
 				6941FF74141A6D6B00FB3A24 /* Foundation.framework */,
 				6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */,
 				6941FF78141A6D6B00FB3A24 /* CoreData.framework */,
+				69934738141BDD88004DFEF1 /* AddressBook.framework */,
+				69934734141BDCA6004DFEF1 /* AddressBookUI.framework */,
 				6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
@@ -202,10 +210,8 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69BA69A7141AB19E008C4384 /* Transaction.h */,
-				69BA69A8141AB19E008C4384 /* Transaction.m */,
-				69BA69AA141AB19F008C4384 /* Person.h */,
-				69BA69AB141AB19F008C4384 /* Person.m */,
+				6993473B141C0050004DFEF1 /* Transaction.h */,
+				6993473C141C0050004DFEF1 /* Transaction.m */,
 			);
 			name = "Generated Classes";
 			sourceTree = "<group>";
@@ -253,6 +259,8 @@
 				69C3CEC9141A7EA600549213 /* AddLoanViewController.m */,
 				69BA69C8141AF5A1008C4384 /* AmountTextField.h */,
 				69BA69C9141AF5A1008C4384 /* AmountTextField.m */,
+				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
+				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
 			);
 			name = "Add Loan";
 			sourceTree = "<group>";
@@ -415,10 +423,10 @@
 				69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */,
 				69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */,
 				69C3CECD141A7EB400549213 /* TransactionDetailsViewController.m in Sources */,
-				69BA69A9141AB19E008C4384 /* Transaction.m in Sources */,
-				69BA69AC141AB19F008C4384 /* Person.m in Sources */,
 				69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */,
 				69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */,
+				6993473D141C0050004DFEF1 /* Transaction.m in Sources */,
+				69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +516,7 @@
 		6941FFA2141A6D6B00FB3A24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";

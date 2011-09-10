@@ -9,18 +9,26 @@
 #import "AddLoanViewController.h"
 
 #import "Transaction.h"
-#import "Person.h"
 
 @interface AddLoanViewController ()
 
-- (void)createTransaction;
-- (Person *)fetchPersonWithName:(NSString *)name;
+- (void)updateSelectedPerson:(ABRecordRef)person;
+- (void)updateLentStatus:(BOOL)lent;
+- (void)validateAmountAndPersonToEnableSave;
+
+- (void)showPeoplePickerController;
+
+- (void)addTransaction;
 
 @end
 
-@implementation AddLoanViewController
+@implementation AddLoanViewController {
+    BOOL isViewControllerLoaded;
+}
 
-@synthesize amountTextField, personTextField, categorySegmentedControl, noteTextField;
+@synthesize personId, personName, lent, category;
+@synthesize amountTextField, noteTextField, saveBarButtonItem;
+@synthesize amountDescriptionLabel, personDescriptionLabel, personValueLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,65 +47,24 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - Actions
-
-- (IBAction)cancel:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self createTransaction];
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)textFieldBorrowButtonTapped:(UITextField *)textField
-{
-    amountField.text = [NSString stringWithFormat:@"-%@", amountField.text];
-    [self nextField];
-}
-
-- (void)textFieldLendButtonTapped:(UITextField *)textField
-{
-    [self nextField];
-}
-
-
-- (void)nextField
-{
-    UITextField *fields[] = {amountField, personField, noteField};
-    int count = sizeof(fields) / sizeof(UITextField *);
-    for (int i = 0; i != count; i++)
-    {
-        UITextField *textField = fields[i];
-        if ([textField isFirstResponder] == YES)
-        {
-            int nextPosition = i + 1;
-            if (nextPosition < count)
-            {
-                UITextField *nextTextField = fields[nextPosition];
-                [nextTextField becomeFirstResponder];
-            }
-            else
-            {
-                [textField resignFirstResponder];
-            }
-        }
-    }
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type
+    
+    // FIXME: Sync problems will arise
+    // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
+//    ABAddressBookRef addressBook = ABAddressBookCreate();
+//    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);
+//    NSLog(@"%08x %08x", record, NULL);
+//    if (record != NULL)
+//        NSLog(@"Test:%@", ABRecordCopyCompositeName(record));
+//    
+//    CFArrayRef array = ABAddressBookCopyPeopleWithName(addressBook, @"b c");
+//    NSLog(@"%@", array);
 }
 
 - (void)viewDidUnload
@@ -111,13 +78,18 @@
 {
     [super viewWillAppear:animated];
     
-    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type
-    [self.amountTextField becomeFirstResponder];
+    [self validateAmountAndPersonToEnableSave];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (isViewControllerLoaded == NO)
+    {
+        [self.amountTextField becomeFirstResponder];
+        isViewControllerLoaded = YES;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -136,87 +108,64 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//#warning Potentially incomplete method implementation.
-//    // Return the number of sections.
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//#warning Incomplete method implementation.
-//    // Return the number of rows in the section.
-//    return 0;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Navigation logic may go here. Create and push another view controller.
-//    /*
-//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-//     // ...
-//     // Pass the selected object to the new view controller.
-//     [self.navigationController pushViewController:detailViewController animated:YES];
-//     */
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    if (indexPath.row == 1)
+        [self showPeoplePickerController];
+}
+
+#pragma mark - Interface actions
+
+- (IBAction)cancel:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)save:(id)sender
+{
+    [self addTransaction];
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)amountTextFieldDidChange:(id)sender
+{
+    [self validateAmountAndPersonToEnableSave];
+}
+
+- (IBAction)selectCategory:(id)sender
+{
+    [self.noteTextField becomeFirstResponder];
+}
+
+#pragma mark - UITextFieldDelegate methods
+
+// Sent from amountTextField
+- (void)textFieldBorrowButtonTapped:(UITextField *)textField
+{
+    [self updateLentStatus:NO];
+    
+    [textField resignFirstResponder];
+}
+
+// Sent from amountTextField
+- (void)textFieldLendButtonTapped:(UITextField *)textField
+{
+    [self updateLentStatus:YES];
+    
+    [textField resignFirstResponder];
+}
+
+// Sent from noteTextField
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
 
 #pragma mark - Core Data stack
 
@@ -226,29 +175,89 @@
     return [delegate managedObjectContext];
 }
 
+#pragma mark - ABPeoplePickerNavigationControllerDelegate methods
+
+// Displays the information of a selected person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+    [self updateSelectedPerson:person];
+    
+    [self validateAmountAndPersonToEnableSave];
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+	return NO;
+}
+
+// Does not allow users to perform default actions such as dialing a phone number, when they select a person property
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+	return NO;
+}
+
+// Dismisses the people picker and shows the application when users tap Cancel
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - Private methods
 
-// TODO: Fix geolocation and category
-- (void)createTransaction
+- (void)updateLentStatus:(BOOL)lentStatus
 {
-    NSLog(@"Creating a record...");
+    self.lent = lentStatus;
     
-    // Check if person already exists
-    Person *person = [self fetchPersonWithName:self.personTextField.text];
-    if (person == nil)
+    // Update GUI
+    if (self.lent == YES)
     {
-        person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
-        person.name = self.personTextField.text;
+        self.amountDescriptionLabel.text = NSLocalizedString(@"Lend", nil);
+        self.personDescriptionLabel.text = NSLocalizedString(@"To", nil);
     }
+    else
+    {
+        self.amountDescriptionLabel.text = NSLocalizedString(@"Borrow", nil);
+        self.personDescriptionLabel.text = NSLocalizedString(@"From", nil);
+    }
+}
+
+- (void)updateSelectedPerson:(ABRecordRef)person
+{
+    self.personId = (int)ABRecordGetRecordID(person);
+    self.personName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(person);
     
-    // Create the transaction
+    // Update GUI
+    self.personValueLabel.text = self.personName;
+}
+
+- (void)validateAmountAndPersonToEnableSave
+{
+    self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && self.personName != nil);
+}
+
+-(void)showPeoplePickerController
+{
+	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
+	[self presentModalViewController:picker animated:YES];
+}
+
+// TODO: Fix geolocation and category
+- (void)addTransaction
+{
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    
     transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountTextField.text];
-    transaction.person = person;
-    transaction.category = [NSNumber numberWithInt:[self.categorySegmentedControl selectedSegmentIndex]];
+    transaction.lent = [NSNumber numberWithBool:self.lent];
+    
+    transaction.personId = [NSNumber numberWithInt:self.personId];
+    transaction.personName = self.personName;
+    
     transaction.note = self.noteTextField.text;
+    
+    transaction.category = [NSNumber numberWithInt:self.category];
+    
     transaction.timeStamp = [NSDate date];
-    transaction.location = @"Current Location"; // FIXME: Missing feature
+    transaction.location = @"Current Location";
     
     // Save the context.
     NSError *error = nil;
@@ -266,20 +275,5 @@
     NSLog(@"Record created successfully!");
 }
 
-- (Person *)fetchPersonWithName:(NSString *)name
-{
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"name ==[c] %@", name];
-    
-    NSError *error = nil;
-    NSArray *people = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (!people)
-    {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    NSLog(@"%@", people);
-    return ([people count] > 0) ? [people objectAtIndex:0] : nil;
-}
 
 @end

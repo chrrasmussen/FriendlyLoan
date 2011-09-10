@@ -9,7 +9,6 @@
 #import "TransactionDetailsViewController.h"
 
 #import "Transaction.h"
-#import "Person.h"
 
 
 @interface TransactionDetailsViewController ()
@@ -185,7 +184,7 @@
 - (void)updateTransactionDetails
 {
     self.amountLabel.text = [transaction.amount stringValue];
-    self.personLabel.text = transaction.person.name;
+    self.personLabel.text = transaction.personName;
     self.categoryLabel.text = [transaction.category stringValue];
     self.noteLabel.text = transaction.note;
     self.timeStampLabel.text = [transaction.timeStamp description];

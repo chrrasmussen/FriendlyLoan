@@ -17,8 +17,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"App started...");
+    
+//    [self performSelector:@selector(presentAddLoanViewController) withObject:nil afterDelay:0.0];
+    
     // Override point for customization after application launch.
     return YES;
+}
+
+- (void)presentAddLoanViewController
+{
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UIViewController *addLoanViewController = [tabBarController.storyboard instantiateViewControllerWithIdentifier:@"AddLoanViewController"];
+    
+    NSLog(@"%@", addLoanViewController);
+    [tabBarController presentModalViewController:addLoanViewController animated:YES];
+//    [[(UITabBarController *)[self.window rootViewController] selectedViewController] presentModalViewController:addLoanViewController animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -49,6 +64,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    [self performSelector:@selector(presentAddLoanViewController) withObject:nil afterDelay:0.0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

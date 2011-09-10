@@ -2,12 +2,11 @@
 //  Transaction.m
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 09.09.11.
+//  Created by Christian Rasmussen on 10.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
 #import "Transaction.h"
-#import "Person.h"
 
 
 @implementation Transaction
@@ -18,6 +17,7 @@
 @dynamic location;
 @dynamic note;
 @dynamic timeStamp;
-@dynamic person;
+@dynamic personId;
+@dynamic personName;
 
 @end
