@@ -8,14 +8,13 @@
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="amount" attributeType="Decimal" syncable="YES"/>
         <attribute name="category" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="lent" attributeType="Boolean" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeStamp" attributeType="Date" syncable="YES"/>
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="transaction" inverseEntity="Person" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="430" positionY="315" width="128" height="90"/>
-        <element name="Transaction" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Person" positionX="351" positionY="252" width="128" height="90"/>
+        <element name="Transaction" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

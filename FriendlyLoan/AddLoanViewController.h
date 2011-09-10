@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AmountTextField.h"
 
-@interface AddLoanViewController : UITableViewController
+@interface AddLoanViewController : UITableViewController <UITextFieldDelegate, AmountTextFieldDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, strong) IBOutlet UISegmentedControl *lentSelection;
-@property (nonatomic, strong) IBOutlet UITextField *amountField;
-@property (nonatomic, strong) IBOutlet UITextField *personField;
-@property (nonatomic, strong) IBOutlet UISegmentedControl *categorySelection;
-@property (nonatomic, strong) IBOutlet UITextField *noteField;
+@property (nonatomic, strong) IBOutlet UITextField *amountTextField;
+@property (nonatomic, strong) IBOutlet UITextField *personTextField;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *categorySegmentedControl;
+@property (nonatomic, strong) IBOutlet UITextField *noteTextField;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;

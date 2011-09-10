@@ -22,7 +22,7 @@
 @implementation TransactionDetailsViewController
 
 @synthesize transaction;
-@synthesize lentLabel, amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, locationlabel;
+@synthesize amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, locationlabel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -184,7 +184,6 @@
 
 - (void)updateTransactionDetails
 {
-    self.lentLabel.text = ([transaction.lent boolValue]) ? @"Lent": @"Borrowed";
     self.amountLabel.text = [transaction.amount stringValue];
     self.personLabel.text = transaction.person.name;
     self.categoryLabel.text = [transaction.category stringValue];

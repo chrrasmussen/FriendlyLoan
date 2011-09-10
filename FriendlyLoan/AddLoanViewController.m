@@ -14,12 +14,13 @@
 @interface AddLoanViewController ()
 
 - (void)createTransaction;
+- (Person *)fetchPersonWithName:(NSString *)name;
 
 @end
 
 @implementation AddLoanViewController
 
-@synthesize lentSelection, amountField, personField, categorySelection, noteField;
+@synthesize amountTextField, personTextField, categorySegmentedControl, noteTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,6 +52,41 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)textFieldBorrowButtonTapped:(UITextField *)textField
+{
+    amountField.text = [NSString stringWithFormat:@"-%@", amountField.text];
+    [self nextField];
+}
+
+- (void)textFieldLendButtonTapped:(UITextField *)textField
+{
+    [self nextField];
+}
+
+
+- (void)nextField
+{
+    UITextField *fields[] = {amountField, personField, noteField};
+    int count = sizeof(fields) / sizeof(UITextField *);
+    for (int i = 0; i != count; i++)
+    {
+        UITextField *textField = fields[i];
+        if ([textField isFirstResponder] == YES)
+        {
+            int nextPosition = i + 1;
+            if (nextPosition < count)
+            {
+                UITextField *nextTextField = fields[nextPosition];
+                [nextTextField becomeFirstResponder];
+            }
+            else
+            {
+                [textField resignFirstResponder];
+            }
+        }
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -74,6 +110,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type
+    [self.amountTextField becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -187,24 +226,27 @@
     return [delegate managedObjectContext];
 }
 
-#pragma mark - Fetched results controller
+#pragma mark - Private methods
 
+// TODO: Fix geolocation and category
 - (void)createTransaction
 {
     NSLog(@"Creating a record...");
     
-    NSEntityDescription *transactionEntity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:transactionEntity.name inManagedObjectContext:self.managedObjectContext];
+    // Check if person already exists
+    Person *person = [self fetchPersonWithName:self.personTextField.text];
+    if (person == nil)
+    {
+        person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+        person.name = self.personTextField.text;
+    }
     
-    NSEntityDescription *personEntity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
-    Person *petter = [NSEntityDescription insertNewObjectForEntityForName:personEntity.name inManagedObjectContext:self.managedObjectContext];
-    petter.name = self.personField.text;
-    
-    transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountField.text];
-    transaction.lent = [NSNumber numberWithBool:[self.lentSelection selectedSegmentIndex]];
-    transaction.person = petter;
-    transaction.category = [NSNumber numberWithInt:[self.categorySelection selectedSegmentIndex]];
-    transaction.note = self.noteField.text;
+    // Create the transaction
+    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountTextField.text];
+    transaction.person = person;
+    transaction.category = [NSNumber numberWithInt:[self.categorySegmentedControl selectedSegmentIndex]];
+    transaction.note = self.noteTextField.text;
     transaction.timeStamp = [NSDate date];
     transaction.location = @"Current Location"; // FIXME: Missing feature
     
@@ -222,6 +264,22 @@
     }
     
     NSLog(@"Record created successfully!");
+}
+
+- (Person *)fetchPersonWithName:(NSString *)name
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"name ==[c] %@", name];
+    
+    NSError *error = nil;
+    NSArray *people = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (!people)
+    {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    NSLog(@"%@", people);
+    return ([people count] > 0) ? [people objectAtIndex:0] : nil;
 }
 
 @end
