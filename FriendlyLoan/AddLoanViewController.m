@@ -11,6 +11,12 @@
 #import "Transaction.h"
 #import "Person.h"
 
+@interface AddLoanViewController ()
+
+- (void)createTransaction;
+
+@end
+
 @implementation AddLoanViewController
 
 @synthesize lentSelection, amountField, personField, categorySelection, noteField;
@@ -41,7 +47,7 @@
 
 - (IBAction)save:(id)sender
 {
-    [self createRecord];
+    [self createTransaction];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -162,16 +168,16 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Navigation logic may go here. Create and push another view controller.
+//    /*
+//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+//     // ...
+//     // Pass the selected object to the new view controller.
+//     [self.navigationController pushViewController:detailViewController animated:YES];
+//     */
+//}
 
 #pragma mark - Core Data stack
 
@@ -183,7 +189,7 @@
 
 #pragma mark - Fetched results controller
 
-- (void)createRecord
+- (void)createTransaction
 {
     NSLog(@"Creating a record...");
     

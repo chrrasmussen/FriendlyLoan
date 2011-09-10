@@ -24,6 +24,8 @@
 		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
 		69BA69A9141AB19E008C4384 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69A8141AB19E008C4384 /* Transaction.m */; };
 		69BA69AC141AB19F008C4384 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69AB141AB19F008C4384 /* Person.m */; };
+		69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BA69BD141AD4E3008C4384 /* Categories.plist */; };
+		69BA69C1141ADC23008C4384 /* Transaction+CustomMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+CustomMethods.m */; };
 		69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* SummaryViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB7141A7B8800549213 /* SettingsViewController.m */; };
@@ -67,6 +69,9 @@
 		69BA69A8141AB19E008C4384 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		69BA69AA141AB19F008C4384 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		69BA69AB141AB19F008C4384 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		69BA69BD141AD4E3008C4384 /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
+		69BA69BF141ADC23008C4384 /* Transaction+CustomMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+CustomMethods.h"; sourceTree = "<group>"; };
+		69BA69C0141ADC23008C4384 /* Transaction+CustomMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+CustomMethods.m"; sourceTree = "<group>"; };
 		69C3CEAE141A7B4C00549213 /* SummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
 		69C3CEAF141A7B4C00549213 /* SummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
 		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -75,7 +80,7 @@
 		69C3CEB7141A7B8800549213 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		69C3CEC8141A7EA600549213 /* AddLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLoanViewController.h; sourceTree = "<group>"; };
 		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
-		69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TransactionDetailsViewController.h; sourceTree = "<group>"; };
+		69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionDetailsViewController.h; sourceTree = "<group>"; };
 		69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionDetailsViewController.m; sourceTree = "<group>"; };
 		69C3CECE141A812B00549213 /* Pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pig.png; sourceTree = "<group>"; };
 		69C3CECF141A812B00549213 /* Pig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pig@2x.png"; sourceTree = "<group>"; };
@@ -181,6 +186,36 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		69BA69BC141AD4C6008C4384 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				69BA69BD141AD4E3008C4384 /* Categories.plist */,
+				69C3CECE141A812B00549213 /* Pig.png */,
+				69C3CECF141A812B00549213 /* Pig@2x.png */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		69BA69C6141AE927008C4384 /* Generated Classes */ = {
+			isa = PBXGroup;
+			children = (
+				69BA69A7141AB19E008C4384 /* Transaction.h */,
+				69BA69A8141AB19E008C4384 /* Transaction.m */,
+				69BA69AA141AB19F008C4384 /* Person.h */,
+				69BA69AB141AB19F008C4384 /* Person.m */,
+			);
+			name = "Generated Classes";
+			sourceTree = "<group>";
+		};
+		69BA69C7141AE941008C4384 /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				69BA69BF141ADC23008C4384 /* Transaction+CustomMethods.h */,
+				69BA69C0141ADC23008C4384 /* Transaction+CustomMethods.m */,
+			);
+			name = "Custom Classes";
+			sourceTree = "<group>";
+		};
 		69C3CEB1141A7B5000549213 /* Summary */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,8 +264,7 @@
 		69C3CED9141A880900549213 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				69C3CECE141A812B00549213 /* Pig.png */,
-				69C3CECF141A812B00549213 /* Pig@2x.png */,
+				69BA69BC141AD4C6008C4384 /* Categories */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -239,10 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				6941FF86141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld */,
-				69BA69A7141AB19E008C4384 /* Transaction.h */,
-				69BA69A8141AB19E008C4384 /* Transaction.m */,
-				69BA69AA141AB19F008C4384 /* Person.h */,
-				69BA69AB141AB19F008C4384 /* Person.m */,
+				69BA69C6141AE927008C4384 /* Generated Classes */,
+				69BA69C7141AE941008C4384 /* Custom Classes */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -335,6 +367,7 @@
 				6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */,
 				69C3CED0141A812B00549213 /* Pig.png in Resources */,
 				69C3CED1141A812B00549213 /* Pig@2x.png in Resources */,
+				69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +412,7 @@
 				69C3CECD141A7EB400549213 /* TransactionDetailsViewController.m in Sources */,
 				69BA69A9141AB19E008C4384 /* Transaction.m in Sources */,
 				69BA69AC141AB19F008C4384 /* Person.m in Sources */,
+				69BA69C1141ADC23008C4384 /* Transaction+CustomMethods.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,10 +502,12 @@
 		6941FFA2141A6D6B00FB3A24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -479,10 +515,12 @@
 		6941FFA3141A6D6B00FB3A24 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyLoan/FriendlyLoan-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

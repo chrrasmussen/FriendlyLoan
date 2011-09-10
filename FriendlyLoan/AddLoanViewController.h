@@ -21,6 +21,4 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 
-- (void)createRecord;
-
 @end
