@@ -85,11 +85,11 @@
 {
     [super viewDidAppear:animated];
     
-    if (isViewControllerLoaded == NO)
-    {
-        [self.amountTextField becomeFirstResponder];
-        isViewControllerLoaded = YES;
-    }
+//    if (isViewControllerLoaded == NO)
+//    {
+//        [self.amountTextField becomeFirstResponder];
+//        isViewControllerLoaded = YES;
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -112,7 +112,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
     if (indexPath.row == 1)
         [self showPeoplePickerController];
 }

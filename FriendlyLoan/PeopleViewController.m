@@ -1,24 +1,23 @@
 //
-//  HistoryViewController.m
+//  SummaryViewController.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
+#import "PeopleViewController.h"
+
 #import "HistoryViewController.h"
 
-#import "TransactionDetailsViewController.h"
-#import "Transaction+Custom.h"
 
-@interface HistoryViewController ()
+@interface PeopleViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
-
-@implementation HistoryViewController
+@implementation PeopleViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 
@@ -89,30 +88,23 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"HistoryCell";
+    static NSString *CellIdentifier = @"SummaryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
 }
 
 /*
@@ -124,33 +116,19 @@
 }
 */
 
+/*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        // Delete the managed object for the given index path
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        // Save the context.
-        NSError *error = nil;
-        if (![context save:&error])
-        {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-    else if (editingStyle == UITableViewCellEditingStyleInsert)
-    {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
+*/
 
 /*
 // Override to support rearranging the table view.
@@ -170,33 +148,33 @@
 
 #pragma mark - Table view delegate
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Navigation logic may go here. Create and push another view controller.
-//    /*
-//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-//     // ...
-//     // Pass the selected object to the new view controller.
-//     [self.navigationController pushViewController:detailViewController animated:YES];
-//     */
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NSLocalizedString(@"Remove Debt", @"Delete confirmation button in Summary");
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+}
 
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"DetailsSegue"])
+    if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
     {
-        Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-        
-        TransactionDetailsViewController *transactionDetailsViewController = [segue destinationViewController];
-        transactionDetailsViewController.transaction = transaction;
-    }
-    else if ([[segue identifier] isEqualToString:@"AddLoanSegue"])
-    {
-//        if ()
+        HistoryViewController *historyViewController = [segue destinationViewController];
+        historyViewController.title = @"John's History";
     }
 }
+
 
 #pragma mark - Core Data stack
 
@@ -228,8 +206,9 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    //    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
+    NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -259,7 +238,7 @@
     [self.tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
     switch(type)
     {
@@ -279,7 +258,6 @@
     
     switch(type)
     {
-            
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -304,23 +282,22 @@
     [self.tableView endUpdates];
 }
 
-
 #pragma mark - Private methods
 
-// TODO: Add correct currency
+// TODO: Localize
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    BOOL lent = [transaction.lent boolValue];
-    NSString *lentText = (lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    NSString *lentPrepositionText = (lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
-    
-    NSString *personText = transaction.personName;
-    NSString *amountText = [transaction.amount stringValue];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ $%@", lentText, amountText];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
+//    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    
+//    BOOL lent = [transaction.lent boolValue];
+//    NSString *lentText = (lent) ? @"Lent" : @"Borrowed";
+//    NSString *lentPrepositionText = (lent) ? @"To" : @"From";
+//    
+//    NSString *personText = transaction.person.name;
+//    NSString *amountText = [transaction.amount stringValue];
+//    
+//    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
 }
 
 @end

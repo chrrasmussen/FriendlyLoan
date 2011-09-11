@@ -26,10 +26,12 @@
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		6993473D141C0050004DFEF1 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473C141C0050004DFEF1 /* Transaction.m */; };
 		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
+		69934743141C361C004DFEF1 /* AddLoan.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934741141C361C004DFEF1 /* AddLoan.png */; };
+		69934744141C361C004DFEF1 /* AddLoan.psd in Resources */ = {isa = PBXBuildFile; fileRef = 69934742141C361C004DFEF1 /* AddLoan.psd */; };
 		69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BA69BD141AD4E3008C4384 /* Categories.plist */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
-		69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* SummaryViewController.m */; };
+		69C3CEB0141A7B4C00549213 /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* PeopleViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB7141A7B8800549213 /* SettingsViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
@@ -74,13 +76,15 @@
 		6993473C141C0050004DFEF1 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
 		6993473F141C19F7004DFEF1 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
+		69934741141C361C004DFEF1 /* AddLoan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddLoan.png; sourceTree = "<group>"; };
+		69934742141C361C004DFEF1 /* AddLoan.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddLoan.psd; sourceTree = "<group>"; };
 		69BA69BD141AD4E3008C4384 /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
 		69BA69C9141AF5A1008C4384 /* AmountTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmountTextField.m; sourceTree = "<group>"; };
-		69C3CEAE141A7B4C00549213 /* SummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
-		69C3CEAF141A7B4C00549213 /* SummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
+		69C3CEAE141A7B4C00549213 /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleViewController.h; sourceTree = "<group>"; };
+		69C3CEAF141A7B4C00549213 /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleViewController.m; sourceTree = "<group>"; };
 		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		69C3CEB3141A7B6700549213 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		69C3CEB6141A7B8800549213 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -197,6 +201,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		69934745141C362C004DFEF1 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				69934741141C361C004DFEF1 /* AddLoan.png */,
+				69934742141C361C004DFEF1 /* AddLoan.psd */,
+			);
+			name = "Tab Bar";
+			sourceTree = "<group>";
+		};
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,13 +238,13 @@
 			name = "Custom Classes";
 			sourceTree = "<group>";
 		};
-		69C3CEB1141A7B5000549213 /* Summary */ = {
+		69C3CEB1141A7B5000549213 /* People */ = {
 			isa = PBXGroup;
 			children = (
-				69C3CEAE141A7B4C00549213 /* SummaryViewController.h */,
-				69C3CEAF141A7B4C00549213 /* SummaryViewController.m */,
+				69C3CEAE141A7B4C00549213 /* PeopleViewController.h */,
+				69C3CEAF141A7B4C00549213 /* PeopleViewController.m */,
 			);
-			name = Summary;
+			name = People;
 			sourceTree = "<group>";
 		};
 		69C3CEB5141A7B6A00549213 /* History */ = {
@@ -277,9 +290,10 @@
 		69C3CED9141A880900549213 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				69934745141C362C004DFEF1 /* Tab Bar */,
 				69BA69BC141AD4C6008C4384 /* Categories */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		69C3CEDA141AB06800549213 /* Models */ = {
@@ -296,10 +310,10 @@
 			isa = PBXGroup;
 			children = (
 				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
-				69C3CEB1141A7B5000549213 /* Summary */,
+				69C3CEBD141A7BA400549213 /* Add Loan */,
+				69C3CEB1141A7B5000549213 /* People */,
 				69C3CEB5141A7B6A00549213 /* History */,
 				69C3CEB9141A7B8C00549213 /* Settings */,
-				69C3CEBD141A7BA400549213 /* Add Loan */,
 				69C3CEC1141A7BF600549213 /* Details */,
 			);
 			name = "User Interface";
@@ -381,6 +395,8 @@
 				69C3CED0141A812B00549213 /* Pig.png in Resources */,
 				69C3CED1141A812B00549213 /* Pig@2x.png in Resources */,
 				69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */,
+				69934743141C361C004DFEF1 /* AddLoan.png in Resources */,
+				69934744141C361C004DFEF1 /* AddLoan.psd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +434,7 @@
 				6941FF81141A6D6B00FB3A24 /* main.m in Sources */,
 				6941FF85141A6D6B00FB3A24 /* AppDelegate.m in Sources */,
 				6941FF88141A6D6B00FB3A24 /* FriendlyLoan.xcdatamodeld in Sources */,
-				69C3CEB0141A7B4C00549213 /* SummaryViewController.m in Sources */,
+				69C3CEB0141A7B4C00549213 /* PeopleViewController.m in Sources */,
 				69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */,
 				69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */,
 				69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  HistoryViewController.h
+//  SummaryViewController.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.09.11.
@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HistoryViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface PeopleViewController : UITableViewController <NSFetchedResultsControllerDelegate>;
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-
-//@property (nonatomic, strong) Person;
 
 @end
