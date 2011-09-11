@@ -182,7 +182,7 @@ enum {
         Transaction *transaction = [self addTransaction];
         
         TransactionDetailsViewController *transactionDetailsViewController = [segue destinationViewController];
-        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Add Loan", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(resetViewController)];
+        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(resetViewController)];
         transactionDetailsViewController.transaction = transaction;
     }
     else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])

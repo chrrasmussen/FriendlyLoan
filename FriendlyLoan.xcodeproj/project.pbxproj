@@ -34,6 +34,11 @@
 		69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934756141C3A03004DFEF1 /* AddLoan@2x.png */; };
 		6993475A141C3F3B004DFEF1 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934758141C3F3B004DFEF1 /* Settings.png */; };
 		6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934759141C3F3B004DFEF1 /* Settings@2x.png */; };
+		69934760141C6C85004DFEF1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6993475E141C6C6E004DFEF1 /* MapKit.framework */; };
+		69934762141C6E85004DFEF1 /* TempProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934761141C6E85004DFEF1 /* TempProfilePicture.png */; };
+		6993476C141C74F6004DFEF1 /* EmptyProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993476A141C74F6004DFEF1 /* EmptyProfilePicture.png */; };
+		6993476D141C74F6004DFEF1 /* EmptyProfilePicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993476B141C74F6004DFEF1 /* EmptyProfilePicture@2x.png */; };
+		6993476F141C7757004DFEF1 /* Todo.oo3 in Resources */ = {isa = PBXBuildFile; fileRef = 6993476E141C7756004DFEF1 /* Todo.oo3 */; };
 		69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BA69BD141AD4E3008C4384 /* Categories.plist */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
@@ -88,6 +93,11 @@
 		69934756141C3A03004DFEF1 /* AddLoan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddLoan@2x.png"; sourceTree = "<group>"; };
 		69934758141C3F3B004DFEF1 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		69934759141C3F3B004DFEF1 /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
+		6993475E141C6C6E004DFEF1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		69934761141C6E85004DFEF1 /* TempProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TempProfilePicture.png; sourceTree = "<group>"; };
+		6993476A141C74F6004DFEF1 /* EmptyProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmptyProfilePicture.png; sourceTree = "<group>"; };
+		6993476B141C74F6004DFEF1 /* EmptyProfilePicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EmptyProfilePicture@2x.png"; sourceTree = "<group>"; };
+		6993476E141C7756004DFEF1 /* Todo.oo3 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Todo.oo3; sourceTree = "<group>"; };
 		69BA69BD141AD4E3008C4384 /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
@@ -116,6 +126,7 @@
 				6941FF79141A6D6B00FB3A24 /* CoreData.framework in Frameworks */,
 				69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */,
 				69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */,
+				69934760141C6C85004DFEF1 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +147,7 @@
 		6941FF63141A6D6B00FB3A24 = {
 			isa = PBXGroup;
 			children = (
+				6993476E141C7756004DFEF1 /* Todo.oo3 */,
 				6941FF7A141A6D6B00FB3A24 /* FriendlyLoan */,
 				6941FF96141A6D6B00FB3A24 /* FriendlyLoanTests */,
 				6941FF71141A6D6B00FB3A24 /* Frameworks */,
@@ -161,6 +173,7 @@
 				6941FF78141A6D6B00FB3A24 /* CoreData.framework */,
 				69934738141BDD88004DFEF1 /* AddressBook.framework */,
 				69934734141BDCA6004DFEF1 /* AddressBookUI.framework */,
+				6993475E141C6C6E004DFEF1 /* MapKit.framework */,
 				6941FF8F141A6D6B00FB3A24 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
@@ -220,6 +233,16 @@
 				69934759141C3F3B004DFEF1 /* Settings@2x.png */,
 			);
 			name = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		69934769141C73E8004DFEF1 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				6993476A141C74F6004DFEF1 /* EmptyProfilePicture.png */,
+				6993476B141C74F6004DFEF1 /* EmptyProfilePicture@2x.png */,
+				69934761141C6E85004DFEF1 /* TempProfilePicture.png */,
+			);
+			name = People;
 			sourceTree = "<group>";
 		};
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
@@ -304,6 +327,7 @@
 			children = (
 				69934745141C362C004DFEF1 /* Tab Bar */,
 				69BA69BC141AD4C6008C4384 /* Categories */,
+				69934769141C73E8004DFEF1 /* People */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -413,6 +437,10 @@
 				69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */,
 				6993475A141C3F3B004DFEF1 /* Settings.png in Resources */,
 				6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */,
+				69934762141C6E85004DFEF1 /* TempProfilePicture.png in Resources */,
+				6993476C141C74F6004DFEF1 /* EmptyProfilePicture.png in Resources */,
+				6993476D141C74F6004DFEF1 /* EmptyProfilePicture@2x.png in Resources */,
+				6993476F141C7757004DFEF1 /* Todo.oo3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
