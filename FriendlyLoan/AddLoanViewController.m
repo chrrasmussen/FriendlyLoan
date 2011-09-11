@@ -39,8 +39,9 @@ enum {
     BOOL awaitingSave;
 }
 
+@synthesize personId, personName; // FIXME: Temp
 @synthesize person, category;
-@synthesize personId, personName;
+@synthesize editTransaction;
 @synthesize saveBarButtonItem;
 @synthesize amountDescriptionLabel, amountTextField, personDescriptionLabel, personValueLabel;
 @synthesize noteTextField;
@@ -73,7 +74,7 @@ enum {
     
     self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type
     
-    // FIXME: Sync problems will arise
+    // FIXME: Sync problems WILL arise
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
 //    ABAddressBookRef addressBook = ABAddressBookCreate();
 //    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);

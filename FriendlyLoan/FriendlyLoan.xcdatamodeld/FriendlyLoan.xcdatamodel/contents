@@ -7,6 +7,7 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recordId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="transactions" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="person" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="amount" attributeType="Decimal" syncable="YES"/>
@@ -17,9 +18,10 @@
         <attribute name="personId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="personName" attributeType="String" syncable="YES"/>
         <attribute name="timeStamp" attributeType="Date" syncable="YES"/>
+        <relationship name="person" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="transactions" inverseEntity="Person" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Transaction" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Person" positionX="351" positionY="261" width="128" height="135"/>
+        <element name="Transaction" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="Person" positionX="396" positionY="207" width="128" height="150"/>
     </elements>
 </model>
