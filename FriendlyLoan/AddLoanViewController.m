@@ -8,33 +8,51 @@
 
 #import "AddLoanViewController.h"
 
+#import "CategoriesViewController.h"
+#import "TransactionDetailsViewController.h"
 #import "Transaction.h"
+
+
+// FIXME: Special case when lent status is undecided
+// TODO: Use awaiting save
+enum {
+    kLentStatusUndecided = -1,
+    kLentStatusBorrow = 0,
+    kLentStatusLend = 1
+};
 
 @interface AddLoanViewController ()
 
 - (void)updateSelectedPerson:(ABRecordRef)person;
-- (void)updateLentStatus:(BOOL)lent;
+- (void)updateLentStatus:(NSInteger)lent;
 - (void)validateAmountAndPersonToEnableSave;
-
+- (void)hideKeyboard;
 - (void)showPeoplePickerController;
 
-- (void)addTransaction;
+- (Transaction *)addTransaction;
+- (void)resetViewController;
 
 @end
 
 @implementation AddLoanViewController {
-    BOOL isViewControllerLoaded;
+    NSInteger lentStatus;
+    BOOL awaitingSave;
 }
 
-@synthesize personId, personName, lent, category;
-@synthesize amountTextField, noteTextField, saveBarButtonItem;
-@synthesize amountDescriptionLabel, personDescriptionLabel, personValueLabel;
+@synthesize person, category;
+@synthesize personId, personName;
+@synthesize saveBarButtonItem;
+@synthesize amountDescriptionLabel, amountTextField, personDescriptionLabel, personValueLabel;
+@synthesize noteTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        lentStatus = kLentStatusUndecided;
+        
+        NSLog(@"Init'd");
     }
     return self;
 }
@@ -108,6 +126,19 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+
+// TODO: Check if lent status is undecided
+- (IBAction)save:(id)sender
+{
+    [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
+}
+
+- (IBAction)amountTextFieldDidChange:(id)sender
+{
+    [self validateAmountAndPersonToEnableSave];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,36 +147,12 @@
         [self showPeoplePickerController];
 }
 
-#pragma mark - Interface actions
-
-- (IBAction)cancel:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self addTransaction];
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)amountTextFieldDidChange:(id)sender
-{
-    [self validateAmountAndPersonToEnableSave];
-}
-
-- (IBAction)selectCategory:(id)sender
-{
-    [self.noteTextField becomeFirstResponder];
-}
-
 #pragma mark - UITextFieldDelegate methods
 
 // Sent from amountTextField
 - (void)textFieldBorrowButtonTapped:(UITextField *)textField
 {
-    [self updateLentStatus:NO];
+    [self updateLentStatus:kLentStatusBorrow];
     
     [textField resignFirstResponder];
 }
@@ -153,7 +160,7 @@
 // Sent from amountTextField
 - (void)textFieldLendButtonTapped:(UITextField *)textField
 {
-    [self updateLentStatus:YES];
+    [self updateLentStatus:kLentStatusLend];
     
     [textField resignFirstResponder];
 }
@@ -164,6 +171,24 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+#pragma mark - Storyboard
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"SaveSegue"])
+    {
+        Transaction *transaction = [self addTransaction];
+        
+        TransactionDetailsViewController *transactionDetailsViewController = [segue destinationViewController];
+        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Add Loan", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(resetViewController)];
+        transactionDetailsViewController.transaction = transaction;
+    }
+    else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
+    {
+        [self hideKeyboard];
+    }
 }
 
 #pragma mark - Core Data stack
@@ -177,9 +202,9 @@
 #pragma mark - ABPeoplePickerNavigationControllerDelegate methods
 
 // Displays the information of a selected person
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)thePerson
 {
-    [self updateSelectedPerson:person];
+    [self updateSelectedPerson:thePerson];
     
     [self validateAmountAndPersonToEnableSave];
     
@@ -202,27 +227,29 @@
 
 #pragma mark - Private methods
 
-- (void)updateLentStatus:(BOOL)lentStatus
+- (void)updateLentStatus:(NSInteger)theLentStatus
 {
-    self.lent = lentStatus;
+    lentStatus = theLentStatus;
     
     // Update GUI
-    if (self.lent == YES)
-    {
-        self.amountDescriptionLabel.text = NSLocalizedString(@"Lend", nil);
-        self.personDescriptionLabel.text = NSLocalizedString(@"To", nil);
-    }
-    else
+    if (lentStatus == kLentStatusBorrow)
     {
         self.amountDescriptionLabel.text = NSLocalizedString(@"Borrow", nil);
         self.personDescriptionLabel.text = NSLocalizedString(@"From", nil);
+        self.amountTextField.textColor = [UIColor colorWithHue:0.0 saturation:1.0 brightness:0.8 alpha:1.0];
+    }
+    else if (lentStatus == kLentStatusLend)
+    {
+        self.amountDescriptionLabel.text = NSLocalizedString(@"Lend", nil);
+        self.personDescriptionLabel.text = NSLocalizedString(@"To", nil);
+        self.amountTextField.textColor = [UIColor colorWithHue:(120.0/360.0) saturation:1.0 brightness:0.8 alpha:1.0];
     }
 }
 
-- (void)updateSelectedPerson:(ABRecordRef)person
+- (void)updateSelectedPerson:(ABRecordRef)theSelectedPerson
 {
-    self.personId = (int)ABRecordGetRecordID(person);
-    self.personName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(person);
+    self.personId = (int)ABRecordGetRecordID(theSelectedPerson);
+    self.personName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson);
     
     // Update GUI
     self.personValueLabel.text = self.personName;
@@ -233,20 +260,28 @@
     self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && self.personName != nil);
 }
 
--(void)showPeoplePickerController
+- (void)hideKeyboard
 {
+    [self.amountTextField resignFirstResponder];
+    [self.noteTextField resignFirstResponder];
+}
+
+- (void)showPeoplePickerController
+{
+    [self hideKeyboard];
+    
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
 	[self presentModalViewController:picker animated:YES];
 }
 
 // TODO: Fix geolocation and category
-- (void)addTransaction
+- (Transaction *)addTransaction
 {
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
     transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountTextField.text];
-    transaction.lent = [NSNumber numberWithBool:self.lent];
+    transaction.lent = [NSNumber numberWithBool:((lentStatus == kLentStatusLend) ? YES : NO)];
     
     transaction.personId = [NSNumber numberWithInt:self.personId];
     transaction.personName = self.personName;
@@ -272,7 +307,19 @@
     }
     
     NSLog(@"Record created successfully!");
+    
+    return transaction;
 }
 
+- (void)resetViewController
+{
+    if ([self.navigationController.viewControllers count] >= 2)
+    {
+        AddLoanViewController *blankAddLoanViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddLoanViewController"];
+        NSArray *viewControllers = [NSArray arrayWithObjects:blankAddLoanViewController, self, self.navigationController.topViewController, nil];
+        [self.navigationController setViewControllers:viewControllers];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
 
 @end

@@ -11,29 +11,28 @@
 
 #import "AmountTextField.h"
 
-
-@class AmountTextField;
+@class Person, AmountTextField;
 
 @interface AddLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, AmountTextFieldDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic) BOOL lent;
+@property (nonatomic, strong) Person *person;
+@property (nonatomic) NSInteger category;
+
+// FIXME: Temp
 @property (nonatomic) int personId;
 @property (nonatomic, strong) NSString *personName;
-@property (nonatomic) int category;
 
-@property (nonatomic, strong) IBOutlet UITextField *amountTextField;
-@property (nonatomic, strong) IBOutlet UITextField *noteTextField;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveBarButtonItem;
 
 @property (nonatomic, strong) IBOutlet UILabel *amountDescriptionLabel;
+@property (nonatomic, strong) IBOutlet AmountTextField *amountTextField;
 @property (nonatomic, strong) IBOutlet UILabel *personDescriptionLabel;
 @property (nonatomic, strong) IBOutlet UILabel *personValueLabel;
 
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
+@property (nonatomic, strong) IBOutlet UITextField *noteTextField;
 
-- (IBAction)selectCategory:(id)sender;
+- (IBAction)save:(id)sender;
 
 @end

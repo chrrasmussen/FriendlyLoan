@@ -26,8 +26,14 @@
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		6993473D141C0050004DFEF1 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473C141C0050004DFEF1 /* Transaction.m */; };
 		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
-		69934743141C361C004DFEF1 /* AddLoan.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934741141C361C004DFEF1 /* AddLoan.png */; };
-		69934744141C361C004DFEF1 /* AddLoan.psd in Resources */ = {isa = PBXBuildFile; fileRef = 69934742141C361C004DFEF1 /* AddLoan.psd */; };
+		6993474C141C36C9004DFEF1 /* Pig.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993474A141C36C9004DFEF1 /* Pig.png */; };
+		6993474D141C36C9004DFEF1 /* Pig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993474B141C36C9004DFEF1 /* Pig@2x.png */; };
+		69934750141C3821004DFEF1 /* AddLoan.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993474E141C3821004DFEF1 /* AddLoan.png */; };
+		69934754141C39D6004DFEF1 /* People.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934752141C39D6004DFEF1 /* People.png */; };
+		69934755141C39D6004DFEF1 /* People@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934753141C39D6004DFEF1 /* People@2x.png */; };
+		69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934756141C3A03004DFEF1 /* AddLoan@2x.png */; };
+		6993475A141C3F3B004DFEF1 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934758141C3F3B004DFEF1 /* Settings.png */; };
+		6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934759141C3F3B004DFEF1 /* Settings@2x.png */; };
 		69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BA69BD141AD4E3008C4384 /* Categories.plist */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
@@ -36,8 +42,6 @@
 		69C3CEB8141A7B8800549213 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB7141A7B8800549213 /* SettingsViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
 		69C3CECD141A7EB400549213 /* TransactionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */; };
-		69C3CED0141A812B00549213 /* Pig.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECE141A812B00549213 /* Pig.png */; };
-		69C3CED1141A812B00549213 /* Pig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3CECF141A812B00549213 /* Pig@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,8 +80,14 @@
 		6993473C141C0050004DFEF1 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
 		6993473F141C19F7004DFEF1 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
-		69934741141C361C004DFEF1 /* AddLoan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddLoan.png; sourceTree = "<group>"; };
-		69934742141C361C004DFEF1 /* AddLoan.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddLoan.psd; sourceTree = "<group>"; };
+		6993474A141C36C9004DFEF1 /* Pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pig.png; sourceTree = "<group>"; };
+		6993474B141C36C9004DFEF1 /* Pig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pig@2x.png"; sourceTree = "<group>"; };
+		6993474E141C3821004DFEF1 /* AddLoan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddLoan.png; sourceTree = "<group>"; };
+		69934752141C39D6004DFEF1 /* People.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = People.png; sourceTree = "<group>"; };
+		69934753141C39D6004DFEF1 /* People@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "People@2x.png"; sourceTree = "<group>"; };
+		69934756141C3A03004DFEF1 /* AddLoan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddLoan@2x.png"; sourceTree = "<group>"; };
+		69934758141C3F3B004DFEF1 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		69934759141C3F3B004DFEF1 /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
 		69BA69BD141AD4E3008C4384 /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
@@ -93,8 +103,6 @@
 		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
 		69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionDetailsViewController.h; sourceTree = "<group>"; };
 		69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionDetailsViewController.m; sourceTree = "<group>"; };
-		69C3CECE141A812B00549213 /* Pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pig.png; sourceTree = "<group>"; };
-		69C3CECF141A812B00549213 /* Pig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pig@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,8 +212,12 @@
 		69934745141C362C004DFEF1 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				69934741141C361C004DFEF1 /* AddLoan.png */,
-				69934742141C361C004DFEF1 /* AddLoan.psd */,
+				6993474E141C3821004DFEF1 /* AddLoan.png */,
+				69934756141C3A03004DFEF1 /* AddLoan@2x.png */,
+				69934752141C39D6004DFEF1 /* People.png */,
+				69934753141C39D6004DFEF1 /* People@2x.png */,
+				69934758141C3F3B004DFEF1 /* Settings.png */,
+				69934759141C3F3B004DFEF1 /* Settings@2x.png */,
 			);
 			name = "Tab Bar";
 			sourceTree = "<group>";
@@ -213,9 +225,9 @@
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6993474A141C36C9004DFEF1 /* Pig.png */,
+				6993474B141C36C9004DFEF1 /* Pig@2x.png */,
 				69BA69BD141AD4E3008C4384 /* Categories.plist */,
-				69C3CECE141A812B00549213 /* Pig.png */,
-				69C3CECF141A812B00549213 /* Pig@2x.png */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -278,13 +290,13 @@
 			name = "Add Loan";
 			sourceTree = "<group>";
 		};
-		69C3CEC1141A7BF600549213 /* Details */ = {
+		69C3CEC1141A7BF600549213 /* Transaction Details */ = {
 			isa = PBXGroup;
 			children = (
 				69C3CECB141A7EB400549213 /* TransactionDetailsViewController.h */,
 				69C3CECC141A7EB400549213 /* TransactionDetailsViewController.m */,
 			);
-			name = Details;
+			name = "Transaction Details";
 			sourceTree = "<group>";
 		};
 		69C3CED9141A880900549213 /* Resources */ = {
@@ -314,7 +326,7 @@
 				69C3CEB1141A7B5000549213 /* People */,
 				69C3CEB5141A7B6A00549213 /* History */,
 				69C3CEB9141A7B8C00549213 /* Settings */,
-				69C3CEC1141A7BF600549213 /* Details */,
+				69C3CEC1141A7BF600549213 /* Transaction Details */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -392,11 +404,15 @@
 			files = (
 				6941FF7F141A6D6B00FB3A24 /* InfoPlist.strings in Resources */,
 				6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */,
-				69C3CED0141A812B00549213 /* Pig.png in Resources */,
-				69C3CED1141A812B00549213 /* Pig@2x.png in Resources */,
 				69BA69BE141AD4E3008C4384 /* Categories.plist in Resources */,
-				69934743141C361C004DFEF1 /* AddLoan.png in Resources */,
-				69934744141C361C004DFEF1 /* AddLoan.psd in Resources */,
+				6993474C141C36C9004DFEF1 /* Pig.png in Resources */,
+				6993474D141C36C9004DFEF1 /* Pig@2x.png in Resources */,
+				69934750141C3821004DFEF1 /* AddLoan.png in Resources */,
+				69934754141C39D6004DFEF1 /* People.png in Resources */,
+				69934755141C39D6004DFEF1 /* People@2x.png in Resources */,
+				69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */,
+				6993475A141C3F3B004DFEF1 /* Settings.png in Resources */,
+				6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

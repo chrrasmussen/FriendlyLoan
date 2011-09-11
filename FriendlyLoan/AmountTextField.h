@@ -19,4 +19,7 @@
 
 @interface AmountTextField : UITextField
 
+@property (nonatomic, strong) UIBarButtonItem *borrowBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *lendBarButtonItem;
+
 @end

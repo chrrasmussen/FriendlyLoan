@@ -175,7 +175,6 @@
     }
 }
 
-
 #pragma mark - Core Data stack
 
 - (NSManagedObjectContext *)managedObjectContext

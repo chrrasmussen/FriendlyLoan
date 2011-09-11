@@ -51,7 +51,6 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-//    [self performSelector:@selector(presentAddLoanViewController) withObject:nil afterDelay:0.0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -78,12 +77,6 @@
         } 
     }
 }
-
-//- (void)presentAddLoanViewController
-//{
-//    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-//    [tabBarController performSegueWithIdentifier:@"StartupSegue" sender:self];
-//}
 
 #pragma mark - Core Data stack
 
