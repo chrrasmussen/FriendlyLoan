@@ -7,10 +7,12 @@
 //
 
 #import "Transaction+Custom.h"
+#import <AddressBook/AddressBook.h>
 
 @implementation Transaction (Custom)
 
 // TODO: Change the outputted format
+// TODO: Also check timezone for output + Substitute with fuzzy time
 - (NSString *)historySectionName
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -30,6 +32,24 @@
 //    NSString *formattedDateString = [formatter stringFromDate:date];
 //    
 //    return formattedDateString;  
+}
+
++ (NSString *)personNameForId:(int)personId
+{
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, personId);
+    
+    if (personRef != NULL)
+        return (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef);
+    
+    return nil;
+}
+
+- (NSString *)personName
+{
+    int personId = [self.personId intValue];
+    
+    return [Transaction personNameForId:personId];
 }
 
 @end

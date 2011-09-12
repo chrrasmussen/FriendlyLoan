@@ -12,4 +12,7 @@
 
 - (NSString *)historySectionName;
 
++ (NSString *)personNameForId:(int)personId;
+- (NSString *)personName;
+
 @end

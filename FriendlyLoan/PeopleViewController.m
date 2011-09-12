@@ -9,13 +9,14 @@
 #import "PeopleViewController.h"
 
 #import "HistoryViewController.h"
-
+#import "Models.h"
 
 @interface PeopleViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
+
 
 @implementation PeopleViewController
 
@@ -61,6 +62,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.fetchedResultsController performFetch:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -88,17 +91,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"SummaryCell";
+    static NSString *CellIdentifier = @"PersonCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
@@ -192,30 +196,35 @@
         return __fetchedResultsController;
     }
     
-    /*
-     Set up the fetched results controller.
-     */
-    // Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
     
-    // Set the batch size to a suitable number.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
     
-    // Edit the sort key as appropriate.
-    //    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
+//    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
-    
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:nil];//@"History"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSPropertyDescription *personProperty = [[entity propertiesByName] objectForKey:@"personId"];
+    
+    NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
+    NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
+    [debtProperty setName:@"debt"];
+    [debtProperty setExpression:sumOfAmount];
+    [debtProperty setExpressionResultType:NSDecimalAttributeType];
+    
+    NSArray *fetchProperties = [NSArray arrayWithObjects:personProperty, debtProperty, nil];
+    NSArray *groupByProperties = [NSArray arrayWithObject:personProperty];
+    
+    [fetchRequest setPropertiesToFetch:fetchProperties];
+    [fetchRequest setPropertiesToGroupBy:groupByProperties];
+    [fetchRequest setResultType:NSDictionaryResultType];
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultsController.delegate = self;
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])
@@ -232,62 +241,68 @@
     return __fetchedResultsController;
 }    
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView *tableView = self.tableView;
-    
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tableView beginUpdates];
+//}
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+//{
+//    switch(type)
+//    {
+//        case NSFetchedResultsChangeInsert:
+//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+//{
+//    UITableView *tableView = self.tableView;
+//    
+//    switch(type)
+//    {
+//        case NSFetchedResultsChangeInsert:
+//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeUpdate:
+//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            break;
+//            
+//        case NSFetchedResultsChangeMove:
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tableView endUpdates];
+//}
 
 #pragma mark - Private methods
 
 // TODO: Localize
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *fetchedResult = [self.fetchedResultsController objectAtIndexPath:indexPath];
 //    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    
+    
+    NSNumber *personId = [fetchedResult objectForKey:@"personId"];
+    NSDecimalNumber *debt = [fetchedResult objectForKey:@"debt"];
+    
+    cell.textLabel.text = [Transaction personNameForId:[personId intValue]];
+    cell.detailTextLabel.text = [debt description];
 //    BOOL lent = [transaction.lent boolValue];
 //    NSString *lentText = (lent) ? @"Lent" : @"Borrowed";
 //    NSString *lentPrepositionText = (lent) ? @"To" : @"From";
@@ -298,36 +313,5 @@
 //    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
 //    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
 }
-
-//+(NSNumber *)aggregateOperation:(NSString *)function onAttribute:(NSString *)attributeName withPredicate:(NSPredicate *)predicate inManagedObjectContext:(NSManagedObjectContext *)context
-//{
-//    NSExpression *ex = [NSExpression expressionForFunction:function 
-//                                                 arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:attributeName]]];
-//    
-//    NSExpressionDescription *ed = [[NSExpressionDescription alloc] init];
-//    [ed setName:@"result"];
-//    [ed setExpression:ex];
-//    [ed setExpressionResultType:NSInteger64AttributeType];
-//    
-//    NSArray *properties = [NSArray arrayWithObject:ed];
-//    [ed release];
-//    
-//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-//    [request setPropertiesToFetch:properties];
-//    [request setResultType:NSDictionaryResultType];
-//    
-//    if (predicate != nil)
-//        [request setPredicate:predicate];
-//    
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:[self className] 
-//                                              inManagedObjectContext:context];
-//    [request setEntity:entity];
-//    
-//    NSArray *results = [context executeFetchRequest:request error:nil];
-//    NSDictionary *resultsDictionary = [results objectAtIndex:0];
-//    NSNumber *resultValue = [resultsDictionary objectForKey:@"result"];
-//    return resultValue;
-//    
-//}
 
 @end

@@ -8,9 +8,9 @@
 
 #import "AddLoanViewController.h"
 
-#import "CategoriesViewController.h"
 #import "TransactionDetailsViewController.h"
-#import "Transaction.h"
+#import "CategoriesViewController.h"
+#import "Models.h"
 
 
 // FIXME: Special case when lent status is undecided
@@ -34,16 +34,19 @@ enum {
 
 @end
 
+
 @implementation AddLoanViewController {
-    NSInteger lentStatus;
-    BOOL awaitingSave;
+    ABRecordRef _selectedPerson;
+    NSInteger _selectedCategory;
+    
+    NSInteger _lentStatus;
+    BOOL _awaitingSave;
 }
 
-@synthesize personId, personName; // FIXME: Temp
-@synthesize person, category;
 @synthesize editTransaction;
 @synthesize saveBarButtonItem;
-@synthesize amountDescriptionLabel, amountTextField, personDescriptionLabel, personValueLabel;
+@synthesize amountDescriptionLabel, amountTextField;
+@synthesize personDescriptionLabel, personValueLabel;
 @synthesize noteTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -51,7 +54,7 @@ enum {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        lentStatus = kLentStatusUndecided;
+        _lentStatus = kLentStatusUndecided;
         
         NSLog(@"Init'd");
     }
@@ -78,6 +81,7 @@ enum {
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
 //    ABAddressBookRef addressBook = ABAddressBookCreate();
 //    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);
+////    (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson)
 //    NSLog(@"%08x %08x", record, NULL);
 //    if (record != NULL)
 //        NSLog(@"Test:%@", ABRecordCopyCompositeName(record));
@@ -103,12 +107,6 @@ enum {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    if (isViewControllerLoaded == NO)
-//    {
-//        [self.amountTextField becomeFirstResponder];
-//        isViewControllerLoaded = YES;
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -144,7 +142,7 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 1)
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:1 inSection:0]])
         [self showPeoplePickerController];
 }
 
@@ -230,16 +228,16 @@ enum {
 
 - (void)updateLentStatus:(NSInteger)theLentStatus
 {
-    lentStatus = theLentStatus;
+    _lentStatus = theLentStatus;
     
     // Update GUI
-    if (lentStatus == kLentStatusBorrow)
+    if (_lentStatus == kLentStatusBorrow)
     {
         self.amountDescriptionLabel.text = NSLocalizedString(@"Borrow", nil);
         self.personDescriptionLabel.text = NSLocalizedString(@"From", nil);
         self.amountTextField.textColor = [UIColor colorWithHue:0.0 saturation:1.0 brightness:0.8 alpha:1.0];
     }
-    else if (lentStatus == kLentStatusLend)
+    else if (_lentStatus == kLentStatusLend)
     {
         self.amountDescriptionLabel.text = NSLocalizedString(@"Lend", nil);
         self.personDescriptionLabel.text = NSLocalizedString(@"To", nil);
@@ -249,16 +247,16 @@ enum {
 
 - (void)updateSelectedPerson:(ABRecordRef)theSelectedPerson
 {
-    self.personId = (int)ABRecordGetRecordID(theSelectedPerson);
-    self.personName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson);
+    _selectedPerson = theSelectedPerson;
     
     // Update GUI
-    self.personValueLabel.text = self.personName;
+    NSString *fullName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson);
+    self.personValueLabel.text = fullName;
 }
 
 - (void)validateAmountAndPersonToEnableSave
 {
-    self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && self.personName != nil);
+    self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && _selectedPerson > 0);
 }
 
 - (void)hideKeyboard
@@ -279,20 +277,22 @@ enum {
 // TODO: Fix geolocation and category
 - (Transaction *)addTransaction
 {
+    // TODO: Check if there already exist a user with the particular record id
+    // Otherwise create a new
+    int recordId = (int)ABRecordGetRecordID(_selectedPerson);
+    
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
+    BOOL lent = (_lentStatus == kLentStatusLend) ? YES : NO;
+    transaction.lent = [NSNumber numberWithBool:lent];
     transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountTextField.text];
-    transaction.lent = [NSNumber numberWithBool:((lentStatus == kLentStatusLend) ? YES : NO)];
-    
-    transaction.personId = [NSNumber numberWithInt:self.personId];
-    transaction.personName = self.personName;
-    
+    transaction.personId = [NSNumber numberWithInt:recordId];
+        
+    transaction.category = [NSNumber numberWithInt:_selectedCategory];
     transaction.note = self.noteTextField.text;
     
-    transaction.category = [NSNumber numberWithInt:self.category];
-    
     transaction.timeStamp = [NSDate date];
-    transaction.location = @"Current Location";
+    transaction.location = @"Current Location"; // TODO: Fix
     
     // Save the context.
     NSError *error = nil;
@@ -317,10 +317,12 @@ enum {
     if ([self.navigationController.viewControllers count] >= 2)
     {
         AddLoanViewController *blankAddLoanViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddLoanViewController"];
-        NSArray *viewControllers = [NSArray arrayWithObjects:blankAddLoanViewController, self, self.navigationController.topViewController, nil];
+        NSArray *viewControllers = [NSArray arrayWithObjects:blankAddLoanViewController, self, self.navigationController.visibleViewController, nil];
         [self.navigationController setViewControllers:viewControllers];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
+
+
 
 @end

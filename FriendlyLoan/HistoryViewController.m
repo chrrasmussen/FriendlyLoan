@@ -9,7 +9,7 @@
 #import "HistoryViewController.h"
 
 #import "TransactionDetailsViewController.h"
-#import "Transaction+Custom.h"
+#import "Models.h"
 
 @interface HistoryViewController ()
 
@@ -191,11 +191,25 @@
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
+    // FIXME: Temporary disabled cache
+    NSString *cacheName = nil;// @"HistoryCache";
+    
+    int recordIdTemp = 2; // FIXME: Temp
+    if (NO) // TODO: Check if recordId/Person * is set in this view controller
+    {
+        // Add a predicate to the fetch request
+        NSNumber *recordId = [NSNumber numberWithInt:recordIdTemp];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personId == %@", recordId];
+        [fetchRequest setPredicate:predicate];
+        
+        // Use a specific cache
+        cacheName = [NSString stringWithFormat:@"personId%@Cache", recordId];
+    }
+    
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:nil];//@"History"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController.delegate = self;
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])

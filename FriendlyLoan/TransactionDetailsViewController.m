@@ -8,7 +8,7 @@
 
 #import "TransactionDetailsViewController.h"
 
-#import "Transaction.h"
+#import "Models.h"
 
 
 @interface TransactionDetailsViewController ()
