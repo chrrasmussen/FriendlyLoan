@@ -15,6 +15,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+- (void)setUpFetchedResultsController;
+- (void)performFetch;
+
 @end
 
 
@@ -63,7 +66,9 @@
 {
     [super viewWillAppear:animated];
     
-    [self.fetchedResultsController performFetch:nil];
+    // Refresh result
+	[self performFetch];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -111,61 +116,11 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return NSLocalizedString(@"Remove Debt", @"Delete confirmation button in Summary");
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 #pragma mark - Storyboard
@@ -174,8 +129,12 @@
 {
     if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
     {
+        NSDictionary *result = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        NSNumber *personId = [result objectForKey:@"personId"];
+        
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = @"John's History";
+        historyViewController.title = [Transaction personNameForId:[personId intValue]];
+        historyViewController.personId = [personId intValue];
     }
 }
 
@@ -183,8 +142,8 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    id delegate = [[UIApplication sharedApplication] delegate];
-    return [delegate managedObjectContext];
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate managedObjectContext];
 }
 
 #pragma mark - Fetched results controller
@@ -196,13 +155,36 @@
         return __fetchedResultsController;
     }
     
+    [self setUpFetchedResultsController];
+    [self performFetch];
+    
+    return __fetchedResultsController;
+}    
+
+#pragma mark - Private methods
+
+// TODO: Localize
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *fetchedResult = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSNumber *personId = [fetchedResult objectForKey:@"personId"];
+    NSDecimalNumber *debt = [fetchedResult objectForKey:@"debt"];
+    
+    cell.textLabel.text = [Transaction personNameForId:[personId intValue]];
+    cell.detailTextLabel.text = [debt description];
+}
+
+- (void)setUpFetchedResultsController
+{
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
     
-//    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
+    //    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -225,8 +207,11 @@
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     self.fetchedResultsController.delegate = self;
-    
-	NSError *error = nil;
+}
+
+- (void)performFetch
+{
+    NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])
     {
 	    /*
@@ -237,81 +222,6 @@
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-    
-    return __fetchedResultsController;
-}    
-
-//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-//{
-//    [self.tableView beginUpdates];
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-//{
-//    switch(type)
-//    {
-//        case NSFetchedResultsChangeInsert:
-//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//            
-//        case NSFetchedResultsChangeDelete:
-//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//    }
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-//{
-//    UITableView *tableView = self.tableView;
-//    
-//    switch(type)
-//    {
-//        case NSFetchedResultsChangeInsert:
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//            
-//        case NSFetchedResultsChangeDelete:
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//            
-//        case NSFetchedResultsChangeUpdate:
-//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-//            break;
-//            
-//        case NSFetchedResultsChangeMove:
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//    }
-//}
-//
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//{
-//    [self.tableView endUpdates];
-//}
-
-#pragma mark - Private methods
-
-// TODO: Localize
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary *fetchedResult = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    NSNumber *personId = [fetchedResult objectForKey:@"personId"];
-    NSDecimalNumber *debt = [fetchedResult objectForKey:@"debt"];
-    
-    cell.textLabel.text = [Transaction personNameForId:[personId intValue]];
-    cell.detailTextLabel.text = [debt description];
-//    BOOL lent = [transaction.lent boolValue];
-//    NSString *lentText = (lent) ? @"Lent" : @"Borrowed";
-//    NSString *lentPrepositionText = (lent) ? @"To" : @"From";
-//    
-//    NSString *personText = transaction.person.name;
-//    NSString *amountText = [transaction.amount stringValue];
-//    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
 }
 
 @end

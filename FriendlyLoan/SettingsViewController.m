@@ -61,8 +61,8 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    id delegate = [[UIApplication sharedApplication] delegate];
-    return [delegate managedObjectContext];
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate managedObjectContext];
 }
 
 @end

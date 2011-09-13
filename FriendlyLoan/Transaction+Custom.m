@@ -8,6 +8,7 @@
 
 #import "Transaction+Custom.h"
 #import <AddressBook/AddressBook.h>
+#import "NSDecimalNumber+RIOAdditions.h"
 
 @implementation Transaction (Custom)
 
@@ -50,6 +51,16 @@
     int personId = [self.personId intValue];
     
     return [Transaction personNameForId:personId];
+}
+
+- (BOOL)lent
+{
+    return ([self.amount isNegative] == NO);
+}
+
+- (NSDecimalNumber *)absoluteAmount
+{
+    return (self.lent == YES) ? self.amount: [self.amount decimalNumberByNegating];
 }
 
 @end

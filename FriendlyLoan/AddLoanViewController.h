@@ -10,10 +10,11 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 #import "AmountTextField.h"
+#import "DetailsViewControllerDelegate.h"
 
-@class Transaction, AmountTextField;
+@class Transaction;
 
-@interface AddLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, AmountTextFieldDelegate>
+@interface AddLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, AmountTextFieldDelegate, DetailsViewControllerDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 

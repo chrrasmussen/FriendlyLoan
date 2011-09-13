@@ -8,12 +8,15 @@
 
 #import "HistoryViewController.h"
 
-#import "TransactionDetailsViewController.h"
+#import "DetailsViewController.h"
 #import "Models.h"
 
 @interface HistoryViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
+- (void)setUpFetchedResultsController;
+- (void)performFetch;
 
 @end
 
@@ -21,6 +24,7 @@
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize personId;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -151,7 +155,7 @@
     {
         Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
-        TransactionDetailsViewController *transactionDetailsViewController = [segue destinationViewController];
+        DetailsViewController *transactionDetailsViewController = [segue destinationViewController];
         transactionDetailsViewController.transaction = transaction;
     }
 }
@@ -160,8 +164,8 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    id delegate = [[UIApplication sharedApplication] delegate];
-    return [delegate managedObjectContext];
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate managedObjectContext];
 }
 
 #pragma mark - Fetched results controller
@@ -173,55 +177,8 @@
         return __fetchedResultsController;
     }
     
-    /*
-     Set up the fetched results controller.
-     */
-    // Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // FIXME: Temporary disabled cache
-    NSString *cacheName = nil;// @"HistoryCache";
-    
-    int recordIdTemp = 2; // FIXME: Temp
-    if (NO) // TODO: Check if recordId/Person * is set in this view controller
-    {
-        // Add a predicate to the fetch request
-        NSNumber *recordId = [NSNumber numberWithInt:recordIdTemp];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personId == %@", recordId];
-        [fetchRequest setPredicate:predicate];
-        
-        // Use a specific cache
-        cacheName = [NSString stringWithFormat:@"personId%@Cache", recordId];
-    }
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
-    self.fetchedResultsController.delegate = self;
-    
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error])
-    {
-	    /*
-	     Replace this implementation with code to handle the error appropriately.
-         
-	     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-	     */
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
+    [self setUpFetchedResultsController];
+    [self performFetch];
     
     return __fetchedResultsController;
 }    
@@ -284,15 +241,69 @@
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    BOOL lent = [transaction.lent boolValue];
-    NSString *lentText = (lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    NSString *lentPrepositionText = (lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+    NSString *lentText = (transaction.lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+    NSString *lentPrepositionText = (transaction.lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
     NSString *personText = transaction.personName;
     NSString *amountText = [transaction.amount stringValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ $%@", lentText, amountText];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
+}
+
+- (void)setUpFetchedResultsController
+{
+    /*
+     Set up the fetched results controller.
+     */
+    // Create the fetch request for the entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // FIXME: Temporary disabled cache
+    NSString *cacheName = nil;// @"HistoryCache";
+    
+    if (personId > 0) // TODO: Check if recordId/Person * is set in this view controller
+    {
+        // Add a predicate to the fetch request
+        NSNumber *personIdNumber = [NSNumber numberWithInt:personId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personId == %@", personIdNumber];
+        [fetchRequest setPredicate:predicate];
+        
+        // Use a specific cache
+        cacheName = [NSString stringWithFormat:@"personId%@Cache", personIdNumber];
+    }
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController.delegate = self;
+}
+
+- (void)performFetch
+{
+    NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error])
+    {
+	    /*
+	     Replace this implementation with code to handle the error appropriately.
+         
+	     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+	     */
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
 }
 
 @end

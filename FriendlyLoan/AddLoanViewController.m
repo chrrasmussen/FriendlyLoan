@@ -8,7 +8,7 @@
 
 #import "AddLoanViewController.h"
 
-#import "TransactionDetailsViewController.h"
+#import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 #import "Models.h"
 
@@ -23,20 +23,22 @@ enum {
 
 @interface AddLoanViewController ()
 
-- (void)updateSelectedPerson:(ABRecordRef)person;
+- (void)updateSelectedPersonId:(int)personId;
 - (void)updateLentStatus:(NSInteger)lent;
 - (void)validateAmountAndPersonToEnableSave;
 - (void)hideKeyboard;
 - (void)showPeoplePickerController;
 
 - (Transaction *)addTransaction;
-- (void)resetViewController;
+
+- (void)detailsViewControllerAdd:(id)sender;
+- (void)popToBlankViewControllerAnimated:(BOOL)animated;
 
 @end
 
 
 @implementation AddLoanViewController {
-    ABRecordRef _selectedPerson;
+    int _selectedPersonId;
     NSInteger _selectedCategory;
     
     NSInteger _lentStatus;
@@ -48,18 +50,6 @@ enum {
 @synthesize amountDescriptionLabel, amountTextField;
 @synthesize personDescriptionLabel, personValueLabel;
 @synthesize noteTextField;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-        _lentStatus = kLentStatusUndecided;
-        
-        NSLog(@"Init'd");
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -75,7 +65,11 @@ enum {
 {
     [super viewDidLoad];
     
-    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type
+    // Set default values
+    _lentStatus = kLentStatusUndecided;
+    
+    // Set correct keyboard type
+    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type in Interface Builder
     
     // FIXME: Sync problems WILL arise
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
@@ -180,8 +174,9 @@ enum {
     {
         Transaction *transaction = [self addTransaction];
         
-        TransactionDetailsViewController *transactionDetailsViewController = [segue destinationViewController];
-        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(resetViewController)];
+        DetailsViewController *transactionDetailsViewController = [segue destinationViewController];
+        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
+        transactionDetailsViewController.delegate = self;
         transactionDetailsViewController.transaction = transaction;
     }
     else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
@@ -194,8 +189,8 @@ enum {
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    id delegate = [[UIApplication sharedApplication] delegate];
-    return [delegate managedObjectContext];
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate managedObjectContext];
 }
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate methods
@@ -203,7 +198,8 @@ enum {
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)thePerson
 {
-    [self updateSelectedPerson:thePerson];
+    int personId = (int)ABRecordGetRecordID(thePerson);
+    [self updateSelectedPersonId:personId];
     
     [self validateAmountAndPersonToEnableSave];
     
@@ -224,8 +220,16 @@ enum {
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark - DetailsViewControllerDelegate methods
+
+- (void)detailsViewControllerDidDisappear:(DetailsViewController *)detailsViewController
+{
+    [self popToBlankViewControllerAnimated:NO];
+}
+
 #pragma mark - Private methods
 
+// TODO: Move colors to a more appropriate place?
 - (void)updateLentStatus:(NSInteger)theLentStatus
 {
     _lentStatus = theLentStatus;
@@ -245,18 +249,17 @@ enum {
     }
 }
 
-- (void)updateSelectedPerson:(ABRecordRef)theSelectedPerson
+- (void)updateSelectedPersonId:(int)personId
 {
-    _selectedPerson = theSelectedPerson;
+    _selectedPersonId = personId;
     
     // Update GUI
-    NSString *fullName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson);
-    self.personValueLabel.text = fullName;
+    self.personValueLabel.text = [Transaction personNameForId:personId];
 }
 
 - (void)validateAmountAndPersonToEnableSave
 {
-    self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && _selectedPerson > 0);
+    self.saveBarButtonItem.enabled = (self.amountTextField.text.length > 0 && _selectedPersonId > 0);
 }
 
 - (void)hideKeyboard
@@ -277,22 +280,20 @@ enum {
 // TODO: Fix geolocation and category
 - (Transaction *)addTransaction
 {
-    // TODO: Check if there already exist a user with the particular record id
-    // Otherwise create a new
-    int recordId = (int)ABRecordGetRecordID(_selectedPerson);
+    // TODO: Check if Borrow or Lend is selected
+    NSLog(@"%d", _lentStatus);
     
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
-    BOOL lent = (_lentStatus == kLentStatusLend) ? YES : NO;
-    transaction.lent = [NSNumber numberWithBool:lent];
-    transaction.amount = [NSDecimalNumber decimalNumberWithString:self.amountTextField.text];
-    transaction.personId = [NSNumber numberWithInt:recordId];
+    NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
+    transaction.amount = (_lentStatus == kLentStatusLend) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    transaction.personId = [NSNumber numberWithInt:_selectedPersonId];
         
     transaction.category = [NSNumber numberWithInt:_selectedCategory];
     transaction.note = self.noteTextField.text;
     
     transaction.timeStamp = [NSDate date];
-    transaction.location = @"Current Location"; // TODO: Fix
+    transaction.location = @"Current Location";
     
     // Save the context.
     NSError *error = nil;
@@ -312,14 +313,19 @@ enum {
     return transaction;
 }
 
-- (void)resetViewController
+- (void)detailsViewControllerAdd:(id)sender
+{
+    [self popToBlankViewControllerAnimated:YES];
+}
+
+- (void)popToBlankViewControllerAnimated:(BOOL)animated
 {
     if ([self.navigationController.viewControllers count] >= 2)
     {
         AddLoanViewController *blankAddLoanViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddLoanViewController"];
         NSArray *viewControllers = [NSArray arrayWithObjects:blankAddLoanViewController, self, self.navigationController.visibleViewController, nil];
         [self.navigationController setViewControllers:viewControllers];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:animated];
     }
 }
 

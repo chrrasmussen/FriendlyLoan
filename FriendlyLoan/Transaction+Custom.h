@@ -15,4 +15,7 @@
 + (NSString *)personNameForId:(int)personId;
 - (NSString *)personName;
 
+- (BOOL)lent;
+- (NSDecimalNumber *)absoluteAmount;
+
 @end
