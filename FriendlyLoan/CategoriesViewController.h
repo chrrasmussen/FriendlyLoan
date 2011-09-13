@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol CategoriesViewControllerDelegate;
+
 @interface CategoriesViewController : UITableViewController
+
+@property (nonatomic, weak) id<CategoriesViewControllerDelegate> delegate;
 
 @end

@@ -2,14 +2,12 @@
 //  SettingsViewController.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 09.09.11.
+//  Created by Christian Rasmussen on 14.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController
-
-@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+@interface SettingsViewController : UITableViewController
 
 @end

@@ -174,14 +174,17 @@ enum {
     {
         Transaction *transaction = [self addTransaction];
         
-        DetailsViewController *transactionDetailsViewController = [segue destinationViewController];
-        transactionDetailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
-        transactionDetailsViewController.delegate = self;
-        transactionDetailsViewController.transaction = transaction;
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
+        detailsViewController.delegate = self;
+        detailsViewController.transaction = transaction;
     }
     else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
     {
         [self hideKeyboard];
+        
+        CategoriesViewController *categoriesViewController = [segue destinationViewController];
+        categoriesViewController.delegate = self;
     }
 }
 
@@ -282,6 +285,10 @@ enum {
 {
     // TODO: Check if Borrow or Lend is selected
     NSLog(@"%d", _lentStatus);
+    if (_lentStatus == kLentStatusUndecided)
+    {
+        [TestFlight passCheckpoint:@"LENT_STATUS_UNDECICED"];
+    }
     
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     

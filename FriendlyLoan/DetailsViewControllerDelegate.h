@@ -13,6 +13,6 @@
 @protocol DetailsViewControllerDelegate <NSObject>
 
 @optional
-- (void)detailsViewControllerDidDisappear:(DetailsViewController *)detailsViewController;
+- (void)detailsViewControllerDidDisappear:(DetailsViewController *)dvc;
 
 @end

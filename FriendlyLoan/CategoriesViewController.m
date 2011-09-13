@@ -7,9 +7,12 @@
 //
 
 #import "CategoriesViewController.h"
+#import "CategoriesViewControllerDelegate.h"
 
 
 @implementation CategoriesViewController
+
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -85,6 +88,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    NSLog(@"%@", indexPath);
 }
 
 @end
