@@ -18,7 +18,7 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"d MMMM yyyy"];
-    NSString *formattedDateString = [formatter stringFromDate:self.timeStamp];
+    NSString *formattedDateString = [formatter stringFromDate:self.createdTimeStamp];
     
     return formattedDateString;
 //    NSString *rawDateString = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
@@ -35,10 +35,21 @@
 //    return formattedDateString;  
 }
 
-+ (NSString *)personNameForId:(int)personId
++ (NSString *)personNameForID:(int)personID
 {
+    // FIXME: Sync problems WILL arise
+    // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
+    //    ABAddressBookRef addressBook = ABAddressBookCreate();
+    //    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);
+    ////    (__bridge_transfer NSString *)ABRecordCopyCompositeName(theSelectedPerson)
+    //    NSLog(@"%08x %08x", record, NULL);
+    //    if (record != NULL)
+    //        NSLog(@"Test:%@", ABRecordCopyCompositeName(record));
+    //    
+    //    CFArrayRef array = ABAddressBookCopyPeopleWithName(addressBook, @"b c");
+    //    NSLog(@"%@", array);
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, personId);
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, personID);
     
     if (personRef != NULL)
         return (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef);
@@ -48,9 +59,9 @@
 
 - (NSString *)personName
 {
-    int personId = [self.personId intValue];
+    int personID = [self.personID intValue];
     
-    return [Transaction personNameForId:personId];
+    return [Transaction personNameForID:personID];
 }
 
 - (BOOL)lent

@@ -24,7 +24,7 @@
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize personId;
+@synthesize personID;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -266,7 +266,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -274,15 +274,15 @@
     // FIXME: Temporary disabled cache
     NSString *cacheName = nil;// @"HistoryCache";
     
-    if (personId > 0) // TODO: Check if recordId/Person * is set in this view controller
+    if (personID > 0) // TODO: Check if recordID/Person * is set in this view controller
     {
         // Add a predicate to the fetch request
-        NSNumber *personIdNumber = [NSNumber numberWithInt:personId];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personId == %@", personIdNumber];
+        NSNumber *personIDNumber = [NSNumber numberWithInt:personID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID == %@", personIDNumber];
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache
-        cacheName = [NSString stringWithFormat:@"personId%@Cache", personIdNumber];
+        cacheName = [NSString stringWithFormat:@"personID%@Cache", personIDNumber];
     }
     
     // Edit the section name key path and cache name if appropriate.

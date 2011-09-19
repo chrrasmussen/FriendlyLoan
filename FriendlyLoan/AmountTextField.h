@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol AmountTextFieldDelegate <NSObject>
-
-@optional
-- (void)textFieldBorrowButtonTapped:(UITextField *)textField;
-- (void)textFieldLendButtonTapped:(UITextField *)textField;
-
-@end
+//@protocol AmountTextFieldDelegate <NSObject>
+//
+//@optional
+//- (void)textFieldBorrowButtonTapped:(UITextField *)textField;
+//- (void)textFieldLendButtonTapped:(UITextField *)textField;
+//
+//@end
 
 
 @interface AmountTextField : UITextField
 
-@property (nonatomic, strong) UIBarButtonItem *borrowBarButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *lendBarButtonItem;
+//@property (nonatomic, strong) UIBarButtonItem *borrowBarButtonItem;
+//@property (nonatomic, strong) UIBarButtonItem *lendBarButtonItem;
 
 @end

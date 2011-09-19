@@ -9,11 +9,12 @@
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="amount" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="category" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="categoryID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="changedTimeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="createdTimeStamp" attributeType="Date" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="personId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="timeStamp" attributeType="Date" syncable="YES"/>
+        <attribute name="personID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
         <element name="PersonSyncInfo" positionX="394" positionY="0" width="128" height="120"/>

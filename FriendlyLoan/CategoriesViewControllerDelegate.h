@@ -14,7 +14,7 @@
 @protocol CategoriesViewControllerDelegate <NSObject>
 
 @optional
-- (BOOL)categoriesViewController:(CategoriesViewController *)cvc willSelectCategory:(int)category;
-- (void)categoriesViewController:(CategoriesViewController *)cvc didSelectCategory:(int)category;
+- (BOOL)categoriesViewController:(CategoriesViewController *)cvc willSelectCategoryID:(int)categoryID;
+- (void)categoriesViewController:(CategoriesViewController *)cvc didSelectCategoryID:(int)categoryID;
 
 @end

@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class Transaction;
-@protocol DetailsViewControllerDelegate;
+#import "EditLoanViewControllerDelegate.h"
 
-@interface DetailsViewController : UITableViewController
+
+@class Transaction;
+
+@interface DetailsViewController : UITableViewController <EditLoanViewControllerDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-
-@property (nonatomic, weak) id<DetailsViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) Transaction *transaction;
 

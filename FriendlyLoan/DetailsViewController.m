@@ -7,21 +7,20 @@
 //
 
 #import "DetailsViewController.h"
-#import "DetailsViewControllerDelegate.h"
 
 #import "Models.h"
+#import "EditLoanViewController.h"
 
 
 @interface DetailsViewController ()
 
-- (void)updateTransactionDetails;
+- (void)updateViewInfo;
 
 @end
 
 
 @implementation DetailsViewController
 
-@synthesize delegate;
 @synthesize transaction;
 @synthesize amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, locationlabel;
 
@@ -48,13 +47,7 @@
 {
     [super viewDidLoad];
     
-    [self updateTransactionDetails];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self updateViewInfo];
 }
 
 - (void)viewDidUnload
@@ -82,9 +75,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    if ([self.delegate respondsToSelector:@selector(detailsViewControllerDidDisappear:)])
-        [self.delegate detailsViewControllerDidDisappear:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -93,86 +83,17 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
+#pragma mark - Storyboard
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//#warning Potentially incomplete method implementation.
-//    // Return the number of sections.
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//#warning Incomplete method implementation.
-//    // Return the number of rows in the section.
-//    return 0;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if ([[segue identifier] isEqualToString:@"EditSegue"])
+    {
+        UINavigationController *navigationController = [segue destinationViewController];
+        EditLoanViewController *editLoanViewController = (EditLoanViewController *)navigationController.topViewController;
+        editLoanViewController.delegate = self;
+        editLoanViewController.transaction = self.transaction;
+    }
 }
 
 #pragma mark - Core Data stack
@@ -183,16 +104,22 @@
     return [appDelegate managedObjectContext];
 }
 
+#pragma mark - EditLoanViewControllerDelegate methods
+
+- (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController
+{
+    [self updateViewInfo];
+}
 
 #pragma mark - Private methods
 
-- (void)updateTransactionDetails
+- (void)updateViewInfo
 {
     self.amountLabel.text = [transaction.amount stringValue];
     self.personLabel.text = transaction.personName;
-    self.categoryLabel.text = [transaction.category stringValue];
+    self.categoryLabel.text = [transaction.categoryID stringValue];
     self.noteLabel.text = transaction.note;
-    self.timeStampLabel.text = [transaction.timeStamp description];
+    self.timeStampLabel.text = [transaction.createdTimeStamp description];
     self.locationlabel.text = transaction.location;
 }
 

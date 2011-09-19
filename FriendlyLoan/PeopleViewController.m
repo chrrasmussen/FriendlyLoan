@@ -62,12 +62,13 @@
     // e.g. self.myOutlet = nil;
 }
 
+// TODO: Optimize the fetch? Check when context was last updated
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     // Refresh result
-	[self performFetch];
+    [self performFetch];
     [self.tableView reloadData];
 }
 
@@ -130,11 +131,11 @@
     if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
     {
         NSDictionary *result = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-        NSNumber *personId = [result objectForKey:@"personId"];
+        NSNumber *personID = [result objectForKey:@"personID"];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = [Transaction personNameForId:[personId intValue]];
-        historyViewController.personId = [personId intValue];
+        historyViewController.title = [Transaction personNameForID:[personID intValue]];
+        historyViewController.personID = [personID intValue];
     }
 }
 
@@ -167,12 +168,11 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *fetchedResult = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSNumber *personId = [fetchedResult objectForKey:@"personId"];
+    NSNumber *personID = [fetchedResult objectForKey:@"personID"];
     NSDecimalNumber *debt = [fetchedResult objectForKey:@"debt"];
     
-    cell.textLabel.text = [Transaction personNameForId:[personId intValue]];
+    cell.textLabel.text = [Transaction personNameForID:[personID intValue]];
     cell.detailTextLabel.text = [debt description];
 }
 
@@ -184,13 +184,13 @@
     [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
     
-    //    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
-    NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+//    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
+    NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     
-    NSPropertyDescription *personProperty = [[entity propertiesByName] objectForKey:@"personId"];
+    NSPropertyDescription *personIDProperty = [[entity propertiesByName] objectForKey:@"personID"];
     
     NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
     NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
@@ -198,8 +198,8 @@
     [debtProperty setExpression:sumOfAmount];
     [debtProperty setExpressionResultType:NSDecimalAttributeType];
     
-    NSArray *fetchProperties = [NSArray arrayWithObjects:personProperty, debtProperty, nil];
-    NSArray *groupByProperties = [NSArray arrayWithObject:personProperty];
+    NSArray *fetchProperties = [NSArray arrayWithObjects:personIDProperty, debtProperty, nil];
+    NSArray *groupByProperties = [NSArray arrayWithObject:personIDProperty];
     
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];

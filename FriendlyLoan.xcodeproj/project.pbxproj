@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		691F2D9B141FE528009C0722 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 691F2D9A141FE528009C0722 /* Transaction.m */; };
 		69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */; };
 		69204A96142012D600D6A075 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69204A94142012D600D6A075 /* libTestFlight.a */; };
 		69204A9A1420162500D6A075 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A991420162500D6A075 /* SettingsViewController.m */; };
@@ -25,7 +24,12 @@
 		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
 		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
+		694A59F21426B7FC000B5190 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 694A59F11426B7FC000B5190 /* Transaction.m */; };
 		69501700141D9013002D17D2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 695016FF141D9013002D17D2 /* Person.m */; };
+		695BC46C142407FE0005BD46 /* EmptyProfilePicture2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 695BC46A142407FE0005BD46 /* EmptyProfilePicture2@2x.png */; };
+		695BC46D142407FE0005BD46 /* EmptyProfilePicture2.png in Resources */ = {isa = PBXBuildFile; fileRef = 695BC46B142407FE0005BD46 /* EmptyProfilePicture2.png */; };
+		6972F0B11426AB430047305C /* EditLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B01426AB430047305C /* EditLoanViewController.m */; };
+		6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */; };
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
 		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
@@ -63,11 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		691F2D99141FE528009C0722 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		691F2D9A141FE528009C0722 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
-		69204A79141FF5E900D6A075 /* DetailsViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewControllerDelegate.h; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewControllerDelegate.h; sourceTree = "<group>"; };
 		69204A94142012D600D6A075 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		69204A95142012D600D6A075 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
@@ -91,9 +92,18 @@
 		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
 		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
+		694A59F01426B7FC000B5190 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
+		694A59F11426B7FC000B5190 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		695016FE141D9013002D17D2 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		695016FF141D9013002D17D2 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		695BC46A142407FE0005BD46 /* EmptyProfilePicture2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EmptyProfilePicture2@2x.png"; sourceTree = "<group>"; };
+		695BC46B142407FE0005BD46 /* EmptyProfilePicture2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmptyProfilePicture2.png; sourceTree = "<group>"; };
+		6972F0AF1426AB430047305C /* EditLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewController.h; sourceTree = "<group>"; };
+		6972F0B01426AB430047305C /* EditLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLoanViewController.m; sourceTree = "<group>"; };
+		6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoanViewController.h; sourceTree = "<group>"; };
+		6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoanViewController.m; sourceTree = "<group>"; };
 		697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
+		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
 		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
@@ -263,6 +273,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		694A59F31426C0D5000B5190 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */,
+				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
+				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		69934745141C362C004DFEF1 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +299,8 @@
 		69934769141C73E8004DFEF1 /* People */ = {
 			isa = PBXGroup;
 			children = (
+				695BC46A142407FE0005BD46 /* EmptyProfilePicture2@2x.png */,
+				695BC46B142407FE0005BD46 /* EmptyProfilePicture2.png */,
 				69934774141CF82B004DFEF1 /* EmptyProfilePicture.png */,
 				69934775141CF82B004DFEF1 /* EmptyProfilePicture@2x.png */,
 				69934761141C6E85004DFEF1 /* TempProfilePicture.png */,
@@ -299,8 +321,8 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				691F2D99141FE528009C0722 /* Transaction.h */,
-				691F2D9A141FE528009C0722 /* Transaction.m */,
+				694A59F01426B7FC000B5190 /* Transaction.h */,
+				694A59F11426B7FC000B5190 /* Transaction.m */,
 				695016FE141D9013002D17D2 /* Person.h */,
 				695016FF141D9013002D17D2 /* Person.m */,
 			);
@@ -346,13 +368,16 @@
 		69C3CEBD141A7BA400549213 /* Add Loan */ = {
 			isa = PBXGroup;
 			children = (
+				694A59F31426C0D5000B5190 /* Categories */,
+				6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */,
+				6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */,
 				69C3CEC8141A7EA600549213 /* AddLoanViewController.h */,
 				69C3CEC9141A7EA600549213 /* AddLoanViewController.m */,
+				698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */,
+				6972F0AF1426AB430047305C /* EditLoanViewController.h */,
+				6972F0B01426AB430047305C /* EditLoanViewController.m */,
 				69BA69C8141AF5A1008C4384 /* AmountTextField.h */,
 				69BA69C9141AF5A1008C4384 /* AmountTextField.m */,
-				69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */,
-				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
-				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
 			);
 			name = "Add Loan";
 			sourceTree = "<group>";
@@ -360,7 +385,6 @@
 		69C3CEC1141A7BF600549213 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				69204A79141FF5E900D6A075 /* DetailsViewControllerDelegate.h */,
 				69C3CECB141A7EB400549213 /* DetailsViewController.h */,
 				69C3CECC141A7EB400549213 /* DetailsViewController.m */,
 			);
@@ -487,6 +511,8 @@
 				6993476F141C7757004DFEF1 /* Todo.oo3 in Resources */,
 				69934776141CF82B004DFEF1 /* EmptyProfilePicture.png in Resources */,
 				69934777141CF82B004DFEF1 /* EmptyProfilePicture@2x.png in Resources */,
+				695BC46C142407FE0005BD46 /* EmptyProfilePicture2@2x.png in Resources */,
+				695BC46D142407FE0005BD46 /* EmptyProfilePicture2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,9 +558,11 @@
 				69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */,
 				697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */,
 				69501700141D9013002D17D2 /* Person.m in Sources */,
-				691F2D9B141FE528009C0722 /* Transaction.m in Sources */,
 				69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */,
 				69204A9A1420162500D6A075 /* SettingsViewController.m in Sources */,
+				6972F0B11426AB430047305C /* EditLoanViewController.m in Sources */,
+				6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */,
+				694A59F21426B7FC000B5190 /* Transaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

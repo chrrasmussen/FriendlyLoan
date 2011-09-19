@@ -12,7 +12,7 @@
 
 - (NSString *)historySectionName;
 
-+ (NSString *)personNameForId:(int)personId;
++ (NSString *)personNameForID:(int)personID;
 - (NSString *)personName;
 
 - (BOOL)lent;

@@ -17,7 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"App started...");
     [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
     
     // Override point for customization after application launch.

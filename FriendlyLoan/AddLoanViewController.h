@@ -7,27 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AddressBookUI/AddressBookUI.h>
+#import "AbstractLoanViewController.h"
 
-#import "AmountTextField.h"
-#import "DetailsViewControllerDelegate.h"
-#import "CategoriesViewControllerDelegate.h"
 
-@class Transaction;
+@interface AddLoanViewController : AbstractLoanViewController
 
-@interface AddLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, AmountTextFieldDelegate, DetailsViewControllerDelegate, CategoriesViewControllerDelegate>
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
 
-@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-
-@property (nonatomic, strong) Transaction *editTransaction;
-
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *saveBarButtonItem;
-@property (nonatomic, strong) IBOutlet UILabel *amountDescriptionLabel;
-@property (nonatomic, strong) IBOutlet AmountTextField *amountTextField;
-@property (nonatomic, strong) IBOutlet UILabel *personDescriptionLabel;
-@property (nonatomic, strong) IBOutlet UILabel *personValueLabel;
-@property (nonatomic, strong) IBOutlet UITextField *noteTextField;
-
-- (IBAction)save:(id)sender;
+- (IBAction)borrow:(id)sender;
+- (IBAction)lend:(id)sender;
 
 @end
