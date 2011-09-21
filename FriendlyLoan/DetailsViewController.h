@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 #import "EditLoanViewControllerDelegate.h"
 
 
 @class Transaction;
 
-@interface DetailsViewController : UITableViewController <EditLoanViewControllerDelegate>
+@interface DetailsViewController : UITableViewController <MKMapViewDelegate, EditLoanViewControllerDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
@@ -24,6 +25,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, strong) IBOutlet UILabel *noteLabel;
 @property (nonatomic, strong) IBOutlet UILabel *timeStampLabel;
-@property (nonatomic, strong) IBOutlet UILabel *locationlabel;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

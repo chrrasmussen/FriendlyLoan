@@ -20,6 +20,7 @@ enum {
 
 @interface EditLoanViewController ()
 
+- (void)editTransaction;
 - (void)updateViewInfo;
 
 @end
@@ -42,6 +43,13 @@ enum {
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
     self.saveBarButtonItem.enabled = enabled;
+}
+
+- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
+{
+    [super updateTransactionBasedOnViewInfo:theTransaction];
+    
+    theTransaction.modifiedTimeStamp = [NSDate date];
 }
 
 #pragma mark - View lifecycle
@@ -92,18 +100,14 @@ enum {
 {
     if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidCancel:)])
         [self.delegate editLoanViewControllerDidCancel:self];
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)save:(id)sender
 {
-    [self updateTransaction:self.transaction];
+    [self editTransaction];
     
     if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidSave:)])
         [self.delegate editLoanViewControllerDidSave:self];
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)changeLentStatus:(id)sender
@@ -112,6 +116,14 @@ enum {
 }
 
 #pragma mark - Private methods
+
+- (void)editTransaction
+{
+    [self updateTransactionBasedOnViewInfo:self.transaction];
+    
+    [self saveContext];
+    NSLog(@"Edited transaction!");
+}
 
 - (void)updateViewInfo
 {

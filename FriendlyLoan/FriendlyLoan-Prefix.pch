@@ -14,5 +14,4 @@
     #import <CoreData/CoreData.h>
     
     #import "TestFlight.h"
-    #import "NSDecimalNumber+RIOAdditions.h"
 #endif

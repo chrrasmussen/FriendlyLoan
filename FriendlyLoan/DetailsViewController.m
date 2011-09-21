@@ -7,13 +7,18 @@
 //
 
 #import "DetailsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #import "Models.h"
 #import "EditLoanViewController.h"
 
 
+const CLLocationDistance kMapViewLocationDistance = 500;
+
+
 @interface DetailsViewController ()
 
+- (void)clipMapView;
 - (void)updateViewInfo;
 
 @end
@@ -21,8 +26,9 @@
 
 @implementation DetailsViewController
 
+
 @synthesize transaction;
-@synthesize amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, locationlabel;
+@synthesize amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -47,11 +53,14 @@
 {
     [super viewDidLoad];
     
+    [self clipMapView];
+    
     [self updateViewInfo];
 }
 
 - (void)viewDidUnload
 {
+    [self setMapView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -106,12 +115,58 @@
 
 #pragma mark - EditLoanViewControllerDelegate methods
 
+- (void)editLoanViewControllerDidCancel:(EditLoanViewController *)editLoanViewController
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController
 {
     [self updateViewInfo];
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - UITableViewDelegate methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
+    return ([self.transaction hasLocation] == YES) ? rows : rows - 1;
 }
 
 #pragma mark - Private methods
+
+- (void)clipMapView
+{
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    
+    CGRect rect = self.mapView.bounds;
+    CGFloat radius = 9;
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, CGRectGetMinX(rect), CGRectGetMinY(rect));
+    CGPathAddArcToPoint(path, NULL, CGRectGetMinX(rect), CGRectGetMaxY(rect), CGRectGetMidX(rect), CGRectGetMaxY(rect), radius);
+    CGPathAddArcToPoint(path, NULL, CGRectGetMaxX(rect), CGRectGetMaxY(rect), CGRectGetMaxX(rect), CGRectGetMidY(rect), radius);
+    CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(rect), CGRectGetMinY(rect));
+    CGPathCloseSubpath(path);
+    maskLayer.path = path;
+    CGPathRelease(path);
+    
+    self.mapView.layer.mask = maskLayer;
+}
+
+- (void)showLocationInfo
+{
+    if ([self.transaction hasLocation] == YES)
+    {
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.transaction.coordinate, kMapViewLocationDistance, kMapViewLocationDistance);
+        MKCoordinateRegion adjustedRegion = [mapView regionThatFits:region];
+        [self.mapView setRegion:adjustedRegion animated:NO];
+        
+        [self.mapView addAnnotation:self.transaction];
+    }
+}
 
 - (void)updateViewInfo
 {
@@ -120,7 +175,8 @@
     self.categoryLabel.text = [transaction.categoryID stringValue];
     self.noteLabel.text = transaction.note;
     self.timeStampLabel.text = [transaction.createdTimeStamp description];
-    self.locationlabel.text = transaction.location;
+    
+    [self showLocationInfo];
 }
 
 @end

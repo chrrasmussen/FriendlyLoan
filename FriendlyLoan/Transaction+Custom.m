@@ -74,4 +74,20 @@
     return (self.lent == YES) ? self.amount: [self.amount decimalNumberByNegating];
 }
 
+- (BOOL)hasLocation
+{
+    return (self.createdLatitude != nil && self.createdLongitude != nil);
+}
+
+#pragma mark - MKAnnotation methods
+
+- (CLLocationCoordinate2D)coordinate
+{
+    CLLocationCoordinate2D location;
+    location.latitude = [self.createdLatitude doubleValue];
+    location.longitude = [self.createdLongitude doubleValue];
+    
+    return location;
+}
+
 @end

@@ -7,13 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "AbstractLoanViewController.h"
 
 
-@interface AddLoanViewController : AbstractLoanViewController
+@interface AddLoanViewController : AbstractLoanViewController <CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *lastKnownLocation;
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
+@property (nonatomic, strong) IBOutlet UILabel *locationLabel;
+@property (nonatomic, strong) IBOutlet UIProgressView *locationProgressView;
 
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;

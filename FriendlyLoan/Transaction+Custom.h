@@ -7,8 +7,10 @@
 //
 
 #import "Transaction.h"
+#import "MapKit/MapKit.h"
 
-@interface Transaction (Custom)
+
+@interface Transaction (Custom) <MKAnnotation>
 
 - (NSString *)historySectionName;
 
@@ -17,5 +19,7 @@
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
+
+- (BOOL)hasLocation;
 
 @end

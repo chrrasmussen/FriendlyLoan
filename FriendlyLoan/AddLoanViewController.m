@@ -7,13 +7,19 @@
 //
 
 #import "AddLoanViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 #import "Models.h"
 
 
+const CLLocationDistance kDistanceFilter = 500;
+
+
 @interface AddLoanViewController ()
+
+- (void)startUpdatingLocation;
 
 - (Transaction *)addTransaction;
 
@@ -25,7 +31,8 @@
 
 @implementation AddLoanViewController
 
-@synthesize borrowBarButtonItem, lendBarButtonItem;
+@synthesize locationManager, lastKnownLocation;
+@synthesize borrowBarButtonItem, lendBarButtonItem, locationLabel, locationProgressView;
 
 - (void)didReceiveMemoryWarning
 {
@@ -39,6 +46,20 @@
 {
     self.borrowBarButtonItem.enabled = enabled;
     self.lendBarButtonItem.enabled = enabled;
+}
+
+- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTansaction
+{
+    [super updateTransactionBasedOnViewInfo:theTansaction];
+    
+    theTansaction.createdTimeStamp = [NSDate date];
+    
+    if (self.lastKnownLocation != nil)
+    {
+        CLLocationCoordinate2D location = self.lastKnownLocation.coordinate;
+        theTansaction.createdLatitude = [NSNumber numberWithDouble:location.latitude];
+        theTansaction.createdLongitude = [NSNumber numberWithDouble:location.longitude];
+    }
 }
 
 #pragma mark - View lifecycle
@@ -63,6 +84,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self startUpdatingLocation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -73,6 +96,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -97,7 +122,7 @@
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
-#pragma mark - Storyboard
+#pragma mark - Storyboard methods
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -110,23 +135,51 @@
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
         detailsViewController.transaction = transaction;
-    } 
+    }
 }
 
-#pragma mark - DetailsViewControllerDelegate methods
+#pragma mark - CLLocationManagerDelegate methods
 
-- (void)detailsViewControllerDidDisappear:(DetailsViewController *)detailsViewController
+// FIXME: Update method
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [self popToBlankViewControllerAnimated:NO];
+    // If it's a relatively recent event, turn off updates to save power
+    NSDate* eventDate = newLocation.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    if (abs(howRecent) < 15.0)
+    {
+        self.lastKnownLocation = newLocation;
+        NSLog(@"Delegated:%@", newLocation);
+    }
+    // else skip the event and process the next one.
 }
 
 #pragma mark - Private methods
+
+- (void)startUpdatingLocation
+{
+    if ([CLLocationManager locationServicesEnabled] == YES)
+    {
+        if (self.locationManager == nil)
+            self.locationManager = [[CLLocationManager alloc] init];
+        
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = kDistanceFilter;
+        
+        [self.locationManager startUpdatingLocation];
+        
+        NSLog(@"Initial:%@", self.locationManager.location);
+    }
+}
 
 - (Transaction *)addTransaction
 {
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
-    [self updateTransaction:transaction];
+    [self updateTransactionBasedOnViewInfo:transaction];
+    
+    [self saveContext];
     NSLog(@"Transaction added!");
     
     return transaction;

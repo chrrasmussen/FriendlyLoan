@@ -28,7 +28,6 @@
 @property (nonatomic, strong) IBOutlet UITextField *noteTextField;
 
 - (void)saveContext;
-- (void)updateTransaction:(Transaction *)transaction;
 
 - (void)updateSelectedPersonID:(int)personID;
 - (void)updateSelectedCategoryID:(int)categoryID;
@@ -39,5 +38,6 @@
 
 // Override methods
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
+- (void)updateTransactionBasedOnViewInfo:(Transaction *)transaction;
 
 @end

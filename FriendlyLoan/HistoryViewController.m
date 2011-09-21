@@ -247,7 +247,7 @@
     NSString *personText = transaction.personName;
     NSString *amountText = [transaction.amount stringValue];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ $%@", lentText, amountText];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
 }
 

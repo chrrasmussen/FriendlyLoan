@@ -2,7 +2,7 @@
 //  Transaction.m
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 19.09.11.
+//  Created by Christian Rasmussen on 20.09.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
@@ -13,10 +13,11 @@
 
 @dynamic amount;
 @dynamic categoryID;
-@dynamic location;
+@dynamic modifiedTimeStamp;
+@dynamic createdTimeStamp;
 @dynamic note;
 @dynamic personID;
-@dynamic createdTimeStamp;
-@dynamic changedTimeStamp;
+@dynamic createdLatitude;
+@dynamic createdLongitude;
 
 @end

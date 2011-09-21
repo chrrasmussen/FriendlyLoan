@@ -8,6 +8,7 @@
 
 #import "AbstractLoanViewController.h"
 
+#import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 #import "Models.h"
@@ -24,21 +25,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)updateTransaction:(Transaction *)transaction
-{
-    NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    transaction.amount = (self.lent == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    transaction.personID = [NSNumber numberWithInt:self.selectedPersonID];
-    
-    transaction.categoryID = [NSNumber numberWithInt:self.selectedCategoryID];
-    transaction.note = self.noteTextField.text;
-    
-    transaction.createdTimeStamp = [NSDate date];
-    transaction.location = @"Current Location";
-    
-    [self saveContext];
 }
 
 - (void)updateSelectedPersonID:(int)personID
@@ -98,13 +84,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self validateAmountAndPerson];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self validateAmountAndPerson];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -127,7 +113,17 @@
 
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
-    // Override
+
+}
+
+- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
+{
+    NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
+    theTransaction.amount = (self.lent == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    theTransaction.personID = [NSNumber numberWithInt:self.selectedPersonID];
+    
+    theTransaction.categoryID = [NSNumber numberWithInt:self.selectedCategoryID];
+    theTransaction.note = self.noteTextField.text;
 }
 
 #pragma mark - Actions

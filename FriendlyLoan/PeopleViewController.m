@@ -47,7 +47,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    // Hide search bar as default
+    self.tableView.contentOffset = CGPointMake(0.0, self.tableView.tableHeaderView.bounds.size.height);
+     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -180,8 +183,7 @@
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
     [fetchRequest setFetchBatchSize:20];
     
 //    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
@@ -191,6 +193,7 @@
     
     
     NSPropertyDescription *personIDProperty = [[entity propertiesByName] objectForKey:@"personID"];
+//    NSExpressionDescriptionDetesterty = [NSExpressionDesc expressionForConstantValue:@dpersonID"];
     
     NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
     NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
@@ -204,6 +207,9 @@
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
     [fetchRequest setResultType:NSDictionaryResultType];
+    
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"@sum != 0"];
+//    [fetchRequest setPredicate:predicate];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     self.fetchedResultsController.delegate = self;
