@@ -35,7 +35,7 @@
 //    return formattedDateString;  
 }
 
-+ (NSString *)personNameForID:(int)personID
++ (NSString *)friendNameForID:(int)friendID
 {
     // FIXME: Sync problems WILL arise
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
@@ -49,7 +49,7 @@
     //    CFArrayRef array = ABAddressBookCopyPeopleWithName(addressBook, @"b c");
     //    NSLog(@"%@", array);
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, personID);
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, friendID);
     
     if (personRef != NULL)
         return (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef);
@@ -57,11 +57,11 @@
     return nil;
 }
 
-- (NSString *)personName
+- (NSString *)friendName
 {
-    int personID = [self.personID intValue];
+    int friendID = [self.friendID intValue];
     
-    return [Transaction personNameForID:personID];
+    return [Transaction friendNameForID:friendID];
 }
 
 - (BOOL)lent

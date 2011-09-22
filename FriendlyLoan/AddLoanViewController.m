@@ -13,8 +13,13 @@
 #import "CategoriesViewController.h"
 #import "Models.h"
 
-
+// Constants
 const CLLocationDistance kDistanceFilter = 500;
+enum {
+    kMainSection = 0,
+    kAdditionalSection,
+    kLocationSection
+};
 
 
 @interface AddLoanViewController ()
@@ -32,7 +37,7 @@ const CLLocationDistance kDistanceFilter = 500;
 @implementation AddLoanViewController
 
 @synthesize locationManager, lastKnownLocation;
-@synthesize borrowBarButtonItem, lendBarButtonItem, locationLabel, locationProgressView;
+@synthesize borrowBarButtonItem, lendBarButtonItem, locationSwitch;
 
 - (void)didReceiveMemoryWarning
 {
@@ -136,6 +141,13 @@ const CLLocationDistance kDistanceFilter = 500;
         detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
         detailsViewController.transaction = transaction;
     }
+}
+
+#pragma mark - UIScrollViewDelegate methods
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self hideKeyboard];
 }
 
 #pragma mark - CLLocationManagerDelegate methods

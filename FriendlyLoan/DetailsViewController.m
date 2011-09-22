@@ -28,7 +28,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 
 @synthesize transaction;
-@synthesize amountLabel, personLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
+@synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -161,8 +161,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     if ([self.transaction hasLocation] == YES)
     {
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.transaction.coordinate, kMapViewLocationDistance, kMapViewLocationDistance);
-        MKCoordinateRegion adjustedRegion = [mapView regionThatFits:region];
-        [self.mapView setRegion:adjustedRegion animated:NO];
+        [self.mapView setRegion:region animated:NO];
         
         [self.mapView addAnnotation:self.transaction];
     }
@@ -171,7 +170,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)updateViewInfo
 {
     self.amountLabel.text = [transaction.amount stringValue];
-    self.personLabel.text = transaction.personName;
+    self.friendLabel.text = transaction.friendName;
     self.categoryLabel.text = [transaction.categoryID stringValue];
     self.noteLabel.text = transaction.note;
     self.timeStampLabel.text = [transaction.createdTimeStamp description];

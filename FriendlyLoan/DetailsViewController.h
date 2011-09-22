@@ -21,7 +21,7 @@
 @property (nonatomic, strong) Transaction *transaction;
 
 @property (nonatomic, strong) IBOutlet UILabel *amountLabel;
-@property (nonatomic, strong) IBOutlet UILabel *personLabel;
+@property (nonatomic, strong) IBOutlet UILabel *friendLabel;
 @property (nonatomic, strong) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, strong) IBOutlet UILabel *noteLabel;
 @property (nonatomic, strong) IBOutlet UILabel *timeStampLabel;

@@ -7,4 +7,3 @@
 //
 
 #import "Transaction+Custom.h"
-#import "Person.h"

@@ -14,8 +14,8 @@
 
 - (NSString *)historySectionName;
 
-+ (NSString *)personNameForID:(int)personID;
-- (NSString *)personName;
++ (NSString *)friendNameForID:(int)friendID;
+- (NSString *)friendName;
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;

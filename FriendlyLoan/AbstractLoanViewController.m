@@ -16,8 +16,8 @@
 
 @implementation AbstractLoanViewController
 
-@synthesize lent, selectedPersonID, selectedCategoryID;
-@synthesize amountTextField, personValueLabel, categoryValueLabel, noteTextField;
+@synthesize lent, selectedFriendID, selectedCategoryID;
+@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField;
 
 - (void)didReceiveMemoryWarning
 {
@@ -27,12 +27,12 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)updateSelectedPersonID:(int)personID
+- (void)updateSelectedFriendID:(int)friendID
 {
-    self.selectedPersonID = personID;
+    self.selectedFriendID = friendID;
     
     // Update GUI
-    self.personValueLabel.text = [Transaction personNameForID:personID];
+    self.friendValueLabel.text = [Transaction friendNameForID:friendID];
 }
 
 - (void)updateSelectedCategoryID:(int)categoryID
@@ -45,8 +45,7 @@
 
 - (void)hideKeyboard
 {
-    [self.amountTextField resignFirstResponder];
-    [self.noteTextField resignFirstResponder];
+    [self.tableView endEditing:YES];
 }
 
 - (void)showPeoplePickerController
@@ -58,9 +57,9 @@
 	[self presentModalViewController:picker animated:YES];
 }
 
-- (void)validateAmountAndPerson
+- (void)validateAmountAndFriend
 {
-    BOOL enabled = (self.amountTextField.text.length > 0 && self.selectedPersonID > 0);
+    BOOL enabled = (self.amountTextField.text.length > 0 && self.selectedFriendID > 0);
     [self setSaveButtonsEnabledState:enabled];
 }
 
@@ -85,7 +84,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self validateAmountAndPerson];
+    [self validateAmountAndFriend];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -120,7 +119,7 @@
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lent == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    theTransaction.personID = [NSNumber numberWithInt:self.selectedPersonID];
+    theTransaction.friendID = [NSNumber numberWithInt:self.selectedFriendID];
     
     theTransaction.categoryID = [NSNumber numberWithInt:self.selectedCategoryID];
     theTransaction.note = self.noteTextField.text;
@@ -130,7 +129,7 @@
 
 - (IBAction)amountTextFieldDidChange:(id)sender
 {
-    [self validateAmountAndPerson];
+    [self validateAmountAndFriend];
 }
 
 #pragma mark - Storyboard methods
@@ -185,10 +184,10 @@
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)thePerson
 {
-    int personID = (int)ABRecordGetRecordID(thePerson);
-    [self updateSelectedPersonID:personID];
+    int friendID = (int)ABRecordGetRecordID(thePerson);
+    [self updateSelectedFriendID:friendID];
     
-    [self validateAmountAndPerson];
+    [self validateAmountAndFriend];
     
     [self dismissModalViewControllerAnimated:YES];
     

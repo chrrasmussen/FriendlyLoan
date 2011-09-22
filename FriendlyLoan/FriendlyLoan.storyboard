@@ -71,8 +71,8 @@
         <scene sceneID="7B2-Ln-Hh1">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FSj-Ww-T5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="AddLoan" id="YJ1-O7-h4f" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="People" image="People.png" id="Bgt-93-F4a"/>
+                <navigationController storyboardIdentifier="" id="YJ1-O7-h4f" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Friends" image="Friends.png" id="Bgt-93-F4a"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Y5G-qC-aDj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -133,8 +133,8 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Person" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hz5-yb-sWJ">
-                                                    <rect key="frame" x="10" y="11" width="58" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Friend" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hz5-yb-sWJ">
+                                                    <rect key="frame" x="10" y="11" width="52" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -265,9 +265,9 @@
                     <connections>
                         <outlet property="amountTextField" destination="9eV-FI-Hds" id="x5f-Oe-L2M"/>
                         <outlet property="categoryValueLabel" destination="eJl-4G-Cnb" id="HZh-vr-0lf"/>
+                        <outlet property="friendValueLabel" destination="yEt-fp-XOO" id="Vr3-5o-YRl"/>
                         <outlet property="lentSegmentedControl" destination="8d1-r6-Tk5" id="y8J-ad-aw1"/>
                         <outlet property="noteTextField" destination="MrZ-B7-VA0" id="HPe-dn-RaH"/>
-                        <outlet property="personValueLabel" destination="yEt-fp-XOO" id="f7i-ee-l9O"/>
                         <outlet property="saveBarButtonItem" destination="XOo-WE-kgT" id="609-7m-Mva"/>
                     </connections>
                 </tableViewController>
@@ -277,7 +277,7 @@
         <scene sceneID="cP2-rl-03g">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zex-ml-Q8E" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController storyboardIdentifier="PeopleViewController" id="Ngg-i8-xMb" customClass="PeopleViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FriendsViewController" id="Ngg-i8-xMb" customClass="FriendsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zn7-dG-vTA">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -291,7 +291,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PersonCell" textLabel="zOw-h5-1Zm" detailTextLabel="Mv7-DS-Jsa" imageView="jiy-pp-aLN" style="IBUITableViewCellStyleValue1" id="5Pb-yU-ICP">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FriendCell" textLabel="zOw-h5-1Zm" detailTextLabel="Mv7-DS-Jsa" imageView="jiy-pp-aLN" style="IBUITableViewCellStyleValue1" id="5Pb-yU-ICP">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -329,7 +329,7 @@
                             <outlet property="delegate" destination="Ngg-i8-xMb" id="ChC-Xc-rN0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="People" id="i7u-Cf-cEz"/>
+                    <navigationItem key="navigationItem" title="Friends" id="i7u-Cf-cEz"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="A70-z1-VOB" id="yvu-TC-9G2"/>
                     </connections>
@@ -390,7 +390,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Person" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WHK-ra-HnS">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Friend" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WHK-ra-HnS">
                                                     <rect key="frame" x="10" y="15" width="67" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
@@ -524,9 +524,9 @@
                     <connections>
                         <outlet property="amountLabel" destination="5Ts-RK-jeL" id="0ke-pL-Xcm"/>
                         <outlet property="categoryLabel" destination="sMR-n4-CFx" id="MYz-Ne-ZYh"/>
+                        <outlet property="friendLabel" destination="Wjl-BY-7O6" id="n48-xT-Dgh"/>
                         <outlet property="mapView" destination="gBf-Co-r0S" id="Azg-US-6JK"/>
                         <outlet property="noteLabel" destination="NDa-bi-pdX" id="ZQO-Gc-4sJ"/>
-                        <outlet property="personLabel" destination="Wjl-BY-7O6" id="uTm-yA-fst"/>
                         <outlet property="timeStampLabel" destination="fTL-uQ-L5l" id="iMN-mY-4Ot"/>
                     </connections>
                 </tableViewController>
@@ -580,8 +580,8 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Person" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hpn-pt-zu6">
-                                                    <rect key="frame" x="10" y="11" width="58" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Friend" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hpn-pt-zu6">
+                                                    <rect key="frame" x="10" y="11" width="52" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -659,7 +659,7 @@
                             <tableViewSection id="ExS-iG-vKe">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uLy-G7-nKl">
-                                        <rect key="frame" x="0.0" y="230" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="230" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -676,29 +676,6 @@
                                                     <rect key="frame" x="211" y="8" width="79" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </switch>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aQv-LH-dz1">
-                                        <rect key="frame" x="0.0" y="275" width="320" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Locating..." lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="FJn-av-6aV">
-                                                    <rect key="frame" x="10" y="11" width="281" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="Wob-WK-U6V">
-                                                    <rect key="frame" x="271" y="11" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -728,9 +705,10 @@
                         <outlet property="amountTextField" destination="jAi-bu-cqX" id="aLO-AP-uy3"/>
                         <outlet property="borrowBarButtonItem" destination="gzN-y3-pBq" id="mas-8B-WRZ"/>
                         <outlet property="categoryValueLabel" destination="nxA-Iv-ttf" id="lM8-h0-Ozq"/>
+                        <outlet property="friendValueLabel" destination="99g-uw-5h9" id="6Iv-V9-UJt"/>
                         <outlet property="lendBarButtonItem" destination="18V-BQ-6fg" id="jS3-BF-T1u"/>
+                        <outlet property="locationSwitch" destination="BBI-uZ-2p1" id="tFR-VQ-lCm"/>
                         <outlet property="noteTextField" destination="jGV-bV-u9f" id="g8q-5l-k8r"/>
-                        <outlet property="personValueLabel" destination="99g-uw-5h9" id="alf-Et-Vel"/>
                         <segue destination="h0t-py-3wA" kind="push" identifier="SaveSegue" id="wgt-lv-gQO"/>
                     </connections>
                 </tableViewController>
@@ -742,7 +720,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tZ-Ao-Uuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Rk5-tN-10S" customClass="CategoriesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="6dl-57-123">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -958,7 +936,7 @@
     <resources>
         <image name="AddLoan.png" width="30" height="30"/>
         <image name="EmptyProfilePicture2.png" width="43" height="43"/>
-        <image name="People.png" width="30" height="30"/>
+        <image name="Friends.png" width="30" height="30"/>
         <image name="Pig.png" width="36" height="36"/>
         <image name="Settings.png" width="30" height="30"/>
     </resources>
@@ -968,8 +946,8 @@
             <relationships>
                 <relationship kind="outlet" name="amountTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="categoryValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="friendValueLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="noteTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="personValueLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="AddLoanViewController" superclassName="AbstractLoanViewController">
@@ -979,8 +957,7 @@
                 <relationship kind="action" name="lend:"/>
                 <relationship kind="outlet" name="borrowBarButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="lendBarButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="locationProgressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="locationSwitch" candidateClass="UISwitch"/>
             </relationships>
         </class>
         <class className="AmountTextField" superclassName="UITextField">
@@ -994,9 +971,9 @@
             <relationships>
                 <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="friendLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="noteLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="personLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timeStampLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -1010,11 +987,11 @@
                 <relationship kind="outlet" name="saveBarButtonItem" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
+        <class className="FriendsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+        </class>
         <class className="HistoryViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HistoryViewController.h"/>
-        </class>
-        <class className="PeopleViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PeopleViewController.h"/>
         </class>
         <class className="SettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
@@ -1026,8 +1003,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wgt-lv-gQO"/>
-        <segue reference="XXf-nL-Jqx"/>
         <segue reference="4Ju-4p-2Le"/>
+        <segue reference="wgt-lv-gQO"/>
+        <segue reference="cOG-mC-NaJ"/>
     </inferredMetricsTieBreakers>
 </document>

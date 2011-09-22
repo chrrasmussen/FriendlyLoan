@@ -24,7 +24,7 @@
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize personID;
+@synthesize friendID;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -244,11 +244,11 @@
     NSString *lentText = (transaction.lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
     NSString *lentPrepositionText = (transaction.lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
-    NSString *personText = transaction.personName;
+    NSString *friendText = transaction.friendName;
     NSString *amountText = [transaction.amount stringValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, personText];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, friendText];
 }
 
 - (void)setUpFetchedResultsController
@@ -274,15 +274,15 @@
     // FIXME: Temporary disabled cache
     NSString *cacheName = nil;// @"HistoryCache";
     
-    if (personID > 0) // TODO: Check if recordID/Person * is set in this view controller
+    if (self.friendID > 0) // TODO: Check if recordID/Friend * is set in this view controller
     {
         // Add a predicate to the fetch request
-        NSNumber *personIDNumber = [NSNumber numberWithInt:personID];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID == %@", personIDNumber];
+        NSNumber *friendIDNumber = [NSNumber numberWithInt:self.friendID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", friendIDNumber];
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache
-        cacheName = [NSString stringWithFormat:@"personID%@Cache", personIDNumber];
+        cacheName = [NSString stringWithFormat:@"friendID%@Cache", friendIDNumber];
     }
     
     // Edit the section name key path and cache name if appropriate.

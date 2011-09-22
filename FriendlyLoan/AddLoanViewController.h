@@ -18,8 +18,7 @@
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
-@property (nonatomic, strong) IBOutlet UILabel *locationLabel;
-@property (nonatomic, strong) IBOutlet UIProgressView *locationProgressView;
+@property (nonatomic, strong) IBOutlet UISwitch *locationSwitch;
 
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
