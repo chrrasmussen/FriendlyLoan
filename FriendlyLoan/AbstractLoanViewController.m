@@ -11,13 +11,17 @@
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
+#import "Category.h"
 #import "Models.h"
+
+
+const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
 
 
 @implementation AbstractLoanViewController
 
-@synthesize lent, selectedFriendID, selectedCategoryID;
-@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField;
+@synthesize lentState, selectedFriendID, selectedCategoryID;
+@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField, friendCell;
 
 - (void)didReceiveMemoryWarning
 {
@@ -32,15 +36,23 @@
     self.selectedFriendID = friendID;
     
     // Update GUI
-    self.friendValueLabel.text = [Transaction friendNameForID:friendID];
+    NSString *friendName = [Transaction friendNameForID:friendID];
+    if (friendName == nil)
+        friendName = NSLocalizedString(@"None", nil);
+    
+    self.friendValueLabel.text = friendName;
 }
 
-- (void)updateSelectedCategoryID:(int)categoryID
+- (void)updateSelectedCategoryID:(NSNumber *)categoryID
 {
     self.selectedCategoryID = categoryID;
     
     // Update GUI
-    self.categoryValueLabel.text = [NSString stringWithFormat:@"#%d", categoryID];
+    Category *category = [Category categoryForCategoryID:categoryID];
+    if (category == nil)
+        category = [Category unknownCategory];
+    
+    self.categoryValueLabel.text = category.categoryName;
 }
 
 - (void)hideKeyboard
@@ -54,7 +66,7 @@
     
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
-	[self presentModalViewController:picker animated:YES];
+	[self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (void)validateAmountAndFriend
@@ -71,6 +83,9 @@
     
     // Set correct keyboard type
 //    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type in Interface Builder
+    
+    // Reset fields
+    [self resetFields];
 }
 
 - (void)viewDidUnload
@@ -118,11 +133,20 @@
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    theTransaction.amount = (self.lent == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     theTransaction.friendID = [NSNumber numberWithInt:self.selectedFriendID];
     
-    theTransaction.categoryID = [NSNumber numberWithInt:self.selectedCategoryID];
+    theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;
+}
+
+- (void)resetFields
+{
+    self.amountTextField.text = @"";
+    [self updateSelectedFriendID:0];
+    
+    [self updateSelectedCategoryID:[NSNumber numberWithInt:kDefaultCategoryID]];
+    self.noteTextField.text = @"";
 }
 
 #pragma mark - Actions
@@ -144,6 +168,7 @@
         
         CategoriesViewController *categoriesViewController = [segue destinationViewController];
         categoriesViewController.delegate = self;
+        categoriesViewController.selectedCategoryID = self.selectedCategoryID;
     }
 }
 
@@ -151,7 +176,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:1 inSection:0]])
+    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+    if (selectedCell == self.friendCell)
         [self showPeoplePickerController];
 }
 
@@ -179,6 +205,15 @@
     [appDelegate saveContext];
 }
 
+#pragma mark - CategoriesViewControllerDelegate methods
+
+- (void)categoriesViewController:(CategoriesViewController *)categoriesViewController didSelectCategoryID:(NSNumber *)categoryID
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self updateSelectedCategoryID:categoryID];
+}
+
 #pragma mark - ABPeoplePickerNavigationControllerDelegate methods
 
 // Displays the information of a selected person
@@ -189,7 +224,7 @@
     
     [self validateAmountAndFriend];
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
     
 	return NO;
 }
@@ -203,7 +238,7 @@
 // Dismisses the people picker and shows the application when users tap Cancel
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
 {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

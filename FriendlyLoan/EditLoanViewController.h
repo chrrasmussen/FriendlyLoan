@@ -23,6 +23,6 @@
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
-- (IBAction)changeLentStatus:(id)sender;
+- (IBAction)changeLentState:(id)sender;
 
 @end

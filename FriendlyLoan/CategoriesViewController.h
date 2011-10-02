@@ -15,4 +15,6 @@
 
 @property (nonatomic, weak) id<CategoriesViewControllerDelegate> delegate;
 
+@property (nonatomic, strong) NSNumber *selectedCategoryID;
+
 @end

@@ -110,9 +110,9 @@ enum {
         [self.delegate editLoanViewControllerDidSave:self];
 }
 
-- (IBAction)changeLentStatus:(id)sender
+- (IBAction)changeLentState:(id)sender
 {
-    self.lent = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
+    self.lentState = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
 }
 
 #pragma mark - Private methods
@@ -128,13 +128,13 @@ enum {
 - (void)updateViewInfo
 {
     // Update internal state
-    self.lent = self.transaction.lent;
+    self.lentState = self.transaction.lent;
     [self updateSelectedFriendID:[self.transaction.friendID intValue]];
-    [self updateSelectedCategoryID:[self.transaction.categoryID intValue]];
+    [self updateSelectedCategoryID:self.transaction.categoryID];
     
     // Update GUI
     self.amountTextField.text = [self.transaction.absoluteAmount stringValue];
-    self.lentSegmentedControl.selectedSegmentIndex = (self.lent == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
+    self.lentSegmentedControl.selectedSegmentIndex = (self.lentState == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
     self.noteTextField.text = self.transaction.note;
 }
 

@@ -11,12 +11,18 @@
 #import "HistoryViewController.h"
 #import "Models.h"
 
+
+NSString * const kResultFriendID    = @"friendID";
+NSString * const kResultFriendName  = @"friendName";
+NSString * const kResultDebt        = @"debt";
+
 @interface FriendsViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)setUpFetchedResultsController;
 - (void)performFetch;
+- (void)cleanAndSortFetchedResult;
 
 @end
 
@@ -24,6 +30,7 @@
 @implementation FriendsViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize sortedResult;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -100,19 +107,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [self.sortedResult count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"FriendCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *cellIdentifier = @"FriendCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
@@ -120,11 +126,11 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate methods
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NSLocalizedString(@"Remove Debt", @"Delete confirmation button in Summary");
+    return NSLocalizedString(@"Clear Debt", @"Delete confirmation button in Summary");
 }
 
 #pragma mark - Storyboard
@@ -134,7 +140,7 @@
     if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
     {
         NSDictionary *result = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
-        NSNumber *friendID = [result objectForKey:@"friendID"];
+        NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
         historyViewController.title = [Transaction friendNameForID:[friendID intValue]];
@@ -163,20 +169,27 @@
     [self performFetch];
     
     return __fetchedResultsController;
-}    
+}
 
 #pragma mark - Private methods
 
-// TODO: Localize
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *fetchedResult = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSDictionary *fetchedResult = [self.sortedResult objectAtIndex:indexPath.row];
     
-    NSNumber *friendID = [fetchedResult objectForKey:@"friendID"];
-    NSDecimalNumber *debt = [fetchedResult objectForKey:@"debt"];
+//    NSNumber *friendID = [fetchedResult objectForKey:kResultFriendID];
+    NSString *friendName = [fetchedResult objectForKey:kResultFriendName];
+    NSDecimalNumber *debt = [fetchedResult objectForKey:kResultDebt];
     
-    cell.textLabel.text = [Transaction friendNameForID:[friendID intValue]];
+    // TODO: Get picture for friendID
+    
+    cell.textLabel.text = friendName;
     cell.detailTextLabel.text = [debt description];
+    
+    if ([debt compare:[NSDecimalNumber zero]] == NSOrderedDescending)
+        cell.detailTextLabel.textColor = [UIColor colorWithHue:(120.0/360.0) saturation:1.0 brightness:0.8 alpha:1.0];
+    else
+        cell.detailTextLabel.textColor = [UIColor colorWithHue:(0.0/360.0) saturation:1.0 brightness:0.8 alpha:1.0];
 }
 
 - (void)setUpFetchedResultsController
@@ -186,32 +199,30 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
     [fetchRequest setFetchBatchSize:20];
     
-//    NSSortDescriptor *sectionNameSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionName" ascending:NO];
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     
-    NSPropertyDescription *friendIDProperty = [[entity propertiesByName] objectForKey:@"friendID"];
+    NSPropertyDescription *friendIDProperty = [[entity propertiesByName] objectForKey:kResultFriendID];
     
     NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
     NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
-    [debtProperty setName:@"debt"];
+    [debtProperty setName:kResultDebt];
     [debtProperty setExpression:sumOfAmount];
     [debtProperty setExpressionResultType:NSDecimalAttributeType];
+    
+//    NSPredicate *havingPredicate = [NSPredicate predicateWithFormat:@"%K != 0", kResultDebt];
     
     NSArray *fetchProperties = [NSArray arrayWithObjects:friendIDProperty, debtProperty, nil];
     NSArray *groupByProperties = [NSArray arrayWithObject:friendIDProperty];
     
+    [fetchRequest setResultType:NSDictionaryResultType];
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
-    [fetchRequest setResultType:NSDictionaryResultType];
+//    [fetchRequest setHavingPredicate:havingPredicate];
     
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"@sum != 0"];
-//    [fetchRequest setPredicate:predicate];
-    
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    self.fetchedResultsController.delegate = self;
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"FriendsCache"];
 }
 
 - (void)performFetch
@@ -227,6 +238,37 @@
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
+    
+    [self cleanAndSortFetchedResult];
+}
+
+- (void)cleanAndSortFetchedResult
+{
+    // Add another field to the result
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *friendObject in self.fetchedResultsController.fetchedObjects)
+    {
+        // Skip friends with no debt
+        NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
+        if ([debt compare:[NSDecimalNumber zero]] == NSOrderedSame)
+            continue;
+        
+        // Add friend name
+        NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
+        
+        NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
+        [updatedFriendObject setValue:[Transaction friendNameForID:[friendID intValue]] forKey:kResultFriendName];
+        
+        // Add friend to result
+        [result addObject:updatedFriendObject];
+    }
+    
+    // Sort result
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kResultDebt ascending:NO];
+    [result sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    self.sortedResult = [result copy];
 }
 
 @end

@@ -10,6 +10,7 @@
 
 #import "DetailsViewController.h"
 #import "Models.h"
+#import "Category.h"
 
 @interface HistoryViewController ()
 
@@ -241,14 +242,20 @@
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    Category *category = [Category categoryForCategoryID:transaction.categoryID];
+    UIImage *image = [UIImage imageNamed:category.imageName];
+    UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
+    
     NSString *lentText = (transaction.lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
     NSString *lentPrepositionText = (transaction.lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
     NSString *friendText = transaction.friendName;
-    NSString *amountText = [transaction.amount stringValue];
+    NSString *amountText = [transaction.absoluteAmount stringValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, friendText];
+    cell.imageView.image = image;
+    cell.imageView.highlightedImage = highlightedImage;
 }
 
 - (void)setUpFetchedResultsController
@@ -271,10 +278,10 @@
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    // FIXME: Temporary disabled cache
-    NSString *cacheName = nil;// @"HistoryCache";
+    // TODO: Temporary disabled cache
+    NSString *cacheName = @"HistoryCache";
     
-    if (self.friendID > 0) // TODO: Check if recordID/Friend * is set in this view controller
+    if (self.friendID > 0)
     {
         // Add a predicate to the fetch request
         NSNumber *friendIDNumber = [NSNumber numberWithInt:self.friendID];
@@ -282,7 +289,7 @@
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache
-        cacheName = [NSString stringWithFormat:@"friendID%@Cache", friendIDNumber];
+        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", friendIDNumber];
     }
     
     // Edit the section name key path and cache name if appropriate.

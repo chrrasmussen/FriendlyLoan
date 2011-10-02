@@ -37,7 +37,7 @@
 
 + (NSString *)friendNameForID:(int)friendID
 {
-    // FIXME: Sync problems WILL arise
+    // TODO: Sync problems WILL arise
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
     //    ABAddressBookRef addressBook = ABAddressBookCreate();
     //    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);

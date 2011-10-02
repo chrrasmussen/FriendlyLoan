@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsViewController : UITableViewController <NSFetchedResultsControllerDelegate>;
+@class FriendsSearchResultsController;
+
+@interface FriendsViewController : UITableViewController <UISearchDisplayDelegate>;
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSMutableArray *sortedResult;
 
 @end

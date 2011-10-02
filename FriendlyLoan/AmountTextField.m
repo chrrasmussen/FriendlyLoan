@@ -21,7 +21,7 @@
 
 //@synthesize borrowBarButtonItem, lendBarButtonItem;
 
-// TODO: Find the correct tint color and button width
+// TODO: Find the correct tint color and button width -- Will be replaced by another solution
 - (UIView *)inputAccessoryView
 {
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 44.0)];

@@ -18,19 +18,20 @@
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic) BOOL lent;
+@property (nonatomic) BOOL lentState;
 @property (nonatomic) int selectedFriendID;
-@property (nonatomic) int selectedCategoryID;
+@property (nonatomic, strong) NSNumber *selectedCategoryID;
 
 @property (nonatomic, strong) IBOutlet UITextField *amountTextField;
 @property (nonatomic, strong) IBOutlet UILabel *friendValueLabel;
 @property (nonatomic, strong) IBOutlet UILabel *categoryValueLabel;
 @property (nonatomic, strong) IBOutlet UITextField *noteTextField;
+@property (nonatomic, strong) IBOutlet UITableViewCell *friendCell;
 
 - (void)saveContext;
 
 - (void)updateSelectedFriendID:(int)friendID;
-- (void)updateSelectedCategoryID:(int)categoryID;
+- (void)updateSelectedCategoryID:(NSNumber *)categoryID;
 
 - (void)hideKeyboard;
 - (void)showPeoplePickerController;
@@ -39,5 +40,6 @@
 // Override methods
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)transaction;
+- (void)resetFields;
 
 @end

@@ -18,9 +18,13 @@
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
-@property (nonatomic, strong) IBOutlet UISwitch *locationSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *attachLocationSwitch;
+
+- (BOOL)attachLocationState;
+- (void)setAttachLocationState:(BOOL)theAttachLocationState;
 
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
+- (IBAction)changeAttachLocationState:(id)sender;
 
 @end

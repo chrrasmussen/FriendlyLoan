@@ -117,20 +117,21 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)editLoanViewControllerDidCancel:(EditLoanViewController *)editLoanViewController
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController
 {
     [self updateViewInfo];
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - UITableViewDelegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
     return ([self.transaction hasLocation] == YES) ? rows : rows - 1;
 }

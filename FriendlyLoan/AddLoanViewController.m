@@ -13,23 +13,18 @@
 #import "CategoriesViewController.h"
 #import "Models.h"
 
-// Constants
-const CLLocationDistance kDistanceFilter = 500;
-enum {
-    kMainSection = 0,
-    kAdditionalSection,
-    kLocationSection
-};
+
+const CLLocationDistance kDistanceFilter = 100;
 
 
 @interface AddLoanViewController ()
 
 - (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
 
 - (Transaction *)addTransaction;
 
 - (void)detailsViewControllerAdd:(id)sender;
-- (void)popToBlankViewControllerAnimated:(BOOL)animated;
 
 @end
 
@@ -37,7 +32,7 @@ enum {
 @implementation AddLoanViewController
 
 @synthesize locationManager, lastKnownLocation;
-@synthesize borrowBarButtonItem, lendBarButtonItem, locationSwitch;
+@synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch;
 
 - (void)didReceiveMemoryWarning
 {
@@ -67,6 +62,33 @@ enum {
     }
 }
 
+- (BOOL)attachLocationState
+{
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
+        return NO;
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"attachLocation"] == nil)
+        return YES;
+    
+    BOOL theAttachLocationState = [[NSUserDefaults standardUserDefaults] boolForKey:@"attachLocation"];
+    
+    return theAttachLocationState;
+}
+
+- (void)setAttachLocationState:(BOOL)theAttachLocationState
+{
+    if (theAttachLocationState == YES)
+        [self startUpdatingLocation];
+    else
+        [self stopUpdatingLocation];
+    
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
+        return;
+    
+    [[NSUserDefaults standardUserDefaults] setBool:theAttachLocationState forKey:@"attachLocation"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -84,25 +106,32 @@ enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+//    [self startUpdatingLocation];
+//    [self performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:3.0];
+    
+    // Set initial state for attach location
+    self.attachLocationSwitch.on = self.attachLocationState;
+    if (self.attachLocationState == YES)
+        [self startUpdatingLocation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self startUpdatingLocation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    if (self.attachLocationState == YES)
+        [self stopUpdatingLocation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    [self.locationManager stopUpdatingLocation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -115,16 +144,22 @@ enum {
 
 - (IBAction)borrow:(id)sender
 {
-    self.lent = NO;
+    self.lentState = NO;
     
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
 - (IBAction)lend:(id)sender
 {
-    self.lent = YES;
+    self.lentState = YES;
     
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
+}
+
+- (IBAction)changeAttachLocationState:(id)sender
+{
+    [self setAttachLocationState:self.attachLocationSwitch.on];
+    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
 }
 
 #pragma mark - Storyboard methods
@@ -143,14 +178,14 @@ enum {
     }
 }
 
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    [self hideKeyboard];
-}
-
 #pragma mark - CLLocationManagerDelegate methods
+
+// FIXME: Fix this
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSLog(@"%s %d %d", (char *)_cmd, status, [CLLocationManager locationServicesEnabled]);
+//    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
+}
 
 // FIXME: Update method
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -166,23 +201,34 @@ enum {
     // else skip the event and process the next one.
 }
 
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"%s %d %d %@", (char *)_cmd, [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled], error);
+}
+
 #pragma mark - Private methods
 
 - (void)startUpdatingLocation
 {
-    if ([CLLocationManager locationServicesEnabled] == YES)
-    {
-        if (self.locationManager == nil)
-            self.locationManager = [[CLLocationManager alloc] init];
-        
-        self.locationManager.delegate = self;
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        self.locationManager.distanceFilter = kDistanceFilter;
-        
-        [self.locationManager startUpdatingLocation];
-        
-        NSLog(@"Initial:%@", self.locationManager.location);
-    }
+    NSLog(@"%s %d %d", (char *)_cmd, [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled]);
+    
+    if (self.locationManager == nil)
+        self.locationManager = [[CLLocationManager alloc] init];
+    
+    self.locationManager.delegate = self;
+//    self.locationManager.purpose = NSLocalizedString(@"This app uses the location services to determine your location when adding a loan.", nil); // TODO: Add proper description
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = kDistanceFilter;
+    
+    NSLog(@"Starting update");
+    [self.locationManager startUpdatingLocation];
+    
+    NSLog(@"Initial:%@", self.locationManager.location);
+}
+
+- (void)stopUpdatingLocation
+{
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (Transaction *)addTransaction
@@ -199,18 +245,22 @@ enum {
 
 - (void)detailsViewControllerAdd:(id)sender
 {
-    [self popToBlankViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self resetFields];
+//    [self popToBlankViewControllerAnimated:YES];
+}
+
+- (void)resetFields
+{
+    [super resetFields];
+    
+    // TODO: Is it necessary to reset attachLocationSwitch?
 }
 
 - (void)popToBlankViewControllerAnimated:(BOOL)animated
 {
-    if ([self.navigationController.viewControllers count] >= 2)
-    {
-        AddLoanViewController *blankAddLoanViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddLoanViewController"];
-        NSArray *viewControllers = [NSArray arrayWithObjects:blankAddLoanViewController, self, self.navigationController.visibleViewController, nil];
-        [self.navigationController setViewControllers:viewControllers];
-        [self.navigationController popToRootViewControllerAnimated:animated];
-    }
+    [self.navigationController popToRootViewControllerAnimated:animated];
+    [self resetFields];
 }
 
 @end
