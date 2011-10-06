@@ -54,14 +54,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    NSLog(@"%@", indexPath);
+    // Convert index path from search display result to sorted result
+    id object = [self.searchDisplayResult objectAtIndex:indexPath.row]; 
+    NSUInteger row = [self.sortedResult indexOfObject:object];
+    NSIndexPath *sortedResultIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    // Select row in table view and perform segue
+    [self.friendsViewController.tableView selectRowAtIndexPath:sortedResultIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.friendsViewController performSegueWithIdentifier:@"FilteredHistorySegue" sender:self];
 }
 
 #pragma mark - UISearchDisplayDelegate methods

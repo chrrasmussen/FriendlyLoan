@@ -16,4 +16,6 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *sortedResult;
 
+@property (nonatomic, strong) IBOutlet FriendsSearchResultsController *friendsSearchResultsController;
+
 @end

@@ -13,7 +13,7 @@
 
 @interface FriendsSearchResultsController : UITableViewController <UISearchDisplayDelegate>
 
-@property (nonatomic, strong) IBOutlet FriendsViewController *friendsViewController;
+@property (nonatomic, weak) IBOutlet FriendsViewController *friendsViewController;
 @property (nonatomic, strong, readonly) NSArray *sortedResult;
 
 @property (nonatomic, strong) NSArray *searchDisplayResult;

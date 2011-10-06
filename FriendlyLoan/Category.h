@@ -15,6 +15,7 @@
 + (Category *)categoryForIndex:(NSUInteger)index;
 + (Category *)categoryForCategoryID:(NSNumber *)categoryID;
 
+- (BOOL)hidden;
 - (NSNumber *)categoryID;
 - (NSString *)categoryName;
 - (NSString *)imageName;

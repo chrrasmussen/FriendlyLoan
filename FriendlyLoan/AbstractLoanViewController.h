@@ -19,7 +19,7 @@
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic) BOOL lentState;
-@property (nonatomic) int selectedFriendID;
+@property (nonatomic, strong) NSNumber *selectedFriendID;
 @property (nonatomic, strong) NSNumber *selectedCategoryID;
 
 @property (nonatomic, strong) IBOutlet UITextField *amountTextField;
@@ -30,7 +30,7 @@
 
 - (void)saveContext;
 
-- (void)updateSelectedFriendID:(int)friendID;
+- (void)updateSelectedFriendID:(NSNumber *)friendID;
 - (void)updateSelectedCategoryID:(NSNumber *)categoryID;
 
 - (void)hideKeyboard;
@@ -38,6 +38,7 @@
 - (void)validateAmountAndFriend;
 
 // Override methods
+- (BOOL)hasChanges;
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)transaction;
 - (void)resetFields;

@@ -40,6 +40,14 @@ enum {
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark - Override methods
+
+// FIXME: Update
+- (BOOL)hasChanges
+{
+    return [super hasChanges];
+}
+
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
     self.saveBarButtonItem.enabled = enabled;
@@ -50,6 +58,27 @@ enum {
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
     theTransaction.modifiedTimeStamp = [NSDate date];
+}
+
+#pragma mark - Actions
+
+- (IBAction)cancel:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidCancel:)])
+        [self.delegate editLoanViewControllerDidCancel:self];
+}
+
+- (IBAction)save:(id)sender
+{
+    [self editTransaction];
+    
+    if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidSave:)])
+        [self.delegate editLoanViewControllerDidSave:self];
+}
+
+- (IBAction)changeLentState:(id)sender
+{
+    self.lentState = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
 }
 
 #pragma mark - View lifecycle
@@ -94,27 +123,6 @@ enum {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Actions
-
-- (IBAction)cancel:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidCancel:)])
-        [self.delegate editLoanViewControllerDidCancel:self];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self editTransaction];
-    
-    if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidSave:)])
-        [self.delegate editLoanViewControllerDidSave:self];
-}
-
-- (IBAction)changeLentState:(id)sender
-{
-    self.lentState = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
-}
-
 #pragma mark - Private methods
 
 - (void)editTransaction
@@ -129,7 +137,7 @@ enum {
 {
     // Update internal state
     self.lentState = self.transaction.lent;
-    [self updateSelectedFriendID:[self.transaction.friendID intValue]];
+    [self updateSelectedFriendID:self.transaction.friendID];
     [self updateSelectedCategoryID:self.transaction.categoryID];
     
     // Update GUI

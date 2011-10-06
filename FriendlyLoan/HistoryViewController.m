@@ -105,10 +105,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"HistoryCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *cellIdentifier = @"HistoryCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
@@ -237,7 +236,7 @@
 
 #pragma mark - Private methods
 
-// TODO: Add correct currency
+// TODO: Add correct currency?
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -246,54 +245,43 @@
     UIImage *image = [UIImage imageNamed:category.imageName];
     UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
     
-    NSString *lentText = (transaction.lent) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    NSString *lentPrepositionText = (transaction.lent) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
-    
     NSString *friendText = transaction.friendName;
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentText, amountText];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPrepositionText, friendText];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentDescriptionString, amountText];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentPrepositionString, friendText];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
 }
 
 - (void)setUpFetchedResultsController
 {
-    /*
-     Set up the fetched results controller.
-     */
-    // Create the fetch request for the entity.
+    // Set up the fetch request
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    // Edit the sort key as appropriate.
+    // Add sort descriptor
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    // TODO: Temporary disabled cache
+    // Set a default cache name
     NSString *cacheName = @"HistoryCache";
     
-    if (self.friendID > 0)
+    // Filter the history based on friend ID
+    if (self.friendID != nil)
     {
-        // Add a predicate to the fetch request
-        NSNumber *friendIDNumber = [NSNumber numberWithInt:self.friendID];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", friendIDNumber];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", self.friendID];
         [fetchRequest setPredicate:predicate];
         
-        // Use a specific cache
-        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", friendIDNumber];
+        // Use a specific cache name
+        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", self.friendID]; // FIXME: I think this one may cause some problems?
     }
     
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
+    // Create the fetched results controller
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
     self.fetchedResultsController.delegate = self;
 }

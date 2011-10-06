@@ -5,6 +5,8 @@
 	<key>categories</key>
 	<array>
 		<dict>
+			<key>hidden</key>
+			<false/>
 			<key>categoryID</key>
 			<integer>1</integer>
 			<key>categoryName</key>
@@ -15,6 +17,8 @@
 			<string>FoodDrinks-Highlighted</string>
 		</dict>
 		<dict>
+			<key>hidden</key>
+			<false/>
 			<key>categoryID</key>
 			<integer>2</integer>
 			<key>categoryName</key>
@@ -25,6 +29,8 @@
 			<string>Travel-Highlighted</string>
 		</dict>
 		<dict>
+			<key>hidden</key>
+			<false/>
 			<key>categoryID</key>
 			<integer>3</integer>
 			<key>categoryName</key>
@@ -35,16 +41,20 @@
 			<string>Activities-Highlighted</string>
 		</dict>
 		<dict>
+			<key>hidden</key>
+			<false/>
 			<key>categoryID</key>
 			<integer>4</integer>
 			<key>categoryName</key>
 			<string>Shopping</string>
 			<key>imageName</key>
-			<string>Groceries-Normal</string>
+			<string>Shopping-Normal</string>
 			<key>highlightedImageName</key>
-			<string>Groceries-Highlighted</string>
+			<string>Shopping-Highlighted</string>
 		</dict>
 		<dict>
+			<key>hidden</key>
+			<true/>
 			<key>categoryID</key>
 			<integer>5</integer>
 			<key>categoryName</key>
@@ -55,8 +65,10 @@
 			<string>Payback-Highlighted</string>
 		</dict>
 		<dict>
+			<key>hidden</key>
+			<false/>
 			<key>categoryID</key>
-			<integer>6</integer>
+			<integer>0</integer>
 			<key>categoryName</key>
 			<string>Other</string>
 			<key>imageName</key>

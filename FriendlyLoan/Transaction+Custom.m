@@ -12,8 +12,7 @@
 
 @implementation Transaction (Custom)
 
-// TODO: Change the outputted format
-// TODO: Also check timezone for output + Substitute with fuzzy time
+// TODO: Replace with RIORelativeTime
 - (NSString *)historySectionName
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -21,23 +20,14 @@
     NSString *formattedDateString = [formatter stringFromDate:self.createdTimeStamp];
     
     return formattedDateString;
-//    NSString *rawDateString = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
-//    
-//    // Parse raw date
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZ"];
-//    NSDate *date = [formatter dateFromString:rawDateString];
-//    
-//    // Convert date to desired format 
-//    [formatter setDateFormat:@"d MMMM yyyy"];
-//    NSString *formattedDateString = [formatter stringFromDate:date];
-//    
-//    return formattedDateString;  
 }
 
-+ (NSString *)friendNameForID:(int)friendID
+
+#pragma mark - Friend methods
+
+// TODO: Sync problems WILL arise
++ (NSString *)friendNameForFriendID:(NSNumber *)friendID
 {
-    // TODO: Sync problems WILL arise
     // Check http://mattgemmell.com/2008/10/31/iphone-dev-tips-for-synced-contacts
     //    ABAddressBookRef addressBook = ABAddressBookCreate();
     //    ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, 1);
@@ -48,8 +38,10 @@
     //    
     //    CFArrayRef array = ABAddressBookCopyPeopleWithName(addressBook, @"b c");
     //    NSLog(@"%@", array);
+    
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, friendID);
+    ABRecordID recordId = (ABRecordID)[friendID intValue];
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
     
     if (personRef != NULL)
         return (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef);
@@ -57,12 +49,26 @@
     return nil;
 }
 
+// TODO: Resize (219x219 thumbnail size) and cache images
++ (UIImage *)friendImageForFriendID:(NSNumber *)friendID
+{
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    ABRecordID recordId = (ABRecordID)[friendID intValue];
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+    
+    if (personRef != nil && ABPersonHasImageData(personRef))
+    {
+        return [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
+    }
+    return nil;
+}
+
 - (NSString *)friendName
 {
-    int friendID = [self.friendID intValue];
-    
-    return [Transaction friendNameForID:friendID];
+    return [Transaction friendNameForFriendID:self.friendID];
 }
+
+#pragma mark - Lent methods
 
 - (BOOL)lent
 {
@@ -74,13 +80,24 @@
     return (self.lent == YES) ? self.amount: [self.amount decimalNumberByNegating];
 }
 
+- (NSString *)lentDescriptionString
+{
+    return (self.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+}
+
+- (NSString *)lentPrepositionString
+{
+    return (self.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+}
+
+#pragma mark - Location methods
+
 - (BOOL)hasLocation
 {
     return (self.createdLatitude != nil && self.createdLongitude != nil);
 }
 
-#pragma mark - MKAnnotation methods
-
+// MKAnnotation methods
 - (CLLocationCoordinate2D)coordinate
 {
     CLLocationCoordinate2D location;

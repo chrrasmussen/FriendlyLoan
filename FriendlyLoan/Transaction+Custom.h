@@ -14,11 +14,14 @@
 
 - (NSString *)historySectionName;
 
-+ (NSString *)friendNameForID:(int)friendID;
++ (NSString *)friendNameForFriendID:(NSNumber *)friendID;
++ (UIImage *)friendImageForFriendID:(NSNumber *)friendID;
 - (NSString *)friendName;
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
+- (NSString *)lentDescriptionString;
+- (NSString *)lentPrepositionString;
 
 - (BOOL)hasLocation;
 

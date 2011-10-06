@@ -8,17 +8,31 @@
 
 #import "AppDelegate.h"
 
+#import "AddLoanViewController.h"
+//#import "RIORelativeTime.h"
+
+
+@interface AppDelegate ()
+
+- (void)setUpTestFlight;
+- (void)setUpTabBarController;
+
+@end
+
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+@synthesize addLoanViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
-    
+    [self setUpTestFlight];
+    [self setUpTabBarController];
+//    NSLog(@"%@", [RIORelativeTime relativeTimeForDate:[NSDate dateWithTimeIntervalSinceNow:0]]);
     // Override point for customization after application launch.
     return YES;
 }
@@ -75,6 +89,37 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
+    }
+}
+
+#pragma mark - UITabBarControllerDelegate methods
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        return;
+    
+    UINavigationController *navigationController = (UINavigationController *)viewController;
+    UIViewController *rootViewController = [navigationController.viewControllers objectAtIndex:0];
+    UIViewController *visibleViewController = navigationController.visibleViewController;
+    
+    // First tab
+    if (rootViewController == self.addLoanViewController)
+    {
+        // Add Loan View is visible
+        if (visibleViewController == self.addLoanViewController)
+        {
+            if (self.addLoanViewController.hasChanges == NO)
+            {
+                [self.addLoanViewController.amountTextField becomeFirstResponder];
+            }
+        }
+        // Details View is visible
+        else
+        {
+            [self.addLoanViewController popToBlankViewControllerAnimated:NO];
+            [self.addLoanViewController.amountTextField becomeFirstResponder];
+        }
     }
 }
 
@@ -170,6 +215,25 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - Private methods
+
+- (void)setUpTestFlight
+{
+    // TODO: Remove if app should be sent to app store
+#ifdef DEBUG
+    [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
+#endif
+}
+
+- (void)setUpTabBarController
+{
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    tabBarController.delegate = self;
+    
+    UINavigationController *addLoanNavigationController = [tabBarController.viewControllers objectAtIndex:0];
+    self.addLoanViewController = [addLoanNavigationController.viewControllers objectAtIndex:0];
 }
 
 @end

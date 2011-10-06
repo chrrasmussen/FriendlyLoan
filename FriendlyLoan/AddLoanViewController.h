@@ -20,6 +20,8 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
 @property (nonatomic, strong) IBOutlet UISwitch *attachLocationSwitch;
 
+- (void)popToBlankViewControllerAnimated:(BOOL)animated;
+
 - (BOOL)attachLocationState;
 - (void)setAttachLocationState:(BOOL)theAttachLocationState;
 

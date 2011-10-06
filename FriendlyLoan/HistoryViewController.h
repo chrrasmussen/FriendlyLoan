@@ -13,6 +13,6 @@
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic) int friendID;
+@property (nonatomic, strong) NSNumber *friendID;
 
 @end

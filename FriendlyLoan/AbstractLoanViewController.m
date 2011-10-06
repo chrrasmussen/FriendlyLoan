@@ -15,7 +15,7 @@
 #import "Models.h"
 
 
-const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
+const NSInteger kDefaultCategoryID = 0;
 
 
 @implementation AbstractLoanViewController
@@ -31,12 +31,12 @@ const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)updateSelectedFriendID:(int)friendID
+- (void)updateSelectedFriendID:(NSNumber *)friendID
 {
     self.selectedFriendID = friendID;
     
     // Update GUI
-    NSString *friendName = [Transaction friendNameForID:friendID];
+    NSString *friendName = [Transaction friendNameForFriendID:friendID];
     if (friendName == nil)
         friendName = NSLocalizedString(@"None", nil);
     
@@ -125,6 +125,12 @@ const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
 
 #pragma mark - Override methods
 
+// FIXME: Check all input values against a prototype (Empty or Transaction)
+- (BOOL)hasChanges
+{
+    return NO;
+}
+
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
 
@@ -134,7 +140,7 @@ const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    theTransaction.friendID = [NSNumber numberWithInt:self.selectedFriendID];
+    theTransaction.friendID = self.selectedFriendID;
     
     theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;
@@ -219,8 +225,8 @@ const NSInteger kDefaultCategoryID = 60; // FIXME: Temp
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)thePerson
 {
-    int friendID = (int)ABRecordGetRecordID(thePerson);
-    [self updateSelectedFriendID:friendID];
+    ABRecordID recordID = ABRecordGetRecordID(thePerson);
+    [self updateSelectedFriendID:[NSNumber numberWithInt:recordID]];
     
     [self validateAmountAndFriend];
     

@@ -58,6 +58,11 @@ static Category *_unknownCategory;
     return [[self alloc] initWithCategoryData:categoryData];
 }
 
+- (BOOL)hidden
+{
+    return [[_categoryData objectForKey:@"hidden"] boolValue];
+}
+
 - (NSNumber *)categoryID
 {
     return [_categoryData objectForKey:@"categoryID"];
@@ -115,7 +120,11 @@ static Category *_unknownCategory;
 {
     if (_categoriesByIndex == nil)
     {
-        _categoriesByIndex = [[self categories] objectForKey:@"categories"];
+        NSArray *allCategories = [[self categories] objectForKey:@"categories"];
+        
+        // Filter the categories
+        NSPredicate *hiddenPredicate = [NSPredicate predicateWithFormat:@"hidden == NO"];
+        _categoriesByIndex = [allCategories filteredArrayUsingPredicate:hiddenPredicate];
     }
     
     return _categoriesByIndex;

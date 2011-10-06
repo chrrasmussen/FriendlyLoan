@@ -16,6 +16,9 @@ NSString * const kResultFriendID    = @"friendID";
 NSString * const kResultFriendName  = @"friendName";
 NSString * const kResultDebt        = @"debt";
 
+NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
+
+
 @interface FriendsViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -31,6 +34,7 @@ NSString * const kResultDebt        = @"debt";
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize sortedResult;
+@synthesize friendsSearchResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -143,8 +147,8 @@ NSString * const kResultDebt        = @"debt";
         NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = [Transaction friendNameForID:[friendID intValue]];
-        historyViewController.friendID = [friendID intValue];
+        historyViewController.title = [Transaction friendNameForFriendID:friendID];
+        historyViewController.friendID = friendID;
     }
 }
 
@@ -173,19 +177,28 @@ NSString * const kResultDebt        = @"debt";
 
 #pragma mark - Private methods
 
+// TODO: Move debt-colors to an appropriate place
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    // Get data for cell
     NSDictionary *fetchedResult = [self.sortedResult objectAtIndex:indexPath.row];
     
-//    NSNumber *friendID = [fetchedResult objectForKey:kResultFriendID];
+    NSNumber *friendID = [fetchedResult objectForKey:kResultFriendID];
     NSString *friendName = [fetchedResult objectForKey:kResultFriendName];
     NSDecimalNumber *debt = [fetchedResult objectForKey:kResultDebt];
     
-    // TODO: Get picture for friendID
-    
+    // Set basic info
     cell.textLabel.text = friendName;
-    cell.detailTextLabel.text = [debt description];
+    cell.detailTextLabel.text = [debt stringValue];
     
+    // Set image
+    UIImage *friendImage = [Transaction friendImageForFriendID:friendID];
+    if (friendImage == nil)
+        friendImage = [UIImage imageNamed:kPlaceholderImageName];
+    
+    cell.imageView.image = friendImage;
+    
+    // Set colors on debt
     if ([debt compare:[NSDecimalNumber zero]] == NSOrderedDescending)
         cell.detailTextLabel.textColor = [UIColor colorWithHue:(120.0/360.0) saturation:1.0 brightness:0.8 alpha:1.0];
     else
@@ -258,7 +271,7 @@ NSString * const kResultDebt        = @"debt";
         NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
         
         NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
-        [updatedFriendObject setValue:[Transaction friendNameForID:[friendID intValue]] forKey:kResultFriendName];
+        [updatedFriendObject setValue:[Transaction friendNameForFriendID:friendID] forKey:kResultFriendName];
         
         // Add friend to result
         [result addObject:updatedFriendObject];

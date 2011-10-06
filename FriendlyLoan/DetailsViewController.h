@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) Transaction *transaction;
 
+@property (nonatomic, strong) IBOutlet UILabel *lentDescriptionLabel;
+@property (nonatomic, strong) IBOutlet UILabel *lentPrepositionLabel;
 @property (nonatomic, strong) IBOutlet UILabel *amountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *friendLabel;
 @property (nonatomic, strong) IBOutlet UILabel *categoryLabel;

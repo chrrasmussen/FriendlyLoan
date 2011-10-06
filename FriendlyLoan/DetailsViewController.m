@@ -28,6 +28,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 
 @synthesize transaction;
+@synthesize lentDescriptionLabel, lentPrepositionLabel;
 @synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -170,7 +171,10 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)updateViewInfo
 {
-    self.amountLabel.text = [transaction.amount stringValue];
+    self.lentDescriptionLabel.text = transaction.lentDescriptionString;
+    self.lentPrepositionLabel.text = transaction.lentPrepositionString;
+    
+    self.amountLabel.text = [transaction.absoluteAmount stringValue];
     self.friendLabel.text = transaction.friendName;
     self.categoryLabel.text = [transaction.categoryID stringValue];
     self.noteLabel.text = transaction.note;

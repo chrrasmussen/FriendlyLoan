@@ -42,6 +42,14 @@ const CLLocationDistance kDistanceFilter = 100;
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark - Override methods
+
+// FIXME: Update
+- (BOOL)hasChanges
+{
+    return [super hasChanges];
+}
+
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
     self.borrowBarButtonItem.enabled = enabled;
@@ -61,6 +69,23 @@ const CLLocationDistance kDistanceFilter = 100;
         theTansaction.createdLongitude = [NSNumber numberWithDouble:location.longitude];
     }
 }
+
+- (void)resetFields
+{
+    [super resetFields];
+    
+    // TODO: Is it necessary to reset attachLocationSwitch?
+}
+
+#pragma mark - Managing the hierarchy
+
+- (void)popToBlankViewControllerAnimated:(BOOL)animated
+{
+    [self.navigationController popToRootViewControllerAnimated:animated];
+    [self resetFields];
+}
+
+#pragma mark - Properties
 
 - (BOOL)attachLocationState
 {
@@ -87,6 +112,28 @@ const CLLocationDistance kDistanceFilter = 100;
     
     [[NSUserDefaults standardUserDefaults] setBool:theAttachLocationState forKey:@"attachLocation"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Actions
+
+- (IBAction)borrow:(id)sender
+{
+    self.lentState = NO;
+    
+    [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
+}
+
+- (IBAction)lend:(id)sender
+{
+    self.lentState = YES;
+    
+    [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
+}
+
+- (IBAction)changeAttachLocationState:(id)sender
+{
+    [self setAttachLocationState:self.attachLocationSwitch.on];
+    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
 }
 
 #pragma mark - View lifecycle
@@ -140,28 +187,6 @@ const CLLocationDistance kDistanceFilter = 100;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Actions
-
-- (IBAction)borrow:(id)sender
-{
-    self.lentState = NO;
-    
-    [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
-}
-
-- (IBAction)lend:(id)sender
-{
-    self.lentState = YES;
-    
-    [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
-}
-
-- (IBAction)changeAttachLocationState:(id)sender
-{
-    [self setAttachLocationState:self.attachLocationSwitch.on];
-    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
-}
-
 #pragma mark - Storyboard methods
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -174,6 +199,7 @@ const CLLocationDistance kDistanceFilter = 100;
         
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
+        detailsViewController.navigationItem.rightBarButtonItem = nil;
         detailsViewController.transaction = transaction;
     }
 }
@@ -248,19 +274,6 @@ const CLLocationDistance kDistanceFilter = 100;
     [self.navigationController popToRootViewControllerAnimated:YES];
     [self resetFields];
 //    [self popToBlankViewControllerAnimated:YES];
-}
-
-- (void)resetFields
-{
-    [super resetFields];
-    
-    // TODO: Is it necessary to reset attachLocationSwitch?
-}
-
-- (void)popToBlankViewControllerAnimated:(BOOL)animated
-{
-    [self.navigationController popToRootViewControllerAnimated:animated];
-    [self resetFields];
 }
 
 @end
