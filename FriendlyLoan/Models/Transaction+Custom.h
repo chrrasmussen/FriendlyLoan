@@ -9,9 +9,7 @@
 #import "Transaction.h"
 
 
-@interface Transaction (Custom) <NSCopying>
-
-- (id)copyWithZone:(NSZone *)zone;
+@interface Transaction (Custom)
 
 - (NSString *)historySectionName;
 

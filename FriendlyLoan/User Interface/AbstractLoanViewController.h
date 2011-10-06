@@ -16,8 +16,6 @@
 
 @interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoriesViewControllerDelegate>
 
-@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-
 @property (nonatomic) BOOL lentState;
 @property (nonatomic, strong) NSNumber *selectedFriendID;
 @property (nonatomic, strong) NSNumber *selectedCategoryID;
@@ -27,8 +25,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *categoryValueLabel;
 @property (nonatomic, strong) IBOutlet UITextField *noteTextField;
 @property (nonatomic, strong) IBOutlet UITableViewCell *friendCell;
-
-- (void)saveContext;
 
 - (void)updateSelectedFriendID:(NSNumber *)friendID;
 - (void)updateSelectedCategoryID:(NSNumber *)categoryID;

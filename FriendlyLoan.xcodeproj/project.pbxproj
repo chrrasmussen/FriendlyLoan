@@ -445,23 +445,23 @@
 			name = "Add Loan";
 			sourceTree = "<group>";
 		};
-		69AC1165143E4AFA001A0810 /* Loan */ = {
+		69AC1165143E4AFA001A0810 /* Loan Manager */ = {
 			isa = PBXGroup;
 			children = (
 				69AC1166143E4B2B001A0810 /* LoanManager.h */,
 				69AC1167143E4B2B001A0810 /* LoanManager.m */,
 			);
-			name = Loan;
+			name = "Loan Manager";
 			sourceTree = "<group>";
 		};
-		69B6B203143E54160014A615 /* Static */ = {
+		69B6B203143E54160014A615 /* Category */ = {
 			isa = PBXGroup;
 			children = (
 				6948E71614310F2A00A7BFFE /* Categories.plist */,
 				69A9B26314311F0D006A0D3F /* Category.h */,
 				69A9B26414311F0D006A0D3F /* Category.m */,
 			);
-			name = Static;
+			name = Category;
 			sourceTree = "<group>";
 		};
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
@@ -600,10 +600,10 @@
 			children = (
 				697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */,
 				69934788141D0B74004DFEF1 /* Models.h */,
-				69AC1165143E4AFA001A0810 /* Loan */,
+				69AC1165143E4AFA001A0810 /* Loan Manager */,
+				69B6B203143E54160014A615 /* Category */,
 				69BA69C6141AE927008C4384 /* Generated Classes */,
 				69BA69C7141AE941008C4384 /* Custom Classes */,
-				69B6B203143E54160014A615 /* Static */,
 			);
 			path = Models;
 			sourceTree = "<group>";

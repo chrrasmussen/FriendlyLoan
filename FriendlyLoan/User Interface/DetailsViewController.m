@@ -9,6 +9,7 @@
 #import "DetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "Category.h"
 #import "Models.h"
 #import "EditLoanViewController.h"
 
@@ -55,13 +56,11 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     [super viewDidLoad];
     
     [self clipMapView];
-    
     [self updateViewInfo];
 }
 
 - (void)viewDidUnload
 {
-    [self setMapView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -106,14 +105,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     }
 }
 
-#pragma mark - Core Data stack
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate managedObjectContext];
-}
-
 #pragma mark - EditLoanViewControllerDelegate methods
 
 - (void)editLoanViewControllerDidCancel:(EditLoanViewController *)editLoanViewController
@@ -124,7 +115,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController
 {
     [self updateViewInfo];
-    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -178,7 +168,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     
     self.amountLabel.text = [transaction.absoluteAmount stringValue];
     self.friendLabel.text = [transaction.friend fullName];
-    self.categoryLabel.text = [transaction.categoryID stringValue];
+    self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
     self.noteLabel.text = transaction.note;
     self.timeStampLabel.text = [transaction.createdTimestamp description];
     

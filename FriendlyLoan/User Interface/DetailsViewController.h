@@ -16,8 +16,6 @@
 
 @interface DetailsViewController : UITableViewController <MKMapViewDelegate, EditLoanViewControllerDelegate>
 
-@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-
 @property (nonatomic, strong) Transaction *transaction;
 
 @property (nonatomic, strong) IBOutlet UILabel *lentDescriptionLabel;

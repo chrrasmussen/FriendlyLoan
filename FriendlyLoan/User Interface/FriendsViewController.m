@@ -8,8 +8,9 @@
 
 #import "FriendsViewController.h"
 
+#import "LoanManager.h"
+
 #import "HistoryViewController.h"
-#import "Models.h"
 
 
 NSString * const kResultFriendID    = @"friendID";
@@ -152,14 +153,6 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     }
 }
 
-#pragma mark - Core Data stack
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate managedObjectContext];
-}
-
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -207,10 +200,11 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (void)setUpFetchedResultsController
 {
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
-    [fetchRequest setFetchBatchSize:20];
+    // Set up fetch request
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:[[LoanManager sharedManager] managedObjectContext]];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
+    fetchRequest.includesSubentities = YES;
+    fetchRequest.fetchBatchSize = 20;
     
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
@@ -235,7 +229,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
 //    [fetchRequest setHavingPredicate:havingPredicate];
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"FriendsCache"];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[LoanManager sharedManager] managedObjectContext] sectionNameKeyPath:nil cacheName:@"FriendsCache"];
 }
 
 - (void)performFetch

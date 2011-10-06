@@ -11,7 +11,8 @@
 
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
-#import "Models.h"
+
+#import "LoanManager.h"
 
 
 const CLLocationDistance kDistanceFilter = 100;
@@ -64,9 +65,13 @@ const CLLocationDistance kDistanceFilter = 100;
     
     if (self.lastKnownLocation != nil)
     {
-        CLLocationCoordinate2D location = self.lastKnownLocation.coordinate;
-        theTansaction.location.latitude = [NSNumber numberWithDouble:location.latitude];
-        theTansaction.location.longitude = [NSNumber numberWithDouble:location.longitude];
+        Location *location = [[LoanManager sharedManager] newLocation];
+        
+        CLLocationCoordinate2D coordinate = self.lastKnownLocation.coordinate;
+        location.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+        location.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+        
+        theTansaction.location = location;
     }
 }
 
@@ -259,12 +264,10 @@ const CLLocationDistance kDistanceFilter = 100;
 
 - (Transaction *)addTransaction
 {
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    
+    Transaction *transaction = [[LoanManager sharedManager] newTransaction];
     [self updateTransactionBasedOnViewInfo:transaction];
     
-    [self saveContext];
-    NSLog(@"Transaction added!");
+    [[LoanManager sharedManager] saveContext];
     
     return transaction;
 }

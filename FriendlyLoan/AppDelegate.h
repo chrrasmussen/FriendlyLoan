@@ -21,7 +21,6 @@
 
 @property (nonatomic, strong) AddLoanViewController *addLoanViewController;
 
-- (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
 @end

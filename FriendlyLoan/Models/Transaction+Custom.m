@@ -9,17 +9,11 @@
 #import "Transaction+Custom.h"
 #import "NSDecimalNumber+RIOAdditions.h"
 
+#import "Models.h"
+
 @implementation Transaction (Custom)
 
-- (id)copyWithZone:(NSZone *)zone
-{
-    Transaction *copy = [[self class] allocWithZone:zone];
-    
-    
-    return copy;
-}
-
-#pragma mark - Fix
+#pragma mark - History methods
 
 // TODO: Replace with RIORelativeTime
 - (NSString *)historySectionName

@@ -9,7 +9,7 @@
 #import "EditLoanViewController.h"
 #import "EditLoanViewControllerDelegate.h"
 
-#import "Models.h"
+#import "LoanManager.h"
 
 
 enum {
@@ -129,8 +129,7 @@ enum {
 {
     [self updateTransactionBasedOnViewInfo:self.transaction];
     
-    [self saveContext];
-    NSLog(@"Edited transaction!");
+    [[LoanManager sharedManager] saveContext];
 }
 
 - (void)updateViewInfo

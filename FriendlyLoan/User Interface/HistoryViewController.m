@@ -8,8 +8,9 @@
 
 #import "HistoryViewController.h"
 
+#import "LoanManager.h"
+
 #import "DetailsViewController.h"
-#import "Models.h"
 #import "Category.h"
 
 @interface HistoryViewController ()
@@ -160,14 +161,6 @@
     }
 }
 
-#pragma mark - Core Data stack
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate managedObjectContext];
-}
-
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -257,10 +250,10 @@
 - (void)setUpFetchedResultsController
 {
     // Set up the fetch request
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchBatchSize:20];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:[[LoanManager sharedManager] managedObjectContext]];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
+    fetchRequest.includesSubentities = YES;
+    fetchRequest.fetchBatchSize = 20;
     
     // Add sort descriptor
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
@@ -274,7 +267,7 @@
     // Filter the history based on friend ID
     if (self.friendID != nil)
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", self.friendID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friend.friendID == %@", self.friendID];
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache name
@@ -282,7 +275,7 @@
     }
     
     // Create the fetched results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[LoanManager sharedManager] managedObjectContext] sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
     self.fetchedResultsController.delegate = self;
 }
 

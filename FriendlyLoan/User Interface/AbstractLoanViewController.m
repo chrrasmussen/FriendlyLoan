@@ -8,11 +8,12 @@
 
 #import "AbstractLoanViewController.h"
 
+#import "LoanManager.h"
+
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 #import "Category.h"
-#import "Models.h"
 
 
 const NSInteger kDefaultCategoryID = 0;
@@ -140,10 +141,15 @@ const NSInteger kDefaultCategoryID = 0;
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    theTransaction.friend.friendID = self.selectedFriendID;
     
     theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;
+    
+    // Add friend
+    Friend *friend = [[LoanManager sharedManager] newFriend];
+    friend.friendID = self.selectedFriendID;
+    
+    theTransaction.friend = friend;
 }
 
 - (void)resetFields
@@ -195,20 +201,6 @@ const NSInteger kDefaultCategoryID = 0;
     [textField resignFirstResponder];
     
     return YES;
-}
-
-#pragma mark - Core Data stack
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate managedObjectContext];
-}
-
-- (void)saveContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    [appDelegate saveContext];
 }
 
 #pragma mark - CategoriesViewControllerDelegate methods
