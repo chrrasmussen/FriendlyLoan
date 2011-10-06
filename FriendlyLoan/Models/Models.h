@@ -7,4 +7,5 @@
 //
 
 #import "Transaction+Custom.h"
+#import "Friend+Custom.h"
 #import "Location+Custom.h"

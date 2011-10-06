@@ -134,7 +134,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return ([self.transaction hasLocation] == YES) ? rows : rows - 1;
+    return (self.transaction.location != nil) ? rows : rows - 1;
 }
 
 #pragma mark - Private methods
@@ -160,7 +160,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)showLocationInfo
 {
-    Location *location = self.transaction.createdLocation;
+    Location *location = self.transaction.location;
     
     if (location != nil)
     {
@@ -177,7 +177,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     self.lentPrepositionLabel.text = transaction.lentPrepositionString;
     
     self.amountLabel.text = [transaction.absoluteAmount stringValue];
-    self.friendLabel.text = transaction.friendName;
+    self.friendLabel.text = [transaction.friend fullName];
     self.categoryLabel.text = [transaction.categoryID stringValue];
     self.noteLabel.text = transaction.note;
     self.timeStampLabel.text = [transaction.createdTimestamp description];

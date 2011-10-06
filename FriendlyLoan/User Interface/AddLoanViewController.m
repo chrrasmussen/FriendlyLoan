@@ -65,8 +65,8 @@ const CLLocationDistance kDistanceFilter = 100;
     if (self.lastKnownLocation != nil)
     {
         CLLocationCoordinate2D location = self.lastKnownLocation.coordinate;
-        theTansaction.createdLocation.latitude = [NSNumber numberWithDouble:location.latitude];
-        theTansaction.createdLocation.longitude = [NSNumber numberWithDouble:location.longitude];
+        theTansaction.location.latitude = [NSNumber numberWithDouble:location.latitude];
+        theTansaction.location.longitude = [NSNumber numberWithDouble:location.longitude];
     }
 }
 

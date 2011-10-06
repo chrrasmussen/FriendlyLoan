@@ -147,7 +147,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = [Transaction friendNameForFriendID:friendID];
+        historyViewController.title = [Friend friendNameForFriendID:friendID];
         historyViewController.friendID = friendID;
     }
 }
@@ -192,7 +192,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     cell.detailTextLabel.text = [debt stringValue];
     
     // Set image
-    UIImage *friendImage = [Transaction friendImageForFriendID:friendID];
+    UIImage *friendImage = [Friend friendImageForFriendID:friendID];
     if (friendImage == nil)
         friendImage = [UIImage imageNamed:kPlaceholderImageName];
     
@@ -271,7 +271,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
         
         NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
-        [updatedFriendObject setValue:[Transaction friendNameForFriendID:friendID] forKey:kResultFriendName];
+        [updatedFriendObject setValue:[Friend friendNameForFriendID:friendID] forKey:kResultFriendName];
         
         // Add friend to result
         [result addObject:updatedFriendObject];

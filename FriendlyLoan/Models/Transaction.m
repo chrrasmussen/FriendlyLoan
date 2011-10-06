@@ -7,8 +7,8 @@
 //
 
 #import "Transaction.h"
+#import "Friend.h"
 #import "Location.h"
-#import "Person.h"
 
 
 @implementation Transaction
@@ -18,7 +18,7 @@
 @dynamic createdTimestamp;
 @dynamic modifiedTimestamp;
 @dynamic note;
-@dynamic location;
 @dynamic friend;
+@dynamic location;
 
 @end

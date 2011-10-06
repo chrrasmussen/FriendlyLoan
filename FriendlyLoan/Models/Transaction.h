@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Location, Person;
+@class Friend, Location;
 
 @interface Transaction : NSManagedObject
 
@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSDate * createdTimestamp;
 @property (nonatomic, retain) NSDate * modifiedTimestamp;
 @property (nonatomic, retain) NSString * note;
+@property (nonatomic, retain) Friend *friend;
 @property (nonatomic, retain) Location *location;
-@property (nonatomic, retain) Person *friend;
 
 @end

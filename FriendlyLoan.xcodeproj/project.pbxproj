@@ -85,12 +85,12 @@
 		69A67F821433FC7600AAEC35 /* FriendsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A67F811433FC7600AAEC35 /* FriendsSearchResultsController.m */; };
 		69A9B26514311F0D006A0D3F /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9B26414311F0D006A0D3F /* Category.m */; };
 		69AC115D143E4806001A0810 /* Location+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC115C143E4806001A0810 /* Location+Custom.m */; };
-		69AC1168143E4B2B001A0810 /* Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1167143E4B2B001A0810 /* Loan.m */; };
+		69AC1168143E4B2B001A0810 /* LoanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1167143E4B2B001A0810 /* LoanManager.m */; };
 		69AC116B143E4FF4001A0810 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC116A143E4FF4001A0810 /* Location.m */; };
-		69AC116E143E4FF5001A0810 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC116D143E4FF5001A0810 /* Person.m */; };
-		69AC1171143E4FF5001A0810 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1170143E4FF5001A0810 /* Transaction.m */; };
 		69AC1174143E5009001A0810 /* Friend+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1173143E5009001A0810 /* Friend+Custom.m */; };
 		69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AE6352142929840016AF6F /* CoreLocation.framework */; };
+		69B6B1FF143E535E0014A615 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B1FE143E535E0014A615 /* Transaction.m */; };
+		69B6B202143E535F0014A615 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B201143E535F0014A615 /* Friend.m */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
 		69C3CEB0141A7B4C00549213 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* FriendsViewController.m */; };
@@ -206,17 +206,18 @@
 		69A9B26414311F0D006A0D3F /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		69AC115B143E4806001A0810 /* Location+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Location+Custom.h"; sourceTree = "<group>"; };
 		69AC115C143E4806001A0810 /* Location+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Location+Custom.m"; sourceTree = "<group>"; };
-		69AC1166143E4B2B001A0810 /* Loan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loan.h; sourceTree = "<group>"; };
-		69AC1167143E4B2B001A0810 /* Loan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loan.m; sourceTree = "<group>"; };
+		69AC1166143E4B2B001A0810 /* LoanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManager.h; sourceTree = "<group>"; };
+		69AC1167143E4B2B001A0810 /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
 		69AC1169143E4FF4001A0810 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		69AC116A143E4FF4001A0810 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
-		69AC116C143E4FF5001A0810 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		69AC116D143E4FF5001A0810 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		69AC116F143E4FF5001A0810 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		69AC1170143E4FF5001A0810 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		69AC1172143E5009001A0810 /* Friend+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+Custom.h"; sourceTree = "<group>"; };
 		69AC1173143E5009001A0810 /* Friend+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+Custom.m"; sourceTree = "<group>"; };
 		69AE6352142929840016AF6F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		69B6B1FD143E535E0014A615 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
+		69B6B1FE143E535E0014A615 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		69B6B200143E535F0014A615 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
+		69B6B201143E535F0014A615 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
+		69B6B204143E55DE0014A615 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
@@ -386,9 +387,6 @@
 		694A59F31426C0D5000B5190 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				6948E71614310F2A00A7BFFE /* Categories.plist */,
-				69A9B26314311F0D006A0D3F /* Category.h */,
-				69A9B26414311F0D006A0D3F /* Category.m */,
 				69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */,
 				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
 				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
@@ -450,10 +448,20 @@
 		69AC1165143E4AFA001A0810 /* Loan */ = {
 			isa = PBXGroup;
 			children = (
-				69AC1166143E4B2B001A0810 /* Loan.h */,
-				69AC1167143E4B2B001A0810 /* Loan.m */,
+				69AC1166143E4B2B001A0810 /* LoanManager.h */,
+				69AC1167143E4B2B001A0810 /* LoanManager.m */,
 			);
 			name = Loan;
+			sourceTree = "<group>";
+		};
+		69B6B203143E54160014A615 /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				6948E71614310F2A00A7BFFE /* Categories.plist */,
+				69A9B26314311F0D006A0D3F /* Category.h */,
+				69A9B26414311F0D006A0D3F /* Category.m */,
+			);
+			name = Static;
 			sourceTree = "<group>";
 		};
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
@@ -498,10 +506,10 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69AC116F143E4FF5001A0810 /* Transaction.h */,
-				69AC1170143E4FF5001A0810 /* Transaction.m */,
-				69AC116C143E4FF5001A0810 /* Person.h */,
-				69AC116D143E4FF5001A0810 /* Person.m */,
+				69B6B1FD143E535E0014A615 /* Transaction.h */,
+				69B6B1FE143E535E0014A615 /* Transaction.m */,
+				69B6B200143E535F0014A615 /* Friend.h */,
+				69B6B201143E535F0014A615 /* Friend.m */,
 				69AC1169143E4FF4001A0810 /* Location.h */,
 				69AC116A143E4FF4001A0810 /* Location.m */,
 			);
@@ -513,10 +521,10 @@
 			children = (
 				69BA69BF141ADC23008C4384 /* Transaction+Custom.h */,
 				69BA69C0141ADC23008C4384 /* Transaction+Custom.m */,
-				69AC115B143E4806001A0810 /* Location+Custom.h */,
-				69AC115C143E4806001A0810 /* Location+Custom.m */,
 				69AC1172143E5009001A0810 /* Friend+Custom.h */,
 				69AC1173143E5009001A0810 /* Friend+Custom.m */,
+				69AC115B143E4806001A0810 /* Location+Custom.h */,
+				69AC115C143E4806001A0810 /* Location+Custom.m */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -595,6 +603,7 @@
 				69AC1165143E4AFA001A0810 /* Loan */,
 				69BA69C6141AE927008C4384 /* Generated Classes */,
 				69BA69C7141AE941008C4384 /* Custom Classes */,
+				69B6B203143E54160014A615 /* Static */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -603,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
+				69B6B204143E55DE0014A615 /* Constants.h */,
 				69C3CEBD141A7BA400549213 /* Add/Edit Loan */,
 				69C3CEB1141A7B5000549213 /* People */,
 				69C3CEB5141A7B6A00549213 /* History */,
@@ -786,11 +796,11 @@
 				693E5097143A1C7600F12459 /* RIORelativeTime.m in Sources */,
 				693E509A143A1CFD00F12459 /* NSDate+RIORelativeTime.m in Sources */,
 				69AC115D143E4806001A0810 /* Location+Custom.m in Sources */,
-				69AC1168143E4B2B001A0810 /* Loan.m in Sources */,
+				69AC1168143E4B2B001A0810 /* LoanManager.m in Sources */,
 				69AC116B143E4FF4001A0810 /* Location.m in Sources */,
-				69AC116E143E4FF5001A0810 /* Person.m in Sources */,
-				69AC1171143E4FF5001A0810 /* Transaction.m in Sources */,
 				69AC1174143E5009001A0810 /* Friend+Custom.m in Sources */,
+				69B6B1FF143E535E0014A615 /* Transaction.m in Sources */,
+				69B6B202143E535F0014A615 /* Friend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,7 +36,7 @@ const NSInteger kDefaultCategoryID = 0;
     self.selectedFriendID = friendID;
     
     // Update GUI
-    NSString *friendName = [Transaction friendNameForFriendID:friendID];
+    NSString *friendName = [Friend friendNameForFriendID:friendID];
     if (friendName == nil)
         friendName = NSLocalizedString(@"None", nil);
     
@@ -140,7 +140,7 @@ const NSInteger kDefaultCategoryID = 0;
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    theTransaction.friendID = self.selectedFriendID;
+    theTransaction.friend.friendID = self.selectedFriendID;
     
     theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;

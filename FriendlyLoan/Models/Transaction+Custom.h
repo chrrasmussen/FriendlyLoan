@@ -15,10 +15,6 @@
 
 - (NSString *)historySectionName;
 
-+ (NSString *)friendNameForFriendID:(NSNumber *)friendID;
-+ (UIImage *)friendImageForFriendID:(NSNumber *)friendID;
-- (NSString *)friendName;
-
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
 - (NSString *)lentDescriptionString;

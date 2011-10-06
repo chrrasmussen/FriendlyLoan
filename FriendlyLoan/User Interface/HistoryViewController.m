@@ -245,7 +245,7 @@
     UIImage *image = [UIImage imageNamed:category.imageName];
     UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
     
-    NSString *friendText = transaction.friendName;
+    NSString *friendText = [transaction.friend fullName];
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentDescriptionString, amountText];

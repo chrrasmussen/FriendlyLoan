@@ -137,7 +137,7 @@ enum {
 {
     // Update internal state
     self.lentState = self.transaction.lent;
-    [self updateSelectedFriendID:self.transaction.friendID];
+    [self updateSelectedFriendID:self.transaction.friend.friendID];
     [self updateSelectedCategoryID:self.transaction.categoryID];
     
     // Update GUI
