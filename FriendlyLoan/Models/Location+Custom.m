@@ -8,16 +8,49 @@
 
 #import "Location+Custom.h"
 
+@interface Location ()
+
+- (void)test;
+
+@end
+
 @implementation Location (Custom)
 
-// MKAnnotation methods
+- (void)awakeFromFetch
+{
+    [super awakeFromFetch];
+    
+    // Resolve place name if necessary
+    if (self.placeName == nil)
+    {
+        NSLog(@"Resolving place name");
+    }
+}
+
+#pragma mark - MKAnnotation methods
+
 - (CLLocationCoordinate2D)coordinate
 {
+    NSLog(@"Coordinate");
     CLLocationCoordinate2D location;
     location.latitude = [self.latitude doubleValue];
     location.longitude = [self.longitude doubleValue];
     
     return location;
+}
+
+//- (NSString *)title
+//{
+//    [self test];
+//    return self.placeName;
+//}
+
+
+#pragma mark - Private methods
+
+- (void)test
+{
+    NSLog(@"Test");
 }
 
 @end

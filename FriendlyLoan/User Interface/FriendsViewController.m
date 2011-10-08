@@ -135,7 +135,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NSLocalizedString(@"Clear Debt", @"Delete confirmation button in Summary");
+    return NSLocalizedString(@"Clear Debt", nil);
 }
 
 #pragma mark - Storyboard
@@ -203,32 +203,38 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     // Set up fetch request
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:[[LoanManager sharedManager] managedObjectContext]];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
-    fetchRequest.includesSubentities = YES;
+//    fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
     
+    // Set sort descriptors
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
+    // Set up friend ID-property
+    NSExpression *friendIDKeyPath = [NSExpression expressionForKeyPath:@"friend.friendID"];
+    NSExpressionDescription *friendIDProperty = [[NSExpressionDescription alloc] init];
+    [friendIDProperty setName:kResultFriendID];
+    [friendIDProperty setExpression:friendIDKeyPath];
+    [friendIDProperty setExpressionResultType:NSInteger32AttributeType];
     
-    NSPropertyDescription *friendIDProperty = [[entity propertiesByName] objectForKey:kResultFriendID];
-    
+    // Set up debt-property
     NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
     NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
     [debtProperty setName:kResultDebt];
     [debtProperty setExpression:sumOfAmount];
     [debtProperty setExpressionResultType:NSDecimalAttributeType];
     
-//    NSPredicate *havingPredicate = [NSPredicate predicateWithFormat:@"%K != 0", kResultDebt];
-    
+    // Combine properties
     NSArray *fetchProperties = [NSArray arrayWithObjects:friendIDProperty, debtProperty, nil];
     NSArray *groupByProperties = [NSArray arrayWithObject:friendIDProperty];
     
+    // Set properties on fetch request
     [fetchRequest setResultType:NSDictionaryResultType];
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
-//    [fetchRequest setHavingPredicate:havingPredicate];
     
+    // Create the fetch results controller
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[LoanManager sharedManager] managedObjectContext] sectionNameKeyPath:nil cacheName:@"FriendsCache"];
 }
 

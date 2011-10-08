@@ -12,7 +12,7 @@
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="latitude" attributeType="Double" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transaction" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="location" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">

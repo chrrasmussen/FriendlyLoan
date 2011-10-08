@@ -15,7 +15,5 @@
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
-- (NSString *)lentDescriptionString;
-- (NSString *)lentPrepositionString;
 
 @end

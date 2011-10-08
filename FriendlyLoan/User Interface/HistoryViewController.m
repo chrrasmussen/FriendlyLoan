@@ -241,8 +241,11 @@
     NSString *friendText = [transaction.friend fullName];
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentDescriptionString, amountText];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentPrepositionString, friendText];
+    NSString *lentDescription = (transaction.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);;
+    NSString *lentPreposition = (transaction.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);;
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentDescription, amountText];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPreposition, friendText];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
 }
@@ -271,7 +274,7 @@
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache name
-        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", self.friendID]; // FIXME: I think this one may cause some problems?
+        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", self.friendID];
     }
     
     // Create the fetched results controller

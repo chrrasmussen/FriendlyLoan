@@ -9,7 +9,6 @@
 #import "Transaction+Custom.h"
 #import "NSDecimalNumber+RIOAdditions.h"
 
-#import "Models.h"
 
 @implementation Transaction (Custom)
 
@@ -35,16 +34,6 @@
 - (NSDecimalNumber *)absoluteAmount
 {
     return (self.lent == YES) ? self.amount: [self.amount decimalNumberByNegating];
-}
-
-- (NSString *)lentDescriptionString
-{
-    return (self.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-}
-
-- (NSString *)lentPrepositionString
-{
-    return (self.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
 }
 
 @end

@@ -9,7 +9,15 @@
 #import "Friend+Custom.h"
 #import <AddressBook/AddressBook.h>
 
+#import "UIImage+RIOAdditions.h"
+
+
+const CGFloat kThumbnailImageLength = 43.0;
+
+
 @implementation Friend (Custom)
+
+static NSCache *thumbnailImages;
 
 // TODO: Sync problems WILL arise
 + (NSString *)friendNameForFriendID:(NSNumber *)friendID
@@ -35,18 +43,35 @@
     return nil;
 }
 
-// TODO: Resize (219x219 thumbnail size) and cache images
 + (UIImage *)friendImageForFriendID:(NSNumber *)friendID
 {
-    ABAddressBookRef addressBook = ABAddressBookCreate();
-    ABRecordID recordId = (ABRecordID)[friendID intValue];
-    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+    // Create a cache
+    if (thumbnailImages == nil)
+        thumbnailImages = [[NSCache alloc] init];
     
-    if (personRef != nil && ABPersonHasImageData(personRef))
+    // Retreive thumbnail image from cache
+    UIImage *thumbnailImage = [thumbnailImages objectForKey:friendID];
+    if (thumbnailImage == nil)
     {
-        return [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
+        // Get person from address book
+        ABAddressBookRef addressBook = ABAddressBookCreate();
+        ABRecordID recordId = (ABRecordID)[friendID intValue];
+        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+        
+        // Create a thumbnail image and cache it
+        if (personRef != nil && ABPersonHasImageData(personRef))
+        {
+            CGFloat scale = [[UIScreen mainScreen] scale];
+            CGSize thumbnailSize = CGSizeMake(kThumbnailImageLength * scale, kThumbnailImageLength * scale);
+            
+            UIImage *originalImage = [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
+            thumbnailImage = [originalImage scaledImageWithSize:thumbnailSize];
+            
+            [thumbnailImages setObject:thumbnailImage forKey:friendID];
+        }
     }
-    return nil;
+    
+    return thumbnailImage;
 }
 
 - (NSString *)fullName

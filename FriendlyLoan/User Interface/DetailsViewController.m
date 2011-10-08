@@ -158,13 +158,15 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         [self.mapView setRegion:region animated:NO];
         
         [self.mapView addAnnotation:location];
+        
+//        NSLog(@"%@", location.placeName);
     }
 }
 
 - (void)updateViewInfo
 {
-    self.lentDescriptionLabel.text = transaction.lentDescriptionString;
-    self.lentPrepositionLabel.text = transaction.lentPrepositionString;
+    self.lentDescriptionLabel.text = (transaction.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+    self.lentPrepositionLabel.text =  (transaction.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
     self.amountLabel.text = [transaction.absoluteAmount stringValue];
     self.friendLabel.text = [transaction.friend fullName];

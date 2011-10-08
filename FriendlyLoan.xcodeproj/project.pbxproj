@@ -11,6 +11,9 @@
 		691292B9143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691292B5143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png */; };
 		691292BA143E24700081DC09 /* KeyboardBackground-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 691292B6143E24700081DC09 /* KeyboardBackground-Normal.png */; };
 		691292BB143E24700081DC09 /* KeyboardBackground-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691292B7143E24700081DC09 /* KeyboardBackground-Normal@2x.png */; };
+		6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3C1440C2830090FAA4 /* MissingProfilePicture.png */; };
+		6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */; };
+		6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */; };
 		69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */; };
 		69204A96142012D600D6A075 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69204A94142012D600D6A075 /* libTestFlight.a */; };
 		69204A9A1420162500D6A075 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A991420162500D6A075 /* SettingsViewController.m */; };
@@ -65,8 +68,6 @@
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
 		6941FFA8141A6DAC00FB3A24 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */; };
 		6948E71714310F2A00A7BFFE /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6948E71614310F2A00A7BFFE /* Categories.plist */; };
-		695BC46C142407FE0005BD46 /* MissingProfilePicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 695BC46A142407FE0005BD46 /* MissingProfilePicture@2x.png */; };
-		695BC46D142407FE0005BD46 /* MissingProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 695BC46B142407FE0005BD46 /* MissingProfilePicture.png */; };
 		6972F0B11426AB430047305C /* EditLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B01426AB430047305C /* EditLoanViewController.m */; };
 		6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */; };
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
@@ -86,11 +87,11 @@
 		69A9B26514311F0D006A0D3F /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9B26414311F0D006A0D3F /* Category.m */; };
 		69AC115D143E4806001A0810 /* Location+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC115C143E4806001A0810 /* Location+Custom.m */; };
 		69AC1168143E4B2B001A0810 /* LoanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1167143E4B2B001A0810 /* LoanManager.m */; };
-		69AC116B143E4FF4001A0810 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC116A143E4FF4001A0810 /* Location.m */; };
 		69AC1174143E5009001A0810 /* Friend+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AC1173143E5009001A0810 /* Friend+Custom.m */; };
 		69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AE6352142929840016AF6F /* CoreLocation.framework */; };
 		69B6B1FF143E535E0014A615 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B1FE143E535E0014A615 /* Transaction.m */; };
 		69B6B202143E535F0014A615 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B201143E535F0014A615 /* Friend.m */; };
+		69B6B207143E74DE0014A615 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B206143E74DE0014A615 /* Location.m */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
 		69C3CEB0141A7B4C00549213 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* FriendsViewController.m */; };
@@ -114,6 +115,10 @@
 		691292B5143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardBackground-Highlighted@2x.png"; sourceTree = "<group>"; };
 		691292B6143E24700081DC09 /* KeyboardBackground-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardBackground-Normal.png"; sourceTree = "<group>"; };
 		691292B7143E24700081DC09 /* KeyboardBackground-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardBackground-Normal@2x.png"; sourceTree = "<group>"; };
+		6914CC3C1440C2830090FAA4 /* MissingProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingProfilePicture.png; sourceTree = "<group>"; };
+		6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePicture@2x.png"; sourceTree = "<group>"; };
+		6914CC401440C4270090FAA4 /* UIImage+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RIOAdditions.h"; sourceTree = "<group>"; };
+		6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -178,8 +183,6 @@
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
 		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6948E71614310F2A00A7BFFE /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
-		695BC46A142407FE0005BD46 /* MissingProfilePicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePicture@2x.png"; sourceTree = "<group>"; };
-		695BC46B142407FE0005BD46 /* MissingProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingProfilePicture.png; sourceTree = "<group>"; };
 		6972F0AF1426AB430047305C /* EditLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewController.h; sourceTree = "<group>"; };
 		6972F0B01426AB430047305C /* EditLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLoanViewController.m; sourceTree = "<group>"; };
 		6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoanViewController.h; sourceTree = "<group>"; };
@@ -208,8 +211,6 @@
 		69AC115C143E4806001A0810 /* Location+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Location+Custom.m"; sourceTree = "<group>"; };
 		69AC1166143E4B2B001A0810 /* LoanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManager.h; sourceTree = "<group>"; };
 		69AC1167143E4B2B001A0810 /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
-		69AC1169143E4FF4001A0810 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		69AC116A143E4FF4001A0810 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		69AC1172143E5009001A0810 /* Friend+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+Custom.h"; sourceTree = "<group>"; };
 		69AC1173143E5009001A0810 /* Friend+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+Custom.m"; sourceTree = "<group>"; };
 		69AE6352142929840016AF6F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -217,7 +218,8 @@
 		69B6B1FE143E535E0014A615 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		69B6B200143E535F0014A615 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		69B6B201143E535F0014A615 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
-		69B6B204143E55DE0014A615 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		69B6B205143E74DE0014A615 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		69B6B206143E74DE0014A615 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
@@ -279,6 +281,8 @@
 			children = (
 				69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */,
 				69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */,
+				6914CC401440C4270090FAA4 /* UIImage+RIOAdditions.h */,
+				6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -421,8 +425,8 @@
 		69934769141C73E8004DFEF1 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				695BC46A142407FE0005BD46 /* MissingProfilePicture@2x.png */,
-				695BC46B142407FE0005BD46 /* MissingProfilePicture.png */,
+				6914CC3C1440C2830090FAA4 /* MissingProfilePicture.png */,
+				6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -506,12 +510,12 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
+				69B6B205143E74DE0014A615 /* Location.h */,
+				69B6B206143E74DE0014A615 /* Location.m */,
 				69B6B1FD143E535E0014A615 /* Transaction.h */,
 				69B6B1FE143E535E0014A615 /* Transaction.m */,
 				69B6B200143E535F0014A615 /* Friend.h */,
 				69B6B201143E535F0014A615 /* Friend.m */,
-				69AC1169143E4FF4001A0810 /* Location.h */,
-				69AC116A143E4FF4001A0810 /* Location.m */,
 			);
 			name = "Generated Classes";
 			sourceTree = "<group>";
@@ -612,7 +616,6 @@
 			isa = PBXGroup;
 			children = (
 				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
-				69B6B204143E55DE0014A615 /* Constants.h */,
 				69C3CEBD141A7BA400549213 /* Add/Edit Loan */,
 				69C3CEB1141A7B5000549213 /* People */,
 				69C3CEB5141A7B6A00549213 /* History */,
@@ -701,8 +704,6 @@
 				69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */,
 				6993475A141C3F3B004DFEF1 /* Settings.png in Resources */,
 				6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */,
-				695BC46C142407FE0005BD46 /* MissingProfilePicture@2x.png in Resources */,
-				695BC46D142407FE0005BD46 /* MissingProfilePicture.png in Resources */,
 				6987FFB1142BCD9E00270B26 /* Friends.png in Resources */,
 				6987FFB2142BCD9E00270B26 /* Friends@2x.png in Resources */,
 				6948E71714310F2A00A7BFFE /* Categories.plist in Resources */,
@@ -743,6 +744,8 @@
 				691292B9143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png in Resources */,
 				691292BA143E24700081DC09 /* KeyboardBackground-Normal.png in Resources */,
 				691292BB143E24700081DC09 /* KeyboardBackground-Normal@2x.png in Resources */,
+				6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */,
+				6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,10 +800,11 @@
 				693E509A143A1CFD00F12459 /* NSDate+RIORelativeTime.m in Sources */,
 				69AC115D143E4806001A0810 /* Location+Custom.m in Sources */,
 				69AC1168143E4B2B001A0810 /* LoanManager.m in Sources */,
-				69AC116B143E4FF4001A0810 /* Location.m in Sources */,
 				69AC1174143E5009001A0810 /* Friend+Custom.m in Sources */,
 				69B6B1FF143E535E0014A615 /* Transaction.m in Sources */,
 				69B6B202143E535F0014A615 /* Friend.m in Sources */,
+				69B6B207143E74DE0014A615 /* Location.m in Sources */,
+				6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
