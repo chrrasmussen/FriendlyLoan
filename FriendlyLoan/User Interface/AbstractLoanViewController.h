@@ -34,7 +34,7 @@
 - (void)validateAmountAndFriend;
 
 // Override methods
-- (BOOL)hasChanges;
+//- (BOOL)isViewInfoEqualToTransaction:(Transaction *)transaction;
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)transaction;
 - (void)resetFields;

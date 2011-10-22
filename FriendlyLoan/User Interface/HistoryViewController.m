@@ -45,11 +45,18 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)dealloc
+{
+    // Release fetched results controller
+    self.fetchedResultsController = nil;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"%@ %s", self, (char *)_cmd);
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -83,6 +90,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -165,13 +173,11 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (__fetchedResultsController != nil)
+    if (__fetchedResultsController == nil)
     {
-        return __fetchedResultsController;
+        [self setUpFetchedResultsController];
+        [self performFetch];
     }
-    
-    [self setUpFetchedResultsController];
-    [self performFetch];
     
     return __fetchedResultsController;
 }    
@@ -229,7 +235,6 @@
 
 #pragma mark - Private methods
 
-// TODO: Add correct currency?
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];

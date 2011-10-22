@@ -9,14 +9,14 @@
 #import "AppDelegate.h"
 
 #import "LoanManager.h"
-#import "AddLoanViewController.h"
-//#import "RIORelativeTime.h"
+#import "RIORelativeDate.h" // FIXME: Temp
+#import "NSDate+RIOAdditions.h" // FIXME: Temp
 
 
 @interface AppDelegate ()
 
 - (void)setUpTestFlight;
-- (void)setUpTabBarController;
+- (void)setUpLoanManager;
 
 @end
 
@@ -27,17 +27,18 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-@synthesize addLoanViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setUpTestFlight];
-    [self setUpTabBarController];
+    [self setUpLoanManager];
     
-    id manager = [[LoanManager alloc] initWithManagedObjectContext:self.managedObjectContext];
-    NSLog(@"%@", manager);
+//    NSLog(@"%@", [[NSDate dateWithTimeIntervalSinceNow:-60*60*24*4] relativeDate]);
+    NSLog(@"%d", [[[NSDate date] dateByAddingTimeInterval:60*60*9] isToday]);
     
-//    NSLog(@"%@", [RIORelativeTime relativeTimeForDate:[NSDate dateWithTimeIntervalSinceNow:0]]);
+    // TODO: Move to Add Loan-tab
+    [[LoanManager sharedManager] startUpdatingLocation];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -74,39 +75,10 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    // TODO: Move to Add Loan-tab
+    [[LoanManager sharedManager] stopUpdatingLocation];
     // Saves changes in the application's managed object context before the application terminates.
-    [[LoanManager sharedManager] saveContext];
-}
-
-#pragma mark - UITabBarControllerDelegate methods
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UINavigationController class]] == NO)
-        return;
-    
-    UINavigationController *navigationController = (UINavigationController *)viewController;
-    UIViewController *rootViewController = [navigationController.viewControllers objectAtIndex:0];
-    UIViewController *visibleViewController = navigationController.visibleViewController;
-    
-    // First tab
-    if (rootViewController == self.addLoanViewController)
-    {
-        // Add Loan View is visible
-        if (visibleViewController == self.addLoanViewController)
-        {
-            if (self.addLoanViewController.hasChanges == NO)
-            {
-                [self.addLoanViewController.amountTextField becomeFirstResponder];
-            }
-        }
-        // Details View is visible
-        else
-        {
-            [self.addLoanViewController popToBlankViewControllerAnimated:NO];
-            [self.addLoanViewController.amountTextField becomeFirstResponder];
-        }
-    }
+//    [[LoanManager sharedManager] saveContext];
 }
 
 #pragma mark - Core Data stack
@@ -125,7 +97,7 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
+        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return __managedObjectContext;
@@ -213,13 +185,9 @@
 #endif
 }
 
-- (void)setUpTabBarController
+- (void)setUpLoanManager
 {
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    tabBarController.delegate = self;
-    
-    UINavigationController *addLoanNavigationController = [tabBarController.viewControllers objectAtIndex:0];
-    self.addLoanViewController = [addLoanNavigationController.viewControllers objectAtIndex:0];
+    (void)[[LoanManager alloc] initWithManagedObjectContext:self.managedObjectContext];
 }
 
 @end

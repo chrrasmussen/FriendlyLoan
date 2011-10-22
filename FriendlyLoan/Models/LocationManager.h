@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface LocationManager : NSObject
+
+@protocol LocationManagerDelegate;
+
+@interface LocationManager : NSObject <CLLocationManagerDelegate>
+
+@property (nonatomic, weak) id<LocationManagerDelegate> delegate;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *lastKnownLocation;
+
+- (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
 
 @end

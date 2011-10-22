@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TabBarController : NSObject
+
+@interface TabBarController : UITabBarController <UITabBarControllerDelegate>
 
 @end

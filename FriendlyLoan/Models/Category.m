@@ -27,6 +27,8 @@ static NSArray *_categoriesByIndex;
 static NSDictionary *_categoriesByID;
 static Category *_unknownCategory;
 
+static NSCache *_storedCategories;
+
 + (NSUInteger)numberOfCategories
 {
     return [[self categoriesByIndex] count];
@@ -45,8 +47,19 @@ static Category *_unknownCategory;
 
 + (Category *)categoryForCategoryID:(NSNumber *)categoryID
 {
-    NSDictionary *categoryData = [[self categoriesByID] objectForKey:[categoryID stringValue]];
-    return [[self alloc] initWithCategoryData:categoryData];
+    if (_storedCategories == nil)
+        _storedCategories = [[NSCache alloc] init];
+    
+    Category *category = [_storedCategories objectForKey:categoryID];
+    if (category == nil)
+    {
+        NSDictionary *categoryData = [[self categoriesByID] objectForKey:[categoryID stringValue]];
+        category = [[self alloc] initWithCategoryData:categoryData];
+        
+        [_storedCategories setObject:category forKey:categoryID];
+    }
+    
+    return category;
 }
 
 + (Category *)categoryForIndex:(NSUInteger)index
@@ -55,7 +68,9 @@ static Category *_unknownCategory;
         return nil;
     
     NSDictionary *categoryData = [[self categoriesByIndex] objectAtIndex:index];
-    return [[self alloc] initWithCategoryData:categoryData];
+    NSNumber *categoryID = [categoryData objectForKey:@"categoryID"];
+    
+    return [[self class] categoryForCategoryID:categoryID];
 }
 
 - (BOOL)hidden
@@ -136,7 +151,8 @@ static Category *_unknownCategory;
     {
         NSMutableDictionary *categoriesByID = [[NSMutableDictionary alloc] init];
         
-        for (NSDictionary *currentCategory in [self categoriesByIndex])
+        NSArray *allCategories = [[self categories] objectForKey:@"categories"];
+        for (NSDictionary *currentCategory in allCategories)
         {
             NSNumber *categoryID = [currentCategory objectForKey:@"categoryID"];
             [categoriesByID setValue:currentCategory forKey:[categoryID stringValue]];

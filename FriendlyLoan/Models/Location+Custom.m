@@ -8,11 +8,6 @@
 
 #import "Location+Custom.h"
 
-@interface Location ()
-
-- (void)test;
-
-@end
 
 @implementation Location (Custom)
 
@@ -31,7 +26,6 @@
 
 - (CLLocationCoordinate2D)coordinate
 {
-    NSLog(@"Coordinate");
     CLLocationCoordinate2D location;
     location.latitude = [self.latitude doubleValue];
     location.longitude = [self.longitude doubleValue];
@@ -39,11 +33,10 @@
     return location;
 }
 
-//- (NSString *)title
-//{
-//    [self test];
-//    return self.placeName;
-//}
+- (NSString *)title
+{
+    return self.placeName;
+}
 
 
 #pragma mark - Private methods

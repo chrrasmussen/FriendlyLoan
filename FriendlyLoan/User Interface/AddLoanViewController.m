@@ -15,13 +15,7 @@
 #import "LoanManager.h"
 
 
-const CLLocationDistance kDistanceFilter = 100;
-
-
 @interface AddLoanViewController ()
-
-- (void)startUpdatingLocation;
-- (void)stopUpdatingLocation;
 
 - (Transaction *)addTransaction;
 
@@ -32,7 +26,6 @@ const CLLocationDistance kDistanceFilter = 100;
 
 @implementation AddLoanViewController
 
-@synthesize locationManager, lastKnownLocation;
 @synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch;
 
 - (void)didReceiveMemoryWarning
@@ -44,12 +37,6 @@ const CLLocationDistance kDistanceFilter = 100;
 }
 
 #pragma mark - Override methods
-
-// FIXME: Update
-- (BOOL)hasChanges
-{
-    return [super hasChanges];
-}
 
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
@@ -63,16 +50,7 @@ const CLLocationDistance kDistanceFilter = 100;
     
     theTansaction.createdTimestamp = [NSDate date];
     
-    if (self.lastKnownLocation != nil)
-    {
-        Location *location = [[LoanManager sharedManager] newLocation];
-        
-        CLLocationCoordinate2D coordinate = self.lastKnownLocation.coordinate;
-        location.latitude = [NSNumber numberWithDouble:coordinate.latitude];
-        location.longitude = [NSNumber numberWithDouble:coordinate.longitude];
-        
-        theTansaction.location = location;
-    }
+    [theTansaction addCurrentLocation];
 }
 
 - (void)resetFields
@@ -107,10 +85,10 @@ const CLLocationDistance kDistanceFilter = 100;
 
 - (void)setAttachLocationState:(BOOL)theAttachLocationState
 {
-    if (theAttachLocationState == YES)
-        [self startUpdatingLocation];
-    else
-        [self stopUpdatingLocation];
+//    if (theAttachLocationState == YES)
+//        [self startUpdatingLocation];
+//    else
+//        [self stopUpdatingLocation];
     
     if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
         return;
@@ -164,8 +142,8 @@ const CLLocationDistance kDistanceFilter = 100;
     
     // Set initial state for attach location
     self.attachLocationSwitch.on = self.attachLocationState;
-    if (self.attachLocationState == YES)
-        [self startUpdatingLocation];
+//    if (self.attachLocationState == YES)
+//        [self startUpdatingLocation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -177,8 +155,8 @@ const CLLocationDistance kDistanceFilter = 100;
 {
     [super viewWillDisappear:animated];
     
-    if (self.attachLocationState == YES)
-        [self stopUpdatingLocation];
+//    if (self.attachLocationState == YES)
+//        [self stopUpdatingLocation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -209,58 +187,7 @@ const CLLocationDistance kDistanceFilter = 100;
     }
 }
 
-#pragma mark - CLLocationManagerDelegate methods
-
-// FIXME: Fix this
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    NSLog(@"%s %d %d", (char *)_cmd, status, [CLLocationManager locationServicesEnabled]);
-//    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
-}
-
-// FIXME: Update method
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    // If it's a relatively recent event, turn off updates to save power
-    NSDate* eventDate = newLocation.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0)
-    {
-        self.lastKnownLocation = newLocation;
-        NSLog(@"Delegated:%@", newLocation);
-    }
-    // else skip the event and process the next one.
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"%s %d %d %@", (char *)_cmd, [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled], error);
-}
-
 #pragma mark - Private methods
-
-- (void)startUpdatingLocation
-{
-    NSLog(@"%s %d %d", (char *)_cmd, [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled]);
-    
-    if (self.locationManager == nil)
-        self.locationManager = [[CLLocationManager alloc] init];
-    
-    self.locationManager.delegate = self;
-//    self.locationManager.purpose = NSLocalizedString(@"This app uses the location services to determine your location when adding a loan.", nil); // TODO: Add proper description
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.distanceFilter = kDistanceFilter;
-    
-    NSLog(@"Starting update");
-    [self.locationManager startUpdatingLocation];
-    
-    NSLog(@"Initial:%@", self.locationManager.location);
-}
-
-- (void)stopUpdatingLocation
-{
-    [self.locationManager stopUpdatingLocation];
-}
 
 - (Transaction *)addTransaction
 {
@@ -274,9 +201,7 @@ const CLLocationDistance kDistanceFilter = 100;
 
 - (void)detailsViewControllerAdd:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self resetFields];
-//    [self popToBlankViewControllerAnimated:YES];
+    [self popToBlankViewControllerAnimated:YES];
 }
 
 @end

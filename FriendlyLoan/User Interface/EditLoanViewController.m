@@ -42,12 +42,6 @@ enum {
 
 #pragma mark - Override methods
 
-// FIXME: Update
-- (BOOL)hasChanges
-{
-    return [super hasChanges];
-}
-
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
     self.saveBarButtonItem.enabled = enabled;

@@ -10,21 +10,31 @@
 #import <CoreData/CoreData.h>
 
 #import "Models.h"
+#import "LocationManagerDelegate.h"
 
 
-@interface LoanManager : NSObject
+@class LocationManager;
+
+@interface LoanManager : NSObject <LocationManagerDelegate>
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *locationManagedObjectContext;
+
+@property (nonatomic, strong, readonly) LocationManager *locationManager;
+@property (nonatomic, strong, readonly) NSMutableSet *transactionsWaitingForLocation;
 
 + (id)sharedManager;
-+ (void)setSharedManager:(id)manager;
++ (void)setSharedManager:(LoanManager *)manager;
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (Transaction *)newTransaction;
-- (Friend *)newFriend;
-- (Location *)newLocation;
+- (void)addFriendID:(NSNumber *)friendID forTransaction:(Transaction *)transaction;
+- (void)addCurrentLocationForTransaction:(Transaction *)transaction;
 
 - (void)saveContext;
+
+- (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
 
 @end

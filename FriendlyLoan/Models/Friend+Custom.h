@@ -12,6 +12,9 @@
 
 + (NSString *)friendNameForFriendID:(NSNumber *)friendID;
 + (UIImage *)friendImageForFriendID:(NSNumber *)friendID;
+
+- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
+
 - (NSString *)fullName;
 
 @end

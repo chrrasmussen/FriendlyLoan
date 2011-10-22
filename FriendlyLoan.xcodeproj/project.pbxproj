@@ -14,12 +14,13 @@
 		6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3C1440C2830090FAA4 /* MissingProfilePicture.png */; };
 		6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */; };
 		6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */; };
+		6914CC451440D6C30090FAA4 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC441440D6C30090FAA4 /* LocationManager.m */; };
+		6914CC491440E00F0090FAA4 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC481440E00E0090FAA4 /* TabBarController.m */; };
 		69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */; };
 		69204A96142012D600D6A075 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69204A94142012D600D6A075 /* libTestFlight.a */; };
 		69204A9A1420162500D6A075 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A991420162500D6A075 /* SettingsViewController.m */; };
-		693E5094143A1C6000F12459 /* RIORelativeTime.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E5093143A1C6000F12459 /* RIORelativeTime.strings */; };
-		693E5097143A1C7600F12459 /* RIORelativeTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E5096143A1C7600F12459 /* RIORelativeTime.m */; };
-		693E509A143A1CFD00F12459 /* NSDate+RIORelativeTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E5099143A1CFD00F12459 /* NSDate+RIORelativeTime.m */; };
+		693E5097143A1C7600F12459 /* RIORelativeDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E5096143A1C7600F12459 /* RIORelativeDate.m */; };
+		693E509A143A1CFD00F12459 /* NSDate+RIORelativeDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E5099143A1CFD00F12459 /* NSDate+RIORelativeDate.m */; };
 		6940EEC81433CD81003361E6 /* Activities-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EE9C1433CD80003361E6 /* Activities-Highlighted.png */; };
 		6940EEC91433CD81003361E6 /* Activities-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EE9D1433CD80003361E6 /* Activities-Highlighted@2x.png */; };
 		6940EECA1433CD81003361E6 /* Activities-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EE9E1433CD80003361E6 /* Activities-Normal.png */; };
@@ -71,6 +72,8 @@
 		6972F0B11426AB430047305C /* EditLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B01426AB430047305C /* EditLoanViewController.m */; };
 		6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */; };
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
+		69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69872F84145238E400BA1FE6 /* RIORelativeDate.strings */; };
+		69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */; };
 		6987FFB1142BCD9E00270B26 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 6987FFAF142BCD9E00270B26 /* Friends.png */; };
 		6987FFB2142BCD9E00270B26 /* Friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6987FFB0142BCD9E00270B26 /* Friends@2x.png */; };
 		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
@@ -91,13 +94,15 @@
 		69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AE6352142929840016AF6F /* CoreLocation.framework */; };
 		69B6B1FF143E535E0014A615 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B1FE143E535E0014A615 /* Transaction.m */; };
 		69B6B202143E535F0014A615 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B201143E535F0014A615 /* Friend.m */; };
-		69B6B207143E74DE0014A615 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B6B206143E74DE0014A615 /* Location.m */; };
 		69BA69C1141ADC23008C4384 /* Transaction+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C0141ADC23008C4384 /* Transaction+Custom.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
 		69C3CEB0141A7B4C00549213 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* FriendsViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
 		69C3CECD141A7EB400549213 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CECC141A7EB400549213 /* DetailsViewController.m */; };
+		69D3360914413EF700CB4E25 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D3360814413EF700CB4E25 /* Location.m */; };
+		69D3361014414E7800CB4E25 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360E14414E7800CB4E25 /* Default.png */; };
+		69D3361114414E7800CB4E25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360F14414E7800CB4E25 /* Default@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +124,10 @@
 		6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePicture@2x.png"; sourceTree = "<group>"; };
 		6914CC401440C4270090FAA4 /* UIImage+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RIOAdditions.h"; sourceTree = "<group>"; };
 		6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RIOAdditions.m"; sourceTree = "<group>"; };
+		6914CC431440D6C30090FAA4 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		6914CC441440D6C30090FAA4 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		6914CC471440E00E0090FAA4 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabBarController.h; path = ../TabBarController.h; sourceTree = "<group>"; };
+		6914CC481440E00E0090FAA4 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = ../TabBarController.m; sourceTree = "<group>"; };
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -126,11 +135,10 @@
 		69204A95142012D600D6A075 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		69204A981420162500D6A075 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		69204A991420162500D6A075 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		693E5093143A1C6000F12459 /* RIORelativeTime.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = RIORelativeTime.strings; sourceTree = "<group>"; };
-		693E5095143A1C7600F12459 /* RIORelativeTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIORelativeTime.h; sourceTree = "<group>"; };
-		693E5096143A1C7600F12459 /* RIORelativeTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIORelativeTime.m; sourceTree = "<group>"; };
-		693E5098143A1CFD00F12459 /* NSDate+RIORelativeTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIORelativeTime.h"; sourceTree = "<group>"; };
-		693E5099143A1CFD00F12459 /* NSDate+RIORelativeTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIORelativeTime.m"; sourceTree = "<group>"; };
+		693E5095143A1C7600F12459 /* RIORelativeDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIORelativeDate.h; sourceTree = "<group>"; };
+		693E5096143A1C7600F12459 /* RIORelativeDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIORelativeDate.m; sourceTree = "<group>"; };
+		693E5098143A1CFD00F12459 /* NSDate+RIORelativeDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIORelativeDate.h"; sourceTree = "<group>"; };
+		693E5099143A1CFD00F12459 /* NSDate+RIORelativeDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIORelativeDate.m"; sourceTree = "<group>"; };
 		6940EE9C1433CD80003361E6 /* Activities-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activities-Highlighted.png"; sourceTree = "<group>"; };
 		6940EE9D1433CD80003361E6 /* Activities-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activities-Highlighted@2x.png"; sourceTree = "<group>"; };
 		6940EE9E1433CD80003361E6 /* Activities-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activities-Normal.png"; sourceTree = "<group>"; };
@@ -183,11 +191,16 @@
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
 		6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6948E71614310F2A00A7BFFE /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
+		6967C4A2145300AF00ADDEA1 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/RIORelativeDate.strings; sourceTree = "<group>"; };
 		6972F0AF1426AB430047305C /* EditLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewController.h; sourceTree = "<group>"; };
 		6972F0B01426AB430047305C /* EditLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLoanViewController.m; sourceTree = "<group>"; };
 		6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoanViewController.h; sourceTree = "<group>"; };
 		6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoanViewController.m; sourceTree = "<group>"; };
 		697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
+		6980CE471441248D00C658A0 /* LocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerDelegate.h; sourceTree = "<group>"; };
+		69872F83145238E400BA1FE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIORelativeDate.strings; sourceTree = "<group>"; };
+		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
+		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
 		6987FFAF142BCD9E00270B26 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friends.png; sourceTree = "<group>"; };
 		6987FFB0142BCD9E00270B26 /* Friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Friends@2x.png"; sourceTree = "<group>"; };
 		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -218,8 +231,6 @@
 		69B6B1FE143E535E0014A615 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		69B6B200143E535F0014A615 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		69B6B201143E535F0014A615 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
-		69B6B205143E74DE0014A615 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		69B6B206143E74DE0014A615 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
@@ -232,6 +243,10 @@
 		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
 		69C3CECB141A7EB400549213 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		69C3CECC141A7EB400549213 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		69D3360714413EF700CB4E25 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		69D3360814413EF700CB4E25 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		69D3360E14414E7800CB4E25 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		69D3360F14414E7800CB4E25 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,12 +281,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6914CC461440D6C80090FAA4 /* Location Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6980CE471441248D00C658A0 /* LocationManagerDelegate.h */,
+				6914CC431440D6C30090FAA4 /* LocationManager.h */,
+				6914CC441440D6C30090FAA4 /* LocationManager.m */,
+			);
+			name = "Location Manager";
+			sourceTree = "<group>";
+		};
 		69204A73141FE9AF00D6A075 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				693E5091143A1B1B00F12459 /* RIORelativeTime */,
-				69204A931420124400D6A075 /* TestFlight */,
 				69204A75141FE9B500D6A075 /* Additions */,
+				693E5091143A1B1B00F12459 /* RIORelativeDate */,
+				69204A931420124400D6A075 /* TestFlight */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -283,6 +308,8 @@
 				69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */,
 				6914CC401440C4270090FAA4 /* UIImage+RIOAdditions.h */,
 				6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */,
+				69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */,
+				69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -296,16 +323,16 @@
 			path = TestFlight;
 			sourceTree = "<group>";
 		};
-		693E5091143A1B1B00F12459 /* RIORelativeTime */ = {
+		693E5091143A1B1B00F12459 /* RIORelativeDate */ = {
 			isa = PBXGroup;
 			children = (
-				693E5093143A1C6000F12459 /* RIORelativeTime.strings */,
-				693E5095143A1C7600F12459 /* RIORelativeTime.h */,
-				693E5096143A1C7600F12459 /* RIORelativeTime.m */,
-				693E5098143A1CFD00F12459 /* NSDate+RIORelativeTime.h */,
-				693E5099143A1CFD00F12459 /* NSDate+RIORelativeTime.m */,
+				69872F84145238E400BA1FE6 /* RIORelativeDate.strings */,
+				693E5098143A1CFD00F12459 /* NSDate+RIORelativeDate.h */,
+				693E5099143A1CFD00F12459 /* NSDate+RIORelativeDate.m */,
+				693E5095143A1C7600F12459 /* RIORelativeDate.h */,
+				693E5096143A1C7600F12459 /* RIORelativeDate.m */,
 			);
-			path = RIORelativeTime;
+			path = RIORelativeDate;
 			sourceTree = "<group>";
 		};
 		6941FF63141A6D6B00FB3A24 = {
@@ -349,7 +376,7 @@
 			children = (
 				6941FF83141A6D6B00FB3A24 /* AppDelegate.h */,
 				6941FF84141A6D6B00FB3A24 /* AppDelegate.m */,
-				69C3CEDB141AB07400549213 /* User Interface */,
+				69C3CEDB141AB07400549213 /* View Controllers */,
 				69C3CEDA141AB06800549213 /* Models */,
 				69204A73141FE9AF00D6A075 /* Libraries */,
 				69C3CED9141A880900549213 /* Resources */,
@@ -388,14 +415,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		694A59F31426C0D5000B5190 /* Categories */ = {
+		694A59F31426C0D5000B5190 /* Categories View */ = {
 			isa = PBXGroup;
 			children = (
 				69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */,
 				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
 				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
 			);
-			name = Categories;
+			name = "Categories View";
 			sourceTree = "<group>";
 		};
 		698EDBEA1426D4630028C16C /* Custom Text Field */ = {
@@ -510,12 +537,12 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69B6B205143E74DE0014A615 /* Location.h */,
-				69B6B206143E74DE0014A615 /* Location.m */,
 				69B6B1FD143E535E0014A615 /* Transaction.h */,
 				69B6B1FE143E535E0014A615 /* Transaction.m */,
 				69B6B200143E535F0014A615 /* Friend.h */,
 				69B6B201143E535F0014A615 /* Friend.m */,
+				69D3360714413EF700CB4E25 /* Location.h */,
+				69D3360814413EF700CB4E25 /* Location.m */,
 			);
 			name = "Generated Classes";
 			sourceTree = "<group>";
@@ -566,7 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				698EDBEA1426D4630028C16C /* Custom Text Field */,
-				694A59F31426C0D5000B5190 /* Categories */,
+				694A59F31426C0D5000B5190 /* Categories View */,
 				6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */,
 				6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */,
 				69C3CEC8141A7EA600549213 /* AddLoanViewController.h */,
@@ -590,6 +617,7 @@
 		69C3CED9141A880900549213 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				69D3360D14414E6900CB4E25 /* Default */,
 				69A9B26114311725006A0D3F /* App Icon */,
 				69934745141C362C004DFEF1 /* Tab Bar */,
 				69BA69BC141AD4C6008C4384 /* Categories */,
@@ -605,6 +633,7 @@
 				697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */,
 				69934788141D0B74004DFEF1 /* Models.h */,
 				69AC1165143E4AFA001A0810 /* Loan Manager */,
+				6914CC461440D6C80090FAA4 /* Location Manager */,
 				69B6B203143E54160014A615 /* Category */,
 				69BA69C6141AE927008C4384 /* Generated Classes */,
 				69BA69C7141AE941008C4384 /* Custom Classes */,
@@ -612,17 +641,29 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		69C3CEDB141AB07400549213 /* User Interface */ = {
+		69C3CEDB141AB07400549213 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				6941FFA7141A6DAC00FB3A24 /* FriendlyLoan.storyboard */,
+				6914CC471440E00E0090FAA4 /* TabBarController.h */,
+				6914CC481440E00E0090FAA4 /* TabBarController.m */,
 				69C3CEBD141A7BA400549213 /* Add/Edit Loan */,
 				69C3CEB1141A7B5000549213 /* People */,
 				69C3CEB5141A7B6A00549213 /* History */,
 				69C3CEB9141A7B8C00549213 /* Settings */,
 				69C3CEC1141A7BF600549213 /* Details */,
 			);
+			name = "View Controllers";
 			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		69D3360D14414E6900CB4E25 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				69D3360E14414E7800CB4E25 /* Default.png */,
+				69D3360F14414E7800CB4E25 /* Default@2x.png */,
+			);
+			name = Default;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -679,6 +720,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				nb,
 			);
 			mainGroup = 6941FF63141A6D6B00FB3A24;
 			productRefGroup = 6941FF6F141A6D6B00FB3A24 /* Products */;
@@ -739,13 +781,15 @@
 				6940EEF91433D294003361E6 /* Other-Highlighted@2x.png in Resources */,
 				6940EEFA1433D294003361E6 /* Other-Normal.png in Resources */,
 				6940EEFB1433D294003361E6 /* Other-Normal@2x.png in Resources */,
-				693E5094143A1C6000F12459 /* RIORelativeTime.strings in Resources */,
+				69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */,
 				691292B8143E24700081DC09 /* KeyboardBackground-Highlighted.png in Resources */,
 				691292B9143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png in Resources */,
 				691292BA143E24700081DC09 /* KeyboardBackground-Normal.png in Resources */,
 				691292BB143E24700081DC09 /* KeyboardBackground-Normal@2x.png in Resources */,
 				6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */,
 				6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */,
+				69D3361014414E7800CB4E25 /* Default.png in Resources */,
+				69D3361114414E7800CB4E25 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,15 +840,18 @@
 				6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */,
 				69A9B26514311F0D006A0D3F /* Category.m in Sources */,
 				69A67F821433FC7600AAEC35 /* FriendsSearchResultsController.m in Sources */,
-				693E5097143A1C7600F12459 /* RIORelativeTime.m in Sources */,
-				693E509A143A1CFD00F12459 /* NSDate+RIORelativeTime.m in Sources */,
+				693E5097143A1C7600F12459 /* RIORelativeDate.m in Sources */,
+				693E509A143A1CFD00F12459 /* NSDate+RIORelativeDate.m in Sources */,
 				69AC115D143E4806001A0810 /* Location+Custom.m in Sources */,
 				69AC1168143E4B2B001A0810 /* LoanManager.m in Sources */,
 				69AC1174143E5009001A0810 /* Friend+Custom.m in Sources */,
 				69B6B1FF143E535E0014A615 /* Transaction.m in Sources */,
 				69B6B202143E535F0014A615 /* Friend.m in Sources */,
-				69B6B207143E74DE0014A615 /* Location.m in Sources */,
 				6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */,
+				6914CC451440D6C30090FAA4 /* LocationManager.m in Sources */,
+				6914CC491440E00F0090FAA4 /* TabBarController.m in Sources */,
+				69D3360914413EF700CB4E25 /* Location.m in Sources */,
+				69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,6 +888,15 @@
 				6941FF9A141A6D6B00FB3A24 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		69872F84145238E400BA1FE6 /* RIORelativeDate.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69872F83145238E400BA1FE6 /* en */,
+				6967C4A2145300AF00ADDEA1 /* nb */,
+			);
+			name = RIORelativeDate.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

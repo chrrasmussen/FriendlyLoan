@@ -8,67 +8,123 @@
 
 #import "LoanManager.h"
 
+#import "LocationManager.h"
+
 @implementation LoanManager
 
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize locationManagedObjectContext = _locationManagedObjectContext;
+@synthesize locationManager = _locationManager;
+@synthesize transactionsWaitingForLocation = _transactionsWaitingForLocation;
 
 static LoanManager *_sharedManager;
+
+#pragma mark - Creating loan manager
 
 + (id)sharedManager
 {
     if (_sharedManager == nil)
-        _sharedManager = [[[self class] alloc] init];
+        [NSException raise:@"SharedManagerNotSet" format:@"Please instantiate a loan manager"];
     
     return _sharedManager;
 }
 
-+ (void)setSharedManager:(id)manager
++ (void)setSharedManager:(LoanManager *)manager
 {
-    if ([manager isKindOfClass:[LoanManager class]])
-        _sharedManager = manager;
+    if (manager == nil)
+        [NSException raise:@"LoanManagerIsNil" format:@"Please specify a loan manager"];
+    
+    _sharedManager = manager;
 }
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self) {
+        // Set first instance as shared manager
         if (_sharedManager == nil)
             _sharedManager = self;
         
+        // Set up instance variables
         _managedObjectContext = context;
+        
+        _locationManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_locationManagedObjectContext performBlockAndWait:^{
+            _locationManagedObjectContext.parentContext = context;
+        }];
+        
+        _locationManager = [[LocationManager alloc] init];
+        _locationManager.delegate = self;
+        
+        _transactionsWaitingForLocation = [[NSMutableSet alloc] init];
     }
     return self;
 }
 
-#pragma mark - Manager methods
+#pragma mark - Manipulating transaction
 
 - (Transaction *)newTransaction
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    return [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];;
 }
 
-- (Friend *)newFriend
+- (void)addFriendID:(NSNumber *)friendID forTransaction:(Transaction *)transaction
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+    if (transaction.friend == nil)
+        transaction.friend = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+    
+    [transaction.friend populateFieldsWithFriendID:friendID];
 }
 
-- (Location *)newLocation
+- (void)addCurrentLocationForTransaction:(Transaction *)transaction
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+    if (transaction.location == nil)
+    {
+        transaction.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+        transaction.location.status = [NSNumber numberWithInt:kLocationStatusLocating];
+    }
+    
+    CLLocationCoordinate2D lastKnownLocation = [[self.locationManager lastKnownLocation] coordinate];
+    transaction.location.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
+    transaction.location.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
+    
+    NSLog(@"Added location for transaction:%@", transaction);
+}
+
+#pragma mark - Location methods
+
+- (void)startUpdatingLocation
+{
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)stopUpdatingLocation
+{
+    [self.locationManager stopUpdatingLocation];
+}
+
+- (void)resolvePlaceNameForLocation:(CLLocation *)CLLocation
+{
+    
+}
+
+#pragma mark - LocationManagerDelegate methods
+
+- (void)locationManager:(LocationManager *)locationManager didFailWithError:(NSError *)error
+{
+    NSLog(@"%s", (char *)_cmd);
+}
+
+- (void)locationManager:(LocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
+{
+    NSLog(@"%s", (char *)_cmd);
+//    [_transactionsWaitingForLocation removeAllObjects];
 }
 
 #pragma mark - Core Data stack
 
-- (NSManagedObjectContext *)managedObjectContext
-{
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate managedObjectContext];
-}
-
 - (void)saveContext
 {
-    NSLog(@"Saving context...");
-    
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil)
@@ -85,6 +141,5 @@ static LoanManager *_sharedManager;
         } 
     }
 }
-
 
 @end

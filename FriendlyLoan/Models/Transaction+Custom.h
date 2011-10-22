@@ -16,4 +16,7 @@
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
 
+- (void)addFriendID:(NSNumber *)friendID;
+- (void)addCurrentLocation;
+
 @end

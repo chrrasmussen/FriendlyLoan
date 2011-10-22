@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class LocationManager;
+
 @protocol LocationManagerDelegate <NSObject>
+
+@optional
+- (void)locationManager:(LocationManager *)locationManager didFailWithError:(NSError *)error;
+- (void)locationManager:(LocationManager *)locationManager didRetrieveLocation:(CLLocation *)location;
 
 @end

@@ -10,6 +10,14 @@
 #import "MapKit/MapKit.h"
 
 
+enum {
+    kLocationStatusDisabled  = 0,
+    kLocationStatusLocating  = 1,
+    kLocationStatusFailed    = 2,
+    kLocationStatusRetrieved = 3
+};
+
+
 @interface Location (Custom) <MKAnnotation>
 
 @end

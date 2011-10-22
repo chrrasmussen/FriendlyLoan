@@ -56,7 +56,7 @@
 			<key>hidden</key>
 			<true/>
 			<key>categoryID</key>
-			<integer>5</integer>
+			<integer>-1</integer>
 			<key>categoryName</key>
 			<string>Payback</string>
 			<key>imageName</key>

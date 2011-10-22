@@ -7,14 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "AbstractLoanViewController.h"
 
 
-@interface AddLoanViewController : AbstractLoanViewController <CLLocationManagerDelegate>
-
-@property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) CLLocation *lastKnownLocation;
+@interface AddLoanViewController : AbstractLoanViewController
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;

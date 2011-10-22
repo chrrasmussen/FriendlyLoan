@@ -126,12 +126,6 @@ const NSInteger kDefaultCategoryID = 0;
 
 #pragma mark - Override methods
 
-// FIXME: Check all input values against a prototype (Empty or Transaction)
-- (BOOL)hasChanges
-{
-    return NO;
-}
-
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
 {
 
@@ -142,23 +136,23 @@ const NSInteger kDefaultCategoryID = 0;
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     
+    [theTransaction addFriendID:self.selectedFriendID];
+    
     theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;
-    
-    // Add friend
-    Friend *friend = [[LoanManager sharedManager] newFriend];
-    friend.friendID = self.selectedFriendID;
-    
-    theTransaction.friend = friend;
 }
 
 - (void)resetFields
 {
-    self.amountTextField.text = @"";
-    [self updateSelectedFriendID:0];
+    self.amountTextField.text = nil;
+    [self updateSelectedFriendID:nil];
     
     [self updateSelectedCategoryID:[NSNumber numberWithInt:kDefaultCategoryID]];
-    self.noteTextField.text = @"";
+    self.noteTextField.text = nil;
+    
+    // TODO: Set the state of attachLocation?
+    
+    [self validateAmountAndFriend];
 }
 
 #pragma mark - Actions
@@ -184,7 +178,7 @@ const NSInteger kDefaultCategoryID = 0;
     }
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -8,9 +8,10 @@
 
 #import "FriendsViewController.h"
 
-#import "LoanManager.h"
-
 #import "HistoryViewController.h"
+
+#import "LoanManager.h"
+#import "NSDecimalNumber+RIOAdditions.h"
 
 
 NSString * const kResultFriendID    = @"friendID";
@@ -18,6 +19,8 @@ NSString * const kResultFriendName  = @"friendName";
 NSString * const kResultDebt        = @"debt";
 
 NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
+
+const NSInteger kPaybackCategory    = -1;
 
 
 @interface FriendsViewController ()
@@ -27,6 +30,8 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)setUpFetchedResultsController;
 - (void)performFetch;
 - (void)cleanAndSortFetchedResult;
+
+- (void)clearDebtForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -108,7 +113,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
+#pragma mark - TableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -125,10 +130,22 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     static NSString *cellIdentifier = @"FriendCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Clear debt
+    [self clearDebtForIndexPath:indexPath];
+    
+    // Delete row from data source
+    [self.sortedResult removeObjectAtIndex:indexPath.row];
+    
+    // Delete row from table view
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -144,7 +161,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 {
     if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
     {
-        NSDictionary *result = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        NSDictionary *result = [self.sortedResult objectAtIndex:[[self.tableView indexPathForSelectedRow] row]];
         NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
@@ -157,13 +174,11 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (__fetchedResultsController != nil)
+    if (__fetchedResultsController == nil)
     {
-        return __fetchedResultsController;
+        [self setUpFetchedResultsController];
+        [self performFetch];
     }
-    
-    [self setUpFetchedResultsController];
-    [self performFetch];
     
     return __fetchedResultsController;
 }
@@ -281,7 +296,26 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kResultDebt ascending:NO];
     [result sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    self.sortedResult = [result copy];
+    self.sortedResult = result;
+}
+
+- (void)clearDebtForIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *friendObject = [self.sortedResult objectAtIndex:indexPath.row];
+    
+    NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
+    NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
+    
+    Transaction *transaction = [[LoanManager sharedManager] newTransaction];
+    
+    [transaction addFriendID:friendID];
+    transaction.amount = [debt decimalNumberByNegating];
+    
+    transaction.categoryID = [NSNumber numberWithInt:kPaybackCategory];
+    
+    transaction.createdTimestamp = [NSDate date];
+    
+    [[LoanManager sharedManager] saveContext];
 }
 
 @end
