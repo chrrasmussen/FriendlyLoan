@@ -1,5 +1,5 @@
 //
-//  Transaction+CustomMethods.m
+//  Transaction+Custom.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 10.09.11.
@@ -7,13 +7,12 @@
 //
 
 #import "Transaction+Custom.h"
-#import "NSDecimalNumber+RIOAdditions.h"
 
 #import "Friend+Custom.h"
 #import "Location+Custom.h"
 
+#import "NSDecimalNumber+RIOAdditions.h"
 #import "RIORelativeDate.h"
-#import "LocationManager.h" // TODO: Move to Location+Custom.h
 #import "AppDelegate.h"
 
 
@@ -37,15 +36,14 @@
 
 - (void)addCurrentLocation
 {
+    // FIXME: Fix this code
+    // - Rename to updateCurrentLocation
+    // - Add a method to remove location? May not be necessary
     if (self.location == nil)
     {
         self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
-        self.location.status = [NSNumber numberWithInt:kLocationStatusLocating];
+        [self.location updateLocation];
     }
-    
-    CLLocationCoordinate2D lastKnownLocation = [[[LocationManager sharedManager] qualifiedLocation] coordinate];
-    self.location.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
-    self.location.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
     
     NSLog(@"Added location for transaction");
 }

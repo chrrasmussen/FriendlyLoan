@@ -8,7 +8,7 @@
 
 #import "AbstractLoanViewController.h"
 
-#import "ManagedObjectModels.h"
+#import "Models.h"
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"

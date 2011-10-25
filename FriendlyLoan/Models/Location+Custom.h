@@ -20,4 +20,6 @@ enum {
 
 @interface Location (Custom) <MKAnnotation>
 
+- (void)updateLocation;
+
 @end

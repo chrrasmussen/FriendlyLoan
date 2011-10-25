@@ -9,7 +9,7 @@
 #import "HistoryViewController.h"
 
 #import "AppDelegate.h"
-#import "ManagedObjectModels.h"
+#import "Models.h"
 #import "DetailsViewController.h"
 #import "Category.h"
 #import "NSDate+RIOAdditions.h"

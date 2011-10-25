@@ -19,9 +19,7 @@
 @end
 
 
-@implementation AppDelegate {
-    UIBackgroundTaskIdentifier _backgroundTask;
-}
+@implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -54,11 +52,10 @@
     // TODO: What I need to account for:
     // Terminates if app is forced closed (by user or otherwise)
     // Background-stuff?
-    
-//    if ([[[LoanManager sharedManager] transactionsWaitingForLocation] count] == 0)
-//    {
-//        [[[LoanManager sharedManager] locationManager] stopUpdatingLocation];
-//    }
+    if ([[LocationManager sharedManager] requiresLocationServicesInBackground] == NO)
+    {
+        [[LocationManager sharedManager] stopUpdatingLocation];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -78,7 +75,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-//    [[LoanManager sharedManager] saveContext];
+//    [self saveContext];
     NSLog(@"Terminated");
 }
 

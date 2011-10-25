@@ -8,6 +8,8 @@
 
 #import "Location+Custom.h"
 
+#import "LocationManager.h"
+
 
 @implementation Location (Custom)
 
@@ -20,6 +22,16 @@
     {
         NSLog(@"Resolving place name");
     }
+}
+
+- (void)updateLocation
+{
+    // FIXME: Set correct flag depending on status
+    self.status = [NSNumber numberWithInt:kLocationStatusLocating];
+    
+    CLLocationCoordinate2D lastKnownLocation = [[[LocationManager sharedManager] qualifiedLocation] coordinate];
+    self.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
+    self.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
 }
 
 #pragma mark - MKAnnotation methods
@@ -38,12 +50,11 @@
     return self.placeName;
 }
 
-
 #pragma mark - Private methods
 
-- (void)test
-{
-    NSLog(@"Test");
-}
+//- (void)test
+//{
+//    NSLog(@"Test");
+//}
 
 @end

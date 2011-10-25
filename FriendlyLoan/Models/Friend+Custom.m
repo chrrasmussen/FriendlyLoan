@@ -78,11 +78,10 @@ static NSCache *_thumbnailImages;
     return thumbnailImage;
 }
 
-// TODO: Add more fields
 - (void)populateFieldsWithFriendID:(NSNumber *)friendID;
 {
     // TODO: May need to clean up an existing Friend-entity
-    
+    // TODO: Add more fields
 //    ABAddressBookRef addressBook = ABAddressBookCreate();
 //    ABRecordID recordId = (ABRecordID)[friendID intValue];
 //    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);

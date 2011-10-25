@@ -9,7 +9,7 @@
 #import "FriendsViewController.h"
 
 #import "AppDelegate.h"
-#import "ManagedObjectModels.h"
+#import "Models.h"
 #import "HistoryViewController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"

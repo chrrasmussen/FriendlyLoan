@@ -12,7 +12,7 @@
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
-#import "Transaction+Custom.h"
+#import "Models.h"
 #import "LocationManager.h"
 
 
@@ -232,8 +232,8 @@
 
 - (void)startUpdatingLocation
 {
-    // TODO: Check if attach location switch is enabled
-    [[LocationManager sharedManager] startUpdatingLocation];
+    if (self.attachLocationState == YES)
+        [[LocationManager sharedManager] startUpdatingLocation];
 }
 
 - (void)stopUpdatingLocation

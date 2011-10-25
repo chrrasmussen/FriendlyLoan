@@ -9,6 +9,8 @@
 #import "LocationManager.h"
 #import "LocationManagerDelegate.h"
 
+#import "Models.h" // TODO: Implement
+
 
 const CLLocationDistance kDistanceFilter    = 500.0;
 const NSTimeInterval kTimeoutTime           = 300.0;
@@ -32,11 +34,11 @@ const CLLocationDistance kQualifiedAccuracy = 100.0;
     CLLocationManager *_locationManager;
     NSTimer *_timeoutTimer;
     CLLocation *_lastSuccessfulLocation;
+    NSSet *_transactionsWaitingForLocation;
 }
 
 @synthesize delegate;
 @synthesize locating = _locating;
-@synthesize transactionsWaitingForLocation;
 
 static LocationManager *_sharedManager;
 
@@ -61,7 +63,7 @@ static LocationManager *_sharedManager;
         if (_sharedManager == nil)
             _sharedManager = self;
         
-        // TODO: Setup (Unecessary?)
+        _transactionsWaitingForLocation = [[NSSet alloc] init];
     }
     return self;
 }
@@ -101,6 +103,11 @@ static LocationManager *_sharedManager;
 
 
 #pragma mark - Helper methods
+
+- (BOOL)requiresLocationServicesInBackground
+{
+    return ([_transactionsWaitingForLocation count] > 0);
+}
 
 - (CLLocation *)qualifiedLocation
 {

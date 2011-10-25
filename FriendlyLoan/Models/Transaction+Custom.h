@@ -1,5 +1,5 @@
 //
-//  Transaction+CustomMethods.h
+//  Transaction+Custom.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 10.09.11.

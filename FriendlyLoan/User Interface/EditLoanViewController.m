@@ -9,7 +9,7 @@
 #import "EditLoanViewController.h"
 #import "EditLoanViewControllerDelegate.h"
 
-#import "ManagedObjectModels.h"
+#import "Models.h"
 
 
 enum {

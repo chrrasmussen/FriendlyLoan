@@ -17,9 +17,8 @@
 @property (nonatomic, weak) id<LocationManagerDelegate> delegate;
 
 @property (nonatomic, readonly) BOOL locating;
+@property (nonatomic, readonly) BOOL requiresLocationServicesInBackground;
 @property (nonatomic, strong, readonly) CLLocation *qualifiedLocation;
-
-@property (nonatomic, strong, readonly) NSMutableSet *transactionsWaitingForLocation; // TODO: Store objectID's for the transaction which awaits a location
 
 + (id)sharedManager;
 + (void)setSharedManager:(LocationManager *)manager;
