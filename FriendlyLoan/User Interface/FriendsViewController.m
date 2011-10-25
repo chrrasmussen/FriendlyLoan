@@ -8,9 +8,10 @@
 
 #import "FriendsViewController.h"
 
+#import "AppDelegate.h"
+#import "ManagedObjectModels.h"
 #import "HistoryViewController.h"
 
-#import "LoanManager.h"
 #import "NSDecimalNumber+RIOAdditions.h"
 
 
@@ -152,8 +153,32 @@ const NSInteger kPaybackCategory    = -1;
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NSLocalizedString(@"Clear Debt", nil);
+    return NSLocalizedString(@"Settle", nil);
 }
+
+//- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"Begin");
+//}
+//
+//- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"End");
+//}
+//
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"Editing style");
+//    
+//    return UITableViewCellEditingStyleDelete;
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"Indent");
+//    
+//    return YES;
+//}
 
 #pragma mark - Storyboard
 
@@ -215,8 +240,10 @@ const NSInteger kPaybackCategory    = -1;
 
 - (void)setUpFetchedResultsController
 {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
     // Set up fetch request
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:[[LoanManager sharedManager] managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:appDelegate.managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
 //    fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
@@ -250,7 +277,7 @@ const NSInteger kPaybackCategory    = -1;
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
     
     // Create the fetch results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[LoanManager sharedManager] managedObjectContext] sectionNameKeyPath:nil cacheName:@"FriendsCache"];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:@"FriendsCache"];
 }
 
 - (void)performFetch
@@ -306,7 +333,7 @@ const NSInteger kPaybackCategory    = -1;
     NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
-    Transaction *transaction = [[LoanManager sharedManager] newTransaction];
+    Transaction *transaction = [Transaction newTransaction];
     
     [transaction addFriendID:friendID];
     transaction.amount = [debt decimalNumberByNegating];
@@ -315,7 +342,7 @@ const NSInteger kPaybackCategory    = -1;
     
     transaction.createdTimestamp = [NSDate date];
     
-    [[LoanManager sharedManager] saveContext];
+    [transaction save];
 }
 
 @end

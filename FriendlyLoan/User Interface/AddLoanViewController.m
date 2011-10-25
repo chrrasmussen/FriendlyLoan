@@ -12,14 +12,18 @@
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
-#import "LoanManager.h"
+#import "Transaction+Custom.h"
+#import "LocationManager.h"
 
 
 @interface AddLoanViewController ()
 
-- (Transaction *)addTransaction;
+- (void)addTransaction;
 
 - (void)detailsViewControllerAdd:(id)sender;
+
+- (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
 
 @end
 
@@ -35,6 +39,15 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+
+// TODO: Temp method
+- (void)showPeoplePickerController
+{
+    [super showPeoplePickerController];
+    
+    [self startUpdatingLocation];
+}
+
 
 #pragma mark - Override methods
 
@@ -57,8 +70,9 @@
 {
     [super resetFields];
     
-    // TODO: Is it necessary to reset attachLocationSwitch?
+    // TODO: Is it necessary to reset attachLocationSwitch? Probably (State may have changed will another view is visible)
 }
+
 
 #pragma mark - Managing the hierarchy
 
@@ -67,6 +81,7 @@
     [self.navigationController popToRootViewControllerAnimated:animated];
     [self resetFields];
 }
+
 
 #pragma mark - Properties
 
@@ -97,7 +112,13 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
 #pragma mark - Actions
+
+- (IBAction)textFieldDidBeginEditing:(id)sender
+{
+    [self startUpdatingLocation];
+}
 
 - (IBAction)borrow:(id)sender
 {
@@ -119,6 +140,7 @@
     [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
 }
 
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -137,26 +159,22 @@
 {
     [super viewWillAppear:animated];
     
-//    [self startUpdatingLocation];
-//    [self performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:3.0];
-    
     // Set initial state for attach location
     self.attachLocationSwitch.on = self.attachLocationState;
-//    if (self.attachLocationState == YES)
-//        [self startUpdatingLocation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    // Avoid the keyboard to be active when application is started
+    // Hide keyboard in order to avoid it becoming first responder when the view appears
+    [self hideKeyboard];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-//    if (self.attachLocationState == YES)
-//        [self stopUpdatingLocation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -170,6 +188,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - Storyboard methods
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -178,30 +197,48 @@
     
     if ([[segue identifier] isEqualToString:@"SaveSegue"])
     {
-        Transaction *transaction = [self addTransaction];
+        // Add transaction
+        [self addTransaction];
         
+        // Set up details view controller
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
         detailsViewController.navigationItem.rightBarButtonItem = nil;
-        detailsViewController.transaction = transaction;
+        detailsViewController.transaction = self.transaction;
+        
+//        // Hide keyboard in order to avoid it becoming first responder when the view appears
+//        [self hideKeyboard];
+    }
+    else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
+    {
+        [self startUpdatingLocation];
     }
 }
 
+
 #pragma mark - Private methods
 
-- (Transaction *)addTransaction
+- (void)addTransaction
 {
-    Transaction *transaction = [[LoanManager sharedManager] newTransaction];
-    [self updateTransactionBasedOnViewInfo:transaction];
-    
-    [[LoanManager sharedManager] saveContext];
-    
-    return transaction;
+    self.transaction = [Transaction newTransaction];
+    [self updateTransactionBasedOnViewInfo:self.transaction];
+    [self.transaction save];
 }
 
 - (void)detailsViewControllerAdd:(id)sender
 {
     [self popToBlankViewControllerAnimated:YES];
+}
+
+- (void)startUpdatingLocation
+{
+    // TODO: Check if attach location switch is enabled
+    [[LocationManager sharedManager] startUpdatingLocation];
+}
+
+- (void)stopUpdatingLocation
+{
+    [[LocationManager sharedManager] stopUpdatingLocation];
 }
 
 @end

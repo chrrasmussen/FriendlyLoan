@@ -16,6 +16,8 @@
 
 @interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoriesViewControllerDelegate>
 
+@property (nonatomic, strong) Transaction *transaction;
+
 @property (nonatomic) BOOL lentState;
 @property (nonatomic, strong) NSNumber *selectedFriendID;
 @property (nonatomic, strong) NSNumber *selectedCategoryID;

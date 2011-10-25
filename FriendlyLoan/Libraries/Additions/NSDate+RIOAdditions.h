@@ -22,14 +22,6 @@
 @property (readonly) NSInteger nthWeekday; // e.g. 2nd Tuesday of the month == 2
 @property (readonly) NSInteger year;
 
-// Ranges
-- (NSRange)dayOfMonthRangeForDate:(NSDate *)aDate;
-- (NSRange)dayOfMonthRangeForToday;
-- (NSRange)weekOfYearRangeForDate:(NSDate *)aDate;
-- (NSRange)weekOfYearRangeForToday;
-- (NSRange)monthOfYearRangeForDate:(NSDate *)aDate;
-- (NSRange)monthOfYearRangeForToday;
-
 // Comparing dates
 - (BOOL)isEqualToDateIgnoringTime:(NSDate *)aDate;
 - (BOOL)isToday;
@@ -47,7 +39,20 @@
 - (BOOL)isThisYear;
 - (BOOL)isNextYear;
 - (BOOL)isLastYear;
-//- (BOOL)isEarlierThanDate:(NSDate *)aDate;
-//- (BOOL)isLaterThanDate:(NSDate *)aDate;
+- (BOOL)isEarlierThanDate:(NSDate *)aDate;
+- (BOOL)isLaterThanDate:(NSDate *)aDate;
+
+// Global state to enable testing
++ (NSCalendar *)currentCalendar;
++ (void)setCurrentCalendar:(NSCalendar *)aCalendar;
++ (NSDate *)today;
++ (void)setToday:(NSDate *)aDate;
+
+// TODO: Add unit tests
+//NSDate *year2010 = [NSDate dateWithTimeIntervalSince1970:(60*60*24*365.25*40)];
+//[NSDate setToday:year2010];
+//NSDate *pastDate = [year2010 dateByAddingTimeInterval:-60*60*24*4];
+//NSLog(@"%@ is %@", pastDate, [pastDate relativeDate]);
+//NSLog(@"%d", [pastDate week]);
 
 @end

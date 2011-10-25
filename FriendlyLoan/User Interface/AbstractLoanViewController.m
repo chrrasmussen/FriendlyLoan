@@ -8,8 +8,7 @@
 
 #import "AbstractLoanViewController.h"
 
-#import "LoanManager.h"
-
+#import "ManagedObjectModels.h"
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
@@ -21,6 +20,7 @@ const NSInteger kDefaultCategoryID = 0;
 
 @implementation AbstractLoanViewController
 
+@synthesize transaction;
 @synthesize lentState, selectedFriendID, selectedCategoryID;
 @synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField, friendCell;
 
@@ -149,8 +149,6 @@ const NSInteger kDefaultCategoryID = 0;
     
     [self updateSelectedCategoryID:[NSNumber numberWithInt:kDefaultCategoryID]];
     self.noteTextField.text = nil;
-    
-    // TODO: Set the state of attachLocation?
     
     [self validateAmountAndFriend];
 }

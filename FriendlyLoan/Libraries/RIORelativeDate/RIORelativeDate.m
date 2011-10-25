@@ -14,82 +14,24 @@
 
 + (NSString *)relativeDateForDate:(NSDate *)aDate
 {
-//    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit;
-//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-//    // TODO: Set weekday, timezone etc. Maybe locale is enough?
-//    
-//    NSDateComponents *pastComponents = [gregorian components:unitFlags fromDate:pastDate];
-//    NSDateComponents *todayComponents = [gregorian components:unitFlags fromDate:[NSDate date]];
-//    
-//    NSInteger pastYear = [pastComponents year];
-//    NSInteger pastMonth = [pastComponents month];
-//    NSInteger pastWeek = [pastComponents week];
-//    NSInteger pastDay = [pastComponents day];
-//    
-//    NSInteger currentYear = [todayComponents year];
-//    NSInteger currentMonth = [todayComponents month];
-//    NSInteger currentWeek = [todayComponents week];
-//    NSInteger currentDay = [todayComponents day];
-    
-//    if ([aDate isToday])
-    [aDate isNextMonth];
-    return NSLocalizedStringFromTable(@"Today", @"RIORelativeDate", nil);
-//    else
-//    {
-//        NSInteger currentLastMonth = currentMonth - 1;
-//        NSInteger currentLastDay = currentDay - 1;
-//        NSRange pastRange = [gregorian rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:pastDate];
-        
-//        if ((pastYear == currentYear) && (pastMonth == currentMonth) && (pastDay == currentLastDay)) ||
-//            ((pastYear == currentYear))
-//            return 
-//        NSLog(@"%@", NSStringFromRange(range));
-//        NSInteger yesterDay = 
-//        if (false)
-//    }
-//        return @"Yesterday";
-    
-//    if (pastYear == currentYear)
-//    {
-//        if (pastMonth == currentMonth)
-//        {
-//            if (pastWeek == currentWeek)
-//            {
-//                if (pastDay == currentDay)
-//                {
-//                    return @"Today";
-//                }
-//                else
-//                {
-//                    if (pastDay == (currentDay - 1))
-//                        return @"Yesterday";
-//                    else
-//                        return @"This week";
-//                }
-//            }
-//            else
-//            {
-//                if (pastWeek == (currentWeek - 1))
-//                    return @"Last week";
-//                else
-//                    return @"This month";
-//            }
-//        }
-//        else
-//        {
-//            if (pastMonth == (currentMonth - 1))
-//                return @"Last month";
-//            else
-//                return @"This year";
-//        }
-//    }
-//    else
-//    {
-//        if (pastYear == (currentYear - 1))
-//            return @"Last year";
-//        else
-//            return NSLocalizedStringFromTable(@"Older", @"RIORelativeDate", nil);
-//    }
+    if ([aDate isToday])
+        return NSLocalizedStringFromTable(@"Today", @"RIORelativeDate", nil);
+    else if ([aDate isYesterday])
+        return NSLocalizedStringFromTable(@"Yesterday", @"RIORelativeDate", nil);
+    else if ([aDate isThisWeek])
+        return NSLocalizedStringFromTable(@"This week", @"RIORelativeDate", nil);
+    else if ([aDate isLastWeek])
+        return NSLocalizedStringFromTable(@"Last week", @"RIORelativeDate", nil);
+    else if ([aDate isThisMonth])
+        return NSLocalizedStringFromTable(@"This month", @"RIORelativeDate", nil);
+    else if ([aDate isLastMonth])
+        return NSLocalizedStringFromTable(@"Last month", @"RIORelativeDate", nil);
+    else if ([aDate isThisYear])
+        return NSLocalizedStringFromTable(@"This year", @"RIORelativeDate", nil);
+    else if ([aDate isLastYear])
+        return NSLocalizedStringFromTable(@"Last year", @"RIORelativeDate", nil);
+    else
+        return NSLocalizedStringFromTable(@"Older", @"RIORelativeDate", nil);
 }
 
 @end

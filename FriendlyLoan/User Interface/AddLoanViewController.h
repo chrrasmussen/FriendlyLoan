@@ -21,6 +21,7 @@
 - (BOOL)attachLocationState;
 - (void)setAttachLocationState:(BOOL)theAttachLocationState;
 
+- (IBAction)textFieldDidBeginEditing:(id)sender;
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
 - (IBAction)changeAttachLocationState:(id)sender;

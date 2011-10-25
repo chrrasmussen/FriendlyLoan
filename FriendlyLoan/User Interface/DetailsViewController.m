@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "Category.h"
-#import "Models.h"
+#import "ManagedObjectModels.h"
 #import "EditLoanViewController.h"
 
 

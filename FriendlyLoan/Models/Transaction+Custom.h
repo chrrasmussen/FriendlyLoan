@@ -11,12 +11,14 @@
 
 @interface Transaction (Custom)
 
++ (id)newTransaction;
+- (void)addFriendID:(NSNumber *)friendID;
+- (void)addCurrentLocation;
+- (void)save;
+
 - (NSString *)historySectionName;
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
-
-- (void)addFriendID:(NSNumber *)friendID;
-- (void)addCurrentLocation;
 
 @end

@@ -9,7 +9,7 @@
 #import "EditLoanViewController.h"
 #import "EditLoanViewControllerDelegate.h"
 
-#import "LoanManager.h"
+#import "ManagedObjectModels.h"
 
 
 enum {
@@ -29,7 +29,7 @@ enum {
 @implementation EditLoanViewController
 
 @synthesize delegate;
-@synthesize transaction;
+//@synthesize transaction;
 @synthesize saveBarButtonItem, lentSegmentedControl;
 
 - (void)didReceiveMemoryWarning
@@ -122,8 +122,7 @@ enum {
 - (void)editTransaction
 {
     [self updateTransactionBasedOnViewInfo:self.transaction];
-    
-    [[LoanManager sharedManager] saveContext];
+    [self.transaction save];
 }
 
 - (void)updateViewInfo

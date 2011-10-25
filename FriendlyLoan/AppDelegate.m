@@ -7,21 +7,21 @@
 //
 
 #import "AppDelegate.h"
+#import <CoreData/CoreData.h>
 
-#import "LoanManager.h"
-#import "RIORelativeDate.h" // FIXME: Temp
-#import "NSDate+RIOAdditions.h" // FIXME: Temp
+#import "LocationManager.h"
 
 
 @interface AppDelegate ()
 
 - (void)setUpTestFlight;
-- (void)setUpLoanManager;
 
 @end
 
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    UIBackgroundTaskIdentifier _backgroundTask;
+}
 
 @synthesize window = _window;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -31,13 +31,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setUpTestFlight];
-    [self setUpLoanManager];
-    
-//    NSLog(@"%@", [[NSDate dateWithTimeIntervalSinceNow:-60*60*24*4] relativeDate]);
-    NSLog(@"%d", [[[NSDate date] dateByAddingTimeInterval:60*60*9] isToday]);
-    
-    // TODO: Move to Add Loan-tab
-    [[LoanManager sharedManager] startUpdatingLocation];
     
     // Override point for customization after application launch.
     return YES;
@@ -57,6 +50,15 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    
+    // TODO: What I need to account for:
+    // Terminates if app is forced closed (by user or otherwise)
+    // Background-stuff?
+    
+//    if ([[[LoanManager sharedManager] transactionsWaitingForLocation] count] == 0)
+//    {
+//        [[[LoanManager sharedManager] locationManager] stopUpdatingLocation];
+//    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -75,10 +77,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // TODO: Move to Add Loan-tab
-    [[LoanManager sharedManager] stopUpdatingLocation];
     // Saves changes in the application's managed object context before the application terminates.
 //    [[LoanManager sharedManager] saveContext];
+    NSLog(@"Terminated");
 }
 
 #pragma mark - Core Data stack
@@ -165,6 +166,25 @@
     return __persistentStoreCoordinator;
 }
 
+- (void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil)
+    {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
+        {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        } 
+    }
+}
+
 #pragma mark - Application's Documents directory
 
 /**
@@ -175,6 +195,7 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+
 #pragma mark - Private methods
 
 - (void)setUpTestFlight
@@ -183,11 +204,6 @@
 #ifdef DEBUG
     [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
 #endif
-}
-
-- (void)setUpLoanManager
-{
-    (void)[[LoanManager alloc] initWithManagedObjectContext:self.managedObjectContext];
 }
 
 @end

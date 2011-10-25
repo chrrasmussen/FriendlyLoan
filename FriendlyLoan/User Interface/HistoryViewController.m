@@ -8,10 +8,11 @@
 
 #import "HistoryViewController.h"
 
-#import "LoanManager.h"
-
+#import "AppDelegate.h"
+#import "ManagedObjectModels.h"
 #import "DetailsViewController.h"
 #import "Category.h"
+#import "NSDate+RIOAdditions.h"
 
 @interface HistoryViewController ()
 
@@ -257,8 +258,10 @@
 
 - (void)setUpFetchedResultsController
 {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
     // Set up the fetch request
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:[[LoanManager sharedManager] managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:appDelegate.managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
     fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
@@ -283,12 +286,18 @@
     }
     
     // Create the fetched results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[LoanManager sharedManager] managedObjectContext] sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
     self.fetchedResultsController.delegate = self;
 }
 
 - (void)performFetch
 {
+    // Remove cache if date has changed
+    static NSDate *lastFetchDate;
+    if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]])
+        [NSFetchedResultsController deleteCacheWithName:@"HistoryCache"];
+    
+    // Perform fetch and handle error
     NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])
     {
@@ -300,6 +309,9 @@
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
+    
+    // Save last fetch date
+    lastFetchDate = [NSDate date];
 }
 
 @end

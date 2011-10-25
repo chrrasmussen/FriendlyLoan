@@ -7,16 +7,54 @@
 //
 
 #import "NSDate+RIOAdditions.h"
+#import "NSCalendar+RIOAdditions.h"
 
 
 @interface NSDate (RIOAdditionsPrivateMethods)
 
 - (NSDateComponents *)components;
+- (NSRange)dayOfMonthRange;
+- (NSRange)dayOfMonthRangeForToday;
+- (NSRange)weekOfYearRange;
+- (NSRange)weekOfYearRangeForToday;
+- (NSRange)monthOfYearRange;
+- (NSRange)monthOfYearRangeForToday;
 
 @end
 
 
 @implementation NSDate (RIOAdditions)
+
+#pragma mark - Global state to enable testing
+
+static NSCalendar *_currentCalendar;
+static NSDate *_today;
+
++ (NSCalendar *)currentCalendar
+{
+    if (_currentCalendar == nil)
+        return [NSCalendar currentCalendar];
+    
+    return _currentCalendar;
+}
+
++ (void)setCurrentCalendar:(NSCalendar *)aCalendar
+{
+    _currentCalendar = aCalendar;
+}
+
++ (NSDate *)today
+{
+    if (_today == nil)
+        return [NSDate date];
+    
+    return _today;
+}
+
++ (void)setToday:(NSDate *)aDate
+{
+    _today = aDate;
+}
 
 
 #pragma mark - Comparing dates
@@ -29,21 +67,21 @@
 
 - (BOOL)isToday
 {
-    return [self isEqualToDateIgnoringTime:[NSDate date]];
+    return [self isEqualToDateIgnoringTime:[NSDate today]];
 }
 
 - (BOOL)isTomorrow
 {
     if ([self isThisMonth])
     {
-        NSInteger nextDay = [[NSDate date] day] + 1;
-        return ([self month] == nextDay);
+        NSInteger nextDay = [[NSDate today] day] + 1;
+        return ([self day] == nextDay);
     }
     else if ([self isNextMonth])
     {
-        NSInteger firstDayOfMonth = [self dayOfMonthRangeForDate:self].location;
+        NSInteger firstDayOfMonth = [self dayOfMonthRange].location;
         NSInteger lastDayOfMonth = [self dayOfMonthRangeForToday].length;
-        return ([self month] == firstDayOfMonth && [[NSDate date] month] == lastDayOfMonth);
+        return ([self day] == firstDayOfMonth && [[NSDate today] day] == lastDayOfMonth);
     }
     
     return NO;
@@ -51,17 +89,17 @@
 
 - (BOOL)isYesterday
 {
-//    if ([self isThisYear])
-//    {
-//        NSInteger lastMonth = [[NSDate date] month] - 1;
-//        return ([self month] == lastMonth);
-//    }
-//    else if ([self isLastYear])
-//    {
-//        NSInteger lastMonthOfYear = [self monthOfYearRangeForDate:self].length;
-//        NSInteger firstMonthOfYear = [self monthOfYearRangeForToday].location;
-//        return ([self month] == lastMonthOfYear && [[NSDate date] month] == firstMonthOfYear);
-//    }
+    if ([self isThisMonth])
+    {
+        NSInteger lastDay = [[NSDate today] day] - 1;
+        return ([self day] == lastDay);
+    }
+    else if ([self isLastMonth])
+    {
+        NSInteger lastDayOfMonth = [self dayOfMonthRange].length;
+        NSInteger firstDayOfMonth = [self dayOfMonthRangeForToday].location;
+        return ([self day] == lastDayOfMonth && [[NSDate today] day] == firstDayOfMonth);
+    }
     
     return NO;
 }
@@ -69,44 +107,46 @@
 // Month
 - (BOOL)isSameWeekAsDate:(NSDate *)aDate
 {
+    // TODO: Take care of special case where week 1 is extending through last and next year
+    // HINT: Check if isLastMonth or isNextMonth to include first and last month of the the year before and after
     return ([self isSameYearAsDate:aDate] && [self week] == [aDate week]);
 }
 
 - (BOOL)isThisWeek
 {
-    return [self isSameWeekAsDate:[NSDate date]];
+    return [self isSameWeekAsDate:[NSDate today]];
 }
 
 - (BOOL)isNextWeek
 {
-//    if ([self isThisYear])
-//    {
-//        NSInteger nextMonth = [[NSDate date] month] + 1;
-//        return ([self month] == nextMonth);
-//    }
-//    else if ([self isNextYear])
-//    {
-//        NSInteger firstMonthOfYear = [self monthOfYearRangeForDate:self].location;
-//        NSInteger lastMonthOfYear = [self monthOfYearRangeForToday].length;
-//        return ([self month] == firstMonthOfYear && [[NSDate date] month] == lastMonthOfYear);
-//    }
+    if ([self isThisYear])
+    {
+        NSInteger nextWeek = [[NSDate today] week] + 1;
+        return ([self week] == nextWeek);
+    }
+    else if ([self isNextYear])
+    {
+        NSInteger firstWeekOfYear = [self weekOfYearRange].location;
+        NSInteger lastWeekOfYear = [self weekOfYearRangeForToday].length;
+        return ([self week] == firstWeekOfYear && [[NSDate today] week] == lastWeekOfYear);
+    }
     
     return NO;
 }
 
 - (BOOL)isLastWeek
 {
-//    if ([self isThisYear])
-//    {
-//        NSInteger lastMonth = [[NSDate date] month] - 1;
-//        return ([self month] == lastMonth);
-//    }
-//    else if ([self isLastYear])
-//    {
-//        NSInteger lastMonthOfYear = [self monthOfYearRangeForDate:self].length;
-//        NSInteger firstMonthOfYear = [self monthOfYearRangeForToday].location;
-//        return ([self month] == lastMonthOfYear && [[NSDate date] month] == firstMonthOfYear);
-//    }
+    if ([self isThisYear])
+    {
+        NSInteger lastWeek = [[NSDate today] week] - 1;
+        return ([self week] == lastWeek);
+    }
+    else if ([self isLastYear])
+    {
+        NSInteger lastWeekOfYear = [self weekOfYearRange].length;
+        NSInteger firstWeekOfYear = [self weekOfYearRangeForToday].location;
+        return ([self week] == lastWeekOfYear && [[NSDate today] week] == firstWeekOfYear);
+    }
     
     return NO;
 }
@@ -119,21 +159,21 @@
 
 - (BOOL)isThisMonth
 {
-    return [self isSameMonthAsDate:[NSDate date]];
+    return [self isSameMonthAsDate:[NSDate today]];
 }
 
 - (BOOL)isNextMonth
 {
     if ([self isThisYear])
     {
-        NSInteger nextMonth = [[NSDate date] month] + 1;
+        NSInteger nextMonth = [[NSDate today] month] + 1;
         return ([self month] == nextMonth);
     }
     else if ([self isNextYear])
     {
-        NSInteger firstMonthOfYear = [self monthOfYearRangeForDate:self].location;
+        NSInteger firstMonthOfYear = [self monthOfYearRange].location;
         NSInteger lastMonthOfYear = [self monthOfYearRangeForToday].length;
-        return ([self month] == firstMonthOfYear && [[NSDate date] month] == lastMonthOfYear);
+        return ([self month] == firstMonthOfYear && [[NSDate today] month] == lastMonthOfYear);
     }
     
     return NO;
@@ -143,14 +183,14 @@
 {
     if ([self isThisYear])
     {
-        NSInteger lastMonth = [[NSDate date] month] - 1;
+        NSInteger lastMonth = [[NSDate today] month] - 1;
         return ([self month] == lastMonth);
     }
     else if ([self isLastYear])
     {
-        NSInteger lastMonthOfYear = [self monthOfYearRangeForDate:self].length;
+        NSInteger lastMonthOfYear = [self monthOfYearRange].length;
         NSInteger firstMonthOfYear = [self monthOfYearRangeForToday].location;
-        return ([self month] == lastMonthOfYear && [[NSDate date] month] == firstMonthOfYear);
+        return ([self month] == lastMonthOfYear && [[NSDate today] month] == firstMonthOfYear);
     }
     
     return NO;
@@ -164,52 +204,30 @@
 
 - (BOOL)isThisYear
 {
-    return [self isSameYearAsDate:[NSDate date]];
+    return [self isSameYearAsDate:[NSDate today]];
 }
 
 -(BOOL)isNextYear
 {
-    NSInteger nextYear = [[NSDate date] year] + 1;
+    NSInteger nextYear = [[NSDate today] year] + 1;
     return ([self year] == nextYear);
 }
 
 - (BOOL)isLastYear
 {
-    NSInteger lastYear = [[NSDate date] year] - 1;
+    NSInteger lastYear = [[NSDate today] year] - 1;
     return ([self year] == lastYear);
 }
 
-
-#pragma mark - Ranges
-
-- (NSRange)dayOfMonthRangeForDate:(NSDate *)aDate
+// Earlier/later date
+- (BOOL)isEarlierThanDate:(NSDate *)aDate
 {
-    return [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:aDate];
+    return ([self earlierDate:aDate] == self);
 }
 
-- (NSRange)dayOfMonthRangeForToday
+- (BOOL)isLaterThanDate:(NSDate *)aDate
 {
-    return [self dayOfMonthRangeForDate:[NSDate date]];
-}
-
-- (NSRange)weekOfYearRangeForDate:(NSDate *)aDate
-{
-    return [[NSCalendar currentCalendar] rangeOfUnit:NSWeekCalendarUnit inUnit:NSYearCalendarUnit forDate:aDate];
-}
-
-- (NSRange)weekOfYearRangeForToday
-{
-    return [self weekOfYearRangeForDate:[NSDate date]];
-}
-
-- (NSRange)monthOfYearRangeForDate:(NSDate *)aDate
-{
-    return [[NSCalendar currentCalendar] rangeOfUnit:NSMonthCalendarUnit inUnit:NSYearCalendarUnit forDate:aDate];
-}
-
-- (NSRange)monthOfYearRangeForToday
-{
-    return [self monthOfYearRangeForDate:[NSDate date]];
+    return ([self laterDate:aDate] == self);    
 }
 
 
@@ -265,9 +283,39 @@
 - (NSDateComponents *)components
 {
     NSUInteger dateComponents = NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:dateComponents fromDate:self];
+    NSDateComponents *components = [[NSDate currentCalendar] components:dateComponents fromDate:self];
     
     return components;
+}
+
+- (NSRange)dayOfMonthRange
+{
+    return [[NSDate currentCalendar] dayOfMonthRangeForDate:self];
+}
+
+- (NSRange)dayOfMonthRangeForToday
+{
+    return [[NSDate currentCalendar] dayOfMonthRangeForDate:[NSDate today]];
+}
+
+- (NSRange)weekOfYearRange
+{
+    return [[NSDate currentCalendar] weekOfYearRangeForDate:self];
+}
+
+- (NSRange)weekOfYearRangeForToday
+{
+    return [[NSDate currentCalendar] weekOfYearRangeForDate:[NSDate today]];
+}
+
+- (NSRange)monthOfYearRange
+{
+    return [[NSDate currentCalendar] monthOfYearRangeForDate:self];
+}
+
+- (NSRange)monthOfYearRangeForToday
+{
+    return [[NSDate currentCalendar] monthOfYearRangeForDate:[NSDate today]];
 }
 
 @end

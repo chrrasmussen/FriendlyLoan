@@ -129,7 +129,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
 
 #pragma mark - Private methods
 
-// FIXME: Caching problem with UIImageView?
+// TODO: Caching problem with UIImageView?
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Category *category;
