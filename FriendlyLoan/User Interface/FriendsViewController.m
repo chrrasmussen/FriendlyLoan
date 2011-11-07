@@ -333,7 +333,9 @@ const NSInteger kPaybackCategory    = -1;
     NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
-    Transaction *transaction = [Transaction newTransaction];
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    Transaction *transaction = [Transaction insertNewObjectInManagedObjectContext:appDelegate.managedObjectContext];
     
     [transaction addFriendID:friendID];
     transaction.amount = [debt decimalNumberByNegating];
@@ -342,7 +344,7 @@ const NSInteger kPaybackCategory    = -1;
     
     transaction.createdTimestamp = [NSDate date];
     
-    [transaction save];
+    [appDelegate saveContext];
 }
 
 @end

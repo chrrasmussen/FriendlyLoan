@@ -9,6 +9,7 @@
 #import "EditLoanViewController.h"
 #import "EditLoanViewControllerDelegate.h"
 
+#import "AppDelegate.h"
 #import "Models.h"
 
 
@@ -122,7 +123,9 @@ enum {
 - (void)editTransaction
 {
     [self updateTransactionBasedOnViewInfo:self.transaction];
-    [self.transaction save];
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate saveContext];
 }
 
 - (void)updateViewInfo

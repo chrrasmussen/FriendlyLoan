@@ -12,6 +12,7 @@
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
+#import "AppDelegate.h"
 #import "Models.h"
 #import "LocationManager.h"
 
@@ -220,9 +221,10 @@
 
 - (void)addTransaction
 {
-    self.transaction = [Transaction newTransaction];
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    self.transaction = [Transaction insertNewObjectInManagedObjectContext:appDelegate.managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
-    [self.transaction save];
+    [appDelegate saveContext];
 }
 
 - (void)detailsViewControllerAdd:(id)sender
