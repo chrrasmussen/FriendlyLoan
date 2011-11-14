@@ -54,18 +54,6 @@
 		</dict>
 		<dict>
 			<key>hidden</key>
-			<true/>
-			<key>categoryID</key>
-			<integer>-1</integer>
-			<key>categoryName</key>
-			<string>Payback</string>
-			<key>imageName</key>
-			<string>Payback-Normal</string>
-			<key>highlightedImageName</key>
-			<string>Payback-Highlighted</string>
-		</dict>
-		<dict>
-			<key>hidden</key>
 			<false/>
 			<key>categoryID</key>
 			<integer>0</integer>

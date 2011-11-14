@@ -9,8 +9,6 @@
 #import "LocationManager.h"
 #import "LocationManagerDelegate.h"
 
-#import "Models.h" // TODO: Implement
-
 
 const CLLocationDistance kDistanceFilter    = 500.0;
 const NSTimeInterval kTimeoutTime           = 300.0;
@@ -25,7 +23,7 @@ const CLLocationDistance kQualifiedAccuracy = 100.0;
 - (void)startTimeoutTimer;
 - (void)stopTimeoutTimer;
 - (void)timeout:(NSTimer *)theTimer;
-- (BOOL)qualifyLocation:(CLLocation *)theLocation;
+- (BOOL)testLocation:(CLLocation *)theLocation;
 
 @end
 
@@ -79,7 +77,8 @@ static LocationManager *_sharedManager;
         
         NSLog(@"Starting updating location:%s %d %d", (char *)_cmd, [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled]);
         [self setUpLocationManager];
-        if ([self qualifyLocation:_locationManager.location] == NO)
+        
+        if ([self testLocation:_locationManager.location] == NO)
         {
             [_locationManager startUpdatingLocation];
             
@@ -132,9 +131,10 @@ static LocationManager *_sharedManager;
     return (abs(timeSinceEvent) < kQualifiedTime && theLocation.horizontalAccuracy < kQualifiedAccuracy);
 }
 
-+ (void)resolvePlaceNameForLocation:(CLLocation *)CLLocation
++ (void)resolvePlaceNameForLocation:(CLLocationCoordinate2D)location completionHandler:(void (^)(NSString *placeName))completionHandler
 {
     // TODO: Add code
+    completionHandler(@"MISSING IMPLEMENTATION!");
 }
 
 
@@ -148,7 +148,7 @@ static LocationManager *_sharedManager;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [self qualifyLocation:newLocation];
+    [self testLocation:newLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -196,7 +196,7 @@ static LocationManager *_sharedManager;
     }
 }
 
-- (BOOL)qualifyLocation:(CLLocation *)theLocation
+- (BOOL)testLocation:(CLLocation *)theLocation
 {
     if ([[self class] isLocationQualified:theLocation])
     {

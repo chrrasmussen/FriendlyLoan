@@ -2,7 +2,7 @@
 //  Transaction.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 06.10.11.
+//  Created by Christian Rasmussen on 08.11.11.
 //  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSDate * createdTimestamp;
 @property (nonatomic, retain) NSDate * modifiedTimestamp;
 @property (nonatomic, retain) NSString * note;
+@property (nonatomic, retain) NSNumber * settled;
 @property (nonatomic, retain) Friend *friend;
 @property (nonatomic, retain) Location *location;
 

@@ -30,7 +30,6 @@ enum {
 @implementation EditLoanViewController
 
 @synthesize delegate;
-//@synthesize transaction;
 @synthesize saveBarButtonItem, lentSegmentedControl;
 
 - (void)didReceiveMemoryWarning

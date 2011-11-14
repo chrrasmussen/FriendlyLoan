@@ -13,6 +13,13 @@
 
 @implementation Location (Custom)
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    NSLog(@"%s", (char *)_cmd);
+}
+
 - (void)awakeFromFetch
 {
     [super awakeFromFetch];
@@ -20,7 +27,10 @@
     // Resolve place name if necessary
     if (self.placeName == nil)
     {
-        NSLog(@"Resolving place name");
+        [LocationManager resolvePlaceNameForLocation:self.coordinate completionHandler:^(NSString *placeName) {
+            // TODO: Fix implementation
+            NSLog(@"Resolved placeName:%@", placeName);
+        }];
     }
 }
 
@@ -33,6 +43,7 @@
     self.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
     self.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
 }
+
 
 #pragma mark - MKAnnotation methods
 

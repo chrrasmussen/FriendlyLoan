@@ -13,9 +13,11 @@
 
 @interface Transaction (Custom)
 
-+ (id)insertNewObjectInManagedObjectContext:(NSManagedObjectContext *)context;
++ (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context;
 - (void)addFriendID:(NSNumber *)friendID;
+//- (void)removeFriendID:(NSNumber *)friendID;
 - (void)addCurrentLocation;
+//- (void)removeCurrentLocation;
 
 - (NSString *)historySectionName;
 

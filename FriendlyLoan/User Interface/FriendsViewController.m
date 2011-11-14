@@ -21,8 +21,6 @@ NSString * const kResultDebt        = @"debt";
 
 NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
-const NSInteger kPaybackCategory    = -1;
-
 
 @interface FriendsViewController ()
 
@@ -32,7 +30,7 @@ const NSInteger kPaybackCategory    = -1;
 - (void)performFetch;
 - (void)cleanAndSortFetchedResult;
 
-- (void)clearDebtForIndexPath:(NSIndexPath *)indexPath;
+- (void)settleDebtForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -139,7 +137,7 @@ const NSInteger kPaybackCategory    = -1;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Clear debt
-    [self clearDebtForIndexPath:indexPath];
+    [self settleDebtForIndexPath:indexPath];
     
     // Delete row from data source
     [self.sortedResult removeObjectAtIndex:indexPath.row];
@@ -326,23 +324,23 @@ const NSInteger kPaybackCategory    = -1;
     self.sortedResult = result;
 }
 
-- (void)clearDebtForIndexPath:(NSIndexPath *)indexPath
+- (void)settleDebtForIndexPath:(NSIndexPath *)indexPath
 {
+    // Retrieve data
     NSDictionary *friendObject = [self.sortedResult objectAtIndex:indexPath.row];
     
     NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
+    // Add transaction
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
-    Transaction *transaction = [Transaction insertNewObjectInManagedObjectContext:appDelegate.managedObjectContext];
+    Transaction *transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
     
     [transaction addFriendID:friendID];
+    
     transaction.amount = [debt decimalNumberByNegating];
-    
-    transaction.categoryID = [NSNumber numberWithInt:kPaybackCategory];
-    
-    transaction.createdTimestamp = [NSDate date];
+    transaction.settled = [NSNumber numberWithBool:YES];
     
     [appDelegate saveContext];
 }

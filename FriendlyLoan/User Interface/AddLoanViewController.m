@@ -222,7 +222,7 @@
 - (void)addTransaction
 {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    self.transaction = [Transaction insertNewObjectInManagedObjectContext:appDelegate.managedObjectContext];
+    self.transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
     [appDelegate saveContext];
 }

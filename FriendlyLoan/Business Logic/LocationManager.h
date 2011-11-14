@@ -10,11 +10,11 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@protocol LocationManagerDelegate;
+@protocol LocationManagerObserver;
 
 @interface LocationManager : NSObject <CLLocationManagerDelegate>
 
-@property (nonatomic, weak) id<LocationManagerDelegate> delegate;
+@property (nonatomic, weak) id<LocationManagerObserver> delegate;
 
 @property (nonatomic, readonly) BOOL locating;
 @property (nonatomic, readonly) BOOL requiresLocationServicesInBackground;
@@ -26,7 +26,7 @@
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
 
-+ (BOOL)isLocationQualified:(CLLocation *)theLocation;
-+ (void)resolvePlaceNameForLocation:(CLLocation *)CLLocation;
++ (BOOL)isLocationQualified:(CLLocation *)location;
++ (void)resolvePlaceNameForLocation:(CLLocationCoordinate2D)location completionHandler:(void (^)(NSString *placeName))completionHandler;
 
 @end

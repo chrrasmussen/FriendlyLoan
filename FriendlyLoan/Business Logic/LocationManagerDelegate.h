@@ -11,7 +11,7 @@
 
 @class LocationManager;
 
-@protocol LocationManagerDelegate <NSObject>
+@protocol LocationManagerObserver <NSObject>
 
 @optional
 - (void)locationManager:(LocationManager *)locationManager didFailWithError:(NSError *)error;

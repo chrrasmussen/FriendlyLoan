@@ -20,9 +20,13 @@
 
 #pragma mark - Creating and saving transaction
 
-+ (id)insertNewObjectInManagedObjectContext:(NSManagedObjectContext *)context
++ (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:context];
+    // Create a new transaction with default properties
+    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:context];
+    transaction.createdTimestamp = [NSDate date];
+    
+    return transaction;
 }
 
 - (void)addFriendID:(NSNumber *)friendID

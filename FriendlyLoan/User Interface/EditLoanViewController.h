@@ -9,14 +9,11 @@
 #import "AddLoanViewController.h"
 
 
-@class Transaction;
 @protocol EditLoanViewControllerDelegate;
 
 @interface EditLoanViewController : AbstractLoanViewController
 
 @property (nonatomic, weak) id<EditLoanViewControllerDelegate> delegate;
-
-//@property (nonatomic, strong) Transaction *transaction;
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *lentSegmentedControl;

@@ -158,8 +158,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         [self.mapView setRegion:region animated:NO];
         
         [self.mapView addAnnotation:location];
-        
-//        NSLog(@"%@", location.placeName);
     }
 }
 
