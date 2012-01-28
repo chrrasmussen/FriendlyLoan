@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "AbstractLoanViewController.h"
+#import "AppDelegateLocationDelegate.h"
 
 
-@interface AddLoanViewController : AbstractLoanViewController
+@interface AddLoanViewController : AbstractLoanViewController <AppDelegateLocationDelegate>
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
@@ -18,12 +19,12 @@
 
 - (void)popToBlankViewControllerAnimated:(BOOL)animated;
 
-- (BOOL)attachLocationState;
-- (void)setAttachLocationState:(BOOL)theAttachLocationState;
+- (BOOL)storedAttachLocationStatus;
+- (void)saveAttachLocationStatus:(BOOL)status;
 
 - (IBAction)textFieldDidBeginEditing:(id)sender;
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
-- (IBAction)changeAttachLocationState:(id)sender;
+- (IBAction)changeAttachLocationStatus:(UISwitch *)sender;
 
 @end

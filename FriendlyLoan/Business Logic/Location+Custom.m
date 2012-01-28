@@ -8,7 +8,7 @@
 
 #import "Location+Custom.h"
 
-#import "LocationManager.h"
+#import "RIOTimedLocationManager.h"
 
 
 @implementation Location (Custom)
@@ -24,13 +24,13 @@
 {
     [super awakeFromFetch];
     
-    // Resolve place name if necessary
+    // TODO: Resolve place name if necessary
     if (self.placeName == nil)
     {
-        [LocationManager resolvePlaceNameForLocation:self.coordinate completionHandler:^(NSString *placeName) {
-            // TODO: Fix implementation
-            NSLog(@"Resolved placeName:%@", placeName);
-        }];
+//        [RIOTimedLocationManager resolvePlaceNameForLocation:self.coordinate completionHandler:^(NSString *placeName) {
+//            // TODO: Fix implementation
+//            NSLog(@"Resolved placeName:%@", placeName);
+//        }];
     }
 }
 
@@ -39,9 +39,10 @@
     // FIXME: Set correct flag depending on status
     self.status = [NSNumber numberWithInt:kLocationStatusLocating];
     
-    CLLocationCoordinate2D lastKnownLocation = [[[LocationManager sharedManager] qualifiedLocation] coordinate];
-    self.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
-    self.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
+    // FIXME: Fix code when RIOTimedLocationManager is fixed
+//    CLLocationCoordinate2D lastKnownLocation = [[[RIOTimedLocationManager sharedManager] qualifiedLocation] coordinate];
+//    self.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
+//    self.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
 }
 
 

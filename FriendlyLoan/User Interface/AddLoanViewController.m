@@ -14,7 +14,7 @@
 
 #import "AppDelegate.h"
 #import "Models.h"
-#import "LocationManager.h"
+#import "RIOTimedLocationManager.h"
 
 
 @interface AddLoanViewController ()
@@ -84,36 +84,6 @@
 }
 
 
-#pragma mark - Properties
-
-- (BOOL)attachLocationState
-{
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
-        return NO;
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"attachLocation"] == nil)
-        return YES;
-    
-    BOOL theAttachLocationState = [[NSUserDefaults standardUserDefaults] boolForKey:@"attachLocation"];
-    
-    return theAttachLocationState;
-}
-
-- (void)setAttachLocationState:(BOOL)theAttachLocationState
-{
-//    if (theAttachLocationState == YES)
-//        [self startUpdatingLocation];
-//    else
-//        [self stopUpdatingLocation];
-    
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
-        return;
-    
-    [[NSUserDefaults standardUserDefaults] setBool:theAttachLocationState forKey:@"attachLocation"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
 #pragma mark - Actions
 
 - (IBAction)textFieldDidBeginEditing:(id)sender
@@ -135,10 +105,44 @@
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
-- (IBAction)changeAttachLocationState:(id)sender
+- (IBAction)changeAttachLocationStatus:(UISwitch *)sender
 {
-    [self setAttachLocationState:self.attachLocationSwitch.on];
-    [self.attachLocationSwitch setOn:self.attachLocationState animated:YES];
+    if (sender.on == YES)
+        [self startUpdatingLocation];
+    else
+        [self stopUpdatingLocation];
+    
+    [self saveAttachLocationStatus:sender.on];
+}
+
+
+#pragma mark - Properties
+
+- (BOOL)storedAttachLocationStatus
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:@"attachLocation"] == nil)
+        return YES;
+    
+    BOOL status = [userDefaults boolForKey:@"attachLocation"];
+    
+    return status;
+}
+
+- (void)saveAttachLocationStatus:(BOOL)status
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:[NSNumber numberWithBool:status] forKey:@"attachLocation"];
+    [userDefaults synchronize];
+}
+
+#pragma mark - AppDelegateLocationDelegate methods
+
+- (void)appDelegate:(AppDelegate *)appDelegate didChangeAttachLocationStatus:(BOOL)status
+{
+    BOOL storedStatus = [self storedAttachLocationStatus];
+    BOOL calculatedStatus = status && storedStatus;
+    [self.attachLocationSwitch setOn:calculatedStatus animated:YES];
 }
 
 
@@ -146,6 +150,9 @@
 
 - (void)viewDidLoad
 {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.locationDelegate = self;
+    
     [super viewDidLoad];
 }
 
@@ -161,7 +168,7 @@
     [super viewWillAppear:animated];
     
     // Set initial state for attach location
-    self.attachLocationSwitch.on = self.attachLocationState;
+    self.attachLocationSwitch.on = [self storedAttachLocationStatus];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -221,7 +228,7 @@
 
 - (void)addTransaction
 {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
     [appDelegate saveContext];
@@ -234,13 +241,17 @@
 
 - (void)startUpdatingLocation
 {
-    if (self.attachLocationState == YES)
-        [[LocationManager sharedManager] startUpdatingLocation];
+    if (self.attachLocationSwitch.on == YES)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate startUpdatingLocation];
+    }
 }
 
 - (void)stopUpdatingLocation
 {
-    [[LocationManager sharedManager] stopUpdatingLocation];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate stopUpdatingLocation];
 }
 
 @end

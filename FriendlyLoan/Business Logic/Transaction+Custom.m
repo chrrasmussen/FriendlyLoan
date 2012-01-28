@@ -44,8 +44,8 @@
     // - Add a method to remove location? May not be necessary
     if (self.location == nil)
     {
-        self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
-        [self.location updateLocation];
+//        self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+//        [self.location updateLocation];
     }
     
     NSLog(@"Added location for transaction");

@@ -170,7 +170,14 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     self.friendLabel.text = [transaction.friend fullName];
     self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
     self.noteLabel.text = transaction.note;
-    self.timeStampLabel.text = [transaction.createdTimestamp description];
+    
+    // Display date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdTimestamp];
+    self.timeStampLabel.text = formattedDateString;
     
     [self showLocationInfo];
 }

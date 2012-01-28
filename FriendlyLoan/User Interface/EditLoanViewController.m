@@ -123,7 +123,7 @@ enum {
 {
     [self updateTransactionBasedOnViewInfo:self.transaction];
     
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate saveContext];
 }
 

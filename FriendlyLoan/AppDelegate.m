@@ -9,12 +9,14 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 
-#import "LocationManager.h"
+#import "RIOTimedLocationManager.h"
+#import "AppDelegateLocationDelegate.h"
 
 
 @interface AppDelegate ()
 
 - (void)setUpTestFlight;
+- (void)setUpTimedLocationManager;
 
 @end
 
@@ -25,11 +27,17 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+@synthesize timedLocationManager = _timedLocationManager;
+@synthesize locationDelegate;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setUpTestFlight];
-    
+    [self setUpTimedLocationManager];
+//    NSLog(@"Initial qualified location:%@", _timedLocationManager.location);
+//    [_timedLocationManager startUpdatingLocation];
+
     // Override point for customization after application launch.
     return YES;
 }
@@ -50,12 +58,8 @@
      */
     
     // TODO: What I need to account for:
-    // Terminates if app is forced closed (by user or otherwise)
-    // Background-stuff?
-    if ([[LocationManager sharedManager] requiresLocationServicesInBackground] == NO)
-    {
-        [[LocationManager sharedManager] stopUpdatingLocation];
-    }
+    // - Terminates if app is forced closed (by user or otherwise)
+    // - Background-stuff?
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -75,7 +79,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-//    [self saveContext];
+    [self saveContext];
     NSLog(@"Terminated");
 }
 
@@ -193,6 +197,61 @@
 }
 
 
+#pragma mark - Location methods
+
+- (void)displayLocationWarning
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled" message:@"To re-enable, please go to Settings and turn on Location Service for this app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (void)startUpdatingLocation
+{
+    if ([CLLocationManager locationServicesEnabled] == YES)
+    {
+        [self.timedLocationManager startUpdatingLocation];
+    }
+    else
+    {
+        [self displayLocationWarning];
+        [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:NO];
+    }
+}
+
+- (void)stopUpdatingLocation
+{
+    [self.timedLocationManager startUpdatingLocation];
+}
+
+
+#pragma mark - RIOTimedLocationManagerDelegate methods
+
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:(status == kCLAuthorizationStatusAuthorized)];
+}
+
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
+{
+//    NSLog(@"%@", location);
+}
+
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
+{
+    if (error.domain == kCLErrorDomain)
+    {
+        if (error.code == kCLErrorLocationUnknown)
+        {
+            // TODO: Add code?
+        }
+        else if (error.code == kCLErrorDenied)
+        {
+            [self displayLocationWarning];
+            [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:NO];
+        }
+    }
+}
+
 #pragma mark - Private methods
 
 - (void)setUpTestFlight
@@ -201,6 +260,18 @@
 #ifdef DEBUG
     [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
 #endif
+}
+
+- (void)setUpTimedLocationManager
+{
+    _timedLocationManager = [[RIOTimedLocationManager alloc] init];
+    _timedLocationManager.delegate = self;
+    _timedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    _timedLocationManager.distanceFilter = 500;
+    _timedLocationManager.accuracyFilter = 100;
+    _timedLocationManager.timeIntervalFilter = 15 * 60;
+    _timedLocationManager.maximumLocatingDuration = 5;
+    _timedLocationManager.purpose = @"The location will help you remember where the loan took place.";
 }
 
 @end

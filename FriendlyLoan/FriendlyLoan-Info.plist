@@ -23,7 +23,7 @@
 				<string>Icon@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
-			<true/>
+			<false/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
@@ -44,7 +44,7 @@
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>location</string>
+		<string>App registers for location updates</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>FriendlyLoan</string>

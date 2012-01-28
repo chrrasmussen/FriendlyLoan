@@ -238,7 +238,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (void)setUpFetchedResultsController
 {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     // Set up fetch request
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:appDelegate.managedObjectContext];
@@ -333,7 +333,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
     // Add transaction
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     Transaction *transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
     

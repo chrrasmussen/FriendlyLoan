@@ -5,49 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
-        <scene sceneID="RRK-fJ-dRW">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xcJ-Fh-2da" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController storyboardIdentifier="SettingsViewController" id="XE9-Tu-IFC" customClass="SettingsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="e28-Sx-Gqa">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection footerTitle="This section will be removed in the final version." id="08P-Uc-gSg">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="DSq-fk-HPt" style="IBUITableViewCellStyleDefault" id="3Vh-RO-tZD">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Give Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DSq-fk-HPt">
-                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="XE9-Tu-IFC" id="Kiv-ew-t6o"/>
-                            <outlet property="delegate" destination="XE9-Tu-IFC" id="yB9-Dq-Pj3"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="sZF-Mu-VvT"/>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="1434" y="935"/>
-        </scene>
         <scene sceneID="hXa-ny-A9k">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYJ-Vj-ekV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -62,7 +19,6 @@
                         <segue destination="ZI5-bW-Wo6" kind="relationship" relationship="viewControllers" id="gMz-Oy-JGY"/>
                         <segue destination="YJ1-O7-h4f" kind="relationship" relationship="viewControllers" id="jYn-nd-Kgm"/>
                         <segue destination="9fZ-Nl-dHE" kind="relationship" relationship="viewControllers" id="GSz-ON-DhD"/>
-                        <segue destination="azR-cD-biT" kind="relationship" relationship="viewControllers" id="Uo4-kh-7lQ"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -670,7 +626,7 @@
                                                     <rect key="frame" x="211" y="8" width="79" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="changeAttachLocationState:" destination="BYs-JF-gLR" eventType="valueChanged" id="5o7-YV-d0p"/>
+                                                        <action selector="changeAttachLocationStatus:" destination="BYs-JF-gLR" eventType="valueChanged" id="dje-1c-vac"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -827,24 +783,6 @@
             </objects>
             <point key="canvasLocation" x="860" y="360"/>
         </scene>
-        <scene sceneID="tQh-6M-MA3">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LXq-Dv-43Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="azR-cD-biT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="Settings.png" id="1mc-yB-Eq3"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="TdX-7a-ZKq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="XE9-Tu-IFC" kind="relationship" relationship="rootViewController" id="lJG-3u-6ZK"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="860" y="935"/>
-        </scene>
         <scene sceneID="rY3-d5-GBX">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QlV-f0-haL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -884,9 +822,8 @@
     </scenes>
     <resources>
         <image name="AddLoan.png" width="30" height="30"/>
-        <image name="Friends.png" width="40" height="30"/>
+        <image name="Friends.png" width="37" height="30"/>
         <image name="MissingProfilePicture.png" width="43" height="43"/>
-        <image name="Settings.png" width="30" height="30"/>
         <image name="Unknown-Normal.png" width="29" height="29"/>
     </resources>
     <classes>
@@ -904,7 +841,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLoanViewController.h"/>
             <relationships>
                 <relationship kind="action" name="borrow:"/>
-                <relationship kind="action" name="changeAttachLocationState:"/>
+                <relationship kind="action" name="changeAttachLocationStatus:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="lend:"/>
                 <relationship kind="action" name="textFieldDidBeginEditing:"/>
                 <relationship kind="outlet" name="attachLocationSwitch" candidateClass="UISwitch"/>
@@ -958,9 +895,6 @@
         </class>
         <class className="HistoryViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HistoryViewController.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
         </class>
         <class className="TabBarController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TabBarController.h"/>
