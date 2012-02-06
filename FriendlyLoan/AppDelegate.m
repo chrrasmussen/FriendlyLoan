@@ -12,10 +12,12 @@
 #import "RIOTimedLocationManager.h"
 #import "AppDelegateLocationDelegate.h"
 
+#import "NSManagedObjectContext+FetchObjectFromURI.h"
+#import "Models.h"
+
 
 @interface AppDelegate ()
 
-- (void)setUpTestFlight;
 - (void)setUpTimedLocationManager;
 
 @end
@@ -27,17 +29,19 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-@synthesize timedLocationManager = _timedLocationManager;
+
 @synthesize locationDelegate;
+@synthesize timedLocationManager = _timedLocationManager;
+@synthesize transactionsAwaitingLocation;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setUpTestFlight];
+    NSLog(@"Init");
     [self setUpTimedLocationManager];
-//    NSLog(@"Initial qualified location:%@", _timedLocationManager.location);
-//    [_timedLocationManager startUpdatingLocation];
-
+    
+    self.transactionsAwaitingLocation = [[NSMutableSet alloc] init];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -201,7 +205,7 @@
 
 - (void)displayLocationWarning
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled" message:@"To re-enable, please go to Settings and turn on Location Service for this app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", nil) message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     [alertView show];
 }
 
@@ -220,7 +224,35 @@
 
 - (void)stopUpdatingLocation
 {
-    [self.timedLocationManager startUpdatingLocation];
+    [self.timedLocationManager stopUpdatingLocation];
+}
+
+- (CLLocation *)location
+{
+    return [self.timedLocationManager location];
+}
+
+- (void)addTransaction:(NSURL *)objectURI
+{
+    [self.transactionsAwaitingLocation addObject:objectURI];
+}
+
+- (void)updateTransactions
+{
+    if (self.timedLocationManager.location == nil)
+    {
+        [self startUpdatingLocation];
+        return;
+    }
+    
+    for (NSURL *objectURI in self.transactionsAwaitingLocation)
+    {
+        Transaction *transaction = (Transaction *)[self.managedObjectContext objectWithURI:objectURI];
+        [transaction updateLocation:self.timedLocationManager.location];
+    }
+    
+    [self saveContext];
+    [self.transactionsAwaitingLocation removeAllObjects];
 }
 
 
@@ -233,7 +265,8 @@
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
-//    NSLog(@"%@", location);
+    NSLog(@"Add locations:%d", [self.transactionsAwaitingLocation count]);
+    [self updateTransactions];
 }
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
@@ -252,15 +285,8 @@
     }
 }
 
-#pragma mark - Private methods
 
-- (void)setUpTestFlight
-{
-    // TODO: Remove if app should be sent to app store
-#ifdef DEBUG
-    [TestFlight takeOff:@"9eebe38baf2651f6db2456860a9aac8a_MTcyNDcyMDExLTA5LTEzIDE3OjU3OjE4LjUyNDk4NA"];
-#endif
-}
+#pragma mark - Private methods
 
 - (void)setUpTimedLocationManager
 {
@@ -270,8 +296,8 @@
     _timedLocationManager.distanceFilter = 500;
     _timedLocationManager.accuracyFilter = 100;
     _timedLocationManager.timeIntervalFilter = 15 * 60;
-    _timedLocationManager.maximumLocatingDuration = 5;
-    _timedLocationManager.purpose = @"The location will help you remember where the loan took place.";
+    _timedLocationManager.maximumLocatingDuration = 2 * 60;
+    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", nil);
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "HistoryViewController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
+#import "AddLoanViewController.h"
 
 
 NSString * const kResultFriendID    = @"friendID";
@@ -343,6 +344,13 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     transaction.settled = [NSNumber numberWithBool:YES];
     
     [appDelegate saveContext];
+    
+    if ([AddLoanViewController attachLocationStatus] == YES)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate addTransaction:[transaction.objectID URIRepresentation]];
+        [appDelegate updateTransactions];
+    }
 }
 
 @end

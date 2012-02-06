@@ -41,7 +41,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-// TODO: Temp method
 - (void)showPeoplePickerController
 {
     [super showPeoplePickerController];
@@ -58,20 +57,18 @@
     self.lendBarButtonItem.enabled = enabled;
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTansaction
+- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
 {
-    [super updateTransactionBasedOnViewInfo:theTansaction];
+    [super updateTransactionBasedOnViewInfo:theTransaction];
     
-    theTansaction.createdTimestamp = [NSDate date];
-    
-    [theTansaction addCurrentLocation];
+    theTransaction.createdTimestamp = [NSDate date];
 }
 
 - (void)resetFields
 {
     [super resetFields];
     
-    // TODO: Is it necessary to reset attachLocationSwitch? Probably (State may have changed will another view is visible)
+    self.attachLocationSwitch.on = [[self class] attachLocationStatus];
 }
 
 
@@ -112,14 +109,17 @@
     else
         [self stopUpdatingLocation];
     
-    [self saveAttachLocationStatus:sender.on];
+    [[self class] saveAttachLocationStatus:sender.on];
 }
 
 
-#pragma mark - Properties
+#pragma mark - Attach location status
 
-- (BOOL)storedAttachLocationStatus
++ (BOOL)attachLocationStatus
 {
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
+        return NO;
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults objectForKey:@"attachLocation"] == nil)
         return YES;
@@ -129,7 +129,7 @@
     return status;
 }
 
-- (void)saveAttachLocationStatus:(BOOL)status
++ (void)saveAttachLocationStatus:(BOOL)status
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:[NSNumber numberWithBool:status] forKey:@"attachLocation"];
@@ -140,7 +140,7 @@
 
 - (void)appDelegate:(AppDelegate *)appDelegate didChangeAttachLocationStatus:(BOOL)status
 {
-    BOOL storedStatus = [self storedAttachLocationStatus];
+    BOOL storedStatus = [[self class] attachLocationStatus];
     BOOL calculatedStatus = status && storedStatus;
     [self.attachLocationSwitch setOn:calculatedStatus animated:YES];
 }
@@ -167,8 +167,8 @@
 {
     [super viewWillAppear:animated];
     
-    // Set initial state for attach location
-    self.attachLocationSwitch.on = [self storedAttachLocationStatus];
+    // Set initial state for attach location switch
+    self.attachLocationSwitch.on = [[self class] attachLocationStatus];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -232,6 +232,13 @@
     self.transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
     [appDelegate saveContext];
+    
+    if ([[self class] attachLocationStatus] == YES)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate addTransaction:[self.transaction.objectID URIRepresentation]];
+        [appDelegate updateTransactions];
+    }
 }
 
 - (void)detailsViewControllerAdd:(id)sender

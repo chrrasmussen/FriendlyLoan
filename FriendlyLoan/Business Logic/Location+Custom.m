@@ -16,33 +16,17 @@
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
-    
-    NSLog(@"%s", (char *)_cmd);
 }
 
 - (void)awakeFromFetch
 {
     [super awakeFromFetch];
-    
-    // TODO: Resolve place name if necessary
-    if (self.placeName == nil)
-    {
-//        [RIOTimedLocationManager resolvePlaceNameForLocation:self.coordinate completionHandler:^(NSString *placeName) {
-//            // TODO: Fix implementation
-//            NSLog(@"Resolved placeName:%@", placeName);
-//        }];
-    }
 }
 
-- (void)updateLocation
+- (void)updateLocation:(CLLocation *)location
 {
-    // FIXME: Set correct flag depending on status
-    self.status = [NSNumber numberWithInt:kLocationStatusLocating];
-    
-    // FIXME: Fix code when RIOTimedLocationManager is fixed
-//    CLLocationCoordinate2D lastKnownLocation = [[[RIOTimedLocationManager sharedManager] qualifiedLocation] coordinate];
-//    self.latitude = [NSNumber numberWithDouble:lastKnownLocation.latitude];
-//    self.longitude = [NSNumber numberWithDouble:lastKnownLocation.longitude];
+    self.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+    self.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
 }
 
 
@@ -56,17 +40,5 @@
     
     return location;
 }
-
-- (NSString *)title
-{
-    return self.placeName;
-}
-
-#pragma mark - Private methods
-
-//- (void)test
-//{
-//    NSLog(@"Test");
-//}
 
 @end

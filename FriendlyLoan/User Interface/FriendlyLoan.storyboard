@@ -231,7 +231,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FriendCell" textLabel="zOw-h5-1Zm" detailTextLabel="Mv7-DS-Jsa" imageView="jiy-pp-aLN" style="IBUITableViewCellStyleValue1" id="5Pb-yU-ICP" customClass="FriendTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FriendCell" textLabel="zOw-h5-1Zm" detailTextLabel="Mv7-DS-Jsa" imageView="jiy-pp-aLN" style="IBUITableViewCellStyleValue1" id="5Pb-yU-ICP">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -877,9 +877,6 @@
                 <relationship kind="outlet" name="lentSegmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="saveBarButtonItem" candidateClass="UIBarButtonItem"/>
             </relationships>
-        </class>
-        <class className="FriendTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendTableViewCell.h"/>
         </class>
         <class className="FriendsSearchResultsController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsSearchResultsController.h"/>

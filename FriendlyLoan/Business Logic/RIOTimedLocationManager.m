@@ -33,6 +33,7 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 @implementation RIOTimedLocationManager {
     CLLocationManager *_locationManager;
     NSTimer *_timeoutTimer;
+    CLLocation *_acquiredLocation;
 }
 
 @synthesize delegate = _delegate;
@@ -56,7 +57,8 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 
 - (void)startUpdatingLocation
 {
-    if (self.locating == NO)
+    BOOL needLocation = (self.location == nil);
+    if (self.locating == NO && needLocation)
     {
 //        NSLog(@"Starting updating location (status:%d enabled:%d)", [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled]);
         [_locationManager startUpdatingLocation];
@@ -106,6 +108,8 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 {
     if ([self isLocationQualified:newLocation])
     {
+        _acquiredLocation = newLocation;
+        
         if ([self.delegate respondsToSelector:@selector(timedLocationManager:didRetrieveLocation:)])
             [self.delegate timedLocationManager:self didRetrieveLocation:newLocation];
         
@@ -165,7 +169,10 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 
 - (CLLocation *)lastLocation
 {
-    return _locationManager.location;
+    if (_acquiredLocation == nil)
+        _acquiredLocation = _locationManager.location;
+    
+    return _acquiredLocation;
 }
 
 - (BOOL)isLocationQualified:(CLLocation *)theLocation

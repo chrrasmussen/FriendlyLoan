@@ -37,18 +37,14 @@
     [self.friend populateFieldsWithFriendID:friendID];
 }
 
-- (void)addCurrentLocation
+- (void)updateLocation:(CLLocation *)location
 {
-    // FIXME: Fix this code
-    // - Rename to updateCurrentLocation
-    // - Add a method to remove location? May not be necessary
     if (self.location == nil)
     {
-//        self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
-//        [self.location updateLocation];
+        self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
     }
     
-    NSLog(@"Added location for transaction");
+    [self.location updateLocation:location];
 }
 
 #pragma mark - History methods

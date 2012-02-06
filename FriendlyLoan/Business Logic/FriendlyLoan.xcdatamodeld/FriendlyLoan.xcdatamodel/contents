@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11C74" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11D50" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Friend" representedClassName="Friend" syncable="YES">
-        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="friendID" attributeType="Integer 32" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transaction" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="friend" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="latitude" attributeType="Double" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" syncable="YES"/>
-        <attribute name="placeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="status" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="transaction" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="location" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
@@ -22,13 +15,12 @@
         <attribute name="createdTimestamp" attributeType="Date" syncable="YES"/>
         <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="friend" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Friend" inverseName="transaction" inverseEntity="Friend" syncable="YES"/>
         <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="transaction" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Friend" positionX="358" positionY="-69" width="128" height="150"/>
-        <element name="Location" positionX="360" positionY="144" width="128" height="120"/>
+        <element name="Friend" positionX="358" positionY="-69" width="128" height="75"/>
+        <element name="Location" positionX="360" positionY="144" width="128" height="90"/>
         <element name="Transaction" positionX="124" positionY="3" width="128" height="165"/>
     </elements>
 </model>

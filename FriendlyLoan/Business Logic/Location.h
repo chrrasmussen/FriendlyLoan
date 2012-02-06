@@ -2,8 +2,8 @@
 //  Location.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 09.10.11.
-//  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
+//  Created by Christian Rasmussen on 28.01.12.
+//  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,8 +15,6 @@
 
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
-@property (nonatomic, retain) NSString * placeName;
-@property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) Transaction *transaction;
 
 @end

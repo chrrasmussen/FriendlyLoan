@@ -9,15 +9,14 @@
 #import "Transaction.h"
 
 
-@class NSManagadObjectContext;
+@class NSManagadObjectContext, CLLocation;
 
 @interface Transaction (Custom)
 
 + (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context;
 - (void)addFriendID:(NSNumber *)friendID;
 //- (void)removeFriendID:(NSNumber *)friendID;
-- (void)addCurrentLocation;
-//- (void)removeCurrentLocation;
+- (void)updateLocation:(CLLocation *)location;
 
 - (NSString *)historySectionName;
 

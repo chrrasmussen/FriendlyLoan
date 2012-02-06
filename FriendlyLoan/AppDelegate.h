@@ -11,6 +11,7 @@
 #import "RIOTimedLocationManagerDelegate.h"
 
 
+@class NSManagedObjectID;
 @class RIOTimedLocationManager;
 @protocol AppDelegateLocationDelegate;
 
@@ -23,15 +24,19 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong, readonly) RIOTimedLocationManager *timedLocationManager;
-
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
 
 // Location
+@property (nonatomic, strong, readonly) RIOTimedLocationManager *timedLocationManager;
 @property (nonatomic, weak) id<AppDelegateLocationDelegate> locationDelegate;
+
+@property (nonatomic, strong) NSMutableSet *transactionsAwaitingLocation;
 
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
+- (CLLocation *)location;
+- (void)addTransaction:(NSURL *)objectURI;
+- (void)updateTransactions;
 
 @end
