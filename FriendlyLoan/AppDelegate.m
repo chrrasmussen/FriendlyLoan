@@ -37,7 +37,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"Init");
+    NSLog(@"application:didFinishLaunchingWithOptions:");
+    
     [self setUpTimedLocationManager];
     
     self.transactionsAwaitingLocation = [[NSMutableSet alloc] init];
@@ -135,11 +136,15 @@
         return __persistentStoreCoordinator;
     }
     
+    
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"FriendlyLoan.sqlite"];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
     {
         /*
          Replace this implementation with code to handle the error appropriately.

@@ -241,6 +241,7 @@
 		69AC1172143E5009001A0810 /* Friend+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+Custom.h"; sourceTree = "<group>"; };
 		69AC1173143E5009001A0810 /* Friend+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+Custom.m"; sourceTree = "<group>"; };
 		69AE6352142929840016AF6F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		69BA5DF914E0865200021EAA /* FriendlyLoan 2.xcdatamodel */ = {isa = PBXFileReference; path = "FriendlyLoan 2.xcdatamodel"; sourceTree = "<group>"; };
 		69BA69BF141ADC23008C4384 /* Transaction+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Custom.h"; sourceTree = "<group>"; };
 		69BA69C0141ADC23008C4384 /* Transaction+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Custom.m"; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
@@ -1065,6 +1066,7 @@
 		697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				69BA5DF914E0865200021EAA /* FriendlyLoan 2.xcdatamodel */,
 				697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */,
 			);
 			currentVersion = 697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */;

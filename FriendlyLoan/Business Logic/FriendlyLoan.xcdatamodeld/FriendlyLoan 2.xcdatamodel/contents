@@ -11,6 +11,7 @@
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="amount" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="attachLocation" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="categoryID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="createdTimestamp" attributeType="Date" syncable="YES"/>
         <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
@@ -19,6 +20,8 @@
         <relationship name="friend" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Friend" inverseName="transaction" inverseEntity="Friend" syncable="YES"/>
         <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="transaction" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <fetchRequest name="FriendsFetchRequest" entity="Transaction"/>
+    <fetchRequest name="HistoryFetchRequest" entity="Transaction"/>
     <elements>
         <element name="Friend" positionX="358" positionY="-69" width="128" height="75"/>
         <element name="Location" positionX="360" positionY="144" width="128" height="90"/>
