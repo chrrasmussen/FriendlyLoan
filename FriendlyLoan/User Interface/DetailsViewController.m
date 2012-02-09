@@ -171,6 +171,8 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
     self.noteLabel.text = transaction.note;
     
+    NSLog(@"attachLocation:%@", transaction.attachLocation);
+    
     // Display date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];

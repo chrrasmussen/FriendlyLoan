@@ -28,7 +28,7 @@
     [hideKeyboardButton setBackgroundImage:keyboardBackgroundImage forState:UIControlStateNormal];
     [hideKeyboardButton setBackgroundImage:keyboardBackgroundHighlightedImage forState:UIControlStateHighlighted];
     
-    [hideKeyboardButton setTitle:NSLocalizedString(@"Hide Keyboard", nil) forState:UIControlStateNormal];
+    [hideKeyboardButton setTitle:NSLocalizedString(@"Hide Keyboard", @"Button text for the numeric keyboard in Add Loan-tab") forState:UIControlStateNormal];
     
     [hideKeyboardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [hideKeyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];

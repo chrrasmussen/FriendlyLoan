@@ -152,7 +152,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NSLocalizedString(@"Settle", nil);
+    return NSLocalizedString(@"Settle", @"Text of delete button in Friends-tab");
 }
 
 //- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath

@@ -2,7 +2,7 @@
 //  Friend.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 28.01.12.
+//  Created by Christian Rasmussen on 06.02.12.
 //  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 

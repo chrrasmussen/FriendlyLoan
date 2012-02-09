@@ -210,7 +210,7 @@
 
 - (void)displayLocationWarning
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", nil) message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", @"Title of location warning") message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", @"Message of location warning") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Button text on location warning") otherButtonTitles:nil];
     [alertView show];
 }
 
@@ -302,7 +302,7 @@
     _timedLocationManager.accuracyFilter = 100;
     _timedLocationManager.timeIntervalFilter = 15 * 60;
     _timedLocationManager.maximumLocatingDuration = 2 * 60;
-    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", nil);
+    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"Message of alert view when location manager is activated for the first time");
 }
 
 @end
