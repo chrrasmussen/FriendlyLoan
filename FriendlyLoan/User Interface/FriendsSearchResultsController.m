@@ -45,7 +45,7 @@
     
     // Configure the cell...
     NSDictionary *friend = [self.searchDisplayResult objectAtIndex:indexPath.row];
-    cell.textLabel.text = [friend objectForKey:@"friendName"]; // TODO: Make a constant? Or refer to FriendsViewController?
+    cell.textLabel.text = [friend objectForKey:kResultFriendName];
     
     return cell;
 }
@@ -73,7 +73,7 @@
     
     // Filter search display result
     NSString *test = [NSString stringWithFormat:@"*%@*", searchString];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE[cd] %@", @"friendName", test]; // TODO: Make a constant? Or refer to FriendsViewController?
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K LIKE[cd] %@", kResultFriendName, test];
     self.searchDisplayResult = [self.sortedResult filteredArrayUsingPredicate:predicate];
     
     // Determine if search display should reload table

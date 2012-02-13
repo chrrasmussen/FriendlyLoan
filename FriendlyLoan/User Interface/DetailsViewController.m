@@ -9,8 +9,9 @@
 #import "DetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "LoanManager.h"
+
 #import "Category.h"
-#import "Models.h"
 #import "EditLoanViewController.h"
 
 
@@ -124,7 +125,20 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return (self.transaction.location != nil) ? rows : rows - 1;
+    return ([self.transaction.attachLocation boolValue] == YES) ? rows : rows - 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
+    if (indexPath.row == rows - 1)
+    {
+        NSLog(@"Is locating:%d", [self.transaction isLocating]);
+    }
+//    else
+//    {
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+//    }
 }
 
 #pragma mark - Private methods
@@ -170,8 +184,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     self.friendLabel.text = [transaction.friend fullName];
     self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
     self.noteLabel.text = transaction.note;
-    
-    NSLog(@"attachLocation:%@", transaction.attachLocation);
     
     // Display date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

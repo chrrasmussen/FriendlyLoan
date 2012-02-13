@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AbstractLoanViewController.h"
-#import "AppDelegateLocationDelegate.h"
+
+#import "LoanManagerAttachLocationDelegate.h"
 
 
-@interface AddLoanViewController : AbstractLoanViewController <AppDelegateLocationDelegate>
+@interface AddLoanViewController : AbstractLoanViewController <LoanManagerAttachLocationDelegate>
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
@@ -26,5 +27,7 @@
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
 - (IBAction)changeAttachLocationStatus:(UISwitch *)sender;
+
+- (void)setAttachLocationStatus:(BOOL)attachLocation;
 
 @end

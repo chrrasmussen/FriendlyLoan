@@ -1,5 +1,5 @@
 //
-//  SummaryViewController.m
+//  FriendsViewController.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.09.11.
@@ -8,8 +8,7 @@
 
 #import "FriendsViewController.h"
 
-#import "AppDelegate.h"
-#import "Models.h"
+#import "LoanManager.h"
 #import "HistoryViewController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
@@ -239,10 +238,9 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (void)setUpFetchedResultsController
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     // Set up fetch request
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:appDelegate.managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
 //    fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
@@ -276,7 +274,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
     
     // Create the fetch results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:@"FriendsCache"];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"FriendsCache"];
 }
 
 - (void)performFetch
@@ -334,23 +332,15 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
     // Add transaction
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    Transaction *transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    Transaction *transaction = [Transaction insertNewTransactionInManagedObjectContext:managedObjectContext];
     
     [transaction addFriendID:friendID];
     
     transaction.amount = [debt decimalNumberByNegating];
     transaction.settled = [NSNumber numberWithBool:YES];
     
-    [appDelegate saveContext];
-    
-    if ([AddLoanViewController attachLocationStatus] == YES)
-    {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate addTransaction:[transaction.objectID URIRepresentation]];
-        [appDelegate updateTransactions];
-    }
+    [[LoanManager sharedManager] saveContext];
 }
 
 @end

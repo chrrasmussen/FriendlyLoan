@@ -10,15 +10,15 @@
 #import <CoreData/CoreData.h>
 
 #import "RIOTimedLocationManager.h"
-#import "AppDelegateLocationDelegate.h"
 
-#import "NSManagedObjectContext+FetchObjectFromURI.h"
-#import "Models.h"
+#import "LoanManager.h"
 
 
 @interface AppDelegate ()
 
 - (void)setUpTimedLocationManager;
+- (void)setUpLoanManager;
+- (void)displayLocationWarning;
 
 @end
 
@@ -30,18 +30,16 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-@synthesize locationDelegate;
+@synthesize loanManager = _loanManager;
 @synthesize timedLocationManager = _timedLocationManager;
-@synthesize transactionsAwaitingLocation;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"application:didFinishLaunchingWithOptions:");
+    NSLog(@"App started");
     
     [self setUpTimedLocationManager];
-    
-    self.transactionsAwaitingLocation = [[NSMutableSet alloc] init];
+    [self setUpLoanManager];
     
     // Override point for customization after application launch.
     return YES;
@@ -61,10 +59,6 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
-    
-    // TODO: What I need to account for:
-    // - Terminates if app is forced closed (by user or otherwise)
-    // - Background-stuff?
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -136,7 +130,7 @@
         return __persistentStoreCoordinator;
     }
     
-    
+    // Resource: http://stackoverflow.com/questions/1018155/what-do-i-have-to-do-to-get-core-data-to-automatically-migrate-models/
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"FriendlyLoan.sqlite"];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
@@ -206,72 +200,17 @@
 }
 
 
-#pragma mark - Location methods
-
-- (void)displayLocationWarning
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", @"Title of location warning") message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", @"Message of location warning") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Button text on location warning") otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (void)startUpdatingLocation
-{
-    if ([CLLocationManager locationServicesEnabled] == YES)
-    {
-        [self.timedLocationManager startUpdatingLocation];
-    }
-    else
-    {
-        [self displayLocationWarning];
-        [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:NO];
-    }
-}
-
-- (void)stopUpdatingLocation
-{
-    [self.timedLocationManager stopUpdatingLocation];
-}
-
-- (CLLocation *)location
-{
-    return [self.timedLocationManager location];
-}
-
-- (void)addTransaction:(NSURL *)objectURI
-{
-    [self.transactionsAwaitingLocation addObject:objectURI];
-}
-
-- (void)updateTransactions
-{
-    if (self.timedLocationManager.location == nil)
-    {
-        [self startUpdatingLocation];
-        return;
-    }
-    
-    for (NSURL *objectURI in self.transactionsAwaitingLocation)
-    {
-        Transaction *transaction = (Transaction *)[self.managedObjectContext objectWithURI:objectURI];
-        [transaction updateLocation:self.timedLocationManager.location];
-    }
-    
-    [self saveContext];
-    [self.transactionsAwaitingLocation removeAllObjects];
-}
-
-
 #pragma mark - RIOTimedLocationManagerDelegate methods
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:(status == kCLAuthorizationStatusAuthorized)];
+    [_loanManager setAttachLocationStatus:(status == kCLAuthorizationStatusAuthorized)];
 }
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
-    NSLog(@"Add locations:%d", [self.transactionsAwaitingLocation count]);
-    [self updateTransactions];
+    [_loanManager updateLocation:location];
+
 }
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
@@ -285,9 +224,35 @@
         else if (error.code == kCLErrorDenied)
         {
             [self displayLocationWarning];
-            [self.locationDelegate appDelegate:self didChangeAttachLocationStatus:NO];
+            [_loanManager setAttachLocationStatus:NO];
         }
     }
+}
+
+
+#pragma mark - LoanManagerLocationDelegate methods
+
+- (void)startUpdatingLocation
+{
+    if ([CLLocationManager locationServicesEnabled] == YES)
+    {
+        [self.timedLocationManager startUpdatingLocation];
+    }
+    else
+    {
+        [self displayLocationWarning];
+        [_loanManager setAttachLocationStatus:NO];
+    }
+}
+
+- (void)stopUpdatingLocation
+{
+    [self.timedLocationManager stopUpdatingLocation];
+}
+
+- (CLLocation *)location
+{
+    return [self.timedLocationManager location];
 }
 
 
@@ -303,6 +268,21 @@
     _timedLocationManager.timeIntervalFilter = 15 * 60;
     _timedLocationManager.maximumLocatingDuration = 2 * 60;
     _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"Message of alert view when location manager is activated for the first time");
+}
+
+- (void)setUpLoanManager
+{
+    _loanManager = [LoanManager sharedManager];
+    _loanManager.locationDelegate = self;
+    _loanManager.backingStoreDelegate = self;
+    
+    // TODO: If transactionsWaitingForLocation.count > 0 => Locate
+}
+
+- (void)displayLocationWarning
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", @"Title of location warning") message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", @"Message of location warning") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Button text on location warning") otherButtonTitles:nil];
+    [alertView show];
 }
 
 @end

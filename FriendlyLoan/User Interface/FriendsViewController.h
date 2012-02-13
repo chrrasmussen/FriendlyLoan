@@ -1,5 +1,5 @@
 //
-//  SummaryViewController.h
+//  FriendsViewController.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.09.11.
@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+
+
+extern NSString * const kResultFriendID;
+extern NSString * const kResultFriendName;
+extern NSString * const kResultDebt;
+
+extern NSString * const kPlaceholderImageName;
 
 
 @class FriendsSearchResultsController;

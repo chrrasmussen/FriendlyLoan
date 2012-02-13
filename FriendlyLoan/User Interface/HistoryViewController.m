@@ -8,8 +8,8 @@
 
 #import "HistoryViewController.h"
 
-#import "AppDelegate.h"
-#import "Models.h"
+#import "LoanManager.h"
+
 #import "DetailsViewController.h"
 #import "Category.h"
 #import "NSDate+RIOAdditions.h"
@@ -246,20 +246,18 @@
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
     NSString *lentDescription = (transaction.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);;
-    NSString *lentPreposition = (transaction.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);;
+    NSString *lentPreposition = (transaction.lent == YES) ? NSLocalizedString(@"to", nil) : NSLocalizedString(@"from", nil);;
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", lentDescription, amountText];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", lentPreposition, friendText];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@", lentDescription, amountText, lentPreposition, friendText];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
 }
 
 - (void)setUpFetchedResultsController
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     // Set up the fetch request
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:appDelegate.managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
     fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
@@ -284,7 +282,7 @@
     }
     
     // Create the fetched results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
     self.fetchedResultsController.delegate = self;
 }
 

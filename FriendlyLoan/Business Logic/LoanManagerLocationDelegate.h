@@ -12,5 +12,6 @@
 
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
+- (CLLocation *)location;
 
 @end

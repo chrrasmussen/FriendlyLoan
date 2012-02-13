@@ -8,7 +8,8 @@
 
 #import "AbstractLoanViewController.h"
 
-#import "Models.h"
+#import "LoanManager.h"
+
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
@@ -39,7 +40,7 @@ const NSInteger kDefaultCategoryID = 0;
     // Update GUI
     NSString *friendName = [Friend friendNameForFriendID:friendID];
     if (friendName == nil)
-        friendName = NSLocalizedString(@"None", @"Placeholder when no friends are selected in Add Loan-tab");
+        friendName = NSLocalizedString(@"None selected", @"Placeholder when no friends are selected in Add Loan-tab");
     
     self.friendValueLabel.text = friendName;
 }

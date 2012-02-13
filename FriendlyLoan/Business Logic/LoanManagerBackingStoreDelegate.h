@@ -14,5 +14,6 @@
 @protocol LoanManagerBackingStoreDelegate <NSObject>
 
 - (NSManagedObjectContext *)managedObjectContext;
+- (void)saveContext;
 
 @end

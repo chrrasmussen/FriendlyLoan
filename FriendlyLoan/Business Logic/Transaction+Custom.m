@@ -16,6 +16,17 @@
 #import "RIORelativeDate.h"
 
 
+const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
+
+
+@interface Transaction (Custom_Private)
+
+- (BOOL)needLocation;
+- (BOOL)isRecentlyCreated;
+
+@end
+
+
 @implementation Transaction (Custom)
 
 #pragma mark - Creating and saving transaction
@@ -31,14 +42,22 @@
 
 - (void)addFriendID:(NSNumber *)friendID
 {
+    if (friendID == nil)
+        return;
+    
     if (self.friend == nil)
+    {
         self.friend = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+    }
     
     [self.friend populateFieldsWithFriendID:friendID];
 }
 
-- (void)updateLocation:(CLLocation *)location
+- (void)addLocation:(CLLocation *)location
 {
+    if (location == nil)
+        return;
+    
     if (self.location == nil)
     {
         self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
@@ -63,7 +82,39 @@
 
 - (NSDecimalNumber *)absoluteAmount
 {
-    return (self.lent == YES) ? self.amount: [self.amount decimalNumberByNegating];
+    return (self.lent == YES) ? self.amount : [self.amount decimalNumberByNegating];
+}
+
+
+#pragma mark - Location methods
+
+- (BOOL)isLocating
+{
+    return (self.needLocation && self.isRecentlyCreated);
+}
+
+- (BOOL)hasFailedToLocate
+{
+    return (self.needLocation && !self.isRecentlyCreated);
+}
+
+
+#pragma mark - Private methods
+
+- (BOOL)needLocation
+{
+    BOOL attachLocation = [self.attachLocation boolValue];
+    BOOL hasLocation = (self.location != nil);
+    
+    return (attachLocation && !hasLocation);
+}
+
+- (BOOL)isRecentlyCreated
+{
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.createdTimestamp];
+    BOOL isRecentlyCreated = (abs(timeInterval) < kLocationTimeLimit);
+    
+    return isRecentlyCreated;
 }
 
 @end

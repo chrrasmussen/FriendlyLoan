@@ -9,11 +9,11 @@
 #import "AddLoanViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
+#import "LoanManager.h"
+
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
-#import "AppDelegate.h"
-#import "Models.h"
 #import "RIOTimedLocationManager.h"
 
 
@@ -60,6 +60,11 @@
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
 {
     [super updateTransactionBasedOnViewInfo:theTransaction];
+    
+    BOOL attachLocation = [[self class] attachLocationStatus];
+    theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
+//    if (attachLocation == YES)
+//        [theTransaction addLocation:[[LoanManager sharedManager] location]]; // FIXME: Remove comment
     
     theTransaction.createdTimestamp = [NSDate date];
 }
@@ -136,12 +141,12 @@
     [userDefaults synchronize];
 }
 
-#pragma mark - AppDelegateLocationDelegate methods
+#pragma mark - LoanManagerAttachLocationDelegate methods
 
-- (void)appDelegate:(AppDelegate *)appDelegate didChangeAttachLocationStatus:(BOOL)status
+- (void)setAttachLocationStatus:(BOOL)attachLocation
 {
     BOOL storedStatus = [[self class] attachLocationStatus];
-    BOOL calculatedStatus = status && storedStatus;
+    BOOL calculatedStatus = attachLocation && storedStatus;
     [self.attachLocationSwitch setOn:calculatedStatus animated:YES];
 }
 
@@ -150,8 +155,7 @@
 
 - (void)viewDidLoad
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.locationDelegate = self;
+    [[LoanManager sharedManager] setAttachLocationDelegate:self];
     
     [super viewDidLoad];
 }
@@ -228,17 +232,10 @@
 
 - (void)addTransaction
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.transaction = [Transaction insertNewTransactionInManagedObjectContext:appDelegate.managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    self.transaction = [Transaction insertNewTransactionInManagedObjectContext:managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
-    [appDelegate saveContext];
-    
-    if ([[self class] attachLocationStatus] == YES)
-    {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate addTransaction:[self.transaction.objectID URIRepresentation]];
-        [appDelegate updateTransactions];
-    }
+    [[LoanManager sharedManager] saveContext];
 }
 
 - (void)detailsViewControllerAdd:(id)sender
@@ -250,15 +247,13 @@
 {
     if (self.attachLocationSwitch.on == YES)
     {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate startUpdatingLocation];
+        [[LoanManager sharedManager] startUpdatingLocation];
     }
 }
 
 - (void)stopUpdatingLocation
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate stopUpdatingLocation];
+    [[LoanManager sharedManager] stopUpdatingLocation];
 }
 
 @end

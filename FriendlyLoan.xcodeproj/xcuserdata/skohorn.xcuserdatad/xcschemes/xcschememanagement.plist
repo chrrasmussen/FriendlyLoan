@@ -9,7 +9,7 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Translate.xcscheme</key>
+		<key>Localize Storyboard.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -17,6 +17,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>690002D614E4A66D00453B83</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>690002DA14E4A6B200453B83</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6941FF6D141A6D6B00FB3A24</key>
 		<dict>
 			<key>primary</key>

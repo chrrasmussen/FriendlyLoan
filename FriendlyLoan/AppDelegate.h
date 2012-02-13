@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "RIOTimedLocationManagerDelegate.h"
+#import "LoanManagerLocationDelegate.h"
+#import "LoanManagerBackingStoreDelegate.h"
 
 
-@class NSManagedObjectID;
+@class LoanManager;
 @class RIOTimedLocationManager;
-@protocol AppDelegateLocationDelegate;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RIOTimedLocationManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RIOTimedLocationManagerDelegate, LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -27,16 +28,8 @@
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
 
-// Location
+@property (nonatomic, strong, readonly) LoanManager *loanManager;
 @property (nonatomic, strong, readonly) RIOTimedLocationManager *timedLocationManager;
-@property (nonatomic, weak) id<AppDelegateLocationDelegate> locationDelegate;
 
-@property (nonatomic, strong) NSMutableSet *transactionsAwaitingLocation;
-
-- (void)startUpdatingLocation;
-- (void)stopUpdatingLocation;
-- (CLLocation *)location;
-- (void)addTransaction:(NSURL *)objectURI;
-- (void)updateTransactions;
 
 @end

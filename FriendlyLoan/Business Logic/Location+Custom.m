@@ -8,20 +8,18 @@
 
 #import "Location+Custom.h"
 
-#import "RIOTimedLocationManager.h"
-
 
 @implementation Location (Custom)
 
-- (void)awakeFromInsert
-{
-    [super awakeFromInsert];
-}
-
-- (void)awakeFromFetch
-{
-    [super awakeFromFetch];
-}
+//- (void)awakeFromInsert
+//{
+//    [super awakeFromInsert];
+//}
+//
+//- (void)awakeFromFetch
+//{
+//    [super awakeFromFetch];
+//}
 
 - (void)updateLocation:(CLLocation *)location
 {

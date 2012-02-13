@@ -9,6 +9,8 @@
 #import "Transaction.h"
 
 
+extern const float kLocationTimeLimit;
+
 @class NSManagadObjectContext, CLLocation;
 
 @interface Transaction (Custom)
@@ -16,11 +18,15 @@
 + (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context;
 - (void)addFriendID:(NSNumber *)friendID;
 //- (void)removeFriendID:(NSNumber *)friendID;
-- (void)updateLocation:(CLLocation *)location;
+- (void)addLocation:(CLLocation *)location;
 
 - (NSString *)historySectionName;
 
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
+
+- (BOOL)isLocating;
+- (BOOL)hasFailedToLocate;
+
 
 @end
