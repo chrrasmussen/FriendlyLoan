@@ -125,21 +125,21 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return ([self.transaction.attachLocation boolValue] == YES) ? rows : rows - 1;
+    return ([self.transaction hasLocation]) ? rows : rows - 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
-    if (indexPath.row == rows - 1)
-    {
-        NSLog(@"Is locating:%d", [self.transaction isLocating]);
-    }
-//    else
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
+//    if (indexPath.row == rows - 1)
 //    {
-    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+//        NSLog(@"Is locating:%d", [self.transaction isLocating]);
 //    }
-}
+////    else
+////    {
+//    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+////    }
+//}
 
 #pragma mark - Private methods
 
@@ -164,10 +164,9 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)showLocationInfo
 {
-    Location *location = self.transaction.location;
-    
-    if (location != nil)
+    if ([self.transaction hasLocation])
     {
+        Location *location = self.transaction.location;
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([location coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
         [self.mapView setRegion:region animated:NO];
         

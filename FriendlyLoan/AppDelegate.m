@@ -209,6 +209,7 @@
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
+    NSLog(@"Acquired location!");
     [_loanManager updateLocation:location];
 
 }
@@ -252,6 +253,7 @@
 
 - (CLLocation *)location
 {
+//    return nil; // FIXME: Remove and uncomment line below
     return [self.timedLocationManager location];
 }
 

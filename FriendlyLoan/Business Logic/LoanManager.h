@@ -26,6 +26,7 @@
 - (void)stopUpdatingLocation;
 - (CLLocation *)location;
 
+//- (BOOL)hasUnlocatedTransactions;
 - (void)updateLocation:(CLLocation *)location;
 
 // Backing store

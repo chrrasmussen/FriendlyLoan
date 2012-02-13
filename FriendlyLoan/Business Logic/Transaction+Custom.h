@@ -25,6 +25,9 @@ extern const float kLocationTimeLimit;
 - (BOOL)lent;
 - (NSDecimalNumber *)absoluteAmount;
 
+- (BOOL)hasFriend;
+
+- (BOOL)hasLocation;
 - (BOOL)isLocating;
 - (BOOL)hasFailedToLocate;
 

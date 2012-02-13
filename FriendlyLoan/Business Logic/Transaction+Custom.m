@@ -45,7 +45,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
     if (friendID == nil)
         return;
     
-    if (self.friend == nil)
+    if ([self hasFriend] == NO)
     {
         self.friend = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
     }
@@ -58,7 +58,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
     if (location == nil)
         return;
     
-    if (self.location == nil)
+    if ([self hasLocation] == NO)
     {
         self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
     }
@@ -86,7 +86,22 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
 }
 
 
+#pragma mark - Friend methods
+
+- (BOOL)hasFriend
+{
+    BOOL hasFriend = (self.friend != nil);
+    return hasFriend;
+}
+
+
 #pragma mark - Location methods
+
+- (BOOL)hasLocation
+{
+    BOOL hasLocation = (self.location != nil);
+    return hasLocation;
+}
 
 - (BOOL)isLocating
 {

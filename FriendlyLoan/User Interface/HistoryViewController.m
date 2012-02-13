@@ -245,10 +245,23 @@
     NSString *friendText = [transaction.friend fullName];
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
-    NSString *lentDescription = (transaction.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);;
-    NSString *lentPreposition = (transaction.lent == YES) ? NSLocalizedString(@"to", nil) : NSLocalizedString(@"from", nil);;
+    NSString *format;
+    if ([transaction.settled boolValue] == NO)
+    {
+        if (transaction.lent == YES)
+            format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
+        else
+            format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
+    }
+    else
+    {
+        if (transaction.lent == YES)
+            format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
+        else
+            format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");
+    }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@", lentDescription, amountText, lentPreposition, friendText];
+    cell.textLabel.text = [NSString stringWithFormat:format, amountText, friendText];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
 }

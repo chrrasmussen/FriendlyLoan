@@ -63,8 +63,8 @@
     
     BOOL attachLocation = [[self class] attachLocationStatus];
     theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
-//    if (attachLocation == YES)
-//        [theTransaction addLocation:[[LoanManager sharedManager] location]]; // FIXME: Remove comment
+    if (attachLocation == YES)
+        [theTransaction addLocation:[[LoanManager sharedManager] location]];
     
     theTransaction.createdTimestamp = [NSDate date];
 }

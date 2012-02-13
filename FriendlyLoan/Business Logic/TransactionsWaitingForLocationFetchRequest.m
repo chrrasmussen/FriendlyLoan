@@ -16,7 +16,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel = persistentStoreCoordinator.managedObjectModel;
     
-    NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:-300]; // TODO: Set as a global constant?
+    NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:-15*60]; // TODO: Set as a global constant?
     NSDictionary *variables = [NSDictionary dictionaryWithObject:dateLimit forKey:@"DATE_LIMIT"];
     NSFetchRequest *fetchRequest = [managedObjectModel fetchRequestFromTemplateWithName:@"TransactionsWaitingForLocationFetchRequest" substitutionVariables:variables];
     
