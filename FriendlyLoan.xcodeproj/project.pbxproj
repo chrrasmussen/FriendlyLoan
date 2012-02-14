@@ -99,8 +99,8 @@
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
 		69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69872F84145238E400BA1FE6 /* RIORelativeDate.strings */; };
 		69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */; };
-		698F4C4D14E9F1F3005DB2C7 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 698F4C4B14E9F1F3005DB2C7 /* Icon.png */; };
-		698F4C4E14E9F1F3005DB2C7 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 698F4C4C14E9F1F3005DB2C7 /* Icon@2x.png */; };
+		698F4C5114E9F4C3005DB2C7 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 698F4C4F14E9F4C3005DB2C7 /* Icon.png */; };
+		698F4C5214E9F4C3005DB2C7 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 698F4C5014E9F4C3005DB2C7 /* Icon@2x.png */; };
 		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
@@ -254,8 +254,8 @@
 		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
 		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
 		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
-		698F4C4B14E9F1F3005DB2C7 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		698F4C4C14E9F1F3005DB2C7 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		698F4C4F14E9F4C3005DB2C7 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		698F4C5014E9F4C3005DB2C7 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
@@ -537,8 +537,8 @@
 		69A9B26114311725006A0D3F /* App Icon */ = {
 			isa = PBXGroup;
 			children = (
-				698F4C4B14E9F1F3005DB2C7 /* Icon.png */,
-				698F4C4C14E9F1F3005DB2C7 /* Icon@2x.png */,
+				698F4C4F14E9F4C3005DB2C7 /* Icon.png */,
+				698F4C5014E9F4C3005DB2C7 /* Icon@2x.png */,
 				6972719914E5EAC90057F71E /* Icon-72.png */,
 				6972719A14E5EAC90057F71E /* Icon-Small-50.png */,
 				6972719B14E5EAC90057F71E /* Icon-Small.png */,
@@ -858,8 +858,8 @@
 				697271A214E5EAC90057F71E /* Icon-Small.png in Resources */,
 				697271A314E5EAC90057F71E /* Icon-Small@2x.png in Resources */,
 				697271A614E5EAC90057F71E /* iTunesArtwork.png in Resources */,
-				698F4C4D14E9F1F3005DB2C7 /* Icon.png in Resources */,
-				698F4C4E14E9F1F3005DB2C7 /* Icon@2x.png in Resources */,
+				698F4C5114E9F4C3005DB2C7 /* Icon.png in Resources */,
+				698F4C5214E9F4C3005DB2C7 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
