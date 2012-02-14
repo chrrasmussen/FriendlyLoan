@@ -21,12 +21,15 @@
 
 + (id)sharedManager;
 
+- (void)start;
+
 // Location
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
 - (CLLocation *)location;
 
 //- (BOOL)hasUnlocatedTransactions;
+//- (NSArray *)remainingTransactions;
 - (void)updateLocation:(CLLocation *)location;
 
 // Backing store

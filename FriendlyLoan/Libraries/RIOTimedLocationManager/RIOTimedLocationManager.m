@@ -106,6 +106,7 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"didUpdateToLocation:%@", newLocation); // TODO: Remove this line
     if ([self isLocationQualified:newLocation])
     {
         _acquiredLocation = newLocation;

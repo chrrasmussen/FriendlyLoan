@@ -340,6 +340,12 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     transaction.amount = [debt decimalNumberByNegating];
     transaction.settled = [NSNumber numberWithBool:YES];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL attachLocation = [userDefaults boolForKey:@"attachLocation"];
+    transaction.attachLocation = [NSNumber numberWithBool:attachLocation];
+    if (attachLocation == YES)
+        [transaction addLocation:[(LoanManager *)[LoanManager sharedManager] location]];
+    
     [[LoanManager sharedManager] saveContext];
 }
 

@@ -204,6 +204,7 @@
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
+    NSLog(@"Location changed authorization status!");
     [_loanManager setAttachLocationStatus:(status == kCLAuthorizationStatusAuthorized)];
 }
 
@@ -216,6 +217,7 @@
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
 {
+    NSLog(@"Location failed!");
     if (error.domain == kCLErrorDomain)
     {
         if (error.code == kCLErrorLocationUnknown)
@@ -253,7 +255,6 @@
 
 - (CLLocation *)location
 {
-//    return nil; // FIXME: Remove and uncomment line below
     return [self.timedLocationManager location];
 }
 
@@ -277,8 +278,7 @@
     _loanManager = [LoanManager sharedManager];
     _loanManager.locationDelegate = self;
     _loanManager.backingStoreDelegate = self;
-    
-    // TODO: If transactionsWaitingForLocation.count > 0 => Locate
+    [_loanManager start];
 }
 
 - (void)displayLocationWarning
