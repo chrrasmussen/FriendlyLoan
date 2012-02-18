@@ -2,19 +2,16 @@
 //  Location.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 28.01.12.
-//  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
+//  Created by Christian Rasmussen on 06.10.11.
+//  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "_Location.h"
+#import <MapKit/MapKit.h>
 
-@class Transaction;
 
-@interface Location : NSManagedObject
+@interface Location : _Location <MKAnnotation>
 
-@property (nonatomic, retain) NSNumber * latitude;
-@property (nonatomic, retain) NSNumber * longitude;
-@property (nonatomic, retain) Transaction *transaction;
+- (void)updateLocation:(CLLocation *)location;
 
 @end

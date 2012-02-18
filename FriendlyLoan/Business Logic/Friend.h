@@ -2,18 +2,19 @@
 //  Friend.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 06.02.12.
-//  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
+//  Created by Christian Rasmussen on 06.10.11.
+//  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "_Friend.h"
 
-@class Transaction;
+@interface Friend : _Friend
 
-@interface Friend : NSManagedObject
++ (NSString *)friendNameForFriendID:(NSNumber *)friendID;
++ (UIImage *)friendImageForFriendID:(NSNumber *)friendID;
 
-@property (nonatomic, retain) NSNumber * friendID;
-@property (nonatomic, retain) Transaction *transaction;
+- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
+
+- (NSString *)fullName;
 
 @end

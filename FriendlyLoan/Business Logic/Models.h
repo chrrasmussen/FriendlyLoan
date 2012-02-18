@@ -9,8 +9,8 @@
 #ifndef FriendlyLoan_Models_h
 #define FriendlyLoan_Models_h
 
-#import "Transaction+Custom.h"
-#import "Friend+Custom.h"
-#import "Location+Custom.h"
+#import "Transaction.h"
+#import "Friend.h"
+#import "Location.h"
 
 #endif
