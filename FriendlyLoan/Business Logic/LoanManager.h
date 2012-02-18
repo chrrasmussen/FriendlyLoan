@@ -37,7 +37,9 @@
 - (void)saveContext;
 
 // Attach location
-- (void)setAttachLocationStatus:(BOOL)attachLocation;
+- (BOOL)attachLocationValue;
+- (void)saveAttachLocationValue:(BOOL)attachLocation;
+- (void)updateAttachLocationSwitch:(BOOL)attachLocation;
 
 
 //- (void)initiate/initialize // If there are some outstanding locations, start location services

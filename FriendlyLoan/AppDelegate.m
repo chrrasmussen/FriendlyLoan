@@ -205,7 +205,7 @@
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     NSLog(@"Location changed authorization status!");
-    [_loanManager setAttachLocationStatus:(status == kCLAuthorizationStatusAuthorized)];
+    [_loanManager updateAttachLocationSwitch:(status == kCLAuthorizationStatusAuthorized)];
 }
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
@@ -217,7 +217,7 @@
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
 {
-    NSLog(@"Location failed!");
+    NSLog(@"Location failed! (%@)", error);
     if (error.domain == kCLErrorDomain)
     {
         if (error.code == kCLErrorLocationUnknown)
@@ -227,7 +227,7 @@
         else if (error.code == kCLErrorDenied)
         {
             [self displayLocationWarning];
-            [_loanManager setAttachLocationStatus:NO];
+            [_loanManager updateAttachLocationSwitch:NO];
         }
     }
 }
@@ -244,7 +244,7 @@
     else
     {
         [self displayLocationWarning];
-        [_loanManager setAttachLocationStatus:NO];
+        [_loanManager updateAttachLocationSwitch:NO];
     }
 }
 
@@ -270,7 +270,7 @@
     _timedLocationManager.accuracyFilter = 100;
     _timedLocationManager.timeIntervalFilter = 15 * 60;
     _timedLocationManager.maximumLocatingDuration = 2 * 60;
-    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"Message of alert view when location manager is activated for the first time");
+    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
 }
 
 - (void)setUpLoanManager

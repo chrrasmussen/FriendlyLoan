@@ -56,12 +56,30 @@ static LoanManager *_sharedManager;
     }
 }
 
+//#pragma mark - 
+//
+//- (void)addTransaction:(Transaction *)transaction
+//{
+//    
+//}
+//
+//- (void)editTransaction:(Transaction *)transaction
+//{
+//    
+//}
+//
+//- (void)settleDebtForFriendID:(NSNumber *)friendID
+//{
+//    
+//}
+
 
 #pragma mark - Control location
 
 - (void)startUpdatingLocation
 {
-    [locationDelegate startUpdatingLocation];
+    if ([self attachLocationValue] == YES)
+        [locationDelegate startUpdatingLocation];
 }
 
 - (void)stopUpdatingLocation
@@ -96,9 +114,34 @@ static LoanManager *_sharedManager;
     [backingStoreDelegate saveContext];
 }
 
-- (void)setAttachLocationStatus:(BOOL)attachLocation
+
+#pragma mark - Attach location
+
+- (BOOL)attachLocationValue
 {
-    [attachLocationDelegate setAttachLocationStatus:attachLocation];
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
+        return NO;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:@"attachLocation"] == nil)
+        return YES;
+    
+    BOOL status = [userDefaults boolForKey:@"attachLocation"];
+    
+    return status;
+}
+
+- (void)saveAttachLocationValue:(BOOL)status
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:status forKey:@"attachLocation"];
+    [userDefaults synchronize];
+}
+
+- (void)updateAttachLocationSwitch:(BOOL)status
+{
+    BOOL attachLocation = [self attachLocationValue] && status;
+    [attachLocationDelegate loanManager:self didChangeAttachLocationValue:attachLocation];
 }
 
 

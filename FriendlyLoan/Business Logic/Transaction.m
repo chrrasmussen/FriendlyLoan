@@ -31,10 +31,10 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
 
 #pragma mark - Creating and saving transaction
 
-+ (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context
++ (id)insertInManagedObjectContext:(NSManagedObjectContext *)context
 {
     // Create a new transaction with default properties
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:context];
+    Transaction *transaction = [super insertInManagedObjectContext:context];
     transaction.createdTimestamp = [NSDate date];
     
     return transaction;
@@ -47,7 +47,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
     
     if ([self hasFriend] == NO)
     {
-        self.friend = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+        self.friend = [Friend insertInManagedObjectContext:self.managedObjectContext];
     }
     
     [self.friend populateFieldsWithFriendID:friendID];
@@ -60,7 +60,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
     
     if ([self hasLocation] == NO)
     {
-        self.location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+        self.location = [Location insertInManagedObjectContext:self.managedObjectContext];
     }
     
     [self.location updateLocation:location];
@@ -120,7 +120,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
 
 - (BOOL)needLocation
 {
-    BOOL attachLocation = [self.attachLocation boolValue];
+    BOOL attachLocation = [self attachLocationValue];
     BOOL hasLocation = (self.location != nil);
     
     return (attachLocation && !hasLocation);

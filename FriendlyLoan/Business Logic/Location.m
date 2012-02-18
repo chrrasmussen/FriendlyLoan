@@ -33,8 +33,8 @@
 - (CLLocationCoordinate2D)coordinate
 {
     CLLocationCoordinate2D location;
-    location.latitude = [self.latitude doubleValue];
-    location.longitude = [self.longitude doubleValue];
+    location.latitude = [self latitudeValue];
+    location.longitude = [self longitudeValue];
     
     return location;
 }

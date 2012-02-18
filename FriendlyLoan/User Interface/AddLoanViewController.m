@@ -23,9 +23,6 @@
 
 - (void)detailsViewControllerAdd:(id)sender;
 
-- (void)startUpdatingLocation;
-- (void)stopUpdatingLocation;
-
 @end
 
 
@@ -45,7 +42,7 @@
 {
     [super showPeoplePickerController];
     
-    [self startUpdatingLocation];
+    [[LoanManager sharedManager] startUpdatingLocation];
 }
 
 
@@ -61,7 +58,7 @@
 {
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
-    BOOL attachLocation = [[self class] attachLocationStatus];
+    BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
     theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
     if (attachLocation == YES)
         [theTransaction addLocation:[[LoanManager sharedManager] location]];
@@ -73,7 +70,7 @@
 {
     [super resetFields];
     
-    self.attachLocationSwitch.on = [[self class] attachLocationStatus];
+    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
 }
 
 
@@ -90,7 +87,7 @@
 
 - (IBAction)textFieldDidBeginEditing:(id)sender
 {
-    [self startUpdatingLocation];
+    [[LoanManager sharedManager] startUpdatingLocation];
 }
 
 - (IBAction)borrow:(id)sender
@@ -107,47 +104,22 @@
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
-- (IBAction)changeAttachLocationStatus:(UISwitch *)sender
+- (IBAction)changeAttachLocationValue:(UISwitch *)sender
 {
+    [[LoanManager sharedManager] saveAttachLocationValue:sender.on];
+    
     if (sender.on == YES)
-        [self startUpdatingLocation];
+        [[LoanManager sharedManager] startUpdatingLocation];
     else
-        [self stopUpdatingLocation];
-    
-    [[self class] saveAttachLocationStatus:sender.on];
+        [[LoanManager sharedManager] stopUpdatingLocation];
 }
 
-
-#pragma mark - Attach location status
-
-+ (BOOL)attachLocationStatus
-{
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
-        return NO;
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults objectForKey:@"attachLocation"] == nil)
-        return YES;
-    
-    BOOL status = [userDefaults boolForKey:@"attachLocation"];
-    
-    return status;
-}
-
-+ (void)saveAttachLocationStatus:(BOOL)status
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:[NSNumber numberWithBool:status] forKey:@"attachLocation"];
-    [userDefaults synchronize];
-}
 
 #pragma mark - LoanManagerAttachLocationDelegate methods
 
-- (void)setAttachLocationStatus:(BOOL)attachLocation
+- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
 {
-    BOOL storedStatus = [[self class] attachLocationStatus];
-    BOOL calculatedStatus = attachLocation && storedStatus;
-    [self.attachLocationSwitch setOn:calculatedStatus animated:YES];
+    [self.attachLocationSwitch setOn:attachLocation animated:YES];
 }
 
 
@@ -172,7 +144,7 @@
     [super viewWillAppear:animated];
     
     // Set initial state for attach location switch
-    self.attachLocationSwitch.on = [[self class] attachLocationStatus];
+    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -223,7 +195,7 @@
     }
     else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
     {
-        [self startUpdatingLocation];
+        [[LoanManager sharedManager] startUpdatingLocation];
     }
 }
 
@@ -233,7 +205,7 @@
 - (void)addTransaction
 {
     NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    self.transaction = [Transaction insertNewTransactionInManagedObjectContext:managedObjectContext];
+    self.transaction = [Transaction insertInManagedObjectContext:managedObjectContext];
     [self updateTransactionBasedOnViewInfo:self.transaction];
     [[LoanManager sharedManager] saveContext];
 }
@@ -241,19 +213,6 @@
 - (void)detailsViewControllerAdd:(id)sender
 {
     [self popToBlankViewControllerAnimated:YES];
-}
-
-- (void)startUpdatingLocation
-{
-    if (self.attachLocationSwitch.on == YES)
-    {
-        [[LoanManager sharedManager] startUpdatingLocation];
-    }
-}
-
-- (void)stopUpdatingLocation
-{
-    [[LoanManager sharedManager] stopUpdatingLocation];
 }
 
 @end

@@ -7,22 +7,26 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		690002DA14E4A6B200453B83 /* Utilities */ = {
+		690002DA14E4A6B200453B83 /* Generators */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Utilities" */;
+			buildConfigurationList = 690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Generators" */;
 			buildPhases = (
-				690002DE14E4A6BB00453B83 /* Localize Storyboard */,
 				69033F8214EF277300C45C16 /* Generate CoreData Models */,
+				6901C90714EFFF640095773B /* Localize Implementation */,
+				690002DE14E4A6BB00453B83 /* Localize Storyboard */,
 			);
 			dependencies = (
 			);
-			name = Utilities;
+			name = Generators;
 			productName = Translate;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
 		690002D314E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */; };
+		6901C90214EFEBE80095773B /* _Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903351D14EFE4CA0091B6E1 /* _Friend.m */; };
+		6901C90314EFEBEE0095773B /* _Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903351F14EFE4CB0091B6E1 /* _Location.m */; };
+		6901C90514EFEC040095773B /* _Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903352114EFE4CB0091B6E1 /* _Transaction.m */; };
 		6903352214EFE4CB0091B6E1 /* _Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903351D14EFE4CA0091B6E1 /* _Friend.m */; };
 		6903352314EFE4CB0091B6E1 /* _Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903351F14EFE4CB0091B6E1 /* _Location.m */; };
 		6903352414EFE4CB0091B6E1 /* _Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903352114EFE4CB0091B6E1 /* _Transaction.m */; };
@@ -605,12 +609,12 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6903352014EFE4CB0091B6E1 /* _Transaction.h */,
+				6903352114EFE4CB0091B6E1 /* _Transaction.m */,
 				6903351C14EFE4CA0091B6E1 /* _Friend.h */,
 				6903351D14EFE4CA0091B6E1 /* _Friend.m */,
 				6903351E14EFE4CA0091B6E1 /* _Location.h */,
 				6903351F14EFE4CB0091B6E1 /* _Location.m */,
-				6903352014EFE4CB0091B6E1 /* _Transaction.h */,
-				6903352114EFE4CB0091B6E1 /* _Transaction.m */,
 			);
 			name = "Generated Classes";
 			sourceTree = "<group>";
@@ -784,7 +788,7 @@
 			targets = (
 				6941FF6D141A6D6B00FB3A24 /* FriendlyLoan */,
 				6941FF8D141A6D6B00FB3A24 /* FriendlyLoanTests */,
-				690002DA14E4A6B200453B83 /* Utilities */,
+				690002DA14E4A6B200453B83 /* Generators */,
 			);
 		};
 /* End PBXProject section */
@@ -879,7 +883,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "localizestoryboard --mainIdiom=en --mainStoryboard=FriendlyLoan/User\\ Interface/en.lproj/FriendlyLoan.storyboard nb";
+			shellScript = "localizestoryboard --mainIdiom=en --mainStoryboard=\"FriendlyLoan/User Interface/en.lproj/FriendlyLoan.storyboard\" nb";
+		};
+		6901C90714EFFF640095773B /* Localize Implementation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Localize Implementation";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"FriendlyLoan\"\ngenstrings -o \"Resources/en.lproj/\" *.m User\\ Interface/*.m";
 		};
 		69033F8214EF277300C45C16 /* Generate CoreData Models */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -893,7 +911,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd FriendlyLoan/Business\\ Logic\nmogenerator --template-var arc=true -m FriendlyLoan.xcdatamodeld/FriendlyLoan\\ 2.xcdatamodel/";
+			shellScript = "cd \"FriendlyLoan/Business Logic\"\nmogenerator --template-var arc=true -m \"FriendlyLoan.xcdatamodeld/FriendlyLoan 2.xcdatamodel\"";
 		};
 		6941FF8C141A6D6B00FB3A24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -938,6 +956,9 @@
 				6967C4A514531FB500ADDEA1 /* NSCalendar+RIOAdditions.m in Sources */,
 				69149CBC1457838E00566FB2 /* FetchedFriendsController.m in Sources */,
 				69149CBF145783A600566FB2 /* FetchedHistoryController.m in Sources */,
+				6901C90214EFEBE80095773B /* _Friend.m in Sources */,
+				6901C90314EFEBEE0095773B /* _Location.m in Sources */,
+				6901C90514EFEC040095773B /* _Transaction.m in Sources */,
 				69515FEA14D39D4900C9569D /* Location.m in Sources */,
 				69BA5DFC14E0920800021EAA /* Friend.m in Sources */,
 				69BA5DFF14E0922500021EAA /* Transaction.m in Sources */,
@@ -1155,7 +1176,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Utilities" */ = {
+		690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Generators" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				690002DC14E4A6B200453B83 /* Debug */,

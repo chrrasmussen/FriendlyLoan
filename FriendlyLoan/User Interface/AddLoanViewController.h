@@ -20,14 +20,9 @@
 
 - (void)popToBlankViewControllerAnimated:(BOOL)animated;
 
-+ (BOOL)attachLocationStatus;
-+ (void)saveAttachLocationStatus:(BOOL)status;
-
 - (IBAction)textFieldDidBeginEditing:(id)sender;
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
-- (IBAction)changeAttachLocationStatus:(UISwitch *)sender;
-
-- (void)setAttachLocationStatus:(BOOL)attachLocation;
+- (IBAction)changeAttachLocationValue:(UISwitch *)sender;
 
 @end

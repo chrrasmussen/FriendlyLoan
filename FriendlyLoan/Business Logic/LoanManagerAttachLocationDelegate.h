@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class LoanManager;
+
 @protocol LoanManagerAttachLocationDelegate <NSObject>
 
-- (void)setAttachLocationStatus:(BOOL)attachLocation;
+- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation;
 
 @end

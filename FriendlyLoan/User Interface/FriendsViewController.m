@@ -333,16 +333,15 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     
     // Add transaction
     NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    Transaction *transaction = [Transaction insertNewTransactionInManagedObjectContext:managedObjectContext];
+    Transaction *transaction = [Transaction insertInManagedObjectContext:managedObjectContext];
     
     [transaction addFriendID:friendID];
     
     transaction.amount = [debt decimalNumberByNegating];
     transaction.settled = [NSNumber numberWithBool:YES];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL attachLocation = [userDefaults boolForKey:@"attachLocation"];
-    transaction.attachLocation = [NSNumber numberWithBool:attachLocation];
+    BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
+    transaction.attachLocationValue = attachLocation;
     if (attachLocation == YES)
         [transaction addLocation:[(LoanManager *)[LoanManager sharedManager] location]];
     

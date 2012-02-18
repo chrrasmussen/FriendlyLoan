@@ -246,7 +246,7 @@
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
     NSString *format;
-    if ([transaction.settled boolValue] == NO)
+    if ([transaction settledValue] == NO)
     {
         if (transaction.lent == YES)
             format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");

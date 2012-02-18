@@ -15,7 +15,7 @@ extern const float kLocationTimeLimit;
 
 @interface Transaction : _Transaction
 
-+ (id)insertNewTransactionInManagedObjectContext:(NSManagedObjectContext *)context;
++ (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
 - (void)addFriendID:(NSNumber *)friendID;
 //- (void)removeFriendID:(NSNumber *)friendID;
 - (void)addLocation:(CLLocation *)location;
