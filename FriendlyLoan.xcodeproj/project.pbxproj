@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		690002DA14E4A6B200453B83 /* Localize Storyboard */ = {
+		690002DA14E4A6B200453B83 /* Utilities */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Localize Storyboard" */;
+			buildConfigurationList = 690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Utilities" */;
 			buildPhases = (
-				690002DE14E4A6BB00453B83 /* ShellScript */,
+				690002DE14E4A6BB00453B83 /* Localize Storyboard */,
+				69033F8214EF277300C45C16 /* Generate CoreData Models */,
 			);
 			dependencies = (
 				690002E014E4A6F600453B83 /* PBXTargetDependency */,
 			);
-			name = "Localize Storyboard";
+			name = Utilities;
 			productName = Translate;
 		};
 /* End PBXAggregateTarget section */
@@ -791,7 +792,7 @@
 			targets = (
 				6941FF6D141A6D6B00FB3A24 /* FriendlyLoan */,
 				6941FF8D141A6D6B00FB3A24 /* FriendlyLoanTests */,
-				690002DA14E4A6B200453B83 /* Localize Storyboard */,
+				690002DA14E4A6B200453B83 /* Utilities */,
 			);
 		};
 /* End PBXProject section */
@@ -874,18 +875,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		690002DE14E4A6BB00453B83 /* ShellScript */ = {
+		690002DE14E4A6BB00453B83 /* Localize Storyboard */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Localize Storyboard";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "python /Users/skohorn/Downloads/localize.py --mainIdiom=en --mainStoryboard=FriendlyLoan/User\\ Interface/en.lproj/FriendlyLoan.storyboard nb";
+			shellScript = "localizestoryboard --mainIdiom=en --mainStoryboard=FriendlyLoan/User\\ Interface/en.lproj/FriendlyLoan.storyboard nb";
+		};
+		69033F8214EF277300C45C16 /* Generate CoreData Models */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CoreData Models";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#cd FriendlyLoan/Business\\ Logic\n#mogenerator -m FriendlyLoan.xcdatamodeld/FriendlyLoan\\ 2.xcdatamodel/";
 		};
 		6941FF8C141A6D6B00FB3A24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1152,7 +1168,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Localize Storyboard" */ = {
+		690002DB14E4A6B200453B83 /* Build configuration list for PBXAggregateTarget "Utilities" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				690002DC14E4A6B200453B83 /* Debug */,

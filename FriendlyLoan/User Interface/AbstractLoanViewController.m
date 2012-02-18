@@ -40,7 +40,7 @@ const NSInteger kDefaultCategoryID = 0;
     // Update GUI
     NSString *friendName = [Friend friendNameForFriendID:friendID];
     if (friendName == nil)
-        friendName = NSLocalizedString(@"None selected", @"Placeholder when no friends are selected in Add Loan-tab");
+        friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
     
     self.friendValueLabel.text = friendName;
 }
