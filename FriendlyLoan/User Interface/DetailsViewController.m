@@ -28,10 +28,10 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 @implementation DetailsViewController
 
-
 @synthesize transaction;
 @synthesize lentDescriptionLabel, lentPrepositionLabel;
 @synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -49,6 +49,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     
     // Release any cached data, images, etc that aren't in use.
 }
+
 
 #pragma mark - View lifecycle
 
@@ -93,6 +94,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -106,6 +108,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     }
 }
 
+
 #pragma mark - EditLoanViewControllerDelegate methods
 
 - (void)editLoanViewControllerDidCancel:(EditLoanViewController *)editLoanViewController
@@ -118,6 +121,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     [self updateViewInfo];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
 
 #pragma mark - UITableViewDelegate methods
 
@@ -141,7 +145,29 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 ////    }
 //}
 
+
 #pragma mark - Private methods
+
+- (void)updateViewInfo
+{
+    self.lentDescriptionLabel.text = ([transaction lent] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+    self.lentPrepositionLabel.text =  ([transaction lent] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+    
+    self.amountLabel.text = [transaction.absoluteAmount stringValue];
+    self.friendLabel.text = [transaction.friend fullName];
+    self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
+    self.noteLabel.text = transaction.note;
+    
+    // Display date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdTimestamp];
+    self.timeStampLabel.text = formattedDateString;
+    
+    [self showLocationInfo];
+}
 
 - (void)clipMapView
 {
@@ -172,27 +198,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         
         [self.mapView addAnnotation:location];
     }
-}
-
-- (void)updateViewInfo
-{
-    self.lentDescriptionLabel.text = (transaction.lent == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    self.lentPrepositionLabel.text =  (transaction.lent == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
-    
-    self.amountLabel.text = [transaction.absoluteAmount stringValue];
-    self.friendLabel.text = [transaction.friend fullName];
-    self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
-    self.noteLabel.text = transaction.note;
-    
-    // Display date
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdTimestamp];
-    self.timeStampLabel.text = formattedDateString;
-    
-    [self showLocationInfo];
 }
 
 @end

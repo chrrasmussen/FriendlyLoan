@@ -73,6 +73,8 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    if ([[LoanManager sharedManager] attachLocationValue] == YES)
+        [[LoanManager sharedManager] startUpdatingLocation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -206,12 +208,17 @@
 {
     NSLog(@"Location changed authorization status!");
     [_loanManager updateAttachLocationSwitch:(status == kCLAuthorizationStatusAuthorized)];
+    
+    if (status == kCLAuthorizationStatusAuthorized)
+        [[LoanManager sharedManager] startUpdatingLocation];
+    else
+        [[LoanManager sharedManager] stopUpdatingLocation];
 }
 
 - (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
     NSLog(@"Acquired location!");
-    [_loanManager updateLocation:location];
+    [_loanManager updateLocationForCachedTransactions:location];
 
 }
 
@@ -268,8 +275,8 @@
     _timedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     _timedLocationManager.distanceFilter = 500;
     _timedLocationManager.accuracyFilter = 100;
-    _timedLocationManager.timeIntervalFilter = 15 * 60;
-    _timedLocationManager.maximumLocatingDuration = 2 * 60;
+    _timedLocationManager.timeIntervalFilter = 10 * 60;
+    _timedLocationManager.maximumLocatingDuration = 3 * 60;
     _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
 }
 
@@ -278,7 +285,6 @@
     _loanManager = [LoanManager sharedManager];
     _loanManager.locationDelegate = self;
     _loanManager.backingStoreDelegate = self;
-    [_loanManager start];
 }
 
 - (void)displayLocationWarning

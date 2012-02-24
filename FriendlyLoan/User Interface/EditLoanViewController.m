@@ -29,6 +29,7 @@ enum {
 @implementation EditLoanViewController
 
 @synthesize delegate;
+@synthesize transaction;
 @synthesize saveBarButtonItem, lentSegmentedControl;
 
 - (void)didReceiveMemoryWarning
@@ -71,7 +72,7 @@ enum {
 
 - (IBAction)changeLentState:(id)sender
 {
-    self.lentState = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
+    self.lentStatus = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
 }
 
 #pragma mark - View lifecycle
@@ -120,21 +121,21 @@ enum {
 
 - (void)editTransaction
 {
-    [self updateTransactionBasedOnViewInfo:self.transaction];
-    
-    [[LoanManager sharedManager] saveContext];
+    [[LoanManager sharedManager] updateTransaction:self.transaction withUpdateHandler:^(Transaction *theTransaction) {
+        [self updateTransactionBasedOnViewInfo:theTransaction];
+    }];
 }
 
 - (void)updateViewInfo
 {
     // Update internal state
-    self.lentState = self.transaction.lent;
+    self.lentStatus = self.transaction.lent;
     [self updateSelectedFriendID:self.transaction.friend.friendID];
     [self updateSelectedCategoryID:self.transaction.categoryID];
     
     // Update GUI
     self.amountTextField.text = [self.transaction.absoluteAmount stringValue];
-    self.lentSegmentedControl.selectedSegmentIndex = (self.lentState == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
+    self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
     self.noteTextField.text = self.transaction.note;
 }
 

@@ -19,37 +19,42 @@
 @property (nonatomic, weak) id<LoanManagerBackingStoreDelegate> backingStoreDelegate;
 @property (nonatomic, weak) id<LoanManagerAttachLocationDelegate> attachLocationDelegate;
 
+// Create loan manager
 + (id)sharedManager;
 
-- (void)start;
+// Controlling loan manager
+//- (void)start;
+//- (void)initiate/initialize // If there are some outstanding locations, start location services
+//- (void)terminate // Do something useful when quitting?
 
-// Location
+// Transaction methods
+- (Transaction *)addTransactionWithUpdateHandler:(void (^)(Transaction *transaction))updateHandler;
+- (void)updateTransaction:(Transaction *)transaction withUpdateHandler:(void (^)(Transaction *transaction))updateHandler;
+- (Transaction *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
+- (void)updateLocationForCachedTransactions:(CLLocation *)location;
+
+// Location proxy methods
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
 - (CLLocation *)location;
-
 //- (BOOL)hasUnlocatedTransactions;
 //- (NSArray *)remainingTransactions;
-- (void)updateLocation:(CLLocation *)location;
 
-// Backing store
+// Backing store proxy methods
 - (NSManagedObjectContext *)managedObjectContext;
-- (void)saveContext;
+//- (void)saveContext;
 
-// Attach location
+// Attach location methods
 - (BOOL)attachLocationValue;
 - (void)saveAttachLocationValue:(BOOL)attachLocation;
 - (void)updateAttachLocationSwitch:(BOOL)attachLocation;
 
 
-//- (void)initiate/initialize // If there are some outstanding locations, start location services
-//- (void)terminate // Do something useful when quitting?
+// Fetched results controller
+//- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID;
+//- (NSFetchedResultsController *)fetchedFriendsController;
 
 
-//- (void)addTransaction:(Transaction *)transaction;
-//- (void)updateTransaction:(Transaction *)transaction;
-// --- OR ---
-//- (void)addTransactionWithAmount:(NSNumber *)amount friendID:(NSNumber *)friendID categoryID:(NSNumber *)categoryID note:(NSString *)note attachLocation:(BOOL)attachLocation;
-//- (void)updateTransactionWithID:(NSManagedObjectID *)objectID amount:(NSNumber *)amount friendID:(NSNumber *)friendID categoryID:(NSNumber *)categoryID note:(NSString *)note attachLocation:(BOOL)attachLocation;
+
 
 @end

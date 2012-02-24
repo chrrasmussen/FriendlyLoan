@@ -845,7 +845,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLoanViewController.h"/>
             <relationships>
                 <relationship kind="action" name="borrow:"/>
-                <relationship kind="action" name="changeAttachLocationStatus:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="changeAttachLocationValue:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="detailsViewControllerAdd:"/>
                 <relationship kind="action" name="lend:"/>
                 <relationship kind="action" name="textFieldDidBeginEditing:"/>
                 <relationship kind="outlet" name="attachLocationSwitch" candidateClass="UISwitch"/>

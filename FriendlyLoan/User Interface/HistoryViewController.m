@@ -14,6 +14,7 @@
 #import "Category.h"
 #import "NSDate+RIOAdditions.h"
 
+
 @interface HistoryViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -48,9 +49,9 @@
 
 - (void)dealloc
 {
-    // Release fetched results controller
     self.fetchedResultsController = nil;
 }
+
 
 #pragma mark - View lifecycle
 
@@ -97,6 +98,7 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 #pragma mark - Table view data source
 
@@ -155,6 +157,7 @@
     }   
 }
 
+
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -167,6 +170,7 @@
         transactionDetailsViewController.transaction = transaction;
     }
 }
+
 
 #pragma mark - Fetched results controller
 
@@ -248,14 +252,14 @@
     NSString *format;
     if ([transaction settledValue] == NO)
     {
-        if (transaction.lent == YES)
+        if ([transaction lent] == YES)
             format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
         else
             format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
     }
     else
     {
-        if (transaction.lent == YES)
+        if ([transaction lent] == YES)
             format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
         else
             format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");

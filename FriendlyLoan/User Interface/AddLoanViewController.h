@@ -24,5 +24,6 @@
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
 - (IBAction)changeAttachLocationValue:(UISwitch *)sender;
+- (IBAction)detailsViewControllerAdd:(id)sender;
 
 @end

@@ -18,7 +18,7 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
 @interface RIOTimedLocationManager () <CLLocationManagerDelegate>
 
 - (void)setUpLocationManager;
-- (void)setUpDefaultValues;
+- (void)setDefaultValues;
 
 - (void)startTimeoutTimer;
 - (void)stopTimeoutTimer;
@@ -47,7 +47,7 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
     if (self)
     {
         [self setUpLocationManager];
-        [self setUpDefaultValues];
+        [self setDefaultValues];
     }
     return self;
 }
@@ -135,7 +135,7 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
     _locationManager.delegate = self;
 }
 
-- (void)setUpDefaultValues
+- (void)setDefaultValues
 {
     self.accuracyFilter = kDefaultAccuracyFilter;
     self.timeIntervalFilter = kDefaultTimeIntervalFilter;

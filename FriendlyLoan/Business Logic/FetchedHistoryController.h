@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface FetchedHistoryController : NSObject
+
+@interface FetchedHistoryController : NSFetchedResultsController
+
+//@property (nonatomic, strong) NSNumber *friendID;
+//
+//+ (FetchedHistoryController *)controllerWithFriendID:(NSNumber *)friendID;
 
 @end

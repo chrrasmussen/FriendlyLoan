@@ -14,14 +14,11 @@
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
-#import "RIOTimedLocationManager.h"
-
 
 @interface AddLoanViewController ()
 
-- (void)addTransaction;
-
-- (void)detailsViewControllerAdd:(id)sender;
+- (Transaction *)addTransaction;
+- (void)configureDetailsViewController:(DetailsViewController *)detailsViewController;
 
 @end
 
@@ -36,13 +33,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)showPeoplePickerController
-{
-    [super showPeoplePickerController];
-    
-    [[LoanManager sharedManager] startUpdatingLocation];
 }
 
 
@@ -62,15 +52,11 @@
     theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
     if (attachLocation == YES)
         [theTransaction addLocation:[[LoanManager sharedManager] location]];
-    
-    theTransaction.createdTimestamp = [NSDate date];
 }
 
 - (void)resetFields
 {
     [super resetFields];
-    
-    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
 }
 
 
@@ -87,19 +73,18 @@
 
 - (IBAction)textFieldDidBeginEditing:(id)sender
 {
-    [[LoanManager sharedManager] startUpdatingLocation];
 }
 
 - (IBAction)borrow:(id)sender
 {
-    self.lentState = NO;
+    self.lentStatus = NO;
     
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
 - (IBAction)lend:(id)sender
 {
-    self.lentState = YES;
+    self.lentStatus = YES;
     
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
@@ -112,6 +97,11 @@
         [[LoanManager sharedManager] startUpdatingLocation];
     else
         [[LoanManager sharedManager] stopUpdatingLocation];
+}
+
+- (IBAction)detailsViewControllerAdd:(id)sender
+{
+    [self popToBlankViewControllerAnimated:YES];
 }
 
 
@@ -127,9 +117,9 @@
 
 - (void)viewDidLoad
 {
-    [[LoanManager sharedManager] setAttachLocationDelegate:self];
-    
     [super viewDidLoad];
+    
+    [[LoanManager sharedManager] setAttachLocationDelegate:self];
 }
 
 - (void)viewDidUnload
@@ -143,7 +133,6 @@
 {
     [super viewWillAppear:animated];
     
-    // Set initial state for attach location switch
     self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
 }
 
@@ -182,37 +171,34 @@
     if ([[segue identifier] isEqualToString:@"SaveSegue"])
     {
         // Add transaction
-        [self addTransaction];
+        Transaction *transaction = [self addTransaction];
         
         // Set up details view controller
         DetailsViewController *detailsViewController = [segue destinationViewController];
-        detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
-        detailsViewController.navigationItem.rightBarButtonItem = nil;
-        detailsViewController.transaction = self.transaction;
+        [self configureDetailsViewController:detailsViewController];
+        detailsViewController.transaction = transaction;
         
 //        // Hide keyboard in order to avoid it becoming first responder when the view appears
 //        [self hideKeyboard];
-    }
-    else if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
-    {
-        [[LoanManager sharedManager] startUpdatingLocation];
     }
 }
 
 
 #pragma mark - Private methods
 
-- (void)addTransaction
+- (Transaction *)addTransaction
 {
-    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    self.transaction = [Transaction insertInManagedObjectContext:managedObjectContext];
-    [self updateTransactionBasedOnViewInfo:self.transaction];
-    [[LoanManager sharedManager] saveContext];
+    Transaction *result = [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Transaction *transaction) {
+        [self updateTransactionBasedOnViewInfo:transaction];
+    }];
+    
+    return result;
 }
 
-- (void)detailsViewControllerAdd:(id)sender
+- (void)configureDetailsViewController:(DetailsViewController *)detailsViewController
 {
-    [self popToBlankViewControllerAnimated:YES];
+    detailsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(detailsViewControllerAdd:)];
+    detailsViewController.navigationItem.rightBarButtonItem = nil;
 }
 
 @end

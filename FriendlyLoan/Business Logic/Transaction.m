@@ -16,7 +16,7 @@
 #import "RIORelativeDate.h"
 
 
-const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
+const float kLocationTimeLimit = 15*60; // TODO: Set as a global constant
 
 
 @interface Transaction ()
@@ -84,7 +84,7 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
 
 - (NSDecimalNumber *)absoluteAmount
 {
-    return (self.lent == YES) ? self.amount : [self.amount decimalNumberByNegating];
+    return ([self lent] == YES) ? self.amount : [self.amount decimalNumberByNegating];
 }
 
 
@@ -107,12 +107,12 @@ const float kLocationTimeLimit = 60*5; // TODO: Set as a global constant
 
 - (BOOL)isLocating
 {
-    return (self.needLocation && self.isRecentlyCreated);
+    return ([self needLocation] && [self isRecentlyCreated]);
 }
 
 - (BOOL)hasFailedToLocate
 {
-    return (self.needLocation && !self.isRecentlyCreated);
+    return ([self needLocation] && ![self isRecentlyCreated]);
 }
 
 

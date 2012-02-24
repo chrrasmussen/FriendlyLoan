@@ -10,10 +10,11 @@
 
 #import "LoanManager.h"
 
-#import "NSDecimalNumber+RIOAdditions.h"
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 #import "Category.h"
+
+#import "NSDecimalNumber+RIOAdditions.h"
 
 
 const NSInteger kDefaultCategoryID = 0;
@@ -21,9 +22,9 @@ const NSInteger kDefaultCategoryID = 0;
 
 @implementation AbstractLoanViewController
 
-@synthesize transaction;
-@synthesize lentState, selectedFriendID, selectedCategoryID;
+@synthesize lentStatus, selectedFriendID, selectedCategoryID;
 @synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField, friendCell;
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -32,6 +33,8 @@ const NSInteger kDefaultCategoryID = 0;
     
     // Release any cached data, images, etc that aren't in use.
 }
+
+#pragma mark - TODO: Fix
 
 - (void)updateSelectedFriendID:(NSNumber *)friendID
 {
@@ -77,14 +80,12 @@ const NSInteger kDefaultCategoryID = 0;
     [self setSaveButtonsEnabledState:enabled];
 }
 
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Set correct keyboard type
-//    self.amountTextField.keyboardType = UIKeyboardTypeDecimalPad; // WORKAROUND: Can't choose decimal pad as keyboard type in Interface Builder
     
     // Reset fields
     [self resetFields];
@@ -125,6 +126,7 @@ const NSInteger kDefaultCategoryID = 0;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - Override methods
 
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
@@ -135,7 +137,7 @@ const NSInteger kDefaultCategoryID = 0;
 - (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    theTransaction.amount = (self.lentState == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    theTransaction.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     
     [theTransaction addFriendID:self.selectedFriendID];
     
@@ -196,6 +198,7 @@ const NSInteger kDefaultCategoryID = 0;
     return YES;
 }
 
+
 #pragma mark - CategoriesViewControllerDelegate methods
 
 - (void)categoriesViewController:(CategoriesViewController *)categoriesViewController didSelectCategoryID:(NSNumber *)categoryID
@@ -204,6 +207,7 @@ const NSInteger kDefaultCategoryID = 0;
     
     [self updateSelectedCategoryID:categoryID];
 }
+
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate methods
 

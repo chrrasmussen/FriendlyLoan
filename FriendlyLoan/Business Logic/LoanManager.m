@@ -14,6 +14,10 @@
 #import "LoanManagerAttachLocationDelegate.h"
 
 #import "TransactionsWaitingForLocationFetchRequest.h"
+#import "FetchedHistoryController.h"
+//#import "FetchedFriendsController.h"
+
+#import "NSDecimalNumber+RIOAdditions.h"
 
 
 @interface LoanManager ()
@@ -43,43 +47,73 @@ static LoanManager *_sharedManager;
 }
 
 
-#pragma mark - Controlling loan manager
+//#pragma mark - Controlling loan manager
+//
+//- (void)start
+//{
+//    if ([[self transactionsWaitingForLocation] count] > 0)
+//    {
+//        if (self.location != nil)
+//            [self updateLocationForCachedTransactions:self.location];
+//    }
+//}
 
-- (void)start
+
+#pragma mark - Transaction methods
+
+- (Transaction *)addTransactionWithUpdateHandler:(void (^)(Transaction *transaction))updateHandler
 {
-    if ([[self transactionsWaitingForLocation] count] > 0)
-    {
-        if (self.location != nil)
-            [self updateLocation:self.location];
-        else
-            [self startUpdatingLocation];
-    }
+    Transaction *transaction = [Transaction insertInManagedObjectContext:self.managedObjectContext];
+    updateHandler(transaction);
+    [self saveContext];
+    
+    return transaction;
 }
 
-//#pragma mark - 
-//
-//- (void)addTransaction:(Transaction *)transaction
-//{
-//    
-//}
-//
-//- (void)editTransaction:(Transaction *)transaction
-//{
-//    
-//}
-//
-//- (void)settleDebtForFriendID:(NSNumber *)friendID
-//{
-//    
-//}
+- (void)updateTransaction:(Transaction *)transaction withUpdateHandler:(void (^)(Transaction *transaction))updateHandler
+{
+    updateHandler(transaction);
+    [self saveContext];
+}
+
+// TODO: Remove the need for the debt-parameter
+- (Transaction *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID
+{
+    __block typeof(self) bself = self;
+    Transaction *result = [self addTransactionWithUpdateHandler:^(Transaction *transaction) {
+        [transaction addFriendID:friendID];
+        
+        transaction.amount = [debt decimalNumberByNegating];
+        transaction.settledValue = YES;
+        
+        if ([bself attachLocationValue] == YES)
+        {
+            transaction.attachLocationValue = YES;
+            [transaction addLocation:[bself location]];
+        }
+    }];
+    
+    return result;
+}
+
+- (void)updateLocationForCachedTransactions:(CLLocation *)location
+{
+    NSArray *transactions = [self transactionsWaitingForLocation];
+    
+    for (Transaction *transaction in transactions)
+    {
+        [transaction addLocation:location];
+    }
+    
+    [self saveContext];
+}
 
 
-#pragma mark - Control location
+#pragma mark - Location proxy methods
 
 - (void)startUpdatingLocation
 {
-    if ([self attachLocationValue] == YES)
-        [locationDelegate startUpdatingLocation];
+    [locationDelegate startUpdatingLocation];
 }
 
 - (void)stopUpdatingLocation
@@ -92,17 +126,8 @@ static LoanManager *_sharedManager;
     return [locationDelegate location];
 }
 
-- (void)updateLocation:(CLLocation *)location
-{
-    NSArray *transactions = [self transactionsWaitingForLocation];
-    
-    for (Transaction *transaction in transactions)
-    {
-        [transaction addLocation:location];
-    }
-    
-    [self saveContext];
-}
+
+#pragma mark - Backing store proxy methods
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -115,7 +140,7 @@ static LoanManager *_sharedManager;
 }
 
 
-#pragma mark - Attach location
+#pragma mark - Attach location methods
 
 - (BOOL)attachLocationValue
 {
@@ -143,6 +168,14 @@ static LoanManager *_sharedManager;
     BOOL attachLocation = [self attachLocationValue] && status;
     [attachLocationDelegate loanManager:self didChangeAttachLocationValue:attachLocation];
 }
+
+
+#pragma mark - Fetched results controller
+
+//- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID
+//{
+//    
+//}
 
 
 #pragma mark - Private methods

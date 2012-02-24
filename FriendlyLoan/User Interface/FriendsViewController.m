@@ -11,9 +11,6 @@
 #import "LoanManager.h"
 #import "HistoryViewController.h"
 
-#import "NSDecimalNumber+RIOAdditions.h"
-#import "AddLoanViewController.h"
-
 
 NSString * const kResultFriendID    = @"friendID";
 NSString * const kResultFriendName  = @"friendName";
@@ -331,21 +328,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
-    // Add transaction
-    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    Transaction *transaction = [Transaction insertInManagedObjectContext:managedObjectContext];
-    
-    [transaction addFriendID:friendID];
-    
-    transaction.amount = [debt decimalNumberByNegating];
-    transaction.settled = [NSNumber numberWithBool:YES];
-    
-    BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
-    transaction.attachLocationValue = attachLocation;
-    if (attachLocation == YES)
-        [transaction addLocation:[(LoanManager *)[LoanManager sharedManager] location]];
-    
-    [[LoanManager sharedManager] saveContext];
+    [[LoanManager sharedManager] settleDebt:debt forFriendID:friendID];
 }
 
 @end
