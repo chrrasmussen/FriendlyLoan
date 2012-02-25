@@ -40,7 +40,7 @@
 		6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3C1440C2830090FAA4 /* MissingProfilePicture.png */; };
 		6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */; };
 		6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */; };
-		6914CC451440D6C30090FAA4 /* RIOTimedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC441440D6C30090FAA4 /* RIOTimedLocationManager.m */; };
+		6914CC451440D6C30090FAA4 /* RIOCachedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC441440D6C30090FAA4 /* RIOCachedLocationManager.m */; };
 		6914CC491440E00F0090FAA4 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6914CC481440E00E0090FAA4 /* TabBarController.m */; };
 		691B063014588E4A00BBD460 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 691B062E14588E4A00BBD460 /* Friends.png */; };
 		691B063114588E4A00BBD460 /* Friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691B062F14588E4A00BBD460 /* Friends@2x.png */; };
@@ -158,8 +158,8 @@
 		6914CC3D1440C2830090FAA4 /* MissingProfilePicture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePicture@2x.png"; sourceTree = "<group>"; };
 		6914CC401440C4270090FAA4 /* UIImage+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RIOAdditions.h"; sourceTree = "<group>"; };
 		6914CC411440C4270090FAA4 /* UIImage+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RIOAdditions.m"; sourceTree = "<group>"; };
-		6914CC431440D6C30090FAA4 /* RIOTimedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOTimedLocationManager.h; sourceTree = "<group>"; };
-		6914CC441440D6C30090FAA4 /* RIOTimedLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOTimedLocationManager.m; sourceTree = "<group>"; };
+		6914CC431440D6C30090FAA4 /* RIOCachedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOCachedLocationManager.h; sourceTree = "<group>"; };
+		6914CC441440D6C30090FAA4 /* RIOCachedLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOCachedLocationManager.m; sourceTree = "<group>"; };
 		6914CC471440E00E0090FAA4 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabBarController.h; path = ../TabBarController.h; sourceTree = "<group>"; };
 		6914CC481440E00E0090FAA4 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = ../TabBarController.m; sourceTree = "<group>"; };
 		691B062E14588E4A00BBD460 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friends.png; sourceTree = "<group>"; };
@@ -241,7 +241,7 @@
 		6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoanViewController.m; sourceTree = "<group>"; };
 		697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerLocationDelegate.h; sourceTree = "<group>"; };
 		697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
-		6980CE471441248D00C658A0 /* RIOTimedLocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOTimedLocationManagerDelegate.h; sourceTree = "<group>"; };
+		6980CE471441248D00C658A0 /* RIOCachedLocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOCachedLocationManagerDelegate.h; sourceTree = "<group>"; };
 		69872F83145238E400BA1FE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIORelativeDate.strings; sourceTree = "<group>"; };
 		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
 		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
@@ -336,11 +336,12 @@
 		6914CC461440D6C80090FAA4 /* RIOTimedLocationManager */ = {
 			isa = PBXGroup;
 			children = (
-				6980CE471441248D00C658A0 /* RIOTimedLocationManagerDelegate.h */,
-				6914CC431440D6C30090FAA4 /* RIOTimedLocationManager.h */,
-				6914CC441440D6C30090FAA4 /* RIOTimedLocationManager.m */,
+				6980CE471441248D00C658A0 /* RIOCachedLocationManagerDelegate.h */,
+				6914CC431440D6C30090FAA4 /* RIOCachedLocationManager.h */,
+				6914CC441440D6C30090FAA4 /* RIOCachedLocationManager.m */,
 			);
-			path = RIOTimedLocationManager;
+			name = RIOTimedLocationManager;
+			path = RIOCachedLocationManager;
 			sourceTree = "<group>";
 		};
 		69204A73141FE9AF00D6A075 /* Libraries */ = {
@@ -916,7 +917,7 @@
 				693E5097143A1C7600F12459 /* RIORelativeDate.m in Sources */,
 				693E509A143A1CFD00F12459 /* NSDate+RIORelativeDate.m in Sources */,
 				6914CC421440C4270090FAA4 /* UIImage+RIOAdditions.m in Sources */,
-				6914CC451440D6C30090FAA4 /* RIOTimedLocationManager.m in Sources */,
+				6914CC451440D6C30090FAA4 /* RIOCachedLocationManager.m in Sources */,
 				6914CC491440E00F0090FAA4 /* TabBarController.m in Sources */,
 				69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */,
 				6967C4A514531FB500ADDEA1 /* NSCalendar+RIOAdditions.m in Sources */,

@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "Models.h"
 
-#import "RIOTimedLocationManagerDelegate.h"
+#import "RIOCachedLocationManagerDelegate.h"
 
 
-@class CLLocation, RIOTimedLocationManager;
+@class CLLocation, RIOCachedLocationManager;
 @protocol LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate;
 
-@interface LoanManager : NSObject <RIOTimedLocationManagerDelegate>
+@interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
 
 @property (nonatomic, weak) id<LoanManagerLocationDelegate> locationDelegate;
 @property (nonatomic, weak) id<LoanManagerBackingStoreDelegate> backingStoreDelegate;
 
-@property (nonatomic, strong, readonly) RIOTimedLocationManager *timedLocationManager;
+@property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
 
 @property (nonatomic) BOOL attachLocationValue;
 

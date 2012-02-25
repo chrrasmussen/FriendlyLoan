@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 
-#import "RIOTimedLocationManager.h"
-
 #import "LoanManager.h"
 
 
