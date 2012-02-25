@@ -95,7 +95,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     BOOL attachLocation = [[change objectForKey:@"new"] boolValue];
-    NSLog(@"%@", change);
+//    NSLog(@"%@", change);
     [self.attachLocationSwitch setOn:attachLocation animated:YES];
 }
 
