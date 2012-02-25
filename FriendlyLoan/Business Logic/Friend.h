@@ -8,6 +8,7 @@
 
 #import "_Friend.h"
 
+
 @interface Friend : _Friend
 
 + (NSString *)friendNameForFriendID:(NSNumber *)friendID;

@@ -15,20 +15,11 @@
 #import "NSDate+RIOAdditions.h"
 
 
-@interface HistoryViewController ()
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
-- (void)setUpFetchedResultsController;
-- (void)performFetch;
-
-@end
-
-
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize friendID;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -252,14 +243,14 @@
     NSString *format;
     if ([transaction settledValue] == NO)
     {
-        if ([transaction lent] == YES)
+        if ([transaction lentValue] == YES)
             format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
         else
             format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
     }
     else
     {
-        if ([transaction lent] == YES)
+        if ([transaction lentValue] == YES)
             format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
         else
             format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");

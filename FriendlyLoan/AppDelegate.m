@@ -16,7 +16,6 @@
 
 @interface AppDelegate ()
 
-- (void)setUpTimedLocationManager;
 - (void)setUpLoanManager;
 - (void)displayLocationWarning;
 
@@ -31,14 +30,12 @@
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
 @synthesize loanManager = _loanManager;
-@synthesize timedLocationManager = _timedLocationManager;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"App started");
+    NSLog(@"%s", (char *)_cmd);
     
-    [self setUpTimedLocationManager];
     [self setUpLoanManager];
     
     // Override point for customization after application launch.
@@ -51,6 +48,7 @@
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
+    NSLog(@"%s", (char *)_cmd);
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -59,6 +57,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    NSLog(@"%s", (char *)_cmd);
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -66,6 +65,7 @@
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+    NSLog(@"%s", (char *)_cmd);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -73,15 +73,15 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-    if ([[LoanManager sharedManager] attachLocationValue] == YES)
-        [[LoanManager sharedManager] startUpdatingLocation];
+    NSLog(@"%s", (char *)_cmd);
+    [[LoanManager sharedManager] startUp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-    NSLog(@"Terminated");
+//    [self saveContext];
+    NSLog(@"%s", (char *)_cmd);
 }
 
 #pragma mark - Core Data stack
@@ -202,89 +202,26 @@
 }
 
 
-#pragma mark - RIOTimedLocationManagerDelegate methods
+#pragma mark - LoanManagerLocationDelegate
 
-- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+- (void)loanManagerNeedLocationServices:(LoanManager *)loanManager
 {
-    NSLog(@"Location changed authorization status!");
-    [_loanManager updateAttachLocationSwitch:(status == kCLAuthorizationStatusAuthorized)];
-    
-    if (status == kCLAuthorizationStatusAuthorized)
-        [[LoanManager sharedManager] startUpdatingLocation];
-    else
-        [[LoanManager sharedManager] stopUpdatingLocation];
+    [self displayLocationWarning];
 }
 
-- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
+- (void)loanManagerNeedLocationServicesForThisApp:(LoanManager *)loanManager
 {
-    NSLog(@"Acquired location!");
-    [_loanManager updateLocationForCachedTransactions:location];
-
-}
-
-- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
-{
-    NSLog(@"Location failed! (%@)", error);
-    if (error.domain == kCLErrorDomain)
-    {
-        if (error.code == kCLErrorLocationUnknown)
-        {
-            // TODO: Add code?
-        }
-        else if (error.code == kCLErrorDenied)
-        {
-            [self displayLocationWarning];
-            [_loanManager updateAttachLocationSwitch:NO];
-        }
-    }
-}
-
-
-#pragma mark - LoanManagerLocationDelegate methods
-
-- (void)startUpdatingLocation
-{
-    if ([CLLocationManager locationServicesEnabled] == YES)
-    {
-        [self.timedLocationManager startUpdatingLocation];
-    }
-    else
-    {
-        [self displayLocationWarning];
-        [_loanManager updateAttachLocationSwitch:NO];
-    }
-}
-
-- (void)stopUpdatingLocation
-{
-    [self.timedLocationManager stopUpdatingLocation];
-}
-
-- (CLLocation *)location
-{
-    return [self.timedLocationManager location];
+    [self displayLocationWarning];
 }
 
 
 #pragma mark - Private methods
 
-- (void)setUpTimedLocationManager
-{
-    _timedLocationManager = [[RIOTimedLocationManager alloc] init];
-    _timedLocationManager.delegate = self;
-    _timedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    _timedLocationManager.distanceFilter = 500;
-    _timedLocationManager.accuracyFilter = 100;
-    _timedLocationManager.timeIntervalFilter = 10 * 60;
-    _timedLocationManager.maximumLocatingDuration = 3 * 60;
-    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
-}
-
 - (void)setUpLoanManager
 {
     _loanManager = [LoanManager sharedManager];
-    _loanManager.locationDelegate = self;
     _loanManager.backingStoreDelegate = self;
+    _loanManager.locationDelegate = self;
 }
 
 - (void)displayLocationWarning

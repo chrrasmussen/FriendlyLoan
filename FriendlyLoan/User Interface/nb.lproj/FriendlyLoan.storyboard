@@ -111,14 +111,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Venn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="Hz5-yb-sWJ">
-                                                    <rect key="frame" x="10" y="11" width="52" height="21"/>
+                                                    <rect key="frame" x="10" y="11" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Ingen" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="yEt-fp-XOO">
-                                                    <rect key="frame" x="229" y="11" width="41" height="21"/>
+                                                    <rect key="frame" x="227" y="11" width="43" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -141,14 +141,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Kategori" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="4wR-8t-o6U">
-                                                    <rect key="frame" x="10" y="11" width="74" height="21"/>
+                                                    <rect key="frame" x="10" y="11" width="69" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Annet" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="eJl-4G-Cnb">
-                                                    <rect key="frame" x="227" y="11" width="43" height="21"/>
+                                                    <rect key="frame" x="225" y="11" width="45" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -452,6 +452,52 @@
                                                         <outlet property="delegate" destination="h0t-py-3wA" id="3qA-KV-AWJ"/>
                                                     </connections>
                                                 </mapView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="EzW-0w-1Az">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TKq-bH-fWv">
+                                        <rect key="frame" x="0.0" y="492" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Leter etter lokasjonen..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="yOn-N3-Vqv">
+                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="CeA-aw-1dT">
+                                                    <rect key="frame" x="270" y="12" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="iTF-Rk-arP" style="IBUITableViewCellStyleDefault" id="kAI-d1-zVD">
+                                        <rect key="frame" x="0.0" y="537" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Fant ikke lokasjonen!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="iTF-Rk-arP">
+                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -845,7 +891,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLoanViewController.h"/>
             <relationships>
                 <relationship kind="action" name="borrow:"/>
-                <relationship kind="action" name="changeAttachLocationStatus:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="changeAttachLocationValue:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="detailsViewControllerAdd:"/>
                 <relationship kind="action" name="lend:"/>
                 <relationship kind="action" name="textFieldDidBeginEditing:"/>
                 <relationship kind="outlet" name="attachLocationSwitch" candidateClass="UISwitch"/>

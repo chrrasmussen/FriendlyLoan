@@ -9,6 +9,9 @@
 #import "TransactionsWaitingForLocationFetchRequest.h"
 #import <CoreData/CoreData.h>
 
+#import "Transaction.h"
+
+
 @implementation TransactionsWaitingForLocationFetchRequest
 
 + (NSArray *)fetchFromManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
@@ -16,7 +19,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel = persistentStoreCoordinator.managedObjectModel;
     
-    NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:-10*60]; // TODO: Set as a global constant?
+    NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:kTransactionLocationTimeLimit];
     NSDictionary *variables = [NSDictionary dictionaryWithObject:dateLimit forKey:@"dateLimit"];
     NSFetchRequest *fetchRequest = [managedObjectModel fetchRequestFromTemplateWithName:@"TransactionsWaitingForLocationFetchRequest" substitutionVariables:variables];
     

@@ -138,7 +138,6 @@
 /* Begin PBXFileReference section */
 		690002D114E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionsWaitingForLocationFetchRequest.h; sourceTree = "<group>"; };
 		690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionsWaitingForLocationFetchRequest.m; sourceTree = "<group>"; };
-		690002D514E4A02600453B83 /* LoanManagerAttachLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerAttachLocationDelegate.h; sourceTree = "<group>"; };
 		6903351C14EFE4CA0091B6E1 /* _Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Friend.h; sourceTree = "<group>"; };
 		6903351D14EFE4CA0091B6E1 /* _Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Friend.m; sourceTree = "<group>"; };
 		6903351E14EFE4CA0091B6E1 /* _Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Location.h; sourceTree = "<group>"; };
@@ -227,7 +226,6 @@
 		6967C4A414531FB500ADDEA1 /* NSCalendar+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+RIOAdditions.m"; sourceTree = "<group>"; };
 		6971E4ED14E452FF00CBDEFC /* LoanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManager.h; sourceTree = "<group>"; };
 		6971E4EE14E452FF00CBDEFC /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
-		6971E4F014E4531000CBDEFC /* LoanManagerLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerLocationDelegate.h; sourceTree = "<group>"; };
 		6971E4F114E4531E00CBDEFC /* LoanManagerBackingStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerBackingStoreDelegate.h; sourceTree = "<group>"; };
 		6971E4F514E4570600CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6971E50314E4611D00CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = en; path = en.lproj/RIORelativeDate.h; sourceTree = "<group>"; };
@@ -241,6 +239,7 @@
 		6972F0B01426AB430047305C /* EditLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLoanViewController.m; sourceTree = "<group>"; };
 		6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoanViewController.h; sourceTree = "<group>"; };
 		6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoanViewController.m; sourceTree = "<group>"; };
+		697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerLocationDelegate.h; sourceTree = "<group>"; };
 		697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
 		6980CE471441248D00C658A0 /* RIOTimedLocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOTimedLocationManagerDelegate.h; sourceTree = "<group>"; };
 		69872F83145238E400BA1FE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIORelativeDate.strings; sourceTree = "<group>"; };
@@ -477,9 +476,8 @@
 			children = (
 				6971E4ED14E452FF00CBDEFC /* LoanManager.h */,
 				6971E4EE14E452FF00CBDEFC /* LoanManager.m */,
-				6971E4F014E4531000CBDEFC /* LoanManagerLocationDelegate.h */,
 				6971E4F114E4531E00CBDEFC /* LoanManagerBackingStoreDelegate.h */,
-				690002D514E4A02600453B83 /* LoanManagerAttachLocationDelegate.h */,
+				697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */,
 			);
 			name = LoanManager;
 			sourceTree = "<group>";

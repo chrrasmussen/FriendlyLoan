@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RIOTimedLocationManagerDelegate.h"
-#import "LoanManagerLocationDelegate.h"
 #import "LoanManagerBackingStoreDelegate.h"
+#import "LoanManagerLocationDelegate.h"
 
 
 @class LoanManager;
-@class RIOTimedLocationManager;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RIOTimedLocationManagerDelegate, LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, LoanManagerBackingStoreDelegate, LoanManagerLocationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -29,7 +27,6 @@
 - (void)saveContext;
 
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
-@property (nonatomic, strong, readonly) RIOTimedLocationManager *timedLocationManager;
 
 
 @end

@@ -19,19 +19,6 @@ NSString * const kResultDebt        = @"debt";
 NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 
-@interface FriendsViewController ()
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
-- (void)setUpFetchedResultsController;
-- (void)performFetch;
-- (void)cleanAndSortFetchedResult;
-
-- (void)settleDebtForIndexPath:(NSIndexPath *)indexPath;
-
-@end
-
-
 @implementation FriendsViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;

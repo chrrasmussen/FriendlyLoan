@@ -183,7 +183,9 @@ const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
     
     NSTimeInterval timeSinceEvent = [theLocation.timestamp timeIntervalSinceNow];
     
-    return (abs(timeSinceEvent) <= self.timeIntervalFilter && theLocation.horizontalAccuracy <= self.accuracyFilter);
+    BOOL isLocationQualified = (fabs(timeSinceEvent) <= self.timeIntervalFilter && theLocation.horizontalAccuracy <= self.accuracyFilter);
+//    NSLog(@"(%f <= %f) && (%f <= %f) == %d", fabs(timeSinceEvent), self.timeIntervalFilter, theLocation.horizontalAccuracy, self.accuracyFilter, isLocationQualified);
+    return isLocationQualified;
 }
 
 

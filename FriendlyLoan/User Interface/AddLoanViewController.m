@@ -15,14 +15,6 @@
 #import "CategoriesViewController.h"
 
 
-@interface AddLoanViewController ()
-
-- (Transaction *)addTransaction;
-- (void)configureDetailsViewController:(DetailsViewController *)detailsViewController;
-
-@end
-
-
 @implementation AddLoanViewController
 
 @synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch;
@@ -50,8 +42,6 @@
     
     BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
     theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
-    if (attachLocation == YES)
-        [theTransaction addLocation:[[LoanManager sharedManager] location]];
 }
 
 - (void)resetFields
@@ -91,12 +81,7 @@
 
 - (IBAction)changeAttachLocationValue:(UISwitch *)sender
 {
-    [[LoanManager sharedManager] saveAttachLocationValue:sender.on];
-    
-    if (sender.on == YES)
-        [[LoanManager sharedManager] startUpdatingLocation];
-    else
-        [[LoanManager sharedManager] stopUpdatingLocation];
+    [[LoanManager sharedManager] setAttachLocationValue:sender.on];
 }
 
 - (IBAction)detailsViewControllerAdd:(id)sender
@@ -105,10 +90,12 @@
 }
 
 
-#pragma mark - LoanManagerAttachLocationDelegate methods
+#pragma mark - Attach location switch
 
-- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    BOOL attachLocation = [[change objectForKey:@"new"] boolValue];
+    NSLog(@"%@", change);
     [self.attachLocationSwitch setOn:attachLocation animated:YES];
 }
 
@@ -118,8 +105,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[LoanManager sharedManager] setAttachLocationDelegate:self];
 }
 
 - (void)viewDidUnload
@@ -134,6 +119,7 @@
     [super viewWillAppear:animated];
     
     self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
+    [[LoanManager sharedManager] addObserver:self forKeyPath:@"attachLocationValue" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -153,6 +139,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [[LoanManager sharedManager] removeObserver:self forKeyPath:@"attachLocationValue"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

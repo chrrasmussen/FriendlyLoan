@@ -7,11 +7,11 @@
 //
 
 #import "LoanManager.h"
-//#import <CoreData/CoreData.h>
 
-#import "LoanManagerLocationDelegate.h"
 #import "LoanManagerBackingStoreDelegate.h"
-#import "LoanManagerAttachLocationDelegate.h"
+#import "LoanManagerLocationDelegate.h"
+
+#import "RIOTimedLocationManager.h"
 
 #import "TransactionsWaitingForLocationFetchRequest.h"
 #import "FetchedHistoryController.h"
@@ -20,17 +20,10 @@
 #import "NSDecimalNumber+RIOAdditions.h"
 
 
-@interface LoanManager ()
-
-- (NSArray *)transactionsWaitingForLocation;
-
-@end
-
-
-
 @implementation LoanManager
 
-@synthesize locationDelegate, backingStoreDelegate, attachLocationDelegate;
+@synthesize locationDelegate, backingStoreDelegate;
+@synthesize timedLocationManager = _timedLocationManager;
 
 
 static LoanManager *_sharedManager;
@@ -46,17 +39,20 @@ static LoanManager *_sharedManager;
     return _sharedManager;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self setUpTimedLocationManager];
+    }
+    return self;
+}
 
-//#pragma mark - Controlling loan manager
-//
-//- (void)start
-//{
-//    if ([[self transactionsWaitingForLocation] count] > 0)
-//    {
-//        if (self.location != nil)
-//            [self updateLocationForCachedTransactions:self.location];
-//    }
-//}
+- (void)startUp
+{
+    if (self.attachLocationValue == YES)
+        [self.timedLocationManager startUpdatingLocation];
+}
 
 
 #pragma mark - Transaction methods
@@ -65,6 +61,10 @@ static LoanManager *_sharedManager;
 {
     Transaction *transaction = [Transaction insertInManagedObjectContext:self.managedObjectContext];
     updateHandler(transaction);
+    
+    if (transaction.attachLocationValue == YES)
+        [transaction updateLocation:[self.timedLocationManager location]];
+    
     [self saveContext];
     
     return transaction;
@@ -73,6 +73,7 @@ static LoanManager *_sharedManager;
 - (void)updateTransaction:(Transaction *)transaction withUpdateHandler:(void (^)(Transaction *transaction))updateHandler
 {
     updateHandler(transaction);
+    
     [self saveContext];
 }
 
@@ -81,7 +82,7 @@ static LoanManager *_sharedManager;
 {
     __block typeof(self) bself = self;
     Transaction *result = [self addTransactionWithUpdateHandler:^(Transaction *transaction) {
-        [transaction addFriendID:friendID];
+        [transaction updateFriendID:friendID];
         
         transaction.amount = [debt decimalNumberByNegating];
         transaction.settledValue = YES;
@@ -89,41 +90,63 @@ static LoanManager *_sharedManager;
         if ([bself attachLocationValue] == YES)
         {
             transaction.attachLocationValue = YES;
-            [transaction addLocation:[bself location]];
+            [transaction updateLocation:[bself.timedLocationManager location]];
         }
     }];
     
     return result;
 }
 
-- (void)updateLocationForCachedTransactions:(CLLocation *)location
+- (void)updateLocationForQueuedTransactions:(CLLocation *)location
 {
     NSArray *transactions = [self transactionsWaitingForLocation];
     
     for (Transaction *transaction in transactions)
     {
-        [transaction addLocation:location];
+        [transaction updateLocation:location];
     }
     
     [self saveContext];
 }
 
 
-#pragma mark - Location proxy methods
+#pragma mark - RIOTimedLocationManagerDelegate methods
 
-- (void)startUpdatingLocation
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    [locationDelegate startUpdatingLocation];
+    NSLog(@"%s %d", (char *)_cmd, self.attachLocationValue);
+    
+    if (self.attachLocationValue == YES)
+        [self.timedLocationManager startUpdatingLocation];
+    else
+        [self.timedLocationManager stopUpdatingLocation];
+    
+    [self willChangeValueForKey:@"attachLocationValue"];
+    [self didChangeValueForKey:@"attachLocationValue"];
 }
 
-- (void)stopUpdatingLocation
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
-    [locationDelegate stopUpdatingLocation];
+    NSLog(@"%s", (char *)_cmd);
+    [self updateLocationForQueuedTransactions:location];
+    
 }
 
-- (CLLocation *)location
+- (void)timedLocationManager:(RIOTimedLocationManager *)locationManager didFailWithError:(NSError *)error
 {
-    return [locationDelegate location];
+    NSLog(@"%s %@", (char *)_cmd, error);
+    if (error.domain == kCLErrorDomain)
+    {
+        if (error.code == kCLErrorLocationUnknown)
+        {
+            // TODO: Add code?
+        }
+        else if (error.code == kCLErrorDenied)
+        {
+            if ([self.locationDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)])
+                [self.locationDelegate loanManagerNeedLocationServices:self];
+        }
+    }
 }
 
 
@@ -140,7 +163,7 @@ static LoanManager *_sharedManager;
 }
 
 
-#pragma mark - Attach location methods
+#pragma mark - Attach location accessor methods
 
 - (BOOL)attachLocationValue
 {
@@ -156,29 +179,36 @@ static LoanManager *_sharedManager;
     return status;
 }
 
-- (void)saveAttachLocationValue:(BOOL)status
+- (void)setAttachLocationValue:(BOOL)status
 {
+    [self willChangeValueForKey:@"attachLocationValue"];
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:status forKey:@"attachLocation"];
     [userDefaults synchronize];
+    
+    if (status == YES)
+        [self.timedLocationManager startUpdatingLocation];
+    else
+        [self.timedLocationManager stopUpdatingLocation];
+    
+    [self didChangeValueForKey:@"attachLocationValue"];
 }
-
-- (void)updateAttachLocationSwitch:(BOOL)status
-{
-    BOOL attachLocation = [self attachLocationValue] && status;
-    [attachLocationDelegate loanManager:self didChangeAttachLocationValue:attachLocation];
-}
-
-
-#pragma mark - Fetched results controller
-
-//- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID
-//{
-//    
-//}
 
 
 #pragma mark - Private methods
+
+- (void)setUpTimedLocationManager
+{
+    _timedLocationManager = [[RIOTimedLocationManager alloc] init];
+    _timedLocationManager.delegate = self;
+    _timedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    _timedLocationManager.distanceFilter = 500;
+    _timedLocationManager.accuracyFilter = 100;
+    _timedLocationManager.timeIntervalFilter = kTransactionLocationTimeLimit;
+    _timedLocationManager.maximumLocatingDuration = 3 * 60;
+    _timedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
+}
 
 - (NSArray *)transactionsWaitingForLocation
 {

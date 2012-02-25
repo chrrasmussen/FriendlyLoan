@@ -18,14 +18,6 @@
 const CLLocationDistance kMapViewLocationDistance = 500;
 
 
-@interface DetailsViewController ()
-
-- (void)clipMapView;
-- (void)updateViewInfo;
-
-@end
-
-
 @implementation DetailsViewController
 
 @synthesize transaction;
@@ -76,6 +68,8 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+//    [self.transaction addObserver:self forKeyPath:@"locationStatus" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -86,6 +80,8 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+//    [self.transaction removeObserver:self forKeyPath:@"locationStatus"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -125,24 +121,64 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 #pragma mark - UITableViewDelegate methods
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return ([self.transaction hasLocation]) ? rows : rows - 1;
+    return (self.transaction.location != nil) ? rows : rows - 1;
+//    return ([self.transaction attachLocationValue] == YES) ? rows : rows - 1;
 }
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
-//    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
-//    if (indexPath.row == rows - 1)
-//    {
-//        NSLog(@"Is locating:%d", [self.transaction isLocating]);
-//    }
-////    else
+////    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
+////    if (indexPath.row == rows - 1)
 ////    {
-//    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+////        if (self.transaction.locationStatus == kTransactionLocationStatusLocating)
+////        {
+////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+////            return [super tableView:tableView cellForRowAtIndexPath:locatingIndexPath];
+////        }
+////        else if (self.transaction.locationStatus == kTransactionLocationStatusNotFound)
+////        {
+////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+////            return [super tableView:tableView cellForRowAtIndexPath:locatingIndexPath];
+////        }
 ////    }
+//    
+//    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+////    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
+////    if (indexPath.row == rows - 1)
+////    {
+////        if (self.transaction.locationStatus == kTransactionLocationStatusLocating)
+////        {
+////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+////            return [super tableView:tableView heightForRowAtIndexPath:locatingIndexPath];
+////        }
+////        else if (self.transaction.locationStatus == kTransactionLocationStatusNotFound)
+////        {
+////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+////            return [super tableView:tableView heightForRowAtIndexPath:locatingIndexPath];
+////        }
+////    }
+//    
+//    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+//}
+
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    NSInteger locationStatus = [[change objectForKey:@"new"] integerValue];
+//    NSLog(@"New location status:%d", locationStatus);
+////    [self mapStatusChanged];
 //}
 
 
@@ -150,8 +186,8 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)updateViewInfo
 {
-    self.lentDescriptionLabel.text = ([transaction lent] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    self.lentPrepositionLabel.text =  ([transaction lent] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+    self.lentDescriptionLabel.text = ([transaction lentValue] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+    self.lentPrepositionLabel.text =  ([transaction lentValue] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
     self.amountLabel.text = [transaction.absoluteAmount stringValue];
     self.friendLabel.text = [transaction.friend fullName];
@@ -190,7 +226,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)showLocationInfo
 {
-    if ([self.transaction hasLocation])
+    if (self.transaction.location != nil)
     {
         Location *location = self.transaction.location;
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([location coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
@@ -199,5 +235,15 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         [self.mapView addAnnotation:location];
     }
 }
+
+//- (void)mapStatusChanged
+//{
+//    NSLog(@"%s", (char *)_cmd);
+//    NSInteger rows = [super tableView:self.tableView numberOfRowsInSection:0];
+//    NSIndexPath *targetIndexPath = [NSIndexPath indexPathForRow:(rows - 1) inSection:0];
+//    
+//    NSArray *indexPaths = [NSArray arrayWithObject:targetIndexPath];
+//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+//}
 
 @end

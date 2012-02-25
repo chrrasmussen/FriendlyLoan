@@ -9,27 +9,31 @@
 #import "_Transaction.h"
 
 
-extern const float kLocationTimeLimit;
+extern const float kTransactionLocationTimeLimit;
 
-@class NSManagadObjectContext, CLLocation;
+//typedef enum {
+//    kTransactionLocationStatusNoLocation = 0,
+//    kTransactionLocationStatusLocating,
+//    kTransactionLocationStatusFound,
+//    kTransactionLocationStatusNotFound = -1
+//} TransactionLocationStatus;
+
+
+@class CLLocation;
+
 
 @interface Transaction : _Transaction
 
+//@property (nonatomic, readonly) TransactionLocationStatus locationStatus;
+
 + (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
-- (void)addFriendID:(NSNumber *)friendID;
-//- (void)removeFriendID:(NSNumber *)friendID;
-- (void)addLocation:(CLLocation *)location;
+- (void)updateFriendID:(NSNumber *)friendID;
+- (void)updateLocation:(CLLocation *)location;
 
 - (NSString *)historySectionName;
 
-- (BOOL)lent;
+- (BOOL)lentValue;
 - (NSDecimalNumber *)absoluteAmount;
-
-- (BOOL)hasFriend;
-
-- (BOOL)hasLocation;
-- (BOOL)isLocating;
-- (BOOL)hasFailedToLocate;
 
 
 @end

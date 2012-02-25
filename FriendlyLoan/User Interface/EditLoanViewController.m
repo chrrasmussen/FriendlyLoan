@@ -18,14 +18,6 @@ enum {
 };
 
 
-@interface EditLoanViewController ()
-
-- (void)editTransaction;
-- (void)updateViewInfo;
-
-@end
-
-
 @implementation EditLoanViewController
 
 @synthesize delegate;
@@ -129,7 +121,7 @@ enum {
 - (void)updateViewInfo
 {
     // Update internal state
-    self.lentStatus = self.transaction.lent;
+    self.lentStatus = [self.transaction lentValue];
     [self updateSelectedFriendID:self.transaction.friend.friendID];
     [self updateSelectedCategoryID:self.transaction.categoryID];
     

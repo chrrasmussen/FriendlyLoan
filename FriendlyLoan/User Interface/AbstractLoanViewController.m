@@ -139,7 +139,7 @@ const NSInteger kDefaultCategoryID = 0;
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     
-    [theTransaction addFriendID:self.selectedFriendID];
+    [theTransaction updateFriendID:self.selectedFriendID];
     
     theTransaction.categoryID = self.selectedCategoryID;
     theTransaction.note = self.noteTextField.text;

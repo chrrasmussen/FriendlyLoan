@@ -16,10 +16,12 @@
 @synthesize friendsViewController;
 @synthesize searchDisplayResult;
 
+
 - (NSArray *)sortedResult
 {
     return self.friendsViewController.sortedResult;
 }
+
 
 #pragma mark - Table view data source
 
@@ -50,6 +52,7 @@
     return cell;
 }
 
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,6 +66,7 @@
     [self.friendsViewController.tableView selectRowAtIndexPath:sortedResultIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self.friendsViewController performSegueWithIdentifier:@"FilteredHistorySegue" sender:self];
 }
+
 
 #pragma mark - UISearchDisplayDelegate methods
 
@@ -83,6 +87,5 @@
     BOOL hasChanged = !([self.searchDisplayResult isEqualToArray:lastResult]);
     return hasChanged;
 }
-
 
 @end

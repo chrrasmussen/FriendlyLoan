@@ -15,14 +15,6 @@
 const NSInteger kUnknownCategoryCellSection = 1;
 
 
-@interface CategoriesViewController ()
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (BOOL)isUnknownSelectedCategoryID;
-
-@end
-
-
 @implementation CategoriesViewController {
     NSIndexPath *_selectedIndexPath;
 }
