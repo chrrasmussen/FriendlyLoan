@@ -16,7 +16,11 @@
 
 @optional
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
-- (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location;
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error;
+
+//- (BOOL)cachedLocationManager:(RIOCachedLocationManager *)locationManager shouldCacheLocation:(CLLocation *)location;
+- (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location;
+
+- (void)cachedLocationManagerDidExpireCachedLocation:(RIOCachedLocationManager *)locationManager;
 
 @end

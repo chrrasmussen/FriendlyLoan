@@ -10,12 +10,13 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-extern NSString * const RIOCachedLocationManagerErrorDomain;
-
-
 @protocol RIOCachedLocationManagerDelegate;
 
 @interface RIOCachedLocationManager : NSObject
+
+// Location services
++ (CLAuthorizationStatus)authorizationStatus;
++ (BOOL)locationServicesEnabled;
 
 // Delegate
 @property (nonatomic, weak) id<RIOCachedLocationManagerDelegate> delegate;
@@ -28,22 +29,12 @@ extern NSString * const RIOCachedLocationManagerErrorDomain;
 @property (nonatomic) CLLocationDistance distanceFilter;
 @property (nonatomic) NSTimeInterval timeIntervalFilter;
 
-// Maximum locating duration
-@property (nonatomic) NSTimeInterval maximumLocatingDuration;
-
 // Purpose
 @property (nonatomic, copy) NSString *purpose;
 
-// Location status
-@property (nonatomic, readonly, getter = isLocating) BOOL locating;
+// Controlling the location
 @property (nonatomic, readonly) CLLocation *location;
-
-// Location services
-+ (CLAuthorizationStatus)authorizationStatus;
-+ (BOOL)locationServicesEnabled;
-
-// Controlling the updates
-- (void)startUpdatingLocation;
-- (void)stopUpdatingLocation;
+@property (nonatomic) BOOL needsLocation;
+- (void)invalidateCachedLocation;
 
 @end

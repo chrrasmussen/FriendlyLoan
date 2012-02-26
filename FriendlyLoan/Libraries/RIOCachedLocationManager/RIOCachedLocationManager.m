@@ -10,14 +10,6 @@
 #import "RIOCachedLocationManagerDelegate.h"
 
 
-const CLLocationAccuracy kDefaultAccuracyFilter         = DBL_MAX;
-const NSTimeInterval kDefaultTimeIntervalFilter         = DBL_MAX;
-const NSTimeInterval kDefaultMaximumLocatingDuration    = DBL_MAX;
-
-
-NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManagerErrorDomain";
-
-
 @interface RIOCachedLocationManager () <CLLocationManagerDelegate>
 
 @end
@@ -25,12 +17,13 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
 
 @implementation RIOCachedLocationManager {
     CLLocationManager *_locationManager;
-    NSTimer *_timeoutTimer;
-    CLLocation *_acquiredLocation;
+    CLLocation *_cachedLocation;
+    NSTimer *_expirationTimer;
 }
 
 @synthesize delegate = _delegate;
-@synthesize accuracyFilter, timeIntervalFilter, maximumLocatingDuration;
+@synthesize accuracyFilter, timeIntervalFilter;
+@synthesize needsLocation = _needsLocation;
 
 
 #pragma mark - Creating location manager
@@ -48,44 +41,25 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
 
 #pragma mark - Controlling location updates
 
-- (void)startUpdatingLocation
+- (void)setNeedsLocation:(BOOL)needsLocation
 {
-    BOOL needLocation = (self.location == nil);
-    if (self.locating == NO && needLocation)
-    {
-//        NSLog(@"Starting updating location (status:%d enabled:%d)", [CLLocationManager authorizationStatus], [CLLocationManager locationServicesEnabled]);
-        [_locationManager startUpdatingLocation];
-        
-        [self startTimeoutTimer];
-    }
+    _needsLocation = needsLocation;
+    
+    [self updateLocationIfNecessary];
 }
 
-- (void)stopUpdatingLocation
+- (void)invalidateCachedLocation
 {
-    if (self.locating == YES)
-    {
-        [self stopTimeoutTimer];
-        
-        [_locationManager stopUpdatingLocation];
-//        NSLog(@"Stopped updating location");
-    }
-}
-
-
-#pragma mark - Location status
-
-- (BOOL)isLocating
-{
-    BOOL timerIsActive = (_timeoutTimer != nil);
-    return timerIsActive;
+    _cachedLocation = nil;
+    [self stopExpirationTimer];
+    
+    [self updateLocationIfNecessary];
 }
 
 - (CLLocation *)location
 {
     if ([self isLocationQualified:self.lastLocation])
         return self.lastLocation;
-    
-    [self startUpdatingLocation];
     
     return nil;
 }
@@ -95,6 +69,9 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
+    if (status == kCLAuthorizationStatusAuthorized)
+        [self updateLocationIfNecessary];
+    
     if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didChangeAuthorizationStatus:)])
         [self.delegate cachedLocationManager:self didChangeAuthorizationStatus:status];
 }
@@ -104,12 +81,14 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
     NSLog(@"didUpdateToLocation:%@", newLocation); // TODO: Remove this line
     if ([self isLocationQualified:newLocation])
     {
-        _acquiredLocation = newLocation;
+        _cachedLocation = newLocation;
+        
+        [_locationManager stopUpdatingLocation];
+        
+        [self startExpirationTimer];
         
         if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didRetrieveLocation:)])
             [self.delegate cachedLocationManager:self didRetrieveLocation:newLocation];
-        
-        [self stopUpdatingLocation];
     }
 }
 
@@ -117,8 +96,6 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
 {
     if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didFailWithError:)])
         [self.delegate cachedLocationManager:self didFailWithError:error];
-    
-    [self stopUpdatingLocation];
 }
 
 
@@ -132,43 +109,32 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
 
 - (void)setDefaultValues
 {
-    self.accuracyFilter = kDefaultAccuracyFilter;
-    self.timeIntervalFilter = kDefaultTimeIntervalFilter;
-    self.maximumLocatingDuration = kDefaultMaximumLocatingDuration;
+    self.accuracyFilter = DBL_MAX;
+    self.timeIntervalFilter = DBL_MAX;
 }
 
-
-- (void)startTimeoutTimer
+- (void)updateLocationIfNecessary
 {
-    _timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:self.maximumLocatingDuration target:self selector:@selector(timeout:) userInfo:nil repeats:NO];
-}
-
-- (void)stopTimeoutTimer
-{
-    [_timeoutTimer invalidate];
-    _timeoutTimer = nil;
-}
-
-- (void)timeout:(NSTimer *)theTimer
-{
-    if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didFailWithError:)])
+    BOOL hasLocation = (self.location != nil);
+    if (hasLocation == NO)
     {
-        // TODO: Set up error correctly
-        NSError *error = [NSError errorWithDomain:RIOCachedLocationManagerErrorDomain code:0 userInfo:nil];
-        
-        [self.delegate cachedLocationManager:self didFailWithError:error];
+        if (_needsLocation == YES)
+            [_locationManager startUpdatingLocation];
+        else
+            [_locationManager stopUpdatingLocation];
     }
-    
-    [self stopUpdatingLocation];
+    else
+    {
+        [self startExpirationTimer];
+    }
 }
    
-
 - (CLLocation *)lastLocation
 {
-    if (_acquiredLocation == nil)
-        _acquiredLocation = _locationManager.location;
+    if (_cachedLocation == nil)
+        _cachedLocation = _locationManager.location;
     
-    return _acquiredLocation;
+    return _cachedLocation;
 }
 
 - (BOOL)isLocationQualified:(CLLocation *)theLocation
@@ -177,10 +143,37 @@ NSString * const RIOCachedLocationManagerErrorDomain = @"kRIOCachedLocationManag
         return NO;
     
     NSTimeInterval timeSinceEvent = [theLocation.timestamp timeIntervalSinceNow];
-    
     BOOL isLocationQualified = (fabs(timeSinceEvent) <= self.timeIntervalFilter && theLocation.horizontalAccuracy <= self.accuracyFilter);
 //    NSLog(@"(%f <= %f) && (%f <= %f) == %d", fabs(timeSinceEvent), self.timeIntervalFilter, theLocation.horizontalAccuracy, self.accuracyFilter, isLocationQualified);
     return isLocationQualified;
+}
+
+
+#pragma mark - Expiration timer methods
+
+- (void)startExpirationTimer
+{
+    if (_expirationTimer != nil)
+        [self stopExpirationTimer];
+    
+    NSTimeInterval timeSinceEvent = [self.location.timestamp timeIntervalSinceNow];
+    NSTimeInterval expirationTimeInterval = self.timeIntervalFilter - fabs(timeSinceEvent);
+    
+    _expirationTimer = [NSTimer scheduledTimerWithTimeInterval:expirationTimeInterval target:self selector:@selector(cacheExpired:) userInfo:nil repeats:NO];
+}
+
+- (void)stopExpirationTimer
+{
+    [_expirationTimer invalidate];
+    _expirationTimer = nil;
+}
+
+- (void)cacheExpired:(NSTimer *)theTimer
+{
+    [self updateLocationIfNecessary];
+    
+    if ([self.delegate respondsToSelector:@selector(cachedLocationManagerDidExpireCachedLocation:)])
+        [self.delegate cachedLocationManagerDidExpireCachedLocation:self];
 }
 
 

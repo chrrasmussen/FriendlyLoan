@@ -333,14 +333,13 @@
 			name = "Fetch Requests";
 			sourceTree = "<group>";
 		};
-		6914CC461440D6C80090FAA4 /* RIOTimedLocationManager */ = {
+		6914CC461440D6C80090FAA4 /* RIOCachedLocationManager */ = {
 			isa = PBXGroup;
 			children = (
 				6980CE471441248D00C658A0 /* RIOCachedLocationManagerDelegate.h */,
 				6914CC431440D6C30090FAA4 /* RIOCachedLocationManager.h */,
 				6914CC441440D6C30090FAA4 /* RIOCachedLocationManager.m */,
 			);
-			name = RIOTimedLocationManager;
 			path = RIOCachedLocationManager;
 			sourceTree = "<group>";
 		};
@@ -349,7 +348,7 @@
 			children = (
 				69204A75141FE9B500D6A075 /* Additions */,
 				693E5091143A1B1B00F12459 /* RIORelativeDate */,
-				6914CC461440D6C80090FAA4 /* RIOTimedLocationManager */,
+				6914CC461440D6C80090FAA4 /* RIOCachedLocationManager */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";

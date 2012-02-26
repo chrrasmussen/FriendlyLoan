@@ -50,8 +50,17 @@ static LoanManager *_sharedManager;
 
 - (void)startUp
 {
-    if (self.attachLocationValue == YES)
-        [self.cachedLocationManager startUpdatingLocation];
+    BOOL attachLocation = (self.attachLocationValue == YES);
+    BOOL needLocation = attachLocation;
+    if ([[self transactionsWaitingForLocation] count] > 0)
+    {
+        if (_cachedLocationManager.location != nil)
+            [self updateLocationForQueuedTransactions:_cachedLocationManager.location];
+        else
+            needLocation = YES;
+    }
+    
+    [self.cachedLocationManager setNeedsLocation:needLocation];
 }
 
 
@@ -116,20 +125,8 @@ static LoanManager *_sharedManager;
 {
     NSLog(@"%s %d", (char *)_cmd, self.attachLocationValue);
     
-    if (self.attachLocationValue == YES)
-        [self.cachedLocationManager startUpdatingLocation];
-    else
-        [self.cachedLocationManager stopUpdatingLocation];
-    
     [self willChangeValueForKey:@"attachLocationValue"];
     [self didChangeValueForKey:@"attachLocationValue"];
-}
-
-- (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
-{
-    NSLog(@"%s", (char *)_cmd);
-    [self updateLocationForQueuedTransactions:location];
-    
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error
@@ -147,6 +144,18 @@ static LoanManager *_sharedManager;
                 [self.locationDelegate loanManagerNeedLocationServices:self];
         }
     }
+}
+
+- (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
+{
+    NSLog(@"%s", (char *)_cmd);
+    [self updateLocationForQueuedTransactions:location];
+    
+}
+
+- (void)cachedLocationManagerDidExpireCachedLocation:(RIOCachedLocationManager *)locationManager
+{
+    NSLog(@"%s %@", (char *)_cmd, _cachedLocationManager.location);
 }
 
 
@@ -187,10 +196,7 @@ static LoanManager *_sharedManager;
     [userDefaults setBool:status forKey:@"attachLocation"];
     [userDefaults synchronize];
     
-    if (status == YES)
-        [self.cachedLocationManager startUpdatingLocation];
-    else
-        [self.cachedLocationManager stopUpdatingLocation];
+    [self.cachedLocationManager setNeedsLocation:status];
     
     [self didChangeValueForKey:@"attachLocationValue"];
 }
@@ -206,7 +212,6 @@ static LoanManager *_sharedManager;
     _cachedLocationManager.distanceFilter = 500;
     _cachedLocationManager.accuracyFilter = 100;
     _cachedLocationManager.timeIntervalFilter = kTransactionLocationTimeLimit;
-    _cachedLocationManager.maximumLocatingDuration = 3 * 60;
     _cachedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
 }
 
