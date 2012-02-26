@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "AbstractLoanViewController.h"
 
+#import "LoanManagerAttachLocationDelegate.h"
 
-@interface AddLoanViewController : AbstractLoanViewController
+
+@interface AddLoanViewController : AbstractLoanViewController <LoanManagerAttachLocationDelegate>
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;

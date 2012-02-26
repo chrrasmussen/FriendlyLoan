@@ -13,12 +13,13 @@
 
 
 @class CLLocation, RIOCachedLocationManager;
-@protocol LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate;
+@protocol LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate, LoanManagerAttachLocationDelegate;
 
 @interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
 
 @property (nonatomic, weak) id<LoanManagerLocationDelegate> locationDelegate;
 @property (nonatomic, weak) id<LoanManagerBackingStoreDelegate> backingStoreDelegate;
+@property (nonatomic, weak) id<LoanManagerAttachLocationDelegate> attachLocationDelegate;
 
 @property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
 

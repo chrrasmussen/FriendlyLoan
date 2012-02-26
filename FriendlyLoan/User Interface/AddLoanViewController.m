@@ -90,16 +90,6 @@
 }
 
 
-#pragma mark - Attach location switch
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    BOOL attachLocation = [[change objectForKey:@"new"] boolValue];
-//    NSLog(@"%@", change);
-    [self.attachLocationSwitch setOn:attachLocation animated:YES];
-}
-
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -118,8 +108,8 @@
 {
     [super viewWillAppear:animated];
     
+    [[LoanManager sharedManager] setAttachLocationDelegate:self];
     self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
-    [[LoanManager sharedManager] addObserver:self forKeyPath:@"attachLocationValue" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -139,8 +129,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    [[LoanManager sharedManager] removeObserver:self forKeyPath:@"attachLocationValue"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -169,6 +157,14 @@
 //        // Hide keyboard in order to avoid it becoming first responder when the view appears
 //        [self hideKeyboard];
     }
+}
+
+
+#pragma mark - LoanManagerAttachLocationDelegate methods
+
+- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
+{
+    [self.attachLocationSwitch setOn:attachLocation animated:YES];
 }
 
 

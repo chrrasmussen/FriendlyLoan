@@ -167,6 +167,7 @@
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewControllerDelegate.h; sourceTree = "<group>"; };
+		6928930214F9D3F2009BC949 /* LoanManagerAttachLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerAttachLocationDelegate.h; sourceTree = "<group>"; };
 		6939C52414F93B6700C19DE5 /* Other-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Highlighted.png"; sourceTree = "<group>"; };
 		6939C52514F93B6700C19DE5 /* Other-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Normal.png"; sourceTree = "<group>"; };
 		6939C52614F93B6700C19DE5 /* Other-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Normal@2x.png"; sourceTree = "<group>"; };
@@ -478,6 +479,7 @@
 				6971E4EE14E452FF00CBDEFC /* LoanManager.m */,
 				6971E4F114E4531E00CBDEFC /* LoanManagerBackingStoreDelegate.h */,
 				697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */,
+				6928930214F9D3F2009BC949 /* LoanManagerAttachLocationDelegate.h */,
 			);
 			name = LoanManager;
 			sourceTree = "<group>";

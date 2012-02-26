@@ -10,6 +10,7 @@
 
 #import "LoanManagerBackingStoreDelegate.h"
 #import "LoanManagerLocationDelegate.h"
+#import "LoanManagerAttachLocationDelegate.h"
 
 #import "RIOCachedLocationManager.h"
 
@@ -22,7 +23,7 @@
 
 @implementation LoanManager
 
-@synthesize locationDelegate, backingStoreDelegate;
+@synthesize locationDelegate, backingStoreDelegate, attachLocationDelegate;
 @synthesize cachedLocationManager = _cachedLocationManager;
 
 
@@ -60,7 +61,8 @@ static LoanManager *_sharedManager;
             needLocation = YES;
     }
     
-    [self.cachedLocationManager setNeedsLocation:needLocation];
+    if (needLocation == YES)
+        [self.cachedLocationManager setNeedsLocation:YES];
 }
 
 
@@ -124,9 +126,7 @@ static LoanManager *_sharedManager;
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     NSLog(@"%s %d", (char *)_cmd, self.attachLocationValue);
-    
-    [self willChangeValueForKey:@"attachLocationValue"];
-    [self didChangeValueForKey:@"attachLocationValue"];
+    [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:self.attachLocationValue];
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error
@@ -140,6 +140,8 @@ static LoanManager *_sharedManager;
         }
         else if (error.code == kCLErrorDenied)
         {
+            [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:NO];
+            
             if ([self.locationDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)])
                 [self.locationDelegate loanManagerNeedLocationServices:self];
         }
@@ -190,15 +192,11 @@ static LoanManager *_sharedManager;
 
 - (void)setAttachLocationValue:(BOOL)status
 {
-    [self willChangeValueForKey:@"attachLocationValue"];
-    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:status forKey:@"attachLocation"];
     [userDefaults synchronize];
     
     [self.cachedLocationManager setNeedsLocation:status];
-    
-    [self didChangeValueForKey:@"attachLocationValue"];
 }
 
 
