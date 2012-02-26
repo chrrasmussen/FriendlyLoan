@@ -78,7 +78,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"didUpdateToLocation:%@", newLocation); // TODO: Remove this line
+    NSLog(@"didUpdateToLocation:%@", newLocation);
     if ([self isLocationQualified:newLocation])
     {
         _cachedLocation = newLocation;

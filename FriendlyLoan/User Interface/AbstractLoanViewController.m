@@ -34,7 +34,8 @@ const NSInteger kDefaultCategoryID = 0;
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - TODO: Fix
+
+#pragma mark - Helper methods for subclasses
 
 - (void)updateSelectedFriendID:(NSNumber *)friendID
 {

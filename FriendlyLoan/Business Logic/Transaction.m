@@ -16,7 +16,7 @@
 #import "RIORelativeDate.h"
 
 
-const float kTransactionLocationTimeLimit = 1*60; // FIXME: 10 instead of 0.5
+const float kTransactionLocationTimeLimit = 10*60;
 
 
 @implementation Transaction

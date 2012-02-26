@@ -863,7 +863,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"FriendlyLoan\"\ngenstrings -o \"Resources/en.lproj/\" *.m User\\ Interface/*.m";
+			shellScript = "cd \"FriendlyLoan\"\ngenstrings -o \"Resources/en.lproj/\" *.m User\\ Interface/*.m Business\\ Logic/*.m";
 		};
 		69033F8214EF277300C45C16 /* Generate CoreData Models */ = {
 			isa = PBXShellScriptBuildPhase;
