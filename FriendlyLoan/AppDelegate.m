@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import <Parse/Parse.h>
 
 #import "LoanManager.h"
 
@@ -33,6 +34,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSLog(@"%s", (char *)_cmd);
+    
+    [Parse setApplicationId:@"0sEiaamI0nu6w5oc537aPdfawR3dFHzvFtN0ytlw" clientKey:@"0WgN3ZTsUMfSPEW5Vok6lkKgUFrzBr9cgMAT5ZSA"];
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    [testObject setObject:@"bar" forKey:@"foo"];
+    [testObject save];
     
     [self setUpLoanManager];
     
