@@ -36,15 +36,65 @@
     NSLog(@"%s", (char *)_cmd);
     
     [Parse setApplicationId:@"0sEiaamI0nu6w5oc537aPdfawR3dFHzvFtN0ytlw" clientKey:@"0WgN3ZTsUMfSPEW5Vok6lkKgUFrzBr9cgMAT5ZSA"];
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:@"bar" forKey:@"foo"];
-    [testObject save];
+    
+    [PFFacebookUtils initializeWithApplicationId:@"377421638976943"];
+    
+    if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+        NSLog(@"User already logged in (%@)", [PFUser currentUser]);
+    }
+    
+    // TODO: Enable after the user has registered
+    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    
+//    [PFUser logInWithUsernameInBackground:@"skohorn@gmail.com" password:@"test" block:^(PFUser *user, NSError *error) {
+//        if (user) {
+//            NSLog(@"Logged in as %@", user);
+//            PFQuery *query = [PFQuery queryWithClassName:@"TestObject"];
+//            PFObject *test = [query getFirstObject];
+//            //    test.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+//            NSLog(@"%@",test);
+//            //    [test save];
+//        }
+//        else {
+//            NSLog(@"Failed");
+//        }
+//    }];
+    
+//    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+//    [testObject setObject:@"bar" forKey:@"foo"];
+//    [testObject save];
+    
+//    [PFUser logOut];
+//    NSLog(@"%@", [PFUser currentUser]);
     
     [self setUpLoanManager];
     
     // Override point for customization after application launch.
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [PFPush storeDeviceToken:deviceToken];
+    [PFPush subscribeToChannelInBackground:@""];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"%s%@", (char *)_cmd, error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [PFPush handlePush:userInfo];
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
