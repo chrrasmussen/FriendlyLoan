@@ -128,7 +128,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     
     // Delete row from table view
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UITableViewDelegate methods

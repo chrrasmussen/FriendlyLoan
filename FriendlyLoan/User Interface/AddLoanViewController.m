@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "LoanManager.h"
+#import "BackendManager.h"
 
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
@@ -17,7 +18,7 @@
 
 @implementation AddLoanViewController
 
-@synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch;
+@synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch, shareLoanSwitch;
 
 - (void)didReceiveMemoryWarning
 {
@@ -82,6 +83,12 @@
 - (IBAction)changeAttachLocationValue:(UISwitch *)sender
 {
     [[LoanManager sharedManager] setAttachLocationValue:sender.on];
+}
+
+- (IBAction)changeShareLoanValue:(UISwitch *)sender
+{
+    // TODO: Check if user is logged in
+    // TODO: Check if selected friend is applicable
 }
 
 - (IBAction)detailsViewControllerAdd:(id)sender
@@ -175,6 +182,8 @@
     Transaction *result = [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Transaction *transaction) {
         [self updateTransactionBasedOnViewInfo:transaction];
     }];
+    
+    [[BackendManager sharedManager] shareTransaction:result];
     
     return result;
 }

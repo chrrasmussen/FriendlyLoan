@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
+#import "BackendManagerLoginDelegate.h"
 
-@interface SettingsViewController : UITableViewController <PF_FBRequestDelegate>
 
-- (IBAction)logIn:(id)sender;
+@interface SettingsViewController : UITableViewController <BackendManagerLoginDelegate>
+
+@property (nonatomic, strong) IBOutlet UITableViewCell *logInTableViewCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *inviteFriendsTableViewCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *manageFriendsTableViewCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell *logOutTableViewCell;
 
 @end

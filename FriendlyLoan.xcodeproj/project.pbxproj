@@ -131,6 +131,8 @@
 		69D3361014414E7800CB4E25 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360E14414E7800CB4E25 /* Default.png */; };
 		69D3361114414E7800CB4E25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360F14414E7800CB4E25 /* Default@2x.png */; };
 		69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC86154F597F00FA6207 /* SettingsViewController.m */; };
+		69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8A154F64D700FA6207 /* BackendManager.m */; };
+		69D5EC8F1550BE5F00FA6207 /* Transaction+PFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,6 +296,11 @@
 		69D3360F14414E7800CB4E25 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		69D5EC85154F597F00FA6207 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		69D5EC86154F597F00FA6207 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		69D5EC89154F64D700FA6207 /* BackendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendManager.h; sourceTree = "<group>"; };
+		69D5EC8A154F64D700FA6207 /* BackendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendManager.m; sourceTree = "<group>"; };
+		69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+PFObject.h"; sourceTree = "<group>"; };
+		69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+PFObject.m"; sourceTree = "<group>"; };
+		69D5EC901550F2BC00FA6207 /* BackendManagerLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackendManagerLoginDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,6 +638,8 @@
 			children = (
 				69BA5DFD14E0922500021EAA /* Transaction.h */,
 				69BA5DFE14E0922500021EAA /* Transaction.m */,
+				69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */,
+				69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */,
 				69BA5DFA14E0920800021EAA /* Friend.h */,
 				69BA5DFB14E0920800021EAA /* Friend.m */,
 				69515FE814D39D4900C9569D /* Location.h */,
@@ -701,8 +710,9 @@
 		69C3CEDA141AB06800549213 /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
-				69149CB91457834C00566FB2 /* Fetch Requests */,
+				69D5EC88154F63E900FA6207 /* BackendManager */,
 				6971E4EB14E452EC00CBDEFC /* LoanManager */,
+				69149CB91457834C00566FB2 /* Fetch Requests */,
 				69149CB814577EB700566FB2 /* Models */,
 			);
 			path = "Business Logic";
@@ -739,6 +749,16 @@
 				69D5EC86154F597F00FA6207 /* SettingsViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		69D5EC88154F63E900FA6207 /* BackendManager */ = {
+			isa = PBXGroup;
+			children = (
+				69D5EC89154F64D700FA6207 /* BackendManager.h */,
+				69D5EC8A154F64D700FA6207 /* BackendManager.m */,
+				69D5EC901550F2BC00FA6207 /* BackendManagerLoginDelegate.h */,
+			);
+			name = BackendManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -974,6 +994,8 @@
 				6971E4EF14E452FF00CBDEFC /* LoanManager.m in Sources */,
 				690002D314E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m in Sources */,
 				69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */,
+				69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */,
+				69D5EC8F1550BE5F00FA6207 /* Transaction+PFObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,7 +1104,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1098,7 +1120,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1109,7 +1131,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

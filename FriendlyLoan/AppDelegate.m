@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
-#import <Parse/Parse.h>
 
 #import "LoanManager.h"
+#import "BackendManager.h"
 
 
 @interface AppDelegate ()
@@ -29,45 +29,17 @@
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
 @synthesize loanManager = _loanManager;
+@synthesize backendManager = _backendManager;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSLog(@"%s", (char *)_cmd);
     
-    [Parse setApplicationId:@"0sEiaamI0nu6w5oc537aPdfawR3dFHzvFtN0ytlw" clientKey:@"0WgN3ZTsUMfSPEW5Vok6lkKgUFrzBr9cgMAT5ZSA"];
-    
-    [PFFacebookUtils initializeWithApplicationId:@"377421638976943"];
-    
-    if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-        NSLog(@"User already logged in (%@)", [PFUser currentUser]);
-    }
-    
-    // TODO: Enable after the user has registered
-    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-    
-//    [PFUser logInWithUsernameInBackground:@"skohorn@gmail.com" password:@"test" block:^(PFUser *user, NSError *error) {
-//        if (user) {
-//            NSLog(@"Logged in as %@", user);
-//            PFQuery *query = [PFQuery queryWithClassName:@"TestObject"];
-//            PFObject *test = [query getFirstObject];
-//            //    test.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
-//            NSLog(@"%@",test);
-//            //    [test save];
-//        }
-//        else {
-//            NSLog(@"Failed");
-//        }
-//    }];
-    
-//    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-//    [testObject setObject:@"bar" forKey:@"foo"];
-//    [testObject save];
-    
-//    [PFUser logOut];
-//    NSLog(@"%@", [PFUser currentUser]);
-    
     [self setUpLoanManager];
+    [self setUpBackendManager];
+    
+    [_backendManager handleApplicationDidFinishLaunching];
     
     // Override point for customization after application launch.
     return YES;
@@ -75,26 +47,29 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [PFFacebookUtils handleOpenURL:url];
+    return [_backendManager handleOpenURL:url];
 }
+
+
+#pragma mark - Remote notifications
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [PFPush storeDeviceToken:deviceToken];
-    [PFPush subscribeToChannelInBackground:@""];
+    [_backendManager handleDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"%s%@", (char *)_cmd, error);
+    [_backendManager handleDidFailToRegisterForRemoteNotificationsWithError:error];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [PFPush handlePush:userInfo];
+    [_backendManager handleDidReceiveRemoteNotification:userInfo];
 }
 
 
+#pragma mark - Application life-time
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -128,7 +103,7 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     NSLog(@"%s", (char *)_cmd);
-    [[LoanManager sharedManager] startUp];
+    [_loanManager handleApplicationDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -276,6 +251,11 @@
     _loanManager = [LoanManager sharedManager];
     _loanManager.backingStoreDelegate = self;
     _loanManager.locationDelegate = self;
+}
+
+- (void)setUpBackendManager
+{
+    _backendManager = [BackendManager sharedManager];
 }
 
 - (void)displayLocationWarning

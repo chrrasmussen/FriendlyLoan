@@ -30,7 +30,7 @@
 + (id)sharedManager;
 
 // Controlling loan manager
-- (void)startUp;
+- (void)handleApplicationDidBecomeActive;
 //- (void)start;
 //- (void)initiate/initialize // If there are some outstanding locations, start location services
 //- (void)terminate // Do something useful when quitting?

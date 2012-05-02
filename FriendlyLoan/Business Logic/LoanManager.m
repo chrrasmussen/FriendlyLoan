@@ -49,7 +49,7 @@ static LoanManager *_sharedManager;
     return self;
 }
 
-- (void)startUp
+- (void)handleApplicationDidBecomeActive
 {
     BOOL attachLocation = (self.attachLocationValue == YES);
     BOOL needLocation = attachLocation;
@@ -202,6 +202,7 @@ static LoanManager *_sharedManager;
 
 #pragma mark - Private methods
 
+// TODO: Move purpose to user interface?
 - (void)setUpCachedLocationManager
 {
     _cachedLocationManager = [[RIOCachedLocationManager alloc] init];

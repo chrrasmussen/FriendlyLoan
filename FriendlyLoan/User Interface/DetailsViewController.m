@@ -243,7 +243,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 //    NSIndexPath *targetIndexPath = [NSIndexPath indexPathForRow:(rows - 1) inSection:0];
 //    
 //    NSArray *indexPaths = [NSArray arrayWithObject:targetIndexPath];
-//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 //}
 
 @end

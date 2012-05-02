@@ -7,12 +7,20 @@
 //
 
 #import "SettingsViewController.h"
+#import "BackendManager.h"
 
-@interface SettingsViewController ()
 
-@end
+const NSInteger kShareLoansSection = 0;
 
-@implementation SettingsViewController
+
+@implementation SettingsViewController {
+    BOOL _loggingIn;
+}
+
+@synthesize logInTableViewCell;
+@synthesize inviteFriendsTableViewCell;
+@synthesize manageFriendsTableViewCell;
+@synthesize logOutTableViewCell;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,12 +34,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [[BackendManager sharedManager] setLoginDelegate:self];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -46,132 +52,160 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)logIn:(id)sender
-{
-    // The permissions requested from the user
-    NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", @"offline_access", nil];
-    
-    // Log in
-    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-        if (!user) {
-            if (!error) { // The user cancelled the login
-                NSLog(@"Uh oh. The user cancelled the Facebook login.");
-            } else { // An error occurred
-                NSLog(@"Uh oh. An error occurred: %@", error);
-            }
-        } else if (user.isNew) { // Success - a new user was created
-            NSLog(@"User with facebook signed up and logged in!");
-            // [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
-        } else { // Success - an existing user logged in
-            NSLog(@"User with facebook logged in!");
-            // [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
-            NSString *requestPath = @"me/?fields=name,gender,picture,email";
-            
-            // Send request to facebook
-            [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
-        }
-    }];
-}
 
-- (void)request:(PF_FBRequest *)request didLoad:(id)result
-{
-    NSDictionary *userData = (NSDictionary *)result;
-    
-    NSString *identifier = [userData objectForKey:@"id"];
-    NSString *name = [userData objectForKey:@"name"];
-    NSString *gender = [userData objectForKey:@"gender"];
-    NSString *email = [userData objectForKey:@"email"];
-    
-    NSLog(@"%@, %@, %@, %@", identifier, name, email, gender);
-}
+#pragma mark - Table view data source
 
-- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // OAuthException means our session is invalid
-    if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"] isEqualToString: @"OAuthException"]) {
-        NSLog(@"The facebook token was invalidated");
-        [PFUser logOut];
-    } else {
-        NSLog(@"Some other error");
+    if (section == 0) {
+        NSInteger loginRows = 1;
+        return ([self shouldDisplayLogInSection] == YES) ? loginRows : [super tableView:tableView numberOfRowsInSection:section] - loginRows;
     }
+    
+    return [super tableView:tableView numberOfRowsInSection:section];
 }
 
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    // Return the number of sections.
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    // Return the number of rows in the section.
-//    return 0;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (indexPath.section == kShareLoansSection) {
+        NSInteger row = ([self shouldDisplayLogInSection] == YES) ? 0 : indexPath.row + 1;
+        indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+    }
+    
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+// TODO: Update user
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    if (section == kShareLoansSection) {
+        if ([self shouldDisplayLogInSection] == NO) {
+            NSString *format = NSLocalizedString(@"Logged in as: %@", @"Text in footer of Share Loans-section in Settings-tab");
+            NSString *fullName = [[BackendManager sharedManager] userFullName];
+            return [NSString stringWithFormat:format, fullName];
+        }
+        else {
+            return nil;
+        }
+    }
+    
+    return [super tableView:tableView titleForFooterInSection:section];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self logIn:cell];
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (cell == self.logInTableViewCell) {
+        [[BackendManager sharedManager] logIn];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    else if (cell == self.logOutTableViewCell) {
+        [[BackendManager sharedManager] logOut];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_loggingIn == YES) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell == self.logInTableViewCell) {
+            return nil;
+        }
+    }
+    
+    return indexPath;
+}
+
+
+#pragma mark - Backend manager login delegate
+
+- (BOOL)backendManagerWillLogIn:(BackendManager *)backendManager
+{
+    [self startLogIn];
+    
+    return YES;
+}
+
+- (void)backendManagerDidSucceedToLogIn:(BackendManager *)backendManager
+{
+    [self endLogIn];
+    
+    [self updateShareLoansSectionWithLogInAnimation:YES];
+}
+
+- (void)backendManager:(BackendManager *)backendManager didFailToLogInWithError:(NSError *)error
+{
+    [self endLogIn];
+    
+    if (error) {
+        NSString *title = NSLocalizedString(@"Failed to Log In", @"Title of alert when failed to log in");
+        NSString *message = NSLocalizedString(@"Please enter the correct username and password.", @"Message of alert when failed to log in");
+        NSString *cancel = NSLocalizedString(@"Close", @"Title of cancel button in alert when failed to log in");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancel otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)backendManagerDidLogOut:(BackendManager *)backendManager
+{
+    [self updateShareLoansSectionWithLogInAnimation:NO];
+}
+     
+     
+#pragma mark - Private methods
+
+- (BOOL)shouldDisplayLogInSection
+{
+    return ([[BackendManager sharedManager] isLoggedIn] == NO);
+}
+
+- (void)startLogIn
+{
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicator startAnimating];
+    self.logInTableViewCell.accessoryView = indicator;
+    self.logInTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    _loggingIn = YES;
+}
+
+- (void)endLogIn
+{
+    _loggingIn = NO;
+    
+    self.logInTableViewCell.accessoryView = nil;
+    self.logInTableViewCell.selectionStyle = UITableViewCellSelectionStyleBlue;
+}
+
+- (void)updateShareLoansSectionWithLogInAnimation:(BOOL)logIn
+{
+    NSArray *logInIndexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:kShareLoansSection]];
+    NSArray *logOutIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:kShareLoansSection],
+                                 [NSIndexPath indexPathForRow:1 inSection:kShareLoansSection],
+                                 [NSIndexPath indexPathForRow:2 inSection:kShareLoansSection], nil];
+    
+    NSArray *deletions;
+    NSArray *insertions;
+    if (logIn) {
+        deletions = logInIndexPaths;
+        insertions = logOutIndexPaths;
+    }
+    else {
+        deletions = logOutIndexPaths;
+        insertions = logInIndexPaths;
+    }
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:deletions withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView insertRowsAtIndexPaths:insertions withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+    
+    [self.tableView reloadData];
 }
 
 @end

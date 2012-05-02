@@ -12,7 +12,7 @@
 #import "LoanManagerLocationDelegate.h"
 
 
-@class LoanManager;
+@class LoanManager, BackendManager;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LoanManagerBackingStoreDelegate, LoanManagerLocationDelegate>
 
@@ -26,7 +26,8 @@
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
 
-@property (nonatomic, strong, readonly) LoanManager *loanManager;
 
+@property (nonatomic, strong, readonly) LoanManager *loanManager;
+@property (nonatomic, strong, readonly) BackendManager *backendManager;
 
 @end
