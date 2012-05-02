@@ -17,7 +17,7 @@
         <attribute name="createdAt" attributeType="Date" elementID="createdTimestamp" syncable="YES"/>
         <attribute name="note" attributeType="String" defaultValueString="\u2205" syncable="YES"/>
         <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="357559200" defaultValueString="2012-05-01 12:00:00 +0200" elementID="modifiedTimestamp" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-31579200" defaultValueString="2000-01-01 12:00:00" elementID="modifiedTimestamp" syncable="YES"/>
         <relationship name="friend" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Friend" inverseName="transaction" inverseEntity="Friend" syncable="YES"/>
         <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="transaction" inverseEntity="Location" syncable="YES"/>
     </entity>
@@ -25,6 +25,6 @@
     <elements>
         <element name="Friend" positionX="358" positionY="-69" width="128" height="75"/>
         <element name="Location" positionX="360" positionY="144" width="128" height="90"/>
-        <element name="Transaction" positionX="124" positionY="3" width="128" height="165"/>
+        <element name="Transaction" positionX="124" positionY="3" width="128" height="195"/>
     </elements>
 </model>
