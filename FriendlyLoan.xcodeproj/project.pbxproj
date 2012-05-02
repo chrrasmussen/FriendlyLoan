@@ -301,6 +301,7 @@
 		69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+PFObject.h"; sourceTree = "<group>"; };
 		69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+PFObject.m"; sourceTree = "<group>"; };
 		69D5EC901550F2BC00FA6207 /* BackendManagerLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackendManagerLoginDelegate.h; sourceTree = "<group>"; };
+		69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FriendlyLoan 3.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -940,7 +941,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"FriendlyLoan/Business Logic\"\nmogenerator --template-var arc=true -m \"FriendlyLoan.xcdatamodeld/FriendlyLoan 2.xcdatamodel\"";
+			shellScript = "cd \"FriendlyLoan/Business Logic\"\nmogenerator --template-var arc=true -m \"FriendlyLoan.xcdatamodeld/FriendlyLoan 3.xcdatamodel\"";
 		};
 		6941FF8C141A6D6B00FB3A24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1258,10 +1259,11 @@
 		697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */,
 				69BA5DF914E0865200021EAA /* FriendlyLoan 2.xcdatamodel */,
 				697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */,
 			);
-			currentVersion = 69BA5DF914E0865200021EAA /* FriendlyLoan 2.xcdatamodel */;
+			currentVersion = 69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */;
 			path = FriendlyLoan.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -20,7 +20,7 @@
 //    fetchRequest.fetchBatchSize = 20;
 //    
 //    // Add sort descriptor
-//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
 //    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 //    
 //    [fetchRequest setSortDescriptors:sortDescriptors];

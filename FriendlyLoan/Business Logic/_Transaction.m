@@ -4,13 +4,14 @@
 #import "_Transaction.h"
 
 const struct TransactionAttributes TransactionAttributes = {
+	.accepted = @"accepted",
 	.amount = @"amount",
 	.attachLocation = @"attachLocation",
 	.categoryID = @"categoryID",
-	.createdTimestamp = @"createdTimestamp",
-	.modifiedTimestamp = @"modifiedTimestamp",
+	.createdAt = @"createdAt",
 	.note = @"note",
 	.settled = @"settled",
+	.updatedAt = @"updatedAt",
 };
 
 const struct TransactionRelationships TransactionRelationships = {
@@ -47,6 +48,10 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"acceptedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"accepted"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"attachLocationValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"attachLocation"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -62,6 +67,32 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic accepted;
+
+
+
+- (BOOL)acceptedValue {
+	NSNumber *result = [self accepted];
+	return [result boolValue];
+}
+
+- (void)setAcceptedValue:(BOOL)value_ {
+	[self setAccepted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveAcceptedValue {
+	NSNumber *result = [self primitiveAccepted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveAcceptedValue:(BOOL)value_ {
+	[self setPrimitiveAccepted:[NSNumber numberWithBool:value_]];
+}
+
 
 
 
@@ -125,14 +156,7 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 
 
 
-@dynamic createdTimestamp;
-
-
-
-
-
-
-@dynamic modifiedTimestamp;
+@dynamic createdAt;
 
 
 
@@ -167,6 +191,13 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 - (void)setPrimitiveSettledValue:(BOOL)value_ {
 	[self setPrimitiveSettled:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic updatedAt;
+
 
 
 

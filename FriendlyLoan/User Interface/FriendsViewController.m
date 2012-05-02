@@ -230,7 +230,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     fetchRequest.fetchBatchSize = 20;
     
     // Set sort descriptors
-    NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
+    NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     

@@ -43,7 +43,7 @@ enum {
 {
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
-    theTransaction.modifiedTimestamp = [NSDate date];
+    theTransaction.updatedAt = [NSDate date];
 }
 
 #pragma mark - Actions

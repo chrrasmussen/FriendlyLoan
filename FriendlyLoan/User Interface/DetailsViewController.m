@@ -199,7 +199,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdTimestamp];
+    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdAt];
     self.timeStampLabel.text = formattedDateString;
     
     [self showLocationInfo];

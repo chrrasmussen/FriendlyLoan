@@ -5,13 +5,14 @@
 
 
 extern const struct TransactionAttributes {
+	__unsafe_unretained NSString *accepted;
 	__unsafe_unretained NSString *amount;
 	__unsafe_unretained NSString *attachLocation;
 	__unsafe_unretained NSString *categoryID;
-	__unsafe_unretained NSString *createdTimestamp;
-	__unsafe_unretained NSString *modifiedTimestamp;
+	__unsafe_unretained NSString *createdAt;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *settled;
+	__unsafe_unretained NSString *updatedAt;
 } TransactionAttributes;
 
 extern const struct TransactionRelationships {
@@ -33,6 +34,7 @@ extern const struct TransactionFetchedProperties {
 
 
 
+
 @interface TransactionID : NSManagedObjectID {}
 @end
 
@@ -41,6 +43,18 @@ extern const struct TransactionFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (TransactionID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSNumber *accepted;
+
+
+@property BOOL acceptedValue;
+- (BOOL)acceptedValue;
+- (void)setAcceptedValue:(BOOL)value_;
+
+//- (BOOL)validateAccepted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -77,18 +91,10 @@ extern const struct TransactionFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSDate *createdTimestamp;
+@property (nonatomic, strong) NSDate *createdAt;
 
 
-//- (BOOL)validateCreatedTimestamp:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSDate *modifiedTimestamp;
-
-
-//- (BOOL)validateModifiedTimestamp:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCreatedAt:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -109,6 +115,14 @@ extern const struct TransactionFetchedProperties {
 - (void)setSettledValue:(BOOL)value_;
 
 //- (BOOL)validateSettled:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSDate *updatedAt;
+
+
+//- (BOOL)validateUpdatedAt:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -143,6 +157,15 @@ extern const struct TransactionFetchedProperties {
 @interface _Transaction (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSNumber *)primitiveAccepted;
+- (void)setPrimitiveAccepted:(NSNumber *)value;
+
+- (BOOL)primitiveAcceptedValue;
+- (void)setPrimitiveAcceptedValue:(BOOL)value_;
+
+
+
+
 - (NSDecimalNumber *)primitiveAmount;
 - (void)setPrimitiveAmount:(NSDecimalNumber *)value;
 
@@ -167,14 +190,8 @@ extern const struct TransactionFetchedProperties {
 
 
 
-- (NSDate *)primitiveCreatedTimestamp;
-- (void)setPrimitiveCreatedTimestamp:(NSDate *)value;
-
-
-
-
-- (NSDate *)primitiveModifiedTimestamp;
-- (void)setPrimitiveModifiedTimestamp:(NSDate *)value;
+- (NSDate *)primitiveCreatedAt;
+- (void)setPrimitiveCreatedAt:(NSDate *)value;
 
 
 
@@ -190,6 +207,12 @@ extern const struct TransactionFetchedProperties {
 
 - (BOOL)primitiveSettledValue;
 - (void)setPrimitiveSettledValue:(BOOL)value_;
+
+
+
+
+- (NSDate *)primitiveUpdatedAt;
+- (void)setPrimitiveUpdatedAt:(NSDate *)value;
 
 
 

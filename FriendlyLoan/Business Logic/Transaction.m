@@ -43,7 +43,8 @@ const float kTransactionLocationTimeLimit = 10*60;
 {
     // Create a new transaction with default properties
     Transaction *transaction = [super insertInManagedObjectContext:context];
-    transaction.createdTimestamp = [NSDate date];
+    transaction.createdAt = [NSDate date];
+    transaction.updatedAt = [NSDate date];
 //    NSLog(@"%s", (char *)_cmd);
     
     return transaction;
@@ -82,7 +83,7 @@ const float kTransactionLocationTimeLimit = 10*60;
 
 - (NSString *)historySectionName
 {
-    return [self.createdTimestamp relativeDate];
+    return [self.createdAt relativeDate];
 }
 
 //#pragma mark - Location status methods
@@ -135,7 +136,7 @@ const float kTransactionLocationTimeLimit = 10*60;
 
 - (BOOL)isRecentlyCreated
 {
-    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.createdTimestamp];
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.createdAt];
     BOOL isRecentlyCreated = (abs(timeInterval) < kTransactionLocationTimeLimit);
     
     return isRecentlyCreated;
