@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="837" systemVersion="10J4138" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Transaction">
+        <attribute name="moreInfo" optional="YES" attributeType="String"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Transaction" positionX="72" positionY="180" width="128" height="90"/>
+    </elements>
+</model>

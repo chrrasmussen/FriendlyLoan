@@ -1,0 +1,17 @@
+/* 
+  RelativeDate.strings
+  FriendlyLoan
+
+  Created by Christian Rasmussen on 03.10.11.
+  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
+*/
+
+"Today" = "Today";
+"Yesterday" = "Yesterday";
+"This week" = "This week";
+"Last week" = "Last week";
+"This month" = "This month";
+"Last month" = "Last month";
+"This year" = "This year";
+"Last year" = "Last year";
+"Older" = "Older";

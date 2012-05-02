@@ -46,9 +46,9 @@ static BackendManager *_sharedManager;
     [PFFacebookUtils initializeWithApplicationId:@"377421638976943"];
     
     if  ([self isLoggedIn]) {
-        NSLog(@"User already logged in (%@)", [PFUser currentUser]);
+        NSLog(@"User already logged in (%@)", [[PFUser currentUser] objectForKey:@"fullName"]);
         
-        [self transactionRequests];
+//        [self transactionRequests];
         
         [self setRemoteNotificationsEnabled:YES];
     }

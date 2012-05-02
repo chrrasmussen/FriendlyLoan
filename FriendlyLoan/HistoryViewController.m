@@ -8,22 +8,24 @@
 
 #import "HistoryViewController.h"
 
-#import "LoanManager.h"
-#import "BackendManager.h"
-
 #import "DetailsViewController.h"
+#import "Models.h"
 #import "Category.h"
-#import "NSDate+RIOAdditions.h"
 
+@interface HistoryViewController ()
 
-const NSInteger kTransactionRequestsSection = 0;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
+- (void)setUpFetchedResultsController;
+- (void)performFetch;
+
+@end
 
 
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize friendID;
-
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,17 +44,12 @@ const NSInteger kTransactionRequestsSection = 0;
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc
-{
-    self.fetchedResultsController = nil;
-}
-
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -85,7 +82,6 @@ const NSInteger kTransactionRequestsSection = 0;
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -94,21 +90,15 @@ const NSInteger kTransactionRequestsSection = 0;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    NSInteger transactionRequestsOffset = (YES) ? 1 : 0;
-    return [[self.fetchedResultsController sections] count];// + transactionRequestsOffset;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section == 0) {
-//        return 0;
-//    }
-//    
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
@@ -157,7 +147,6 @@ const NSInteger kTransactionRequestsSection = 0;
     }   
 }
 
-
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -171,16 +160,25 @@ const NSInteger kTransactionRequestsSection = 0;
     }
 }
 
+#pragma mark - Core Data stack
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    return [appDelegate managedObjectContext];
+}
 
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (__fetchedResultsController == nil)
+    if (__fetchedResultsController != nil)
     {
-        [self setUpFetchedResultsController];
-        [self performFetch];
+        return __fetchedResultsController;
     }
+    
+    [self setUpFetchedResultsController];
+    [self performFetch];
     
     return __fetchedResultsController;
 }    
@@ -195,11 +193,11 @@ const NSInteger kTransactionRequestsSection = 0;
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }
@@ -212,11 +210,11 @@ const NSInteger kTransactionRequestsSection = 0;
     {
             
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -224,9 +222,9 @@ const NSInteger kTransactionRequestsSection = 0;
             break;
             
         case NSFetchedResultsChangeMove:
-             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
-             break;
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
     }
 }
 
@@ -238,6 +236,7 @@ const NSInteger kTransactionRequestsSection = 0;
 
 #pragma mark - Private methods
 
+// TODO: Add correct currency?
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -246,26 +245,11 @@ const NSInteger kTransactionRequestsSection = 0;
     UIImage *image = [UIImage imageNamed:category.imageName];
     UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
     
-    NSString *friendText = [transaction.friend fullName];
+    NSString *friendText = transaction.friendName;
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
-    NSString *format;
-    if ([transaction settledValue] == NO)
-    {
-        if ([transaction lentValue] == YES)
-            format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
-        else
-            format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
-    }
-    else
-    {
-        if ([transaction lentValue] == YES)
-            format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
-        else
-            format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");
-    }
-    
-    cell.textLabel.text = [NSString stringWithFormat:format, amountText, friendText];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentDescriptionString, amountText];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", transaction.lentPrepositionString, friendText];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
 }
@@ -273,14 +257,13 @@ const NSInteger kTransactionRequestsSection = 0;
 - (void)setUpFetchedResultsController
 {
     // Set up the fetch request
-    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
-    fetchRequest.includesSubentities = YES;
-    fetchRequest.fetchBatchSize = 20;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setFetchBatchSize:20];
     
     // Add sort descriptor
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimestamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdTimeStamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -291,26 +274,20 @@ const NSInteger kTransactionRequestsSection = 0;
     // Filter the history based on friend ID
     if (self.friendID != nil)
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friend.friendID == %@", self.friendID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", self.friendID];
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache name
-        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", self.friendID];
+        cacheName = [NSString stringWithFormat:@"FriendID%@Cache", self.friendID]; // FIXME: I think this one may cause some problems?
     }
     
     // Create the fetched results controller
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"historySectionName" cacheName:cacheName];
     self.fetchedResultsController.delegate = self;
 }
 
 - (void)performFetch
 {
-    // Remove cache if date has changed
-    static NSDate *lastFetchDate;
-    if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]])
-        [NSFetchedResultsController deleteCacheWithName:@"HistoryCache"];
-    
-    // Perform fetch and handle error
     NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])
     {
@@ -322,22 +299,6 @@ const NSInteger kTransactionRequestsSection = 0;
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-    
-    // Save last fetch date
-    lastFetchDate = [NSDate date];
-}
-
-
-#pragma mark - Transaction requests
-
-- (BOOL)hasRemainingTransactionRequests
-{
-    return ([self transactionRequests] > 0);
-}
-
-- (NSArray *)transactionRequests
-{
-    return [[BackendManager sharedManager] transactionRequests];
 }
 
 @end
