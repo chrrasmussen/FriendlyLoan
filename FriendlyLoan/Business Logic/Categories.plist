@@ -9,7 +9,7 @@
 			<false/>
 			<key>categoryID</key>
 			<integer>1</integer>
-			<key>categoryName</key>
+			<key>categoryKey</key>
 			<string>Food &amp; Drinks</string>
 			<key>imageName</key>
 			<string>FoodDrinks-Normal</string>
@@ -21,7 +21,7 @@
 			<false/>
 			<key>categoryID</key>
 			<integer>2</integer>
-			<key>categoryName</key>
+			<key>categoryKey</key>
 			<string>Transport</string>
 			<key>imageName</key>
 			<string>Travel-Normal</string>
@@ -33,7 +33,7 @@
 			<false/>
 			<key>categoryID</key>
 			<integer>3</integer>
-			<key>categoryName</key>
+			<key>categoryKey</key>
 			<string>Activities</string>
 			<key>imageName</key>
 			<string>Activities-Normal</string>
@@ -45,7 +45,7 @@
 			<false/>
 			<key>categoryID</key>
 			<integer>4</integer>
-			<key>categoryName</key>
+			<key>categoryKey</key>
 			<string>Shopping</string>
 			<key>imageName</key>
 			<string>Shopping-Normal</string>
@@ -57,7 +57,7 @@
 			<false/>
 			<key>categoryID</key>
 			<integer>0</integer>
-			<key>categoryName</key>
+			<key>categoryKey</key>
 			<string>Other</string>
 			<key>imageName</key>
 			<string>Other-Normal</string>
@@ -67,7 +67,7 @@
 	</array>
 	<key>unknownCategory</key>
 	<dict>
-		<key>categoryName</key>
+		<key>categoryKey</key>
 		<string>Unknown</string>
 		<key>imageName</key>
 		<string>Unknown-Normal</string>

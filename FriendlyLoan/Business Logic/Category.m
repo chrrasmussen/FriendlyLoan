@@ -8,15 +8,6 @@
 
 #import "Category.h"
 
-@interface Category ()
-
-- (id)initWithCategoryData:(NSDictionary *)categoryData;
-+ (NSDictionary *)categories;
-+ (NSArray *)categoriesByIndex;
-+ (NSDictionary *)categoriesByID;
-+ (NSDictionary *)objectForCategoryID:(NSNumber *)categoryID;
-
-@end
 
 @implementation Category {
     NSDictionary *_categoryData;
@@ -83,9 +74,14 @@ static NSCache *_storedCategories;
     return [_categoryData objectForKey:@"categoryID"];
 }
 
+- (NSString *)categoryKey
+{
+    return [_categoryData objectForKey:@"categoryKey"];
+}
+
 - (NSString *)categoryName
 {
-    return [_categoryData objectForKey:@"categoryName"];
+    return  [[NSBundle mainBundle] localizedStringForKey:self.categoryKey value:@"" table:@"Categories"];
 }
 
 - (NSString *)imageName
@@ -100,7 +96,7 @@ static NSCache *_storedCategories;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: 0x%x; categoryID = %@; categoryName = %@>", self.class, self, self.categoryID, self.categoryName];
+    return [NSString stringWithFormat:@"<%@: 0x%x; categoryID = %@; categoryKey = %@>", self.class, self, self.categoryID, self.categoryKey];
 }
 
 #pragma mark - Private methods

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="1.2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Friend" representedClassName="Friend" syncable="YES">
         <attribute name="friendID" attributeType="Integer 32" syncable="YES"/>
         <relationship name="transaction" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="friend" inverseEntity="Transaction" syncable="YES"/>
@@ -15,7 +15,7 @@
         <attribute name="attachLocation" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="categoryID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="createdAt" attributeType="Date" elementID="createdTimestamp" syncable="YES"/>
-        <attribute name="note" attributeType="String" defaultValueString="\u2205" syncable="YES"/>
+        <attribute name="note" attributeType="String" defaultValueString="No note" syncable="YES"/>
         <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="updatedAt" attributeType="Date" defaultDateTimeInterval="-31579200" defaultValueString="2000-01-01 12:00:00" elementID="modifiedTimestamp" syncable="YES"/>
         <relationship name="friend" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Friend" inverseName="transaction" inverseEntity="Friend" syncable="YES"/>

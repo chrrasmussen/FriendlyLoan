@@ -17,6 +17,7 @@
 
 - (BOOL)hidden;
 - (NSNumber *)categoryID;
+- (NSString *)categoryKey;
 - (NSString *)categoryName;
 - (NSString *)imageName;
 - (NSString *)highlightedImageName;

@@ -68,6 +68,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -96,6 +97,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
     return cell;
 }
 
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,6 +120,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
     if ([self.delegate respondsToSelector:@selector(categoriesViewController:didSelectCategoryID:)])
         [self.delegate categoriesViewController:self didSelectCategoryID:categoryID];
 }
+
 
 #pragma mark - Private methods
 

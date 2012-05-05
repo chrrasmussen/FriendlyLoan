@@ -503,12 +503,51 @@
 		694A59F31426C0D5000B5190 /* Categories View */ = {
 			isa = PBXGroup;
 			children = (
-				69B6B203143E54160014A615 /* Category */,
 				69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */,
 				6993473E141C19F7004DFEF1 /* CategoriesViewController.h */,
 				6993473F141C19F7004DFEF1 /* CategoriesViewController.m */,
 			);
 			name = "Categories View";
+			sourceTree = "<group>";
+		};
+		696E409A1555BF6B00B05962 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				69BA5DFD14E0922500021EAA /* Transaction.h */,
+				69BA5DFE14E0922500021EAA /* Transaction.m */,
+				69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */,
+				69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */,
+			);
+			name = Transaction;
+			sourceTree = "<group>";
+		};
+		696E409C1555BF7000B05962 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				69BA5DFA14E0920800021EAA /* Friend.h */,
+				69BA5DFB14E0920800021EAA /* Friend.m */,
+			);
+			name = Friend;
+			sourceTree = "<group>";
+		};
+		696E409D1555BF7500B05962 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				69515FE814D39D4900C9569D /* Location.h */,
+				69515FE914D39D4900C9569D /* Location.m */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		696E409E1555C1A100B05962 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				69078BC814E476210080EC68 /* Categories.plist */,
+				6971E52F14E4727100CBDEFC /* Categories.strings */,
+				69A9B26314311F0D006A0D3F /* Category.h */,
+				69A9B26414311F0D006A0D3F /* Category.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 		6971E4EB14E452EC00CBDEFC /* LoanManager */ = {
@@ -579,17 +618,6 @@
 			name = "Add Loan";
 			sourceTree = "<group>";
 		};
-		69B6B203143E54160014A615 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				69078BC814E476210080EC68 /* Categories.plist */,
-				6971E52F14E4727100CBDEFC /* Categories.strings */,
-				69A9B26314311F0D006A0D3F /* Category.h */,
-				69A9B26414311F0D006A0D3F /* Category.m */,
-			);
-			name = Category;
-			sourceTree = "<group>";
-		};
 		69BA69BC141AD4C6008C4384 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,14 +665,10 @@
 		69BA69C7141AE941008C4384 /* Custom Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69BA5DFD14E0922500021EAA /* Transaction.h */,
-				69BA5DFE14E0922500021EAA /* Transaction.m */,
-				69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */,
-				69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */,
-				69BA5DFA14E0920800021EAA /* Friend.h */,
-				69BA5DFB14E0920800021EAA /* Friend.m */,
-				69515FE814D39D4900C9569D /* Location.h */,
-				69515FE914D39D4900C9569D /* Location.m */,
+				696E409E1555C1A100B05962 /* Category */,
+				696E409A1555BF6B00B05962 /* Transaction */,
+				696E409C1555BF7000B05962 /* Friend */,
+				696E409D1555BF7500B05962 /* Location */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
