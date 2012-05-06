@@ -19,16 +19,15 @@ extern const float kTransactionLocationTimeLimit;
 //} TransactionLocationStatus;
 
 
-@class CLLocation;
-
-
 @interface Transaction : _Transaction
 
 //@property (nonatomic, readonly) TransactionLocationStatus locationStatus;
 
+@property (nonatomic, strong) NSNumber *friendID;
+@property (nonatomic, strong) NSNumber *categoryID;
+
 + (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
-- (void)updateFriendID:(NSNumber *)friendID;
-- (void)updateLocation:(CLLocation *)location;
+- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude;
 
 - (NSString *)historySectionName;
 

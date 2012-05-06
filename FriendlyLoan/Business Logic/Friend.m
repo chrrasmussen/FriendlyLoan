@@ -12,7 +12,7 @@
 #import "UIImage+RIOAdditions.h"
 
 
-const CGFloat kThumbnailImageLength = 43.0;
+const CGFloat kThumbnailImageSize = 43.0;
 
 
 @implementation Friend
@@ -63,7 +63,7 @@ static NSCache *_thumbnailImages;
         if (personRef != NULL && ABPersonHasImageData(personRef))
         {
             CGFloat scale = [[UIScreen mainScreen] scale];
-            CGSize thumbnailSize = CGSizeMake(kThumbnailImageLength * scale, kThumbnailImageLength * scale);
+            CGSize thumbnailSize = CGSizeMake(kThumbnailImageSize * scale, kThumbnailImageSize * scale);
             
             UIImage *originalImage = [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
             thumbnailImage = [originalImage scaledImageWithSize:thumbnailSize];
@@ -78,16 +78,16 @@ static NSCache *_thumbnailImages;
     return thumbnailImage;
 }
 
-- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
-{
-    // TODO: May need to clean up an existing Friend-entity
-    // TODO: Add more fields
-    //    ABAddressBookRef addressBook = ABAddressBookCreate();
-    //    ABRecordID recordId = (ABRecordID)[friendID intValue];
-    //    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
-    
-    self.friendID = friendID;
-}
+//- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
+//{
+//    // TODO: May need to clean up an existing Friend-entity
+//    // TODO: Add more fields
+//    //    ABAddressBookRef addressBook = ABAddressBookCreate();
+//    //    ABRecordID recordId = (ABRecordID)[friendID intValue];
+//    //    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+//    
+//    self.friendID = friendID;
+//}
 
 - (NSString *)fullName
 {

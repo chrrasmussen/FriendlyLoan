@@ -12,7 +12,6 @@
 
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
-#import "Category.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
@@ -140,10 +139,12 @@ const NSInteger kDefaultCategoryID = 0;
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     
-    [theTransaction updateFriendID:self.selectedFriendID];
+    theTransaction.friendID = self.selectedFriendID;
     
     theTransaction.categoryID = self.selectedCategoryID;
-    theTransaction.note = self.noteTextField.text;
+    
+    NSString *note = (self.noteTextField.text) ? self.noteTextField.text : @"";
+    theTransaction.note = note;
 }
 
 - (void)resetFields

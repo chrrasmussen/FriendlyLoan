@@ -20,10 +20,14 @@
 @property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
 @property (nonatomic, strong) NSString *userFullName;
 
+@property (nonatomic, readonly) NSUInteger transactionRequestCount;
+@property (nonatomic, readonly) NSUInteger friendRequestCount;
+
 
 + (id)sharedManager;
 
 - (void)handleApplicationDidFinishLaunching;
+- (void)handleApplicationDidBecomeActive;
 - (BOOL)handleOpenURL:(NSURL *)url;
 
 // Remote notifications
@@ -38,6 +42,8 @@
 - (BOOL)isLoggedIn;
 
 // Transactions
-- (void)shareTransaction:(Transaction *)transaction;
+- (void)shareTransactionInBackground:(Transaction *)transaction;
+- (void)updateTransactionRequests;
+
 
 @end

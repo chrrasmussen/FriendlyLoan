@@ -13,8 +13,10 @@
 #import "LoanManagerAttachLocationDelegate.h"
 
 #import "RIOCachedLocationManager.h"
+#import <CoreLocation/CoreLocation.h>
 
 #import "TransactionsWaitingForLocationFetchRequest.h"
+#import "NumberOfTransactionRequestsFetchRequest.h"
 #import "FetchedHistoryController.h"
 //#import "FetchedFriendsController.h"
 
@@ -34,8 +36,9 @@ static LoanManager *_sharedManager;
 
 + (id)sharedManager
 {
-    if (_sharedManager == nil)
+    if (_sharedManager == nil) {
         _sharedManager = [[[self class] alloc] init];
+    }
     
     return _sharedManager;
 }
@@ -53,16 +56,18 @@ static LoanManager *_sharedManager;
 {
     BOOL attachLocation = (self.attachLocationValue == YES);
     BOOL needLocation = attachLocation;
-    if ([[self transactionsWaitingForLocation] count] > 0)
-    {
-        if (_cachedLocationManager.location != nil)
+    if ([[self transactionsWaitingForLocation] count] > 0) {
+        if (_cachedLocationManager.location != nil) {
             [self updateLocationForQueuedTransactions:_cachedLocationManager.location];
-        else
+        }
+        else {
             needLocation = YES;
+        }
     }
     
-    if (needLocation == YES)
+    if (needLocation == YES) {
         [self.cachedLocationManager setNeedsLocation:YES];
+    }
 }
 
 
@@ -73,9 +78,13 @@ static LoanManager *_sharedManager;
     Transaction *transaction = [Transaction insertInManagedObjectContext:self.managedObjectContext];
     updateHandler(transaction);
     
-    if (transaction.attachLocationValue == YES)
-        [transaction updateLocation:[self.cachedLocationManager location]];
-    
+    if (transaction.attachLocationValue == YES) {
+        CLLocation *location = [self.cachedLocationManager location];
+        if (location != nil) {
+            [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+        }
+    }
+        
     [self saveContext];
     
     return transaction;
@@ -93,15 +102,17 @@ static LoanManager *_sharedManager;
 {
     __block typeof(self) bself = self;
     Transaction *result = [self addTransactionWithUpdateHandler:^(Transaction *transaction) {
-        [transaction updateFriendID:friendID];
+        transaction.friendID = friendID;
         
         transaction.amount = [debt decimalNumberByNegating];
         transaction.settledValue = YES;
         
-        if ([bself attachLocationValue] == YES)
-        {
+        if ([bself attachLocationValue] == YES) {
             transaction.attachLocationValue = YES;
-            [transaction updateLocation:[bself.cachedLocationManager location]];
+            CLLocation *location = [bself.cachedLocationManager location];
+            if (location != nil) {
+                [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+            }
         }
     }];
     
@@ -112,14 +123,18 @@ static LoanManager *_sharedManager;
 {
     NSArray *transactions = [self transactionsWaitingForLocation];
     
-    for (Transaction *transaction in transactions)
-    {
-        [transaction updateLocation:location];
+    for (Transaction *transaction in transactions) {
+        [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     }
     
     [self saveContext];
 }
 
+- (NSUInteger)getTransactionRequestCount
+{
+    NSUInteger count = [NumberOfTransactionRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+    return count;
+}
 
 #pragma mark - RIOCachedLocationManagerDelegate methods
 
@@ -132,18 +147,16 @@ static LoanManager *_sharedManager;
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error
 {
     NSLog(@"%s %@", (char *)_cmd, error);
-    if (error.domain == kCLErrorDomain)
-    {
-        if (error.code == kCLErrorLocationUnknown)
-        {
+    if (error.domain == kCLErrorDomain) {
+        if (error.code == kCLErrorLocationUnknown) {
             // TODO: Add code?
         }
-        else if (error.code == kCLErrorDenied)
-        {
+        else if (error.code == kCLErrorDenied) {
             [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:NO];
             
-            if ([self.locationDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)])
+            if ([self.locationDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)]) {
                 [self.locationDelegate loanManagerNeedLocationServices:self];
+            }
         }
     }
 }
@@ -178,12 +191,14 @@ static LoanManager *_sharedManager;
 
 - (BOOL)attachLocationValue
 {
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized)
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
         return NO;
+    }
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults objectForKey:@"attachLocation"] == nil)
+    if ([userDefaults objectForKey:@"attachLocation"] == nil) {
         return YES;
+    }
     
     BOOL status = [userDefaults boolForKey:@"attachLocation"];
     

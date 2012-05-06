@@ -46,6 +46,9 @@
 // Backing store proxy methods
 - (NSManagedObjectContext *)managedObjectContext;
 
+
+- (NSUInteger)getTransactionRequestCount;
+
 // Fetched results controller
 //- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID;
 //- (NSFetchedResultsController *)fetchedFriendsController;

@@ -12,7 +12,6 @@
 #import "BackendManager.h"
 
 #import "DetailsViewController.h"
-#import "Category.h"
 #import "NSDate+RIOAdditions.h"
 
 
@@ -24,15 +23,6 @@ const NSInteger kTransactionRequestsSection = 0;
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize friendID;
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -99,16 +89,11 @@ const NSInteger kTransactionRequestsSection = 0;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    NSInteger transactionRequestsOffset = (YES) ? 1 : 0;
-    return [[self.fetchedResultsController sections] count];// + transactionRequestsOffset;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section == 0) {
-//        return 0;
-//    }
-//    
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
@@ -178,6 +163,7 @@ const NSInteger kTransactionRequestsSection = 0;
 {
     if (__fetchedResultsController == nil)
     {
+        NSLog(@"FetchedResultsController");
         [self setUpFetchedResultsController];
         [self performFetch];
     }
@@ -210,7 +196,6 @@ const NSInteger kTransactionRequestsSection = 0;
     
     switch(type)
     {
-            
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
@@ -249,17 +234,20 @@ const NSInteger kTransactionRequestsSection = 0;
     NSString *friendText = [transaction.friend fullName];
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
-    NSString *format;
-    if ([transaction settledValue] == NO)
+    BOOL settled = [transaction settledValue];
+    BOOL lent = [transaction lentValue];
+    
+    NSString *format = nil;
+    if (settled == NO)
     {
-        if ([transaction lentValue] == YES)
+        if (lent == YES)
             format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
         else
             format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
     }
     else
     {
-        if ([transaction lentValue] == YES)
+        if (lent == YES)
             format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
         else
             format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");
@@ -280,8 +268,9 @@ const NSInteger kTransactionRequestsSection = 0;
     fetchRequest.fetchBatchSize = 20;
     
     // Add sort descriptor
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    NSSortDescriptor *acceptedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"accepted" ascending:YES];
+    NSSortDescriptor *createdAtSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:acceptedSortDescriptor, createdAtSortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -325,19 +314,6 @@ const NSInteger kTransactionRequestsSection = 0;
     
     // Save last fetch date
     lastFetchDate = [NSDate date];
-}
-
-
-#pragma mark - Transaction requests
-
-- (BOOL)hasRemainingTransactionRequests
-{
-    return ([self transactionRequests] > 0);
-}
-
-- (NSArray *)transactionRequests
-{
-    return [[BackendManager sharedManager] transactionRequests];
 }
 
 @end

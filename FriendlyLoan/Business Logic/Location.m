@@ -21,10 +21,10 @@
 //    [super awakeFromFetch];
 //}
 
-- (void)updateLocation:(CLLocation *)location
+- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude
 {
-    self.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-    self.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+    self.latitude = [NSNumber numberWithDouble:latitude];
+    self.longitude = [NSNumber numberWithDouble:longitude];
 }
 
 

@@ -12,6 +12,6 @@
 
 @interface Location : _Location <MKAnnotation>
 
-- (void)updateLocation:(CLLocation *)location;
+- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude;
 
 @end

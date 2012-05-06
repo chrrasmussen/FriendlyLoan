@@ -11,7 +11,6 @@
 
 #import "LoanManager.h"
 
-#import "Category.h"
 #import "EditLoanViewController.h"
 
 
@@ -24,15 +23,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 @synthesize lentDescriptionLabel, lentPrepositionLabel;
 @synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {

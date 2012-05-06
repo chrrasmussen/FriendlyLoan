@@ -12,6 +12,7 @@
 #import "Transaction.h"
 #import "Transaction+PFObject.h"
 #import "Friend.h"
+#import "Category.h"
 #import "Location.h"
 
 #endif

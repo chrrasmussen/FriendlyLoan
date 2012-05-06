@@ -20,6 +20,7 @@
 
 @synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch, shareLoanSwitch;
 
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -183,7 +184,9 @@
         [self updateTransactionBasedOnViewInfo:transaction];
     }];
     
-    [[BackendManager sharedManager] shareTransaction:result];
+    if (self.shareLoanSwitch.on) {
+        [[BackendManager sharedManager] shareTransactionInBackground:result];
+    }
     
     return result;
 }

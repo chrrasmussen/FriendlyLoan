@@ -22,6 +22,9 @@ const float kTransactionLocationTimeLimit = 10*60;
 @implementation Transaction
 
 
+@synthesize friendID;
+@synthesize categoryID;
+
 #pragma mark - Managed object life-cycle methods
 
 //- (void)awakeFromInsert
@@ -50,24 +53,47 @@ const float kTransactionLocationTimeLimit = 10*60;
     return transaction;
 }
 
-- (void)updateFriendID:(NSNumber *)friendID
+- (NSNumber *)friendID
 {
-    if (friendID == nil)
+    return [self.friend friendID];
+}
+
+- (void)setFriendID:(NSNumber *)aFriendID
+{
+    if (aFriendID == nil) {
         return;
+    }
     
     if (self.friend == nil)
     {
         self.friend = [Friend insertInManagedObjectContext:self.managedObjectContext];
     }
     
-    [self.friend populateFieldsWithFriendID:friendID];
+    self.friend.friendID = aFriendID;
 }
 
-- (void)updateLocation:(CLLocation *)location
+//- (NSNumber *)categoryID
+//{
+//    return _categoryID;
+//}
+//
+//- (void)setCategoryID:(NSNumber *)categoryID
+//{
+//   _categoryID = categoryID;
+//}
+
+// TODO: Fix note (may get nil)
+//- (void)setNote:(NSString *)note
+//{
+//    if (note == nil) {
+//        note = @"";
+//    }
+//    
+//    [super setNote:note];
+//}
+
+- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude
 {
-    if (location == nil)
-        return;
-    
     if (self.location == nil)
     {
 //        [self willChangeValueForKey:@"locationStatus"];
@@ -75,7 +101,7 @@ const float kTransactionLocationTimeLimit = 10*60;
 //        [self didChangeValueForKey:@"locationStatus"];
     }
     
-    [self.location updateLocation:location];
+    [self.location setLocationWithLatitude:latitude longitude:longitude];
 }
 
 
@@ -83,7 +109,12 @@ const float kTransactionLocationTimeLimit = 10*60;
 
 - (NSString *)historySectionName
 {
-    return [self.createdAt relativeDate];
+    if ([self.accepted boolValue] == YES) {
+        return [self.createdAt relativeDate];
+    }
+    else {
+        return NSLocalizedString(@"Incoming Loans", @"Section name for transaction requests in History tab");
+    }
 }
 
 //#pragma mark - Location status methods

@@ -24,6 +24,7 @@ enum {
 @synthesize transaction;
 @synthesize saveBarButtonItem, lentSegmentedControl;
 
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

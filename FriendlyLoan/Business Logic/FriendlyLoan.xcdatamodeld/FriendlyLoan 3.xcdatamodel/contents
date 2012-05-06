@@ -21,6 +21,7 @@
         <relationship name="friend" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Friend" inverseName="transaction" inverseEntity="Friend" syncable="YES"/>
         <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="transaction" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <fetchRequest name="NumberOfTransactionRequestsFetchRequest" entity="Transaction" predicateString="accepted == 0"/>
     <fetchRequest name="TransactionsWaitingForLocationFetchRequest" entity="Transaction" predicateString="attachLocation == 1 AND location == nil AND createdAt > $dateLimit"/>
     <elements>
         <element name="Friend" positionX="358" positionY="-69" width="128" height="75"/>

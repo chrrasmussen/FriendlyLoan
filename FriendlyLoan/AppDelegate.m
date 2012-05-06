@@ -13,14 +13,6 @@
 #import "BackendManager.h"
 
 
-@interface AppDelegate ()
-
-- (void)setUpLoanManager;
-- (void)displayLocationWarning;
-
-@end
-
-
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -104,6 +96,7 @@
      */
     NSLog(@"%s", (char *)_cmd);
     [_loanManager handleApplicationDidBecomeActive];
+    [_backendManager handleApplicationDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

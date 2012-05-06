@@ -124,11 +124,9 @@ const NSInteger kShareLoansSection = 0;
 
 #pragma mark - Backend manager login delegate
 
-- (BOOL)backendManagerWillLogIn:(BackendManager *)backendManager
+- (void)backendManagerWillLogIn:(BackendManager *)backendManager
 {
     [self startLogIn];
-    
-    return YES;
 }
 
 - (void)backendManagerDidSucceedToLogIn:(BackendManager *)backendManager

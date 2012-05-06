@@ -15,11 +15,11 @@
 @protocol BackendManagerLoginDelegate <NSObject>
 
 @optional
-- (BOOL)backendManagerWillLogIn:(BackendManager *)backendManager;
+- (void)backendManagerWillLogIn:(BackendManager *)backendManager;
 - (void)backendManagerDidSucceedToLogIn:(BackendManager *)backendManager;
 - (void)backendManager:(BackendManager *)backendManager didFailToLogInWithError:(NSError *)error;
 
-- (BOOL)backendManagerWillLogOut:(BackendManager *)backendManager;
+- (void)backendManagerWillLogOut:(BackendManager *)backendManager;
 - (void)backendManagerDidLogOut:(BackendManager *)backendManager;
 
 @end

@@ -111,6 +111,10 @@
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
 		69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69872F84145238E400BA1FE6 /* RIORelativeDate.strings */; };
 		69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */; };
+		699051031555DF0C00108374 /* PFObjectTransactionAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 699051021555DF0C00108374 /* PFObjectTransactionAdapter.m */; };
+		699051061555E6A100108374 /* PFObjectFriendAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 699051051555E6A100108374 /* PFObjectFriendAdapter.m */; };
+		699051091555E6B800108374 /* PFObjectLocationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 699051081555E6B800108374 /* PFObjectLocationAdapter.m */; };
+		6990510D15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */; };
 		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
@@ -264,6 +268,14 @@
 		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
 		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
 		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
+		699051011555DF0C00108374 /* PFObjectTransactionAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFObjectTransactionAdapter.h; sourceTree = "<group>"; };
+		699051021555DF0C00108374 /* PFObjectTransactionAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFObjectTransactionAdapter.m; sourceTree = "<group>"; };
+		699051041555E6A000108374 /* PFObjectFriendAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFObjectFriendAdapter.h; sourceTree = "<group>"; };
+		699051051555E6A100108374 /* PFObjectFriendAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFObjectFriendAdapter.m; sourceTree = "<group>"; };
+		699051071555E6B800108374 /* PFObjectLocationAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFObjectLocationAdapter.h; sourceTree = "<group>"; };
+		699051081555E6B800108374 /* PFObjectLocationAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFObjectLocationAdapter.m; sourceTree = "<group>"; };
+		6990510B15560FE900108374 /* NumberOfTransactionRequestsFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberOfTransactionRequestsFetchRequest.h; sourceTree = "<group>"; };
+		6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfTransactionRequestsFetchRequest.m; sourceTree = "<group>"; };
 		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
@@ -356,6 +368,8 @@
 		69149CB91457834C00566FB2 /* Fetch Requests */ = {
 			isa = PBXGroup;
 			children = (
+				6990510B15560FE900108374 /* NumberOfTransactionRequestsFetchRequest.h */,
+				6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */,
 				690002D114E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.h */,
 				690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */,
 				69149CBA1457838E00566FB2 /* FetchedFriendsController.h */,
@@ -571,6 +585,19 @@
 			name = "Custom Text Field";
 			sourceTree = "<group>";
 		};
+		6990510A1555F17400108374 /* Temp */ = {
+			isa = PBXGroup;
+			children = (
+				699051011555DF0C00108374 /* PFObjectTransactionAdapter.h */,
+				699051021555DF0C00108374 /* PFObjectTransactionAdapter.m */,
+				699051041555E6A000108374 /* PFObjectFriendAdapter.h */,
+				699051051555E6A100108374 /* PFObjectFriendAdapter.m */,
+				699051071555E6B800108374 /* PFObjectLocationAdapter.h */,
+				699051081555E6B800108374 /* PFObjectLocationAdapter.m */,
+			);
+			name = Temp;
+			sourceTree = "<group>";
+		};
 		69934745141C362C004DFEF1 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,9 +692,10 @@
 		69BA69C7141AE941008C4384 /* Custom Classes */ = {
 			isa = PBXGroup;
 			children = (
-				696E409E1555C1A100B05962 /* Category */,
+				6990510A1555F17400108374 /* Temp */,
 				696E409A1555BF6B00B05962 /* Transaction */,
 				696E409C1555BF7000B05962 /* Friend */,
+				696E409E1555C1A100B05962 /* Category */,
 				696E409D1555BF7500B05962 /* Location */,
 			);
 			name = "Custom Classes";
@@ -1021,6 +1049,10 @@
 				69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */,
 				69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */,
 				69D5EC8F1550BE5F00FA6207 /* Transaction+PFObject.m in Sources */,
+				699051031555DF0C00108374 /* PFObjectTransactionAdapter.m in Sources */,
+				699051061555E6A100108374 /* PFObjectFriendAdapter.m in Sources */,
+				699051091555E6B800108374 /* PFObjectLocationAdapter.m in Sources */,
+				6990510D15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

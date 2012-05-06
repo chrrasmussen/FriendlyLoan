@@ -14,5 +14,6 @@
 @interface Transaction (PFObject)
 
 - (PFObject *)serializeAsPFObject;
+- (void)setValuesForPFObject:(PFObject *)pfObject;
 
 @end

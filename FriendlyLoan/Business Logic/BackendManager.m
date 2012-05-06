@@ -9,7 +9,14 @@
 #import "BackendManager.h"
 #import <Parse/Parse.h>
 
-#import "Models.h"
+#import "LoanManager.h"
+
+@interface BackendManager ()
+
+@property (nonatomic) NSUInteger transactionRequestCount;
+@property (nonatomic) NSUInteger friendRequestCount;
+
+@end
 
 
 @implementation BackendManager
@@ -20,37 +27,43 @@ static BackendManager *_sharedManager;
 @synthesize loginDelegate;
 @synthesize userFullName;
 
+@synthesize transactionRequestCount = _transactionRequestCount;
+@synthesize friendRequestCount;
+
 
 #pragma mark - Create backend manager
 
 + (id)sharedManager
 {
-    if (_sharedManager == nil)
+    if (_sharedManager == nil) {
         _sharedManager = [[[self class] alloc] init];
+    }
     
     return _sharedManager;
 }
 
-//- (id)init
-//{
-//    self = [super init];
-//    if (self) {
-//    }
-//    return self;
-//}
+
+#pragma mark - Application events
 
 - (void)handleApplicationDidFinishLaunching
 {
     // Set up application keys
     [Parse setApplicationId:@"0sEiaamI0nu6w5oc537aPdfawR3dFHzvFtN0ytlw" clientKey:@"0WgN3ZTsUMfSPEW5Vok6lkKgUFrzBr9cgMAT5ZSA"];
     [PFFacebookUtils initializeWithApplicationId:@"377421638976943"];
-    
+}
+
+- (void)handleApplicationDidBecomeActive
+{
     if  ([self isLoggedIn]) {
         NSLog(@"User already logged in (%@)", [[PFUser currentUser] objectForKey:@"fullName"]);
         
 //        [self transactionRequests];
         
         [self setRemoteNotificationsEnabled:YES];
+        
+        [self updateTransactionRequestCount];
+        [self updateTransactionRequests];
+//        [self updateFriendRequests];
     }
 }
 
@@ -61,19 +74,6 @@ static BackendManager *_sharedManager;
 
 
 #pragma mark - Remote notifications
-
-- (void)setRemoteNotificationsEnabled:(BOOL)enabled
-{
-    UIApplication *application = [UIApplication sharedApplication];
-    if (enabled) {
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-    }
-    else {
-        [application unregisterForRemoteNotifications];
-        
-        [self subscribeToChannels:NO];
-    }
-}
 
 - (void)handleDidRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -89,7 +89,22 @@ static BackendManager *_sharedManager;
 
 - (void)handleDidReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [PFPush handlePush:userInfo];
+    if (YES) { // TODO: Verify that notification is a transaction request
+        [self updateTransactionRequests];
+    }
+}
+
+- (void)setRemoteNotificationsEnabled:(BOOL)enabled
+{
+    UIApplication *application = [UIApplication sharedApplication];
+    if (enabled) {
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    }
+    else {
+        [application unregisterForRemoteNotifications];
+        
+        [self subscribeToChannels:NO];
+    }
 }
 
 - (void)subscribeToChannels:(BOOL)enabled
@@ -111,8 +126,7 @@ static BackendManager *_sharedManager;
 - (void)logIn
 {
     if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogIn:)])
-        if ([self.loginDelegate backendManagerWillLogIn:self] == NO)
-            return;
+        [self.loginDelegate backendManagerWillLogIn:self];
     
     // The permissions requested from the user
     NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", nil];
@@ -155,8 +169,7 @@ static BackendManager *_sharedManager;
 - (void)logOut
 {
     if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)])
-        if ([self.loginDelegate backendManagerWillLogOut:self] == NO)
-            return;
+        [self.loginDelegate backendManagerWillLogOut:self];
     
     [self setRemoteNotificationsEnabled:NO];
     
@@ -216,8 +229,13 @@ static BackendManager *_sharedManager;
 
 #pragma mark - Transactions
 
-- (void)shareTransaction:(Transaction *)transaction
+- (void)shareTransactionInBackground:(Transaction *)transaction
 {
+    // TODO: Is it necessary to check this?
+    if (![self isLoggedIn]) {
+        return;
+    }
+    
     PFUser *sender = [PFUser currentUser];
     PFUser *recipient = [self userForFriendID:transaction.friend.friendID];
     
@@ -248,29 +266,44 @@ static BackendManager *_sharedManager;
     }];
 }
 
-- (NSArray *)transactionRequests
+- (void)updateTransactionRequests
 {
-    NSLog(@"transactionRequests API call");
     PFQuery *query = [PFQuery queryWithClassName:@"Transaction"];
     query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query whereKey:@"recipient" equalTo:[PFUser currentUser]];
     
-//    __block NSArray *transactions;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (objects) {
-            NSLog(@"%@", objects);
+            for (PFObject *object in objects) {
+                [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Transaction *transaction) {
+                    [transaction setValuesForPFObject:object];
+                    
+                    // TODO: Fix automatic friend ID
+                    transaction.friendID = [NSNumber numberWithInt:3554];
+                }];
+                
+                [object deleteEventually];
+            }
             
-//            transactions = objects;
+            [self updateTransactionRequestCount];
+        }
+        else {
+            NSLog(@"Failed to retrieve transactions:%@", error);
         }
     }];
-    
-    return nil;
+}
+
+- (void)updateTransactionRequestCount
+{
+    NSUInteger count = [[LoanManager sharedManager] getTransactionRequestCount];
+    self.transactionRequestCount = count;
 }
 
 - (PFUser *)userForFriendID:(NSNumber *)friendID
 {
     return [PFUser currentUser];
 }
+
 
 #pragma mark - Temp methods
 

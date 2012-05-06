@@ -25,14 +25,6 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 @synthesize sortedResult;
 @synthesize friendsSearchResultsController;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -229,6 +221,9 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 //    fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;
     
+    // Predicate
+    NSPredicate *acceptedPredicate = [NSPredicate predicateWithFormat:@"accepted == YES"];
+    
     // Set sort descriptors
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
@@ -254,6 +249,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     
     // Set properties on fetch request
     [fetchRequest setResultType:NSDictionaryResultType];
+    [fetchRequest setPredicate:acceptedPredicate];
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
     
