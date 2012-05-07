@@ -9,9 +9,6 @@
 #import "Transaction.h"
 #import <CoreData/CoreData.h>
 
-#import "Friend.h"
-#import "Location.h"
-
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "RIORelativeDate.h"
 
@@ -20,10 +17,6 @@ const float kTransactionLocationTimeLimit = 10*60;
 
 
 @implementation Transaction
-
-
-@synthesize friendID;
-@synthesize categoryID;
 
 #pragma mark - Managed object life-cycle methods
 
@@ -47,61 +40,10 @@ const float kTransactionLocationTimeLimit = 10*60;
     // Create a new transaction with default properties
     Transaction *transaction = [super insertInManagedObjectContext:context];
     transaction.createdAt = [NSDate date];
-    transaction.updatedAt = [NSDate date];
+//    transaction.updatedAt = [NSDate date];
 //    NSLog(@"%s", (char *)_cmd);
     
     return transaction;
-}
-
-- (NSNumber *)friendID
-{
-    return [self.friend friendID];
-}
-
-- (void)setFriendID:(NSNumber *)aFriendID
-{
-    if (aFriendID == nil) {
-        return;
-    }
-    
-    if (self.friend == nil)
-    {
-        self.friend = [Friend insertInManagedObjectContext:self.managedObjectContext];
-    }
-    
-    self.friend.friendID = aFriendID;
-}
-
-//- (NSNumber *)categoryID
-//{
-//    return _categoryID;
-//}
-//
-//- (void)setCategoryID:(NSNumber *)categoryID
-//{
-//   _categoryID = categoryID;
-//}
-
-// TODO: Fix note (may get nil)
-//- (void)setNote:(NSString *)note
-//{
-//    if (note == nil) {
-//        note = @"";
-//    }
-//    
-//    [super setNote:note];
-//}
-
-- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude
-{
-    if (self.location == nil)
-    {
-//        [self willChangeValueForKey:@"locationStatus"];
-        self.location = [Location insertInManagedObjectContext:self.managedObjectContext];
-//        [self didChangeValueForKey:@"locationStatus"];
-    }
-    
-    [self.location setLocationWithLatitude:latitude longitude:longitude];
 }
 
 
@@ -109,7 +51,7 @@ const float kTransactionLocationTimeLimit = 10*60;
 
 - (NSString *)historySectionName
 {
-    if ([self.accepted boolValue] == YES) {
+    if (self.requestAcceptedValue == NO) {
         return [self.createdAt relativeDate];
     }
     else {
@@ -145,32 +87,32 @@ const float kTransactionLocationTimeLimit = 10*60;
 }
 
 
-#pragma mark - Private methods
-
-- (BOOL)isLocating
-{
-    return ([self needLocation] && [self isRecentlyCreated]);
-}
-
-- (BOOL)hasFailedToLocate
-{
-    return ([self needLocation] && ![self isRecentlyCreated]);
-}
-
-- (BOOL)needLocation
-{
-    BOOL attachLocation = [self attachLocationValue];
-    BOOL hasLocation = (self.location != nil);
-    
-    return (attachLocation && !hasLocation);
-}
-
-- (BOOL)isRecentlyCreated
-{
-    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.createdAt];
-    BOOL isRecentlyCreated = (abs(timeInterval) < kTransactionLocationTimeLimit);
-    
-    return isRecentlyCreated;
-}
+//#pragma mark - Private methods
+//
+//- (BOOL)isLocating
+//{
+//    return ([self needLocation] && [self isRecentlyCreated]);
+//}
+//
+//- (BOOL)hasFailedToLocate
+//{
+//    return ([self needLocation] && ![self isRecentlyCreated]);
+//}
+//
+//- (BOOL)needLocation
+//{
+//    BOOL attachLocation = [self attachLocationValue];
+//    BOOL hasLocation = (self.location != nil);
+//    
+//    return (attachLocation && !hasLocation);
+//}
+//
+//- (BOOL)isRecentlyCreated
+//{
+//    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.createdAt];
+//    BOOL isRecentlyCreated = (abs(timeInterval) < kTransactionLocationTimeLimit);
+//    
+//    return isRecentlyCreated;
+//}
 
 @end

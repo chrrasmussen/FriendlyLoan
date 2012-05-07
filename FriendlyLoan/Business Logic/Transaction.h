@@ -23,11 +23,7 @@ extern const float kTransactionLocationTimeLimit;
 
 //@property (nonatomic, readonly) TransactionLocationStatus locationStatus;
 
-@property (nonatomic, strong) NSNumber *friendID;
-@property (nonatomic, strong) NSNumber *categoryID;
-
 + (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
-- (void)setLocationWithLatitude:(double)latitude longitude:(double)longitude;
 
 - (NSString *)historySectionName;
 

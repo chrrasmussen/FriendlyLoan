@@ -9,7 +9,7 @@
 #import "CategoriesViewController.h"
 #import "CategoriesViewControllerDelegate.h"
 
-#import "Category.h"
+#import "CategoryList.h"
 
 
 const NSInteger kUnknownCategoryCellSection = 1;
@@ -73,18 +73,20 @@ const NSInteger kUnknownCategoryCellSection = 1;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([self isUnknownSelectedCategoryID] == YES)
+    if ([self isUnknownSelectedCategoryID] == YES) {
         return 2;
+    }
     
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == kUnknownCategoryCellSection)
+    if (section == kUnknownCategoryCellSection) {
         return 1;
+    }
     
-    return [Category numberOfCategories];
+    return [[CategoryList categoryIDs] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,11 +104,13 @@ const NSInteger kUnknownCategoryCellSection = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumber *categoryID;
-    if (indexPath.section == kUnknownCategoryCellSection)
+    NSNumber *categoryID = nil;
+    if (indexPath.section == kUnknownCategoryCellSection) {
         categoryID = self.selectedCategoryID;
-    else
-        categoryID = [[Category categoryForIndex:indexPath.row] categoryID];
+    }
+    else {
+        categoryID = [[CategoryList categoryIDs] objectAtIndex:indexPath.row];
+    }
     
     self.selectedCategoryID = categoryID;
     
@@ -127,34 +131,33 @@ const NSInteger kUnknownCategoryCellSection = 1;
 // TODO: Caching problem with UIImageView?
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Category *category;
+    NSNumber *categoryID = nil;
     BOOL isSelected;
-    if (indexPath.section == kUnknownCategoryCellSection)
-    {
-        category = [Category unknownCategory];
+    if (indexPath.section == kUnknownCategoryCellSection) {
+        categoryID = self.selectedCategoryID;
         isSelected = YES;
     }
-    else
-    {
-        category = [Category categoryForIndex:indexPath.row];
-        isSelected = [[category categoryID] isEqualToNumber:self.selectedCategoryID];
+    else {
+        categoryID =[[CategoryList categoryIDs] objectAtIndex:indexPath.row];
+        isSelected = [categoryID isEqualToNumber:self.selectedCategoryID];
     }
     
-    UIImage *image = [UIImage imageNamed:category.imageName];
-    UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
+    UIImage *image = [CategoryList imageForCategoryID:categoryID];
+    UIImage *highlightedImage = [CategoryList highlightedImageForCategoryID:categoryID];
     
-    cell.textLabel.text = category.categoryName;
+    cell.textLabel.text = [CategoryList nameForCategoryID:categoryID];
     cell.imageView.image = image;
     cell.imageView.highlightedImage = highlightedImage;
     cell.accessoryType = (isSelected == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
-    if (isSelected == YES)
+    if (isSelected == YES) {
         _selectedIndexPath = indexPath;
+    }
 }
 
 - (BOOL)isUnknownSelectedCategoryID
 {
-    return ([Category categoryForCategoryID:self.selectedCategoryID] == nil);
+    return ([[CategoryList categoryIDs] containsObject:self.selectedCategoryID] == NO);
 }
 
 @end

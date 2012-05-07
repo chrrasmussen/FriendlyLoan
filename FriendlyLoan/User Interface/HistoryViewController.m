@@ -227,11 +227,10 @@ const NSInteger kTransactionRequestsSection = 0;
 {
     Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    Category *category = [Category categoryForCategoryID:transaction.categoryID];
-    UIImage *image = [UIImage imageNamed:category.imageName];
-    UIImage *highlightedImage = [UIImage imageNamed:category.highlightedImageName];
+    UIImage *image = [transaction categoryImage];
+    UIImage *highlightedImage = [transaction categoryHighlightedImage];
     
-    NSString *friendText = [transaction.friend fullName];
+    NSString *friendText = [transaction friendFullName];
     NSString *amountText = [transaction.absoluteAmount stringValue];
     
     BOOL settled = [transaction settledValue];
@@ -268,7 +267,7 @@ const NSInteger kTransactionRequestsSection = 0;
     fetchRequest.fetchBatchSize = 20;
     
     // Add sort descriptor
-    NSSortDescriptor *acceptedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"accepted" ascending:YES];
+    NSSortDescriptor *acceptedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"requestAccepted" ascending:NO];
     NSSortDescriptor *createdAtSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:acceptedSortDescriptor, createdAtSortDescriptor, nil];
     
@@ -280,7 +279,7 @@ const NSInteger kTransactionRequestsSection = 0;
     // Filter the history based on friend ID
     if (self.friendID != nil)
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friend.friendID == %@", self.friendID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", self.friendID];
         [fetchRequest setPredicate:predicate];
         
         // Use a specific cache name

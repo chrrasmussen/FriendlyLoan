@@ -31,7 +31,7 @@
         <scene sceneID="7B2-Ln-Hh1">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FSj-Ww-T5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="" id="YJ1-O7-h4f" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FriendsNavigationController" id="YJ1-O7-h4f" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Venner" image="Friends.png" id="Bgt-93-F4a"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Y5G-qC-aDj">
@@ -845,7 +845,7 @@
         <scene sceneID="bIl-U3-UdY">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hi-vb-SWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="9fZ-Nl-dHE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HistoryNavigationController" id="9fZ-Nl-dHE" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="history" id="Zhr-Iu-WBl"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ZkZ-Kn-DyJ">
@@ -1082,7 +1082,7 @@
         <scene sceneID="agH-Me-q2x">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eNO-ui-JBp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="cAZ-yf-tSj" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsNavigationController" definesPresentationContext="YES" id="cAZ-yf-tSj" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings.png" id="TwZ-Wi-cX0"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="u86-fO-n1L">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1098,7 +1098,7 @@
         <scene sceneID="rY3-d5-GBX">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QlV-f0-haL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="" id="ZI5-bW-Wo6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddLoanNavigationController" id="ZI5-bW-Wo6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Legg til lån" image="AddLoan.png" id="XTh-hR-450"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="3rU-D1-oEe"/>
@@ -1229,7 +1229,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4Ju-4p-2Le"/>
+        <segue reference="5eo-IK-l62"/>
         <segue reference="XXf-nL-Jqx"/>
         <segue reference="wgt-lv-gQO"/>
     </inferredMetricsTieBreakers>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>categories</key>
+	<array>
+		<dict>
+			<key>hidden</key>
+			<false/>
+			<key>categoryID</key>
+			<integer>1</integer>
+			<key>categoryKey</key>
+			<string>Food &amp; Drinks</string>
+			<key>imageName</key>
+			<string>FoodDrinks-Normal</string>
+			<key>highlightedImageName</key>
+			<string>FoodDrinks-Highlighted</string>
+		</dict>
+		<dict>
+			<key>hidden</key>
+			<false/>
+			<key>categoryID</key>
+			<integer>2</integer>
+			<key>categoryKey</key>
+			<string>Transport</string>
+			<key>imageName</key>
+			<string>Travel-Normal</string>
+			<key>highlightedImageName</key>
+			<string>Travel-Highlighted</string>
+		</dict>
+		<dict>
+			<key>hidden</key>
+			<false/>
+			<key>categoryID</key>
+			<integer>3</integer>
+			<key>categoryKey</key>
+			<string>Activities</string>
+			<key>imageName</key>
+			<string>Activities-Normal</string>
+			<key>highlightedImageName</key>
+			<string>Activities-Highlighted</string>
+		</dict>
+		<dict>
+			<key>hidden</key>
+			<false/>
+			<key>categoryID</key>
+			<integer>4</integer>
+			<key>categoryKey</key>
+			<string>Shopping</string>
+			<key>imageName</key>
+			<string>Shopping-Normal</string>
+			<key>highlightedImageName</key>
+			<string>Shopping-Highlighted</string>
+		</dict>
+		<dict>
+			<key>hidden</key>
+			<false/>
+			<key>categoryID</key>
+			<integer>0</integer>
+			<key>categoryKey</key>
+			<string>Other</string>
+			<key>imageName</key>
+			<string>Other-Normal</string>
+			<key>highlightedImageName</key>
+			<string>Other-Highlighted</string>
+		</dict>
+	</array>
+</dict>
+</plist>

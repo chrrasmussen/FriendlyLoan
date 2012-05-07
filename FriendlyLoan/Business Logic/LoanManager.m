@@ -54,8 +54,8 @@ static LoanManager *_sharedManager;
 
 - (void)handleApplicationDidBecomeActive
 {
-    BOOL attachLocation = (self.attachLocationValue == YES);
-    BOOL needLocation = attachLocation;
+    BOOL needLocation = self.attachLocationValue;
+    
     if ([[self transactionsWaitingForLocation] count] > 0) {
         if (_cachedLocationManager.location != nil) {
             [self updateLocationForQueuedTransactions:_cachedLocationManager.location];
@@ -132,7 +132,8 @@ static LoanManager *_sharedManager;
 
 - (NSUInteger)getTransactionRequestCount
 {
-    NSUInteger count = [NumberOfTransactionRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+    // FIXME: Fix
+    NSUInteger count = 0;//[NumberOfTransactionRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
     return count;
 }
 
@@ -170,7 +171,7 @@ static LoanManager *_sharedManager;
 
 - (void)cachedLocationManagerDidExpireCachedLocation:(RIOCachedLocationManager *)locationManager
 {
-    NSLog(@"%s %@", (char *)_cmd, _cachedLocationManager.location);
+    NSLog(@"%s", (char *)_cmd);
 }
 
 

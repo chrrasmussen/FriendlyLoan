@@ -5,26 +5,30 @@
 
 
 extern const struct TransactionAttributes {
-	__unsafe_unretained NSString *accepted;
 	__unsafe_unretained NSString *amount;
 	__unsafe_unretained NSString *attachLocation;
 	__unsafe_unretained NSString *categoryID;
 	__unsafe_unretained NSString *createdAt;
+	__unsafe_unretained NSString *friendID;
+	__unsafe_unretained NSString *locationLatitude;
+	__unsafe_unretained NSString *locationLongitude;
 	__unsafe_unretained NSString *note;
+	__unsafe_unretained NSString *requestAccepted;
+	__unsafe_unretained NSString *requestID;
 	__unsafe_unretained NSString *settled;
 	__unsafe_unretained NSString *updatedAt;
 } TransactionAttributes;
 
 extern const struct TransactionRelationships {
-	__unsafe_unretained NSString *friend;
-	__unsafe_unretained NSString *location;
 } TransactionRelationships;
 
 extern const struct TransactionFetchedProperties {
 } TransactionFetchedProperties;
 
-@class Friend;
-@class Location;
+
+
+
+
 
 
 
@@ -43,18 +47,6 @@ extern const struct TransactionFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (TransactionID*)objectID;
-
-
-
-
-@property (nonatomic, strong) NSNumber *accepted;
-
-
-@property BOOL acceptedValue;
-- (BOOL)acceptedValue;
-- (void)setAcceptedValue:(BOOL)value_;
-
-//- (BOOL)validateAccepted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -99,10 +91,66 @@ extern const struct TransactionFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber *friendID;
+
+
+@property int32_t friendIDValue;
+- (int32_t)friendIDValue;
+- (void)setFriendIDValue:(int32_t)value_;
+
+//- (BOOL)validateFriendID:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber *locationLatitude;
+
+
+@property double locationLatitudeValue;
+- (double)locationLatitudeValue;
+- (void)setLocationLatitudeValue:(double)value_;
+
+//- (BOOL)validateLocationLatitude:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber *locationLongitude;
+
+
+@property double locationLongitudeValue;
+- (double)locationLongitudeValue;
+- (void)setLocationLongitudeValue:(double)value_;
+
+//- (BOOL)validateLocationLongitude:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString *note;
 
 
 //- (BOOL)validateNote:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber *requestAccepted;
+
+
+@property BOOL requestAcceptedValue;
+- (BOOL)requestAcceptedValue;
+- (void)setRequestAcceptedValue:(BOOL)value_;
+
+//- (BOOL)validateRequestAccepted:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString *requestID;
+
+
+//- (BOOL)validateRequestID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -128,22 +176,13 @@ extern const struct TransactionFetchedProperties {
 
 
 
-@property (nonatomic, strong) Friend* friend;
-
-//- (BOOL)validateFriend:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) Location* location;
-
-//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
-
-
-
-
 + (NSArray*)fetchTransactionsWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ ;
 + (NSArray*)fetchTransactionsWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_;
+
+
+
++ (NSArray*)fetchNumberOfTransactionRequestsFetchRequest:(NSManagedObjectContext*)moc_ ;
++ (NSArray*)fetchNumberOfTransactionRequestsFetchRequest:(NSManagedObjectContext*)moc_ error:(NSError**)error_;
 
 
 
@@ -155,15 +194,6 @@ extern const struct TransactionFetchedProperties {
 @end
 
 @interface _Transaction (CoreDataGeneratedPrimitiveAccessors)
-
-
-- (NSNumber *)primitiveAccepted;
-- (void)setPrimitiveAccepted:(NSNumber *)value;
-
-- (BOOL)primitiveAcceptedValue;
-- (void)setPrimitiveAcceptedValue:(BOOL)value_;
-
-
 
 
 - (NSDecimalNumber *)primitiveAmount;
@@ -196,8 +226,50 @@ extern const struct TransactionFetchedProperties {
 
 
 
+- (NSNumber *)primitiveFriendID;
+- (void)setPrimitiveFriendID:(NSNumber *)value;
+
+- (int32_t)primitiveFriendIDValue;
+- (void)setPrimitiveFriendIDValue:(int32_t)value_;
+
+
+
+
+- (NSNumber *)primitiveLocationLatitude;
+- (void)setPrimitiveLocationLatitude:(NSNumber *)value;
+
+- (double)primitiveLocationLatitudeValue;
+- (void)setPrimitiveLocationLatitudeValue:(double)value_;
+
+
+
+
+- (NSNumber *)primitiveLocationLongitude;
+- (void)setPrimitiveLocationLongitude:(NSNumber *)value;
+
+- (double)primitiveLocationLongitudeValue;
+- (void)setPrimitiveLocationLongitudeValue:(double)value_;
+
+
+
+
 - (NSString *)primitiveNote;
 - (void)setPrimitiveNote:(NSString *)value;
+
+
+
+
+- (NSNumber *)primitiveRequestAccepted;
+- (void)setPrimitiveRequestAccepted:(NSNumber *)value;
+
+- (BOOL)primitiveRequestAcceptedValue;
+- (void)setPrimitiveRequestAcceptedValue:(BOOL)value_;
+
+
+
+
+- (NSString *)primitiveRequestID;
+- (void)setPrimitiveRequestID:(NSString *)value;
 
 
 
@@ -215,16 +287,6 @@ extern const struct TransactionFetchedProperties {
 - (void)setPrimitiveUpdatedAt:(NSDate *)value;
 
 
-
-
-
-- (Friend*)primitiveFriend;
-- (void)setPrimitiveFriend:(Friend*)value;
-
-
-
-- (Location*)primitiveLocation;
-- (void)setPrimitiveLocation:(Location*)value;
 
 
 @end

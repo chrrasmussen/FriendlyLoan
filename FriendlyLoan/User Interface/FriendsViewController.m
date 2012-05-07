@@ -11,6 +11,8 @@
 #import "LoanManager.h"
 #import "HistoryViewController.h"
 
+#import "FriendList.h"
+
 
 NSString * const kResultFriendID    = @"friendID";
 NSString * const kResultFriendName  = @"friendName";
@@ -164,7 +166,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = [Friend friendNameForFriendID:friendID];
+        historyViewController.title = [FriendList friendNameForFriendID:friendID];
         historyViewController.friendID = friendID;
     }
 }
@@ -199,7 +201,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     cell.detailTextLabel.text = [debt stringValue];
     
     // Set image
-    UIImage *friendImage = [Friend friendImageForFriendID:friendID];
+    UIImage *friendImage = [FriendList friendImageForFriendID:friendID];
     if (friendImage == nil)
         friendImage = [UIImage imageNamed:kPlaceholderImageName];
     
@@ -222,7 +224,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     fetchRequest.fetchBatchSize = 20;
     
     // Predicate
-    NSPredicate *acceptedPredicate = [NSPredicate predicateWithFormat:@"accepted == YES"];
+    NSPredicate *acceptedPredicate = [NSPredicate predicateWithFormat:@"requestAccepted == YES"];
     
     // Set sort descriptors
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
@@ -230,7 +232,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Set up friend ID-property
-    NSExpression *friendIDKeyPath = [NSExpression expressionForKeyPath:@"friend.friendID"];
+    NSExpression *friendIDKeyPath = [NSExpression expressionForKeyPath:@"friendID"];
     NSExpressionDescription *friendIDProperty = [[NSExpressionDescription alloc] init];
     [friendIDProperty setName:kResultFriendID];
     [friendIDProperty setExpression:friendIDKeyPath];
@@ -290,7 +292,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
         
         NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
-        [updatedFriendObject setValue:[Friend friendNameForFriendID:friendID] forKey:kResultFriendName];
+        [updatedFriendObject setValue:[FriendList friendNameForFriendID:friendID] forKey:kResultFriendName];
         
         // Add friend to result
         [result addObject:updatedFriendObject];

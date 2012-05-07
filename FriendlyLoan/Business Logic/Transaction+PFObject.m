@@ -8,12 +8,15 @@
 
 #import "Transaction+PFObject.h"
 #import <Parse/Parse.h>
-#import "Location.h"
+
+#import "Transaction+Location.h"
+
 #import "NSDecimalNumber+RIOAdditions.h"
+
 
 @implementation Transaction (PFObject)
 
-- (PFObject *)serializeAsPFObject
+- (PFObject *)PFObjectForValues
 {
     PFObject *transaction = [PFObject objectWithClassName:@"Transaction"];
     
@@ -23,10 +26,10 @@
     [transaction setValue:self.categoryID forKey:@"categoryId"];
     [transaction setValue:self.note forKey:@"note"];
     
-    [transaction setValue:[NSNumber numberWithBool:self.settledValue] forKey:@"settled"];
+    [transaction setValue:self.settled forKey:@"settled"];
     
     if (self.location) {
-        PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:[self.location.latitude doubleValue] longitude:[self.location.longitude doubleValue]];
+        PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:self.locationLatitudeValue longitude:self.locationLongitudeValue];
         [transaction setValue:location forKey:@"location"];
     }
     
@@ -35,6 +38,8 @@
 
 - (void)setValuesForPFObject:(PFObject *)pfObject
 {
+    self.requestID = [pfObject valueForKey:@"objectId"];
+    
     self.amount = [pfObject valueForKey:@"amount"];
     
     self.categoryID = [pfObject valueForKey:@"categoryId"];
@@ -45,12 +50,11 @@
     self.createdAt = [pfObject valueForKey:@"createdAt"];
     self.updatedAt = [pfObject valueForKey:@"updatedAt"];
     
-    PFGeoPoint *location = (PFGeoPoint *)[pfObject valueForKey:@"location"];
-    if (location != nil) {
-        [self setLocationWithLatitude:location.latitude longitude:location.longitude];
+    PFGeoPoint *geoPoint = (PFGeoPoint *)[pfObject valueForKey:@"location"];
+    if (geoPoint != nil) {
+        self.attachLocation = [NSNumber numberWithBool:YES];
+        [self setLocationWithLatitude:geoPoint.latitude longitude:geoPoint.longitude];
     }
-    
-    self.accepted = [NSNumber numberWithBool:NO];
 }
 
 @end

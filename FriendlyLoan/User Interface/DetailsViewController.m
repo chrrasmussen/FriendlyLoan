@@ -121,7 +121,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
     return (self.transaction.location != nil) ? rows : rows - 1;
-//    return ([self.transaction attachLocationValue] == YES) ? rows : rows - 1;
 }
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,8 +179,8 @@ const CLLocationDistance kMapViewLocationDistance = 500;
     self.lentPrepositionLabel.text =  ([transaction lentValue] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
     self.amountLabel.text = [transaction.absoluteAmount stringValue];
-    self.friendLabel.text = [transaction.friend fullName];
-    self.categoryLabel.text = [[Category categoryForCategoryID:transaction.categoryID] categoryName];
+    self.friendLabel.text = [transaction friendFullName];
+    self.categoryLabel.text = [transaction categoryName];
     self.noteLabel.text = transaction.note;
     
     // Display date
@@ -218,11 +217,10 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     if (self.transaction.location != nil)
     {
-        Location *location = self.transaction.location;
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([location coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([transaction coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
         [self.mapView setRegion:region animated:NO];
         
-        [self.mapView addAnnotation:location];
+        [self.mapView addAnnotation:transaction];
     }
 }
 

@@ -4,19 +4,21 @@
 #import "_Transaction.h"
 
 const struct TransactionAttributes TransactionAttributes = {
-	.accepted = @"accepted",
 	.amount = @"amount",
 	.attachLocation = @"attachLocation",
 	.categoryID = @"categoryID",
 	.createdAt = @"createdAt",
+	.friendID = @"friendID",
+	.locationLatitude = @"locationLatitude",
+	.locationLongitude = @"locationLongitude",
 	.note = @"note",
+	.requestAccepted = @"requestAccepted",
+	.requestID = @"requestID",
 	.settled = @"settled",
 	.updatedAt = @"updatedAt",
 };
 
 const struct TransactionRelationships TransactionRelationships = {
-	.friend = @"friend",
-	.location = @"location",
 };
 
 const struct TransactionFetchedProperties TransactionFetchedProperties = {
@@ -48,16 +50,28 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"acceptedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"accepted"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"attachLocationValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"attachLocation"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"categoryIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"categoryID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"friendIDValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"friendID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"locationLatitudeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"locationLatitude"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"locationLongitudeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"locationLongitude"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"requestAcceptedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"requestAccepted"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"settledValue"]) {
@@ -67,32 +81,6 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic accepted;
-
-
-
-- (BOOL)acceptedValue {
-	NSNumber *result = [self accepted];
-	return [result boolValue];
-}
-
-- (void)setAcceptedValue:(BOOL)value_ {
-	[self setAccepted:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveAcceptedValue {
-	NSNumber *result = [self primitiveAccepted];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveAcceptedValue:(BOOL)value_ {
-	[self setPrimitiveAccepted:[NSNumber numberWithBool:value_]];
-}
-
 
 
 
@@ -163,7 +151,118 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 
 
 
+@dynamic friendID;
+
+
+
+- (int32_t)friendIDValue {
+	NSNumber *result = [self friendID];
+	return [result intValue];
+}
+
+- (void)setFriendIDValue:(int32_t)value_ {
+	[self setFriendID:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveFriendIDValue {
+	NSNumber *result = [self primitiveFriendID];
+	return [result intValue];
+}
+
+- (void)setPrimitiveFriendIDValue:(int32_t)value_ {
+	[self setPrimitiveFriendID:[NSNumber numberWithInt:value_]];
+}
+
+
+
+
+
+@dynamic locationLatitude;
+
+
+
+- (double)locationLatitudeValue {
+	NSNumber *result = [self locationLatitude];
+	return [result doubleValue];
+}
+
+- (void)setLocationLatitudeValue:(double)value_ {
+	[self setLocationLatitude:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveLocationLatitudeValue {
+	NSNumber *result = [self primitiveLocationLatitude];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveLocationLatitudeValue:(double)value_ {
+	[self setPrimitiveLocationLatitude:[NSNumber numberWithDouble:value_]];
+}
+
+
+
+
+
+@dynamic locationLongitude;
+
+
+
+- (double)locationLongitudeValue {
+	NSNumber *result = [self locationLongitude];
+	return [result doubleValue];
+}
+
+- (void)setLocationLongitudeValue:(double)value_ {
+	[self setLocationLongitude:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveLocationLongitudeValue {
+	NSNumber *result = [self primitiveLocationLongitude];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveLocationLongitudeValue:(double)value_ {
+	[self setPrimitiveLocationLongitude:[NSNumber numberWithDouble:value_]];
+}
+
+
+
+
+
 @dynamic note;
+
+
+
+
+
+
+@dynamic requestAccepted;
+
+
+
+- (BOOL)requestAcceptedValue {
+	NSNumber *result = [self requestAccepted];
+	return [result boolValue];
+}
+
+- (void)setRequestAcceptedValue:(BOOL)value_ {
+	[self setRequestAccepted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveRequestAcceptedValue {
+	NSNumber *result = [self primitiveRequestAccepted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveRequestAcceptedValue:(BOOL)value_ {
+	[self setPrimitiveRequestAccepted:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic requestID;
 
 
 
@@ -203,14 +302,6 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 
 
 
-@dynamic friend;
-
-	
-
-@dynamic location;
-
-	
-
 
 
 
@@ -243,6 +334,37 @@ const struct TransactionFetchedProperties TransactionFetchedProperties = {
 	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"TransactionsWaitingForLocationFetchRequest"
 													 substitutionVariables:substitutionVariables];
 	NSAssert(fetchRequest, @"Can't find fetch request named \"TransactionsWaitingForLocationFetchRequest\".");
+	
+	NSArray *result = [moc_ executeFetchRequest:fetchRequest error:&error];
+	if (error_) *error_ = error;
+	return result;
+}
+
+
+
++ (NSArray*)fetchNumberOfTransactionRequestsFetchRequest:(NSManagedObjectContext*)moc_ {
+	NSError *error = nil;
+	NSArray *result = [self fetchNumberOfTransactionRequestsFetchRequest:moc_ error:&error];
+	if (error) {
+#if TARGET_OS_IPHONE
+		NSLog(@"error: %@", error);
+#else
+		[NSApp presentError:error];
+#endif
+	}
+	return result;
+}
++ (NSArray*)fetchNumberOfTransactionRequestsFetchRequest:(NSManagedObjectContext*)moc_ error:(NSError**)error_ {
+	NSParameterAssert(moc_);
+	NSError *error = nil;
+	
+	NSManagedObjectModel *model = [[moc_ persistentStoreCoordinator] managedObjectModel];
+	
+	NSDictionary *substitutionVariables = [NSDictionary dictionary];
+										
+	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfTransactionRequestsFetchRequest"
+													 substitutionVariables:substitutionVariables];
+	NSAssert(fetchRequest, @"Can't find fetch request named \"NumberOfTransactionRequestsFetchRequest\".");
 	
 	NSArray *result = [moc_ executeFetchRequest:fetchRequest error:&error];
 	if (error_) *error_ = error;

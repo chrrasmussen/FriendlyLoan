@@ -31,7 +31,7 @@
 //    // Filter the history based on friend ID
 //    if (self.friendID != nil)
 //    {
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friend.friendID == %@", self.friendID];
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"friendID == %@", self.friendID];
 //        [fetchRequest setPredicate:predicate];
 //        
 //        // Use a specific cache name

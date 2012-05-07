@@ -11,8 +11,16 @@
 
 #import "LoanManager.h"
 
+NSString * const BMUserWillLogInNotification        = @"BMUserWillLogInNotification";
+NSString * const BMUserDidLogInNotification         = @"BMUserDidLogInNotification";
+NSString * const BMUserFailedToLogInNotification    = @"BMUserFailedToLogInNotification";
+NSString * const BMUserWillLogOutNotification       = @"BMUserWillLogOutNotification";
+NSString * const BMUserDidLogOutNotification        = @"BMUserDidLogOutNotification";
+
+
 @interface BackendManager ()
 
+@property (nonatomic, strong) NSString *userFullName;
 @property (nonatomic) NSUInteger transactionRequestCount;
 @property (nonatomic) NSUInteger friendRequestCount;
 
@@ -57,8 +65,6 @@ static BackendManager *_sharedManager;
     if  ([self isLoggedIn]) {
         NSLog(@"User already logged in (%@)", [[PFUser currentUser] objectForKey:@"fullName"]);
         
-//        [self transactionRequests];
-        
         [self setRemoteNotificationsEnabled:YES];
         
         [self updateTransactionRequestCount];
@@ -90,6 +96,7 @@ static BackendManager *_sharedManager;
 - (void)handleDidReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (YES) { // TODO: Verify that notification is a transaction request
+        NSLog(@"%@", userInfo);
         [self updateTransactionRequests];
     }
 }
@@ -139,13 +146,14 @@ static BackendManager *_sharedManager;
             }
             else {
                 NSLog(@"User with facebook logged in!");
-                
-                // Send request to facebook
-                NSString *requestPath = @"me/?fields=name,gender,picture,email";
-                [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
             }
             
+            // Set initial full name
             self.userFullName = [user objectForKey:@"fullName"];
+            
+            // Send request to facebook
+            NSString *requestPath = @"me/?fields=name,gender,picture,email";
+            [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
             
             [self setRemoteNotificationsEnabled:YES];
             
@@ -170,10 +178,13 @@ static BackendManager *_sharedManager;
 {
     if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)])
         [self.loginDelegate backendManagerWillLogOut:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BMUserWillLogOutNotification object:self];
     
     [self setRemoteNotificationsEnabled:NO];
     
     [PFUser logOut];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:BMUserDidLogOutNotification object:self];
     
     if ([self.loginDelegate respondsToSelector:@selector(backendManagerDidLogOut:)])
         [self.loginDelegate backendManagerDidLogOut:self];
@@ -195,23 +206,25 @@ static BackendManager *_sharedManager;
 {
     NSDictionary *userData = (NSDictionary *)result;
     
-    NSString *identifier = [userData objectForKey:@"id"];
-    NSString *name = [userData objectForKey:@"name"];
-    NSString *gender = [userData objectForKey:@"gender"];
+    NSString *facebookID = [userData objectForKey:@"id"];
+    NSString *fullName = [userData objectForKey:@"name"];
     NSString *email = [userData objectForKey:@"email"];
     
-    if (![self.userFullName isEqualToString:name]) {
-        self.userFullName = name;
+    if (![self.userFullName isEqualToString:fullName]) {
+        self.userFullName = fullName;
     }
     
-
-//    PFUser *currentUser = [PFUser currentUser];
-//    
-//    if (![currentUser.email isEqualToString:email]) {
-//        
-//    }
-    
-    NSLog(@"%@, %@, %@, %@", identifier, name, email, gender);
+    if ([self isLoggedIn]) {
+        PFUser *user = [PFUser currentUser];
+        
+        // FIXME: Wrong data type for facebookID?
+        [user setValue:facebookID forKey:@"facebookId"];
+        [user setValue:fullName forKey:@"fullName"];
+        [user setValue:email forKey:@"email"];
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSLog(@"Successfully saved:%@, %@, %@", facebookID, fullName, email);
+        }];
+    }
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error
@@ -237,11 +250,11 @@ static BackendManager *_sharedManager;
     }
     
     PFUser *sender = [PFUser currentUser];
-    PFUser *recipient = [self userForFriendID:transaction.friend.friendID];
+    PFUser *recipient = [self userForFriendID:transaction.friendID];
     
     // TODO: Check if recipient is matched
     
-    PFObject *serializedTransaction = [transaction serializeAsPFObject];
+    PFObject *serializedTransaction = [transaction PFObjectForValues];
     [serializedTransaction setValue:sender forKey:@"sender"];
     [serializedTransaction setValue:recipient forKey:@"recipient"];
     serializedTransaction.ACL = [PFACL ACLWithUser:recipient];
@@ -259,7 +272,10 @@ static BackendManager *_sharedManager;
 - (void)notifyUser:(PFUser *)user withMessage:(NSString *)message
 {
     NSString *userChannel = [NSString stringWithFormat:@"user_%@", user.objectId];
-    [PFPush sendPushMessageToChannelInBackground:userChannel withMessage:message block:^(BOOL succeeded, NSError *error) {
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:message, @"alert",
+                          @"", @"sound",
+                          @"transactionRequest", @"type", nil];
+    [PFPush sendPushDataToChannelInBackground:userChannel withData:data block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Succeeded to send push message");
         }

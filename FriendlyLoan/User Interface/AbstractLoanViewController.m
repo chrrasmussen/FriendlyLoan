@@ -10,6 +10,9 @@
 
 #import "LoanManager.h"
 
+#import "FriendList.h"
+#import "CategoryList.h"
+
 #import "DetailsViewController.h"
 #import "CategoriesViewController.h"
 
@@ -41,7 +44,7 @@ const NSInteger kDefaultCategoryID = 0;
     self.selectedFriendID = friendID;
     
     // Update GUI
-    NSString *friendName = [Friend friendNameForFriendID:friendID];
+    NSString *friendName = [FriendList friendNameForFriendID:friendID];
     if (friendName == nil)
         friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
     
@@ -53,11 +56,7 @@ const NSInteger kDefaultCategoryID = 0;
     self.selectedCategoryID = categoryID;
     
     // Update GUI
-    Category *category = [Category categoryForCategoryID:categoryID];
-    if (category == nil)
-        category = [Category unknownCategory];
-    
-    self.categoryValueLabel.text = category.categoryName;
+    self.categoryValueLabel.text = [CategoryList nameForCategoryID:categoryID];
 }
 
 - (void)hideKeyboard
@@ -186,8 +185,9 @@ const NSInteger kDefaultCategoryID = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-    if (selectedCell == self.friendCell)
+    if (selectedCell == self.friendCell) {
         [self showPeoplePickerController];
+    }
 }
 
 #pragma mark - UITextFieldDelegate methods

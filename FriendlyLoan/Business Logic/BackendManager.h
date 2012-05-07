@@ -12,14 +12,21 @@
 #import "BackendManagerLoginDelegate.h"
 
 
+extern NSString * const BMUserWillLogInNotification;
+extern NSString * const BMUserDidLogInNotification;
+extern NSString * const BMUserFailedToLogInNotification;
+extern NSString * const BMUserWillLogOutNotification;
+extern NSString * const BMUserDidLogOutNotification;
+
+
 @class Transaction;
 
 
 @interface BackendManager : NSObject <PF_FBRequestDelegate>
 
 @property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
-@property (nonatomic, strong) NSString *userFullName;
 
+@property (nonatomic, strong, readonly) NSString *userFullName;
 @property (nonatomic, readonly) NSUInteger transactionRequestCount;
 @property (nonatomic, readonly) NSUInteger friendRequestCount;
 

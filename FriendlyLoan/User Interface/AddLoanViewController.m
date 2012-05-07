@@ -43,7 +43,7 @@
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
     BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
-    theTransaction.attachLocation = [NSNumber numberWithBool:attachLocation];
+    theTransaction.attachLocationValue = attachLocation;
 }
 
 - (void)resetFields
