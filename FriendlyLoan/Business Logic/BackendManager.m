@@ -21,7 +21,7 @@ NSString * const BMUserDidLogOutNotification        = @"BMUserDidLogOutNotificat
 @interface BackendManager ()
 
 @property (nonatomic, strong) NSString *userFullName;
-@property (nonatomic) NSUInteger transactionRequestCount;
+@property (nonatomic) NSUInteger loanRequestCount;
 @property (nonatomic) NSUInteger friendRequestCount;
 
 @end
@@ -31,11 +31,12 @@ NSString * const BMUserDidLogOutNotification        = @"BMUserDidLogOutNotificat
 
 static BackendManager *_sharedManager;
 
+@synthesize loanManager = _loanManager;
 
 @synthesize loginDelegate;
 @synthesize userFullName;
 
-@synthesize transactionRequestCount = _transactionRequestCount;
+@synthesize loanRequestCount = _loanRequestCount;
 @synthesize friendRequestCount;
 
 
@@ -43,11 +44,18 @@ static BackendManager *_sharedManager;
 
 + (id)sharedManager
 {
-    if (_sharedManager == nil) {
-        _sharedManager = [[[self class] alloc] init];
-    }
-    
     return _sharedManager;
+}
+
+- (id)initWithLoanManager:(LoanManager *)aLoanManager;
+{
+    self = [super init];
+    if (self) {
+        _sharedManager = self;
+        
+        _loanManager = aLoanManager;
+    }
+    return self;
 }
 
 
@@ -178,6 +186,7 @@ static BackendManager *_sharedManager;
 {
     if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)])
         [self.loginDelegate backendManagerWillLogOut:self];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:BMUserWillLogOutNotification object:self];
     
     [self setRemoteNotificationsEnabled:NO];
@@ -242,7 +251,7 @@ static BackendManager *_sharedManager;
 
 #pragma mark - Transactions
 
-- (void)shareTransactionInBackground:(Transaction *)transaction
+- (void)shareTransactionInBackground:(Loan *)transaction
 {
     // TODO: Is it necessary to check this?
     if (![self isLoggedIn]) {
@@ -291,7 +300,7 @@ static BackendManager *_sharedManager;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (objects) {
             for (PFObject *object in objects) {
-                [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Transaction *transaction) {
+                [_loanManager addTransactionWithUpdateHandler:^(Loan *transaction) {
                     [transaction setValuesForPFObject:object];
                     
                     // TODO: Fix automatic friend ID
@@ -311,8 +320,8 @@ static BackendManager *_sharedManager;
 
 - (void)updateTransactionRequestCount
 {
-    NSUInteger count = [[LoanManager sharedManager] getTransactionRequestCount];
-    self.transactionRequestCount = count;
+    NSUInteger count = [_loanManager getTransactionRequestCount];
+    self.loanRequestCount = count;
 }
 
 - (PFUser *)userForFriendID:(NSNumber *)friendID

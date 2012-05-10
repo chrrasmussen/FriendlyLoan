@@ -40,7 +40,7 @@ enum {
     self.saveBarButtonItem.enabled = enabled;
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
+- (void)updateTransactionBasedOnViewInfo:(Loan *)theTransaction
 {
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
@@ -114,7 +114,7 @@ enum {
 
 - (void)editTransaction
 {
-    [[LoanManager sharedManager] updateTransaction:self.transaction withUpdateHandler:^(Transaction *theTransaction) {
+    [[LoanManager sharedManager] updateTransaction:self.transaction withUpdateHandler:^(Loan *theTransaction) {
         [self updateTransactionBasedOnViewInfo:theTransaction];
     }];
 }

@@ -30,6 +30,60 @@
 }
 
 
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedAttachLocationValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedShareLoanValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    
+    [[LoanManager sharedManager] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //    [[LoanManager sharedManager] setAttachLocationDelegate:self];
+    //    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
+//    self.attachLocationSwitch.on = [[LoanManager sharedManager] calculatedAttachLocationValue];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // Avoid the keyboard to be active when application is started
+    // Hide keyboard in order to avoid it becoming first responder when the view appears
+    [self hideKeyboard];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
 #pragma mark - Override methods
 
 - (void)setSaveButtonsEnabledState:(BOOL)enabled
@@ -38,12 +92,11 @@
     self.lendBarButtonItem.enabled = enabled;
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
+- (void)updateTransactionBasedOnViewInfo:(Loan *)theTransaction
 {
     [super updateTransactionBasedOnViewInfo:theTransaction];
     
-    BOOL attachLocation = [[LoanManager sharedManager] attachLocationValue];
-    theTransaction.attachLocationValue = attachLocation;
+    theTransaction.attachLocationValue = [[LoanManager sharedManager] calculatedAttachLocationValue];
 }
 
 - (void)resetFields
@@ -88,63 +141,13 @@
 
 - (IBAction)changeShareLoanValue:(UISwitch *)sender
 {
-    // TODO: Check if user is logged in
-    // TODO: Check if selected friend is applicable
+    [[LoanManager sharedManager] setShareLoanValue:sender.on];
 }
 
 - (IBAction)detailsViewControllerAdd:(id)sender
 {
     [self popToBlankViewControllerAnimated:YES];
 }
-
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[LoanManager sharedManager] setAttachLocationDelegate:self];
-    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    // Avoid the keyboard to be active when application is started
-    // Hide keyboard in order to avoid it becoming first responder when the view appears
-    [self hideKeyboard];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 #pragma mark - Storyboard methods
 
@@ -155,7 +158,7 @@
     if ([[segue identifier] isEqualToString:@"SaveSegue"])
     {
         // Add transaction
-        Transaction *transaction = [self addTransaction];
+        Loan *transaction = [self addTransaction];
         
         // Set up details view controller
         DetailsViewController *detailsViewController = [segue destinationViewController];
@@ -170,17 +173,29 @@
 
 #pragma mark - LoanManagerAttachLocationDelegate methods
 
-- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self.attachLocationSwitch setOn:attachLocation animated:YES];
+    if ([keyPath isEqualToString:@"calculatedAttachLocationValue"]) {
+        BOOL attachLocation = [[change objectForKey:@"new"] boolValue];
+        [self.attachLocationSwitch setOn:attachLocation animated:YES];
+    }
+    else if ([keyPath isEqualToString:@"calculatedShareLoanValue"]) {
+        BOOL shareLoan = [[change objectForKey:@"new"] boolValue];
+        [self.shareLoanSwitch setOn:shareLoan animated:YES];
+    }
 }
+
+//- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
+//{
+//    [self.attachLocationSwitch setOn:attachLocation animated:YES];
+//}
 
 
 #pragma mark - Private methods
 
-- (Transaction *)addTransaction
+- (Loan *)addTransaction
 {
-    Transaction *result = [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Transaction *transaction) {
+    Loan *result = [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Loan *transaction) {
         [self updateTransactionBasedOnViewInfo:transaction];
     }];
     

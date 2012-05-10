@@ -133,7 +133,7 @@ const NSInteger kDefaultCategoryID = 0;
 
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Transaction *)theTransaction
+- (void)updateTransactionBasedOnViewInfo:(Loan *)theTransaction
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
     theTransaction.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];

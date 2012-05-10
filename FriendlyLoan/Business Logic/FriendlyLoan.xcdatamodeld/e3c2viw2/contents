@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="1.2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Loan" representedClassName="Loan" elementID="Transaction" syncable="YES">
+<model name="" userDefinedModelVersionIdentifier="1.2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="amount" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="attachLocation" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="categoryID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -14,9 +14,9 @@
         <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" elementID="modifiedTimestamp" syncable="YES"/>
     </entity>
-    <fetchRequest name="LoansWaitingForLocationFetchRequest" entity="Loan" predicateString="attachLocation == 0 AND locationLatitude == 0 AND locationLongitude == 0 AND createdAt > $dateLimit"/>
-    <fetchRequest name="NumberOfLoanRequestsFetchRequest" entity="Loan" predicateString="requestAccepted == 0"/>
+    <fetchRequest name="NumberOfTransactionRequestsFetchRequest" entity="Transaction" predicateString="requestAccepted == 0"/>
+    <fetchRequest name="TransactionsWaitingForLocationFetchRequest" entity="Transaction" predicateString="attachLocation == 0 AND locationLatitude == 0 AND locationLongitude == 0 AND createdAt > $dateLimit"/>
     <elements>
-        <element name="Loan" positionX="124" positionY="3" width="128" height="225"/>
+        <element name="Transaction" positionX="124" positionY="3" width="128" height="225"/>
     </elements>
 </model>

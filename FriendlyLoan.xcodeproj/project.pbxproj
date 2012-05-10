@@ -23,9 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		690002D314E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */; };
-		6901C90514EFEC040095773B /* _Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903352114EFE4CB0091B6E1 /* _Transaction.m */; };
-		6903352414EFE4CB0091B6E1 /* _Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6903352114EFE4CB0091B6E1 /* _Transaction.m */; };
+		690002D314E4952100453B83 /* LoansWaitingForLocationFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 690002D214E4952100453B83 /* LoansWaitingForLocationFetchRequest.m */; };
 		69078BC714E476210080EC68 /* CategoryList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69078BC814E476210080EC68 /* CategoryList.plist */; };
 		691292B8143E24700081DC09 /* KeyboardBackground-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 691292B4143E24700081DC09 /* KeyboardBackground-Highlighted.png */; };
 		691292B9143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691292B5143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png */; };
@@ -81,7 +79,9 @@
 		6941FF93141A6D6B00FB3A24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF78141A6D6B00FB3A24 /* CoreData.framework */; };
 		6941FF9B141A6D6B00FB3A24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6941FF99141A6D6B00FB3A24 /* InfoPlist.strings */; };
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
-		69515FEA14D39D4900C9569D /* Transaction+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69515FE914D39D4900C9569D /* Transaction+Location.m */; };
+		69497C5A155C3D7E009E3EF6 /* _Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C59155C3D7E009E3EF6 /* _Loan.m */; };
+		69497C5E155C444E009E3EF6 /* RIOComputedState.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C5C155C43DC009E3EF6 /* RIOComputedState.m */; };
+		69515FEA14D39D4900C9569D /* Loan+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69515FE914D39D4900C9569D /* Loan+Location.m */; };
 		6957B33614F8480B0059922D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B32F14F8480B0059922D /* Icon-72.png */; };
 		6957B33714F8480B0059922D /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B33014F8480B0059922D /* Icon-Small-50.png */; };
 		6957B33814F8480B0059922D /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B33114F8480B0059922D /* Icon-Small.png */; };
@@ -107,7 +107,7 @@
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
 		69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69872F84145238E400BA1FE6 /* RIORelativeDate.strings */; };
 		69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */; };
-		6990510D15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */; };
+		6990510D15560FEA00108374 /* NumberOfLoanRequestsFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6990510C15560FEA00108374 /* NumberOfLoanRequestsFetchRequest.m */; };
 		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		69934740141C19F7004DFEF1 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoriesViewController.m */; };
@@ -117,12 +117,12 @@
 		6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934759141C3F3B004DFEF1 /* Settings@2x.png */; };
 		69934760141C6C85004DFEF1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6993475E141C6C6E004DFEF1 /* MapKit.framework */; };
 		69A67F821433FC7600AAEC35 /* FriendsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A67F811433FC7600AAEC35 /* FriendsSearchResultsController.m */; };
-		69A9B26514311F0D006A0D3F /* Transaction+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9B26414311F0D006A0D3F /* Transaction+Category.m */; };
+		69A9B26514311F0D006A0D3F /* Loan+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9B26414311F0D006A0D3F /* Loan+Category.m */; };
 		69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AE6352142929840016AF6F /* CoreLocation.framework */; };
-		69BA5DFC14E0920800021EAA /* Transaction+Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFB14E0920800021EAA /* Transaction+Friend.m */; };
-		69BA5DFF14E0922500021EAA /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFE14E0922500021EAA /* Transaction.m */; };
+		69BA5DFC14E0920800021EAA /* Loan+Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFB14E0920800021EAA /* Loan+Friend.m */; };
+		69BA5DFF14E0922500021EAA /* Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFE14E0922500021EAA /* Loan.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
-		69C2450F15572DE90026D7AC /* Transaction+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C2450C155720630026D7AC /* Transaction+Request.m */; };
+		69C2450F15572DE90026D7AC /* Loan+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C2450C155720630026D7AC /* Loan+Request.m */; };
 		69C3CEB0141A7B4C00549213 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* FriendsViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
@@ -131,10 +131,12 @@
 		69D3361114414E7800CB4E25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360F14414E7800CB4E25 /* Default@2x.png */; };
 		69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC86154F597F00FA6207 /* SettingsViewController.m */; };
 		69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8A154F64D700FA6207 /* BackendManager.m */; };
-		69D5EC8F1550BE5F00FA6207 /* Transaction+PFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */; };
+		69D5EC8F1550BE5F00FA6207 /* Loan+PFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8E1550BE5F00FA6207 /* Loan+PFObject.m */; };
 		69EC2E701558553D00970F47 /* FriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E6F1558553D00970F47 /* FriendList.m */; };
-		69EC2E7315586BA800970F47 /* PFTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7215586BA800970F47 /* PFTransaction.m */; };
+		69EC2E7315586BA800970F47 /* LoanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7215586BA800970F47 /* LoanRequest.m */; };
 		69EC2E7715586F8900970F47 /* PFDynamicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7615586F8900970F47 /* PFDynamicObject.m */; };
+		69EC2E7A1558873300970F47 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E791558873300970F47 /* Test.m */; };
+		69EC2E7F1559936A00970F47 /* PersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7E1559936A00970F47 /* PersistentStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,10 +150,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		690002D114E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionsWaitingForLocationFetchRequest.h; sourceTree = "<group>"; };
-		690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionsWaitingForLocationFetchRequest.m; sourceTree = "<group>"; };
-		6903352014EFE4CB0091B6E1 /* _Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Transaction.h; sourceTree = "<group>"; };
-		6903352114EFE4CB0091B6E1 /* _Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Transaction.m; sourceTree = "<group>"; };
+		690002D114E4952100453B83 /* LoansWaitingForLocationFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoansWaitingForLocationFetchRequest.h; sourceTree = "<group>"; };
+		690002D214E4952100453B83 /* LoansWaitingForLocationFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoansWaitingForLocationFetchRequest.m; sourceTree = "<group>"; };
 		69078BC814E476210080EC68 /* CategoryList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CategoryList.plist; sourceTree = "<group>"; };
 		691292B4143E24700081DC09 /* KeyboardBackground-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardBackground-Highlighted.png"; sourceTree = "<group>"; };
 		691292B5143E24700081DC09 /* KeyboardBackground-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyboardBackground-Highlighted@2x.png"; sourceTree = "<group>"; };
@@ -175,7 +175,6 @@
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoriesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewControllerDelegate.h; sourceTree = "<group>"; };
-		6928930214F9D3F2009BC949 /* LoanManagerAttachLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerAttachLocationDelegate.h; sourceTree = "<group>"; };
 		6939C52414F93B6700C19DE5 /* Other-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Highlighted.png"; sourceTree = "<group>"; };
 		6939C52514F93B6700C19DE5 /* Other-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Normal.png"; sourceTree = "<group>"; };
 		6939C52614F93B6700C19DE5 /* Other-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Normal@2x.png"; sourceTree = "<group>"; };
@@ -221,8 +220,12 @@
 		6941FF9A141A6D6B00FB3A24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6941FF9C141A6D6B00FB3A24 /* FriendlyLoanTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyLoanTests.h; sourceTree = "<group>"; };
 		6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyLoanTests.m; sourceTree = "<group>"; };
-		69515FE814D39D4900C9569D /* Transaction+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Location.h"; sourceTree = "<group>"; };
-		69515FE914D39D4900C9569D /* Transaction+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Location.m"; sourceTree = "<group>"; };
+		69497C58155C3D7E009E3EF6 /* _Loan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Loan.h; sourceTree = "<group>"; };
+		69497C59155C3D7E009E3EF6 /* _Loan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Loan.m; sourceTree = "<group>"; };
+		69497C5B155C43DC009E3EF6 /* RIOComputedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOComputedState.h; sourceTree = "<group>"; };
+		69497C5C155C43DC009E3EF6 /* RIOComputedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOComputedState.m; sourceTree = "<group>"; };
+		69515FE814D39D4900C9569D /* Loan+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Location.h"; sourceTree = "<group>"; };
+		69515FE914D39D4900C9569D /* Loan+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Location.m"; sourceTree = "<group>"; };
 		6957B32F14F8480B0059922D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		6957B33014F8480B0059922D /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		6957B33114F8480B0059922D /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -242,7 +245,6 @@
 		6967C4A414531FB500ADDEA1 /* NSCalendar+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+RIOAdditions.m"; sourceTree = "<group>"; };
 		6971E4ED14E452FF00CBDEFC /* LoanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManager.h; sourceTree = "<group>"; };
 		6971E4EE14E452FF00CBDEFC /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
-		6971E4F114E4531E00CBDEFC /* LoanManagerBackingStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerBackingStoreDelegate.h; sourceTree = "<group>"; };
 		6971E4F514E4570600CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6971E50314E4611D00CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = en; path = en.lproj/RIORelativeDate.h; sourceTree = "<group>"; };
 		6971E50714E4622C00CBDEFC /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
@@ -255,15 +257,15 @@
 		6972F0B01426AB430047305C /* EditLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLoanViewController.m; sourceTree = "<group>"; };
 		6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoanViewController.h; sourceTree = "<group>"; };
 		6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoanViewController.m; sourceTree = "<group>"; };
-		697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerLocationDelegate.h; sourceTree = "<group>"; };
+		697CAED114F8A124000DCC9C /* LoanManagerLocationServicesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManagerLocationServicesDelegate.h; sourceTree = "<group>"; };
 		697D8C9E141D48E9007FAD86 /* FriendlyLoan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FriendlyLoan.xcdatamodel; sourceTree = "<group>"; };
 		6980CE471441248D00C658A0 /* RIOCachedLocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOCachedLocationManagerDelegate.h; sourceTree = "<group>"; };
 		69872F83145238E400BA1FE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIORelativeDate.strings; sourceTree = "<group>"; };
 		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
 		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
 		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
-		6990510B15560FE900108374 /* NumberOfTransactionRequestsFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberOfTransactionRequestsFetchRequest.h; sourceTree = "<group>"; };
-		6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfTransactionRequestsFetchRequest.m; sourceTree = "<group>"; };
+		6990510B15560FE900108374 /* NumberOfLoanRequestsFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberOfLoanRequestsFetchRequest.h; sourceTree = "<group>"; };
+		6990510C15560FEA00108374 /* NumberOfLoanRequestsFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfLoanRequestsFetchRequest.m; sourceTree = "<group>"; };
 		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6993473E141C19F7004DFEF1 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
@@ -275,18 +277,18 @@
 		6993475E141C6C6E004DFEF1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		69A67F801433FC7600AAEC35 /* FriendsSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsSearchResultsController.h; sourceTree = "<group>"; };
 		69A67F811433FC7600AAEC35 /* FriendsSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsSearchResultsController.m; sourceTree = "<group>"; };
-		69A9B26314311F0D006A0D3F /* Transaction+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Category.h"; sourceTree = "<group>"; };
-		69A9B26414311F0D006A0D3F /* Transaction+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Category.m"; sourceTree = "<group>"; };
+		69A9B26314311F0D006A0D3F /* Loan+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Category.h"; sourceTree = "<group>"; };
+		69A9B26414311F0D006A0D3F /* Loan+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Category.m"; sourceTree = "<group>"; };
 		69AE6352142929840016AF6F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		69BA5DF914E0865200021EAA /* FriendlyLoan 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FriendlyLoan 2.xcdatamodel"; sourceTree = "<group>"; };
-		69BA5DFA14E0920800021EAA /* Transaction+Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Friend.h"; sourceTree = "<group>"; };
-		69BA5DFB14E0920800021EAA /* Transaction+Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Friend.m"; sourceTree = "<group>"; };
-		69BA5DFD14E0922500021EAA /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
-		69BA5DFE14E0922500021EAA /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		69BA5DFA14E0920800021EAA /* Loan+Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Friend.h"; sourceTree = "<group>"; };
+		69BA5DFB14E0920800021EAA /* Loan+Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Friend.m"; sourceTree = "<group>"; };
+		69BA5DFD14E0922500021EAA /* Loan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loan.h; sourceTree = "<group>"; };
+		69BA5DFE14E0922500021EAA /* Loan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loan.m; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
 		69BA69C9141AF5A1008C4384 /* AmountTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmountTextField.m; sourceTree = "<group>"; };
-		69C2450B155720620026D7AC /* Transaction+Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+Request.h"; sourceTree = "<group>"; };
-		69C2450C155720630026D7AC /* Transaction+Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+Request.m"; sourceTree = "<group>"; };
+		69C2450B155720620026D7AC /* Loan+Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Request.h"; sourceTree = "<group>"; };
+		69C2450C155720630026D7AC /* Loan+Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Request.m"; sourceTree = "<group>"; };
 		69C3CEAE141A7B4C00549213 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		69C3CEAF141A7B4C00549213 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -303,16 +305,20 @@
 		69D5EC86154F597F00FA6207 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		69D5EC89154F64D700FA6207 /* BackendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendManager.h; sourceTree = "<group>"; };
 		69D5EC8A154F64D700FA6207 /* BackendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendManager.m; sourceTree = "<group>"; };
-		69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+PFObject.h"; sourceTree = "<group>"; };
-		69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Transaction+PFObject.m"; sourceTree = "<group>"; };
+		69D5EC8D1550BE5F00FA6207 /* Loan+PFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+PFObject.h"; sourceTree = "<group>"; };
+		69D5EC8E1550BE5F00FA6207 /* Loan+PFObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+PFObject.m"; sourceTree = "<group>"; };
 		69D5EC901550F2BC00FA6207 /* BackendManagerLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackendManagerLoginDelegate.h; sourceTree = "<group>"; };
 		69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FriendlyLoan 3.xcdatamodel"; sourceTree = "<group>"; };
 		69EC2E6E1558553D00970F47 /* FriendList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendList.h; sourceTree = "<group>"; };
 		69EC2E6F1558553D00970F47 /* FriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendList.m; sourceTree = "<group>"; };
-		69EC2E7115586BA700970F47 /* PFTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFTransaction.h; sourceTree = "<group>"; };
-		69EC2E7215586BA800970F47 /* PFTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFTransaction.m; sourceTree = "<group>"; };
+		69EC2E7115586BA700970F47 /* LoanRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanRequest.h; sourceTree = "<group>"; };
+		69EC2E7215586BA800970F47 /* LoanRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanRequest.m; sourceTree = "<group>"; };
 		69EC2E7515586F8900970F47 /* PFDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDynamicObject.h; sourceTree = "<group>"; };
 		69EC2E7615586F8900970F47 /* PFDynamicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFDynamicObject.m; sourceTree = "<group>"; };
+		69EC2E781558873200970F47 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		69EC2E791558873300970F47 /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		69EC2E7D1559936A00970F47 /* PersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStore.h; sourceTree = "<group>"; };
+		69EC2E7E1559936A00970F47 /* PersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,7 +359,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		69149CB814577EB700566FB2 /* Models */ = {
+		69149CB814577EB700566FB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				69149CB71457785E00566FB2 /* Models.h */,
@@ -362,16 +368,16 @@
 				69BA69C7141AE941008C4384 /* Custom Classes */,
 				69EC2E7415586C9500970F47 /* Backend */,
 			);
-			name = Models;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		69149CB91457834C00566FB2 /* Fetch Requests */ = {
 			isa = PBXGroup;
 			children = (
-				6990510B15560FE900108374 /* NumberOfTransactionRequestsFetchRequest.h */,
-				6990510C15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m */,
-				690002D114E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.h */,
-				690002D214E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m */,
+				6990510B15560FE900108374 /* NumberOfLoanRequestsFetchRequest.h */,
+				6990510C15560FEA00108374 /* NumberOfLoanRequestsFetchRequest.m */,
+				690002D114E4952100453B83 /* LoansWaitingForLocationFetchRequest.h */,
+				690002D214E4952100453B83 /* LoansWaitingForLocationFetchRequest.m */,
 				69149CBA1457838E00566FB2 /* FetchedFriendsController.h */,
 				69149CBB1457838E00566FB2 /* FetchedFriendsController.m */,
 				69149CBD145783A600566FB2 /* FetchedHistoryController.h */,
@@ -396,6 +402,7 @@
 				69204A75141FE9B500D6A075 /* Additions */,
 				693E5091143A1B1B00F12459 /* RIORelativeDate */,
 				6914CC461440D6C80090FAA4 /* RIOCachedLocationManager */,
+				6966670B155B5C2C00FDC0C9 /* RIOComputedState */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -524,6 +531,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		6966670B155B5C2C00FDC0C9 /* RIOComputedState */ = {
+			isa = PBXGroup;
+			children = (
+				69497C5B155C43DC009E3EF6 /* RIOComputedState.h */,
+				69497C5C155C43DC009E3EF6 /* RIOComputedState.m */,
+			);
+			path = RIOComputedState;
+			sourceTree = "<group>";
+		};
 		696E409E1555C1A100B05962 /* CategoryList */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,9 +556,7 @@
 			children = (
 				6971E4ED14E452FF00CBDEFC /* LoanManager.h */,
 				6971E4EE14E452FF00CBDEFC /* LoanManager.m */,
-				6971E4F114E4531E00CBDEFC /* LoanManagerBackingStoreDelegate.h */,
-				697CAED114F8A124000DCC9C /* LoanManagerLocationDelegate.h */,
-				6928930214F9D3F2009BC949 /* LoanManagerAttachLocationDelegate.h */,
+				697CAED114F8A124000DCC9C /* LoanManagerLocationServicesDelegate.h */,
 			);
 			name = LoanManager;
 			sourceTree = "<group>";
@@ -637,8 +651,8 @@
 		69BA69C6141AE927008C4384 /* Generated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6903352014EFE4CB0091B6E1 /* _Transaction.h */,
-				6903352114EFE4CB0091B6E1 /* _Transaction.m */,
+				69497C58155C3D7E009E3EF6 /* _Loan.h */,
+				69497C59155C3D7E009E3EF6 /* _Loan.m */,
 			);
 			name = "Generated Classes";
 			sourceTree = "<group>";
@@ -646,16 +660,16 @@
 		69BA69C7141AE941008C4384 /* Custom Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69BA5DFD14E0922500021EAA /* Transaction.h */,
-				69BA5DFE14E0922500021EAA /* Transaction.m */,
-				69BA5DFA14E0920800021EAA /* Transaction+Friend.h */,
-				69BA5DFB14E0920800021EAA /* Transaction+Friend.m */,
-				69A9B26314311F0D006A0D3F /* Transaction+Category.h */,
-				69A9B26414311F0D006A0D3F /* Transaction+Category.m */,
-				69515FE814D39D4900C9569D /* Transaction+Location.h */,
-				69515FE914D39D4900C9569D /* Transaction+Location.m */,
-				69C2450B155720620026D7AC /* Transaction+Request.h */,
-				69C2450C155720630026D7AC /* Transaction+Request.m */,
+				69BA5DFD14E0922500021EAA /* Loan.h */,
+				69BA5DFE14E0922500021EAA /* Loan.m */,
+				69BA5DFA14E0920800021EAA /* Loan+Friend.h */,
+				69BA5DFB14E0920800021EAA /* Loan+Friend.m */,
+				69A9B26314311F0D006A0D3F /* Loan+Category.h */,
+				69A9B26414311F0D006A0D3F /* Loan+Category.m */,
+				69515FE814D39D4900C9569D /* Loan+Location.h */,
+				69515FE914D39D4900C9569D /* Loan+Location.m */,
+				69C2450B155720620026D7AC /* Loan+Request.h */,
+				69C2450C155720630026D7AC /* Loan+Request.m */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -722,10 +736,11 @@
 		69C3CEDA141AB06800549213 /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
-				69D5EC88154F63E900FA6207 /* BackendManager */,
+				69EC2E7C1559935700970F47 /* CoreDataManager */,
 				6971E4EB14E452EC00CBDEFC /* LoanManager */,
+				69D5EC88154F63E900FA6207 /* BackendManager */,
 				69149CB91457834C00566FB2 /* Fetch Requests */,
-				69149CB814577EB700566FB2 /* Models */,
+				69149CB814577EB700566FB2 /* Model */,
 				69EC2E6D1558552800970F47 /* FriendList */,
 				696E409E1555C1A100B05962 /* CategoryList */,
 			);
@@ -790,12 +805,23 @@
 			children = (
 				69EC2E7515586F8900970F47 /* PFDynamicObject.h */,
 				69EC2E7615586F8900970F47 /* PFDynamicObject.m */,
-				69EC2E7115586BA700970F47 /* PFTransaction.h */,
-				69EC2E7215586BA800970F47 /* PFTransaction.m */,
-				69D5EC8D1550BE5F00FA6207 /* Transaction+PFObject.h */,
-				69D5EC8E1550BE5F00FA6207 /* Transaction+PFObject.m */,
+				69EC2E7115586BA700970F47 /* LoanRequest.h */,
+				69EC2E7215586BA800970F47 /* LoanRequest.m */,
+				69D5EC8D1550BE5F00FA6207 /* Loan+PFObject.h */,
+				69D5EC8E1550BE5F00FA6207 /* Loan+PFObject.m */,
+				69EC2E781558873200970F47 /* Test.h */,
+				69EC2E791558873300970F47 /* Test.m */,
 			);
 			name = Backend;
+			sourceTree = "<group>";
+		};
+		69EC2E7C1559935700970F47 /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				69EC2E7D1559936A00970F47 /* PersistentStore.h */,
+				69EC2E7E1559936A00970F47 /* PersistentStore.m */,
+			);
+			name = CoreDataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1011,7 +1037,7 @@
 				69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */,
 				6972F0B11426AB430047305C /* EditLoanViewController.m in Sources */,
 				6972F0B51426AE0E0047305C /* AbstractLoanViewController.m in Sources */,
-				69A9B26514311F0D006A0D3F /* Transaction+Category.m in Sources */,
+				69A9B26514311F0D006A0D3F /* Loan+Category.m in Sources */,
 				69A67F821433FC7600AAEC35 /* FriendsSearchResultsController.m in Sources */,
 				693E5097143A1C7600F12459 /* RIORelativeDate.m in Sources */,
 				693E509A143A1CFD00F12459 /* NSDate+RIORelativeDate.m in Sources */,
@@ -1022,21 +1048,24 @@
 				6967C4A514531FB500ADDEA1 /* NSCalendar+RIOAdditions.m in Sources */,
 				69149CBC1457838E00566FB2 /* FetchedFriendsController.m in Sources */,
 				69149CBF145783A600566FB2 /* FetchedHistoryController.m in Sources */,
-				6901C90514EFEC040095773B /* _Transaction.m in Sources */,
-				69515FEA14D39D4900C9569D /* Transaction+Location.m in Sources */,
-				69BA5DFC14E0920800021EAA /* Transaction+Friend.m in Sources */,
-				69BA5DFF14E0922500021EAA /* Transaction.m in Sources */,
+				69515FEA14D39D4900C9569D /* Loan+Location.m in Sources */,
+				69BA5DFC14E0920800021EAA /* Loan+Friend.m in Sources */,
+				69BA5DFF14E0922500021EAA /* Loan.m in Sources */,
 				6971E4EF14E452FF00CBDEFC /* LoanManager.m in Sources */,
-				690002D314E4952100453B83 /* TransactionsWaitingForLocationFetchRequest.m in Sources */,
+				690002D314E4952100453B83 /* LoansWaitingForLocationFetchRequest.m in Sources */,
 				69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */,
 				69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */,
-				69D5EC8F1550BE5F00FA6207 /* Transaction+PFObject.m in Sources */,
-				6990510D15560FEA00108374 /* NumberOfTransactionRequestsFetchRequest.m in Sources */,
-				69C2450F15572DE90026D7AC /* Transaction+Request.m in Sources */,
+				69D5EC8F1550BE5F00FA6207 /* Loan+PFObject.m in Sources */,
+				6990510D15560FEA00108374 /* NumberOfLoanRequestsFetchRequest.m in Sources */,
+				69C2450F15572DE90026D7AC /* Loan+Request.m in Sources */,
 				69CFD7D61558469100053606 /* CategoryList.m in Sources */,
 				69EC2E701558553D00970F47 /* FriendList.m in Sources */,
-				69EC2E7315586BA800970F47 /* PFTransaction.m in Sources */,
+				69EC2E7315586BA800970F47 /* LoanRequest.m in Sources */,
 				69EC2E7715586F8900970F47 /* PFDynamicObject.m in Sources */,
+				69EC2E7A1558873300970F47 /* Test.m in Sources */,
+				69EC2E7F1559936A00970F47 /* PersistentStore.m in Sources */,
+				69497C5A155C3D7E009E3EF6 /* _Loan.m in Sources */,
+				69497C5E155C444E009E3EF6 /* RIOComputedState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1045,7 +1074,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */,
-				6903352414EFE4CB0091B6E1 /* _Transaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

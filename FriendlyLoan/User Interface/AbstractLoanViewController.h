@@ -12,7 +12,7 @@
 #import "CategoriesViewControllerDelegate.h"
 
 
-@class Transaction;
+@class Loan;
 
 @interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoriesViewControllerDelegate>
 
@@ -36,7 +36,7 @@
 // Override methods
 //- (BOOL)isViewInfoEqualToTransaction:(Transaction *)transaction;
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
-- (void)updateTransactionBasedOnViewInfo:(Transaction *)transaction;
+- (void)updateTransactionBasedOnViewInfo:(Loan *)transaction;
 - (void)resetFields;
 
 @end

@@ -8,25 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "LoanManagerBackingStoreDelegate.h"
-#import "LoanManagerLocationDelegate.h"
+
+@class PersistentStore, LoanManager, BackendManager;
 
 
-@class LoanManager, BackendManager;
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate, LoanManagerBackingStoreDelegate, LoanManagerLocationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-// Core Data
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (NSURL *)applicationDocumentsDirectory;
-- (void)saveContext;
-
-
+@property (nonatomic, strong, readonly) PersistentStore *persistentStore;
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
 @property (nonatomic, strong, readonly) BackendManager *backendManager;
 

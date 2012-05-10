@@ -12,22 +12,27 @@
 #import "RIOCachedLocationManagerDelegate.h"
 
 
-@class CLLocation, RIOCachedLocationManager;
-@protocol LoanManagerLocationDelegate, LoanManagerBackingStoreDelegate, LoanManagerAttachLocationDelegate;
+@class PersistentStore;
+@class RIOCachedLocationManager;
+@protocol LoanManagerLocationServicesDelegate;
 
 @interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
 
-@property (nonatomic, weak) id<LoanManagerLocationDelegate> locationDelegate;
-@property (nonatomic, weak) id<LoanManagerBackingStoreDelegate> backingStoreDelegate;
-@property (nonatomic, weak) id<LoanManagerAttachLocationDelegate> attachLocationDelegate;
-
+@property (nonatomic, strong, readonly) PersistentStore *persistentStore;
 @property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
 
+@property (nonatomic, weak) id locationServicesDelegate;
+
 @property (nonatomic) BOOL attachLocationValue;
+@property (nonatomic, readonly) BOOL calculatedAttachLocationValue;
+
+@property (nonatomic) BOOL shareLoanValue;
+@property (nonatomic, readonly) BOOL calculatedShareLoanValue;
 
 
 // Create loan manager
 + (id)sharedManager;
+- (id)initWithPersistentStore:(PersistentStore *)persistentStore;
 
 // Controlling loan manager
 - (void)handleApplicationDidBecomeActive;
@@ -36,9 +41,9 @@
 //- (void)terminate // Do something useful when quitting?
 
 // Transaction methods
-- (Transaction *)addTransactionWithUpdateHandler:(void (^)(Transaction *transaction))updateHandler;
-- (void)updateTransaction:(Transaction *)transaction withUpdateHandler:(void (^)(Transaction *transaction))updateHandler;
-- (Transaction *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
+- (Loan *)addTransactionWithUpdateHandler:(void (^)(Loan *transaction))updateHandler;
+- (void)updateTransaction:(Loan *)transaction withUpdateHandler:(void (^)(Loan *transaction))updateHandler;
+- (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
 
 //- (BOOL)hasUnlocatedTransactions;
 //- (NSArray *)remainingTransactions;

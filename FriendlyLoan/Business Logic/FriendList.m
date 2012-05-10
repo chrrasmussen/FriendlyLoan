@@ -19,6 +19,17 @@ const CGFloat kThumbnailImageSize = 43.0;
 
 static NSCache *_thumbnailImages;
 
+//- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
+//{
+//    // TODO: May need to clean up an existing Friend-entity
+//    // TODO: Add more fields
+//    //    ABAddressBookRef addressBook = ABAddressBookCreate();
+//    //    ABRecordID recordId = (ABRecordID)[friendID intValue];
+//    //    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+//    
+//    self.friendID = friendID;
+//}
+
 // TODO: Sync problems WILL arise
 + (NSString *)friendNameForFriendID:(NSNumber *)friendID
 {

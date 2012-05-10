@@ -80,7 +80,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"transactionRequestCount"]) {
+    if ([keyPath isEqualToString:@"loanRequestCount"]) {
         NSNumber *value = [change objectForKey:@"new"];
         [self setTransactionRequestCount:[value unsignedIntegerValue]];
     }
@@ -102,7 +102,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 
 - (void)setUpObservers
 {
-    [[BackendManager sharedManager] addObserver:self forKeyPath:@"transactionRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
+    [[BackendManager sharedManager] addObserver:self forKeyPath:@"loanRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
     [[BackendManager sharedManager] addObserver:self forKeyPath:@"friendRequestCount" options:NSKeyValueObservingOptionInitial |NSKeyValueObservingOptionNew context:NULL];
 }
 

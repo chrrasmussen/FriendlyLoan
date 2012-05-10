@@ -9,12 +9,12 @@
 #ifndef FriendlyLoan_Models_h
 #define FriendlyLoan_Models_h
 
-#import "Transaction.h"
-#import "Transaction+Friend.h"
-#import "Transaction+Category.h"
-#import "Transaction+Location.h"
-#import "Transaction+Request.h"
+#import "Loan.h"
+#import "Loan+Friend.h"
+#import "Loan+Category.h"
+#import "Loan+Location.h"
+#import "Loan+Request.h"
 
-#import "Transaction+PFObject.h"
+#import "Loan+PFObject.h"
 
 #endif

@@ -8,46 +8,58 @@
 
 #import "LoanManager.h"
 
-#import "LoanManagerBackingStoreDelegate.h"
-#import "LoanManagerLocationDelegate.h"
-#import "LoanManagerAttachLocationDelegate.h"
-
+#import "PersistentStore.h"
 #import "RIOCachedLocationManager.h"
 #import <CoreLocation/CoreLocation.h>
 
-#import "TransactionsWaitingForLocationFetchRequest.h"
-#import "NumberOfTransactionRequestsFetchRequest.h"
+#import "LoanManagerLocationServicesDelegate.h"
+
+#import "RIOComputedState.h"
+
+#import "LoansWaitingForLocationFetchRequest.h"
+#import "NumberOfLoanRequestsFetchRequest.h"
 #import "FetchedHistoryController.h"
 //#import "FetchedFriendsController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
 
+@interface LoanManager ()
+
+@property (nonatomic, strong) RIOComputedState *attachLocationState;
+@property (nonatomic, strong) RIOComputedState *shareLoanState;
+
+@end
+
+
 @implementation LoanManager
 
-@synthesize locationDelegate, backingStoreDelegate, attachLocationDelegate;
-@synthesize cachedLocationManager = _cachedLocationManager;
-
-
 static LoanManager *_sharedManager;
+
+@synthesize persistentStore = _persistentStore;
+@synthesize cachedLocationManager = _cachedLocationManager;
+@synthesize locationServicesDelegate;
+@synthesize attachLocationState, shareLoanState;
 
 
 #pragma mark - Create loan manager
 
 + (id)sharedManager
 {
-    if (_sharedManager == nil) {
-        _sharedManager = [[[self class] alloc] init];
-    }
-    
     return _sharedManager;
 }
 
-- (id)init
+- (id)initWithPersistentStore:(PersistentStore *)aPersistentStore
 {
     self = [super init];
     if (self) {
+        _sharedManager = self;
+        
+        _persistentStore = aPersistentStore;
         [self setUpCachedLocationManager];
+        
+        [self setUpAttachLocationState];
+        [self setUpShareLoanState];
     }
     return self;
 }
@@ -56,7 +68,7 @@ static LoanManager *_sharedManager;
 {
     BOOL needLocation = self.attachLocationValue;
     
-    if ([[self transactionsWaitingForLocation] count] > 0) {
+    if ([[self loansWaitingForLocation] count] > 0) {
         if (_cachedLocationManager.location != nil) {
             [self updateLocationForQueuedTransactions:_cachedLocationManager.location];
         }
@@ -73,9 +85,9 @@ static LoanManager *_sharedManager;
 
 #pragma mark - Transaction methods
 
-- (Transaction *)addTransactionWithUpdateHandler:(void (^)(Transaction *transaction))updateHandler
+- (Loan *)addTransactionWithUpdateHandler:(void (^)(Loan *transaction))updateHandler
 {
-    Transaction *transaction = [Transaction insertInManagedObjectContext:self.managedObjectContext];
+    Loan *transaction = [Loan insertInManagedObjectContext:self.managedObjectContext];
     updateHandler(transaction);
     
     if (transaction.attachLocationValue == YES) {
@@ -90,7 +102,7 @@ static LoanManager *_sharedManager;
     return transaction;
 }
 
-- (void)updateTransaction:(Transaction *)transaction withUpdateHandler:(void (^)(Transaction *transaction))updateHandler
+- (void)updateTransaction:(Loan *)transaction withUpdateHandler:(void (^)(Loan *transaction))updateHandler
 {
     updateHandler(transaction);
     
@@ -98,10 +110,10 @@ static LoanManager *_sharedManager;
 }
 
 // TODO: Remove the need for the debt-parameter
-- (Transaction *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID
+- (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID
 {
     __block typeof(self) bself = self;
-    Transaction *result = [self addTransactionWithUpdateHandler:^(Transaction *transaction) {
+    Loan *result = [self addTransactionWithUpdateHandler:^(Loan *transaction) {
         transaction.friendID = friendID;
         
         transaction.amount = [debt decimalNumberByNegating];
@@ -121,9 +133,9 @@ static LoanManager *_sharedManager;
 
 - (void)updateLocationForQueuedTransactions:(CLLocation *)location
 {
-    NSArray *transactions = [self transactionsWaitingForLocation];
+    NSArray *transactions = [self loansWaitingForLocation];
     
-    for (Transaction *transaction in transactions) {
+    for (Loan *transaction in transactions) {
         [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     }
     
@@ -133,16 +145,35 @@ static LoanManager *_sharedManager;
 - (NSUInteger)getTransactionRequestCount
 {
     // FIXME: Fix
-    NSUInteger count = 0;//[NumberOfTransactionRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+    NSUInteger count = 0;//[NumberOfLoanRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
     return count;
 }
 
+- (NSArray *)loansWaitingForLocation
+{
+    return [LoansWaitingForLocationFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+}
+
+
 #pragma mark - RIOCachedLocationManagerDelegate methods
+
+// TODO: Move purpose to user interface?
+- (void)setUpCachedLocationManager
+{
+    _cachedLocationManager = [[RIOCachedLocationManager alloc] init];
+    _cachedLocationManager.delegate = self;
+    _cachedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    _cachedLocationManager.distanceFilter = 500;
+    _cachedLocationManager.accuracyFilter = 100;
+    _cachedLocationManager.timeIntervalFilter = kLoanLocationTimeLimit;
+    _cachedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
+}
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     NSLog(@"%s %d", (char *)_cmd, self.attachLocationValue);
-    [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:self.attachLocationValue];
+//    [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:self.attachLocationValue];
+    self.attachLocationState.systemState = [NSNumber numberWithBool:(status == kCLAuthorizationStatusAuthorized)];
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error
@@ -153,11 +184,12 @@ static LoanManager *_sharedManager;
             // TODO: Add code?
         }
         else if (error.code == kCLErrorDenied) {
-            [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:NO];
-            
-            if ([self.locationDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)]) {
-                [self.locationDelegate loanManagerNeedLocationServices:self];
-            }
+            self.attachLocationState.systemState = [NSNumber numberWithBool:NO];
+//            [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:NO];
+//            
+//            if ([self.locationServicesDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)]) {
+//                [self.locationServicesDelegate loanManagerNeedLocationServices:self];
+//            }
         }
     }
 }
@@ -179,35 +211,36 @@ static LoanManager *_sharedManager;
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    return backingStoreDelegate.managedObjectContext;
+    return _persistentStore.managedObjectContext;
 }
 
 - (void)saveContext
 {
-    [backingStoreDelegate saveContext];
+    [_persistentStore saveContext];
 }
 
 
-#pragma mark - Attach location accessor methods
+#pragma mark - Attach location methods
+
+- (void)setUpAttachLocationState
+{
+    NSNumber *userState = [[NSUserDefaults standardUserDefaults] objectForKey:@"attachLocation"];
+    NSNumber *systemState = [NSNumber numberWithBool:([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)];
+    self.attachLocationState = [[RIOComputedState alloc] initWithInitialUserState:userState systemState:systemState computedStateHandler:^id(id userState, id systemState) {
+        BOOL available = ([userState boolValue] == YES && [systemState boolValue] == YES);
+        return [NSNumber numberWithBool:available];
+    }];
+}
 
 - (BOOL)attachLocationValue
 {
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
-        return NO;
-    }
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults objectForKey:@"attachLocation"] == nil) {
-        return YES;
-    }
-    
-    BOOL status = [userDefaults boolForKey:@"attachLocation"];
-    
-    return status;
+    return [self.attachLocationState.userState boolValue];
 }
 
 - (void)setAttachLocationValue:(BOOL)status
 {
+    self.attachLocationState.userState = [NSNumber numberWithBool:status];
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:status forKey:@"attachLocation"];
     [userDefaults synchronize];
@@ -215,24 +248,51 @@ static LoanManager *_sharedManager;
     [self.cachedLocationManager setNeedsLocation:status];
 }
 
-
-#pragma mark - Private methods
-
-// TODO: Move purpose to user interface?
-- (void)setUpCachedLocationManager
+- (BOOL)calculatedAttachLocationValue
 {
-    _cachedLocationManager = [[RIOCachedLocationManager alloc] init];
-    _cachedLocationManager.delegate = self;
-    _cachedLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    _cachedLocationManager.distanceFilter = 500;
-    _cachedLocationManager.accuracyFilter = 100;
-    _cachedLocationManager.timeIntervalFilter = kTransactionLocationTimeLimit;
-    _cachedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
+    return [self.attachLocationState.computedState boolValue];
 }
 
-- (NSArray *)transactionsWaitingForLocation
++ (NSSet *)keyPathsForValuesAffectingCalculatedAttachLocationValue
 {
-    return [TransactionsWaitingForLocationFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+    return [NSSet setWithObject:@"attachLocationState.computedState"];
+}
+
+
+#pragma mark - Share loan methods
+
+- (void)setUpShareLoanState
+{
+    NSNumber *userState = [[NSUserDefaults standardUserDefaults] objectForKey:@"shareLoan"];
+    NSNumber *systemState = [NSNumber numberWithBool:YES]; // TODO: Fix this
+    self.shareLoanState = [[RIOComputedState alloc] initWithInitialUserState:userState systemState:systemState computedStateHandler:^id(id userState, id systemState) {
+        BOOL available = ([userState boolValue] == YES && [systemState boolValue] == YES);
+        return [NSNumber numberWithBool:available];
+    }];
+}
+
+- (BOOL)shareLoanValue
+{
+    return [self.shareLoanState.userState boolValue];
+}
+
+- (void)setShareLoanValue:(BOOL)status
+{
+    self.shareLoanState.userState = [NSNumber numberWithBool:status];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:status forKey:@"shareLoan"];
+    [userDefaults synchronize];
+}
+
+- (BOOL)calculatedShareLoanValue
+{
+    return [self.shareLoanState.computedState boolValue];
+}
+
++ (NSSet *)keyPathsForValuesAffectingCalculatedShareLoanValue
+{
+    return [NSSet setWithObject:@"shareLoanState.computedState"];
 }
 
 @end

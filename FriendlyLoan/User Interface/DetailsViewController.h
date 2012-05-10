@@ -12,11 +12,11 @@
 #import "EditLoanViewControllerDelegate.h"
 
 
-@class Transaction;
+@class Loan;
 
 @interface DetailsViewController : UITableViewController <MKMapViewDelegate, EditLoanViewControllerDelegate>
 
-@property (nonatomic, strong) Transaction *transaction;
+@property (nonatomic, strong) Loan *transaction;
 
 @property (nonatomic, strong) IBOutlet UILabel *lentDescriptionLabel;
 @property (nonatomic, strong) IBOutlet UILabel *lentPrepositionLabel;

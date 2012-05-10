@@ -149,7 +149,7 @@ const NSInteger kTransactionRequestsSection = 0;
 {
     if ([[segue identifier] isEqualToString:@"DetailsSegue"])
     {
-        Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        Loan *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
         DetailsViewController *transactionDetailsViewController = [segue destinationViewController];
         transactionDetailsViewController.transaction = transaction;
@@ -225,7 +225,7 @@ const NSInteger kTransactionRequestsSection = 0;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Transaction *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Loan *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     UIImage *image = [transaction categoryImage];
     UIImage *highlightedImage = [transaction categoryHighlightedImage];
@@ -261,7 +261,7 @@ const NSInteger kTransactionRequestsSection = 0;
 {
     // Set up the fetch request
     NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Loan" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
     fetchRequest.includesSubentities = YES;
     fetchRequest.fetchBatchSize = 20;

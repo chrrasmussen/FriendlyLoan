@@ -19,19 +19,23 @@ extern NSString * const BMUserWillLogOutNotification;
 extern NSString * const BMUserDidLogOutNotification;
 
 
-@class Transaction;
+@class LoanManager;
+@class Loan;
 
 
 @interface BackendManager : NSObject <PF_FBRequestDelegate>
 
+@property (nonatomic, strong, readonly) LoanManager *loanManager;
+
 @property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
 
 @property (nonatomic, strong, readonly) NSString *userFullName;
-@property (nonatomic, readonly) NSUInteger transactionRequestCount;
+@property (nonatomic, readonly) NSUInteger loanRequestCount;
 @property (nonatomic, readonly) NSUInteger friendRequestCount;
 
 
 + (id)sharedManager;
+- (id)initWithLoanManager:(LoanManager *)aLoanManager;
 
 - (void)handleApplicationDidFinishLaunching;
 - (void)handleApplicationDidBecomeActive;
@@ -49,7 +53,7 @@ extern NSString * const BMUserDidLogOutNotification;
 - (BOOL)isLoggedIn;
 
 // Transactions
-- (void)shareTransactionInBackground:(Transaction *)transaction;
+- (void)shareTransactionInBackground:(Loan *)transaction;
 - (void)updateTransactionRequests;
 
 
