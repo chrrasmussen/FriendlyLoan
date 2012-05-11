@@ -16,7 +16,7 @@
 
 @interface DetailsViewController : UITableViewController <MKMapViewDelegate, EditLoanViewControllerDelegate>
 
-@property (nonatomic, strong) Loan *transaction;
+@property (nonatomic, strong) Loan *loan;
 
 @property (nonatomic, strong) IBOutlet UILabel *lentDescriptionLabel;
 @property (nonatomic, strong) IBOutlet UILabel *lentPrepositionLabel;

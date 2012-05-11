@@ -18,22 +18,22 @@
 
 - (PFObject *)PFObjectForValues
 {
-    PFObject *transaction = [PFObject objectWithClassName:@"Transaction"];
+    PFObject *loan = [PFObject objectWithClassName:@"LoanRequest"];
     
     NSDecimalNumber *negatedAmount = [self.amount decimalNumberByNegating];
-    [transaction setValue:negatedAmount forKey:@"amount"];
+    [loan setValue:negatedAmount forKey:@"amount"];
     
-    [transaction setValue:self.categoryID forKey:@"categoryId"];
-    [transaction setValue:self.note forKey:@"note"];
+    [loan setValue:self.categoryID forKey:@"categoryId"];
+    [loan setValue:self.note forKey:@"note"];
     
-    [transaction setValue:self.settled forKey:@"settled"];
+    [loan setValue:self.settled forKey:@"settled"];
     
     if (self.location) {
         PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:self.locationLatitudeValue longitude:self.locationLongitudeValue];
-        [transaction setValue:location forKey:@"location"];
+        [loan setValue:location forKey:@"location"];
     }
     
-    return transaction;
+    return loan;
 }
 
 - (void)setValuesForPFObject:(PFObject *)pfObject
@@ -48,7 +48,6 @@
     self.settled = [pfObject valueForKey:@"settled"];
     
     self.createdAt = [pfObject valueForKey:@"createdAt"];
-    self.updatedAt = [pfObject valueForKey:@"updatedAt"];
     
     PFGeoPoint *geoPoint = (PFGeoPoint *)[pfObject valueForKey:@"location"];
     if (geoPoint != nil) {

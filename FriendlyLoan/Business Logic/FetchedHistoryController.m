@@ -14,7 +14,7 @@
 //{
 //    // Set up the fetch request
 //    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:managedObjectContext];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Loan" inManagedObjectContext:managedObjectContext];
 //    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
 //    fetchRequest.includesSubentities = YES;
 //    fetchRequest.fetchBatchSize = 20;

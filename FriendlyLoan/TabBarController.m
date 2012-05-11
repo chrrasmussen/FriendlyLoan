@@ -82,7 +82,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 {
     if ([keyPath isEqualToString:@"loanRequestCount"]) {
         NSNumber *value = [change objectForKey:@"new"];
-        [self setTransactionRequestCount:[value unsignedIntegerValue]];
+        [self setLoanRequestCount:[value unsignedIntegerValue]];
     }
     else if ([keyPath isEqualToString:@"friendRequestCount"]) {
         NSNumber *value = [change objectForKey:@"new"];
@@ -111,7 +111,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
     [[BackendManager sharedManager] removeObserver:self];
 }
 
-- (void)setTransactionRequestCount:(NSUInteger)count
+- (void)setLoanRequestCount:(NSUInteger)count
 {
     NSString *badgeValue = (count > 0) ? [NSString stringWithFormat:@"%u", count] : nil;
     _historyNavigationController.tabBarItem.badgeValue = badgeValue;

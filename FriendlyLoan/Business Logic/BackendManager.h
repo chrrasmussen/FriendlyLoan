@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-#import "BackendManagerLoginDelegate.h"
 
-
-extern NSString * const BMUserWillLogInNotification;
-extern NSString * const BMUserDidLogInNotification;
-extern NSString * const BMUserFailedToLogInNotification;
-extern NSString * const BMUserWillLogOutNotification;
-extern NSString * const BMUserDidLogOutNotification;
+//extern NSString * const BMUserWillLogInNotification;
+//extern NSString * const BMUserDidLogInNotification;
+//extern NSString * const BMUserFailedToLogInNotification;
+//extern NSString * const BMUserWillLogOutNotification;
+//extern NSString * const BMUserDidLogOutNotification;
 
 
 @class LoanManager;
 @class Loan;
+
+@protocol BackendManagerLoginDelegate, BackendManagerLoanRequestDelegate;
 
 
 @interface BackendManager : NSObject <PF_FBRequestDelegate>
@@ -28,6 +28,7 @@ extern NSString * const BMUserDidLogOutNotification;
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
 
 @property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
+@property (nonatomic, weak) id<BackendManagerLoanRequestDelegate> loanRequestDelegate;
 
 @property (nonatomic, strong, readonly) NSString *userFullName;
 @property (nonatomic, readonly) NSUInteger loanRequestCount;
@@ -52,9 +53,9 @@ extern NSString * const BMUserDidLogOutNotification;
 - (void)logOut;
 - (BOOL)isLoggedIn;
 
-// Transactions
-- (void)shareTransactionInBackground:(Loan *)transaction;
-- (void)updateTransactionRequests;
+// Loan methods
+- (void)shareLoanInBackground:(Loan *)loan;
+- (void)updateLoanRequests;
 
 
 @end

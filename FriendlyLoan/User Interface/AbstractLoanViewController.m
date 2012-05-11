@@ -133,17 +133,17 @@ const NSInteger kDefaultCategoryID = 0;
 
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Loan *)theTransaction
+- (void)updateLoanBasedOnViewInfo:(Loan *)theLoan
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    theTransaction.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    theLoan.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
     
-    theTransaction.friendID = self.selectedFriendID;
+    theLoan.friendID = self.selectedFriendID;
     
-    theTransaction.categoryID = self.selectedCategoryID;
+    theLoan.categoryID = self.selectedCategoryID;
     
     NSString *note = (self.noteTextField.text) ? self.noteTextField.text : @"";
-    theTransaction.note = note;
+    theLoan.note = note;
 }
 
 - (void)resetFields

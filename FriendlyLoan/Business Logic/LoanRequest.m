@@ -1,5 +1,5 @@
 //
-//  TransactionRequest.m
+//  LoanRequest.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 07.05.12.

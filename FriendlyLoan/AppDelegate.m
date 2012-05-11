@@ -12,10 +12,6 @@
 #import "LoanManager.h"
 #import "BackendManager.h"
 
-// FIXME: Remove
-//#import "Test.h"
-//#import "RIOCalculatedState.h"
-
 
 @implementation AppDelegate
 
@@ -29,21 +25,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSLog(@"%s", (char *)_cmd);
-    
-//    NSNumber *userState = [[NSUserDefaults standardUserDefaults] objectForKey:@"attachLocation"];
-//    NSNumber *systemState = [NSNumber numberWithBool:([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)];
-//    RIOCalculatedState *attachLocationState = [[RIOCalculatedState alloc] initWithInitialUserState:userState systemState:systemState calculatedStateHandler:^id(id userState, id systemState) {
-//        BOOL available = ([userState boolValue] == YES && [systemState boolValue] == YES);
-//        return [NSNumber numberWithBool:available];
-//    }];
-//    [attachLocationState addObserver:self forKeyPath:@"calculatedState" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
-//    
-//    attachLocationState.userState = [NSNumber numberWithBool:NO];
-//    attachLocationState.userState = [NSNumber numberWithBool:YES];
-//    attachLocationState.systemState = [NSNumber numberWithBool:YES];;
-//    attachLocationState.userState = [NSNumber numberWithBool:NO];
-//    
-//    [attachLocationState removeObserver:self forKeyPath:@"calculatedState"];
     
     [self setUpManagers];
     [self.backendManager handleApplicationDidFinishLaunching];
@@ -138,6 +119,13 @@
     [self displayLocationWarning];
 }
 
+
+#pragma mark - BackendManagerLoanRequestDelegate
+
+- (void)backendManager:(BackendManager *)backendManager displayLoanRequest:(Loan *)loan
+{
+    
+}
 
 #pragma mark - Private methods
 

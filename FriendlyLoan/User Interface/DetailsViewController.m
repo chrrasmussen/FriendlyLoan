@@ -19,7 +19,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 @implementation DetailsViewController
 
-@synthesize transaction;
+@synthesize loan;
 @synthesize lentDescriptionLabel, lentPrepositionLabel;
 @synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
 
@@ -59,7 +59,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     [super viewDidAppear:animated];
     
-//    [self.transaction addObserver:self forKeyPath:@"locationStatus" options:NSKeyValueObservingOptionNew context:NULL];
+//    [self.loan addObserver:self forKeyPath:@"locationStatus" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -71,7 +71,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 {
     [super viewDidDisappear:animated];
     
-//    [self.transaction removeObserver:self forKeyPath:@"locationStatus"];
+//    [self.loan removeObserver:self forKeyPath:@"locationStatus"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -90,7 +90,7 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         UINavigationController *navigationController = [segue destinationViewController];
         EditLoanViewController *editLoanViewController = (EditLoanViewController *)navigationController.topViewController;
         editLoanViewController.delegate = self;
-        editLoanViewController.transaction = self.transaction;
+        editLoanViewController.loan = self.loan;
     }
 }
 
@@ -111,57 +111,12 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 #pragma mark - UITableViewDelegate methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return (self.transaction.location != nil) ? rows : rows - 1;
+    return (self.loan.location != nil) ? rows : rows - 1;
 }
-
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
-////    if (indexPath.row == rows - 1)
-////    {
-////        if (self.transaction.locationStatus == kTransactionLocationStatusLocating)
-////        {
-////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-////            return [super tableView:tableView cellForRowAtIndexPath:locatingIndexPath];
-////        }
-////        else if (self.transaction.locationStatus == kTransactionLocationStatusNotFound)
-////        {
-////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-////            return [super tableView:tableView cellForRowAtIndexPath:locatingIndexPath];
-////        }
-////    }
-//    
-//    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    NSInteger rows = [super tableView:tableView numberOfRowsInSection:indexPath.section];
-////    if (indexPath.row == rows - 1)
-////    {
-////        if (self.transaction.locationStatus == kTransactionLocationStatusLocating)
-////        {
-////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-////            return [super tableView:tableView heightForRowAtIndexPath:locatingIndexPath];
-////        }
-////        else if (self.transaction.locationStatus == kTransactionLocationStatusNotFound)
-////        {
-////            NSIndexPath *locatingIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-////            return [super tableView:tableView heightForRowAtIndexPath:locatingIndexPath];
-////        }
-////    }
-//    
-//    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-//}
 
 //- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 //{
@@ -175,20 +130,20 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)updateViewInfo
 {
-    self.lentDescriptionLabel.text = ([transaction lentValue] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    self.lentPrepositionLabel.text =  ([transaction lentValue] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+    self.lentDescriptionLabel.text = ([loan lentValue] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
+    self.lentPrepositionLabel.text =  ([loan lentValue] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
     
-    self.amountLabel.text = [transaction.absoluteAmount stringValue];
-    self.friendLabel.text = [transaction friendFullName];
-    self.categoryLabel.text = [transaction categoryName];
-    self.noteLabel.text = transaction.note;
+    self.amountLabel.text = [[loan absoluteAmount] stringValue];
+    self.friendLabel.text = [loan friendFullName];
+    self.categoryLabel.text = [loan categoryName];
+    self.noteLabel.text = loan.note;
     
     // Display date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    NSString *formattedDateString = [dateFormatter stringFromDate:transaction.createdAt];
+    NSString *formattedDateString = [dateFormatter stringFromDate:loan.createdAt];
     self.timeStampLabel.text = formattedDateString;
     
     [self showLocationInfo];
@@ -215,23 +170,13 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)showLocationInfo
 {
-    if (self.transaction.location != nil)
+    if (loan.location != nil)
     {
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([transaction coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([loan coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
         [self.mapView setRegion:region animated:NO];
         
-        [self.mapView addAnnotation:transaction];
+        [self.mapView addAnnotation:loan];
     }
 }
-
-//- (void)mapStatusChanged
-//{
-//    NSLog(@"%s", (char *)_cmd);
-//    NSInteger rows = [super tableView:self.tableView numberOfRowsInSection:0];
-//    NSIndexPath *targetIndexPath = [NSIndexPath indexPathForRow:(rows - 1) inSection:0];
-//    
-//    NSArray *indexPaths = [NSArray arrayWithObject:targetIndexPath];
-//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-//}
 
 @end

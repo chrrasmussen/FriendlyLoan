@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "LoanManagerLocationServicesDelegate.h"
+#import "BackendManagerLoanRequestDelegate.h"
+
 
 @class PersistentStore, LoanManager, BackendManager;
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, LoanManagerLocationServicesDelegate, BackendManagerLoanRequestDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

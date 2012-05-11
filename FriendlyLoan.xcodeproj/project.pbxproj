@@ -81,6 +81,15 @@
 		6941FF9E141A6D6B00FB3A24 /* FriendlyLoanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6941FF9D141A6D6B00FB3A24 /* FriendlyLoanTests.m */; };
 		69497C5A155C3D7E009E3EF6 /* _Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C59155C3D7E009E3EF6 /* _Loan.m */; };
 		69497C5E155C444E009E3EF6 /* RIOComputedState.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C5C155C43DC009E3EF6 /* RIOComputedState.m */; };
+		69497C66155C72C0009E3EF6 /* GrayButton-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C60155C72C0009E3EF6 /* GrayButton-Normal.png */; };
+		69497C67155C72C0009E3EF6 /* GrayButton-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C61155C72C0009E3EF6 /* GrayButton-Normal@2x.png */; };
+		69497C68155C72C0009E3EF6 /* GreenButton-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C62155C72C0009E3EF6 /* GreenButton-Normal.png */; };
+		69497C69155C72C0009E3EF6 /* GreenButton-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C63155C72C0009E3EF6 /* GreenButton-Normal@2x.png */; };
+		69497C6A155C72C0009E3EF6 /* RedButton-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C64155C72C0009E3EF6 /* RedButton-Normal.png */; };
+		69497C6B155C72C0009E3EF6 /* RedButton-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C65155C72C0009E3EF6 /* RedButton-Normal@2x.png */; };
+		69497C6F155C77E3009E3EF6 /* MissingProfilePictureDetails.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C6D155C77E3009E3EF6 /* MissingProfilePictureDetails.png */; };
+		69497C70155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C6E155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png */; };
+		69497C73155C7BE4009E3EF6 /* LoanRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */; };
 		69515FEA14D39D4900C9569D /* Loan+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69515FE914D39D4900C9569D /* Loan+Location.m */; };
 		6957B33614F8480B0059922D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B32F14F8480B0059922D /* Icon-72.png */; };
 		6957B33714F8480B0059922D /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B33014F8480B0059922D /* Icon-Small-50.png */; };
@@ -224,6 +233,16 @@
 		69497C59155C3D7E009E3EF6 /* _Loan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Loan.m; sourceTree = "<group>"; };
 		69497C5B155C43DC009E3EF6 /* RIOComputedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIOComputedState.h; sourceTree = "<group>"; };
 		69497C5C155C43DC009E3EF6 /* RIOComputedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIOComputedState.m; sourceTree = "<group>"; };
+		69497C60155C72C0009E3EF6 /* GrayButton-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayButton-Normal.png"; sourceTree = "<group>"; };
+		69497C61155C72C0009E3EF6 /* GrayButton-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayButton-Normal@2x.png"; sourceTree = "<group>"; };
+		69497C62155C72C0009E3EF6 /* GreenButton-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenButton-Normal.png"; sourceTree = "<group>"; };
+		69497C63155C72C0009E3EF6 /* GreenButton-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenButton-Normal@2x.png"; sourceTree = "<group>"; };
+		69497C64155C72C0009E3EF6 /* RedButton-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedButton-Normal.png"; sourceTree = "<group>"; };
+		69497C65155C72C0009E3EF6 /* RedButton-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedButton-Normal@2x.png"; sourceTree = "<group>"; };
+		69497C6D155C77E3009E3EF6 /* MissingProfilePictureDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingProfilePictureDetails.png; sourceTree = "<group>"; };
+		69497C6E155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePictureDetails@2x.png"; sourceTree = "<group>"; };
+		69497C71155C7BE4009E3EF6 /* LoanRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanRequestViewController.h; sourceTree = "<group>"; };
+		69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanRequestViewController.m; sourceTree = "<group>"; };
 		69515FE814D39D4900C9569D /* Loan+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Location.h"; sourceTree = "<group>"; };
 		69515FE914D39D4900C9569D /* Loan+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Location.m"; sourceTree = "<group>"; };
 		6957B32F14F8480B0059922D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -296,7 +315,7 @@
 		69C3CEC8141A7EA600549213 /* AddLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLoanViewController.h; sourceTree = "<group>"; };
 		69C3CEC9141A7EA600549213 /* AddLoanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLoanViewController.m; sourceTree = "<group>"; };
 		69C3CECB141A7EB400549213 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
-		69CFD7C715573C3400053606 /* BackendManagerTransactionRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendManagerTransactionRequestDelegate.h; sourceTree = "<group>"; };
+		69CFD7C715573C3400053606 /* BackendManagerLoanRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendManagerLoanRequestDelegate.h; sourceTree = "<group>"; };
 		69CFD7D41558469100053606 /* CategoryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryList.h; sourceTree = "<group>"; };
 		69CFD7D51558469100053606 /* CategoryList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryList.m; sourceTree = "<group>"; };
 		69D3360E14414E7800CB4E25 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -521,6 +540,28 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		69497C5F155C72AE009E3EF6 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				69497C60155C72C0009E3EF6 /* GrayButton-Normal.png */,
+				69497C61155C72C0009E3EF6 /* GrayButton-Normal@2x.png */,
+				69497C62155C72C0009E3EF6 /* GreenButton-Normal.png */,
+				69497C63155C72C0009E3EF6 /* GreenButton-Normal@2x.png */,
+				69497C64155C72C0009E3EF6 /* RedButton-Normal.png */,
+				69497C65155C72C0009E3EF6 /* RedButton-Normal@2x.png */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		69497C6C155C77BF009E3EF6 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				69497C6D155C77E3009E3EF6 /* MissingProfilePictureDetails.png */,
+				69497C6E155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png */,
+			);
+			name = Details;
+			sourceTree = "<group>";
+		};
 		694A59F31426C0D5000B5190 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -706,6 +747,8 @@
 				698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */,
 				6972F0AF1426AB430047305C /* EditLoanViewController.h */,
 				6972F0B01426AB430047305C /* EditLoanViewController.m */,
+				69497C71155C7BE4009E3EF6 /* LoanRequestViewController.h */,
+				69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */,
 			);
 			name = "Add/Edit Loan";
 			sourceTree = "<group>";
@@ -729,6 +772,8 @@
 				69BA69BC141AD4C6008C4384 /* Categories */,
 				69AC1164143E4A58001A0810 /* Add Loan */,
 				69934769141C73E8004DFEF1 /* Friends */,
+				69497C6C155C77BF009E3EF6 /* Details */,
+				69497C5F155C72AE009E3EF6 /* Buttons */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -786,7 +831,7 @@
 				69D5EC89154F64D700FA6207 /* BackendManager.h */,
 				69D5EC8A154F64D700FA6207 /* BackendManager.m */,
 				69D5EC901550F2BC00FA6207 /* BackendManagerLoginDelegate.h */,
-				69CFD7C715573C3400053606 /* BackendManagerTransactionRequestDelegate.h */,
+				69CFD7C715573C3400053606 /* BackendManagerLoanRequestDelegate.h */,
 			);
 			name = BackendManager;
 			sourceTree = "<group>";
@@ -949,6 +994,14 @@
 				6939C53914F96EAC00C19DE5 /* Travel-Normal@2x.png in Resources */,
 				6939C53A14F96EAC00C19DE5 /* Travel-Highlighted.png in Resources */,
 				6939C53B14F96EAC00C19DE5 /* Travel-Highlighted@2x.png in Resources */,
+				69497C66155C72C0009E3EF6 /* GrayButton-Normal.png in Resources */,
+				69497C67155C72C0009E3EF6 /* GrayButton-Normal@2x.png in Resources */,
+				69497C68155C72C0009E3EF6 /* GreenButton-Normal.png in Resources */,
+				69497C69155C72C0009E3EF6 /* GreenButton-Normal@2x.png in Resources */,
+				69497C6A155C72C0009E3EF6 /* RedButton-Normal.png in Resources */,
+				69497C6B155C72C0009E3EF6 /* RedButton-Normal@2x.png in Resources */,
+				69497C6F155C77E3009E3EF6 /* MissingProfilePictureDetails.png in Resources */,
+				69497C70155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,6 +1119,7 @@
 				69EC2E7F1559936A00970F47 /* PersistentStore.m in Sources */,
 				69497C5A155C3D7E009E3EF6 /* _Loan.m in Sources */,
 				69497C5E155C444E009E3EF6 /* RIOComputedState.m in Sources */,
+				69497C73155C7BE4009E3EF6 /* LoanRequestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

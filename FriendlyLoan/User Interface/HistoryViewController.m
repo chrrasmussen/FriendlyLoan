@@ -15,9 +15,6 @@
 #import "NSDate+RIOAdditions.h"
 
 
-const NSInteger kTransactionRequestsSection = 0;
-
-
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
@@ -149,10 +146,10 @@ const NSInteger kTransactionRequestsSection = 0;
 {
     if ([[segue identifier] isEqualToString:@"DetailsSegue"])
     {
-        Loan *transaction = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        Loan *loan = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
-        DetailsViewController *transactionDetailsViewController = [segue destinationViewController];
-        transactionDetailsViewController.transaction = transaction;
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.loan = loan;
     }
 }
 
@@ -225,16 +222,16 @@ const NSInteger kTransactionRequestsSection = 0;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Loan *transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Loan *loan = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    UIImage *image = [transaction categoryImage];
-    UIImage *highlightedImage = [transaction categoryHighlightedImage];
+    UIImage *image = [loan categoryImage];
+    UIImage *highlightedImage = [loan categoryHighlightedImage];
     
-    NSString *friendText = [transaction friendFullName];
-    NSString *amountText = [transaction.absoluteAmount stringValue];
+    NSString *friendText = [loan friendFullName];
+    NSString *amountText = [loan.absoluteAmount stringValue];
     
-    BOOL settled = [transaction settledValue];
-    BOOL lent = [transaction lentValue];
+    BOOL settled = [loan settledValue];
+    BOOL lent = [loan lentValue];
     
     NSString *format = nil;
     if (settled == NO)

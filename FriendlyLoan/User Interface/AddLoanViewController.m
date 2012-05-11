@@ -43,8 +43,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
     
     [[LoanManager sharedManager] removeObserver:self];
 }
@@ -52,10 +50,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    //    [[LoanManager sharedManager] setAttachLocationDelegate:self];
-    //    self.attachLocationSwitch.on = [[LoanManager sharedManager] attachLocationValue];
-//    self.attachLocationSwitch.on = [[LoanManager sharedManager] calculatedAttachLocationValue];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,11 +86,11 @@
     self.lendBarButtonItem.enabled = enabled;
 }
 
-- (void)updateTransactionBasedOnViewInfo:(Loan *)theTransaction
+- (void)updateLoanBasedOnViewInfo:(Loan *)theLoan
 {
-    [super updateTransactionBasedOnViewInfo:theTransaction];
+    [super updateLoanBasedOnViewInfo:theLoan];
     
-    theTransaction.attachLocationValue = [[LoanManager sharedManager] calculatedAttachLocationValue];
+    theLoan.attachLocationValue = [[LoanManager sharedManager] calculatedAttachLocationValue];
 }
 
 - (void)resetFields
@@ -157,13 +151,13 @@
     
     if ([[segue identifier] isEqualToString:@"SaveSegue"])
     {
-        // Add transaction
-        Loan *transaction = [self addTransaction];
+        // Add loan
+        Loan *loan = [self addLoan];
         
         // Set up details view controller
         DetailsViewController *detailsViewController = [segue destinationViewController];
         [self configureDetailsViewController:detailsViewController];
-        detailsViewController.transaction = transaction;
+        detailsViewController.loan = loan;
         
 //        // Hide keyboard in order to avoid it becoming first responder when the view appears
 //        [self hideKeyboard];
@@ -185,22 +179,17 @@
     }
 }
 
-//- (void)loanManager:(LoanManager *)loanManager didChangeAttachLocationValue:(BOOL)attachLocation
-//{
-//    [self.attachLocationSwitch setOn:attachLocation animated:YES];
-//}
-
 
 #pragma mark - Private methods
 
-- (Loan *)addTransaction
+- (Loan *)addLoan
 {
-    Loan *result = [[LoanManager sharedManager] addTransactionWithUpdateHandler:^(Loan *transaction) {
-        [self updateTransactionBasedOnViewInfo:transaction];
+    Loan *result = [[LoanManager sharedManager] addLoanWithUpdateHandler:^(Loan *loan) {
+        [self updateLoanBasedOnViewInfo:loan];
     }];
     
     if (self.shareLoanSwitch.on) {
-        [[BackendManager sharedManager] shareTransactionInBackground:result];
+        [[BackendManager sharedManager] shareLoanInBackground:result];
     }
     
     return result;

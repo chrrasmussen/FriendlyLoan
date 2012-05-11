@@ -70,7 +70,7 @@ static LoanManager *_sharedManager;
     
     if ([[self loansWaitingForLocation] count] > 0) {
         if (_cachedLocationManager.location != nil) {
-            [self updateLocationForQueuedTransactions:_cachedLocationManager.location];
+            [self updateLocationForQueuedLoans:_cachedLocationManager.location];
         }
         else {
             needLocation = YES;
@@ -83,28 +83,28 @@ static LoanManager *_sharedManager;
 }
 
 
-#pragma mark - Transaction methods
+#pragma mark - Loan methods
 
-- (Loan *)addTransactionWithUpdateHandler:(void (^)(Loan *transaction))updateHandler
+- (Loan *)addLoanWithUpdateHandler:(void (^)(Loan *loan))updateHandler
 {
-    Loan *transaction = [Loan insertInManagedObjectContext:self.managedObjectContext];
-    updateHandler(transaction);
+    Loan *loan = [Loan insertInManagedObjectContext:self.managedObjectContext];
+    updateHandler(loan);
     
-    if (transaction.attachLocationValue == YES) {
+    if (loan.attachLocationValue == YES) {
         CLLocation *location = [self.cachedLocationManager location];
         if (location != nil) {
-            [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+            [loan setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
         }
     }
         
     [self saveContext];
     
-    return transaction;
+    return loan;
 }
 
-- (void)updateTransaction:(Loan *)transaction withUpdateHandler:(void (^)(Loan *transaction))updateHandler
+- (void)updateLoan:(Loan *)loan withUpdateHandler:(void (^)(Loan *loan))updateHandler
 {
-    updateHandler(transaction);
+    updateHandler(loan);
     
     [self saveContext];
 }
@@ -113,17 +113,17 @@ static LoanManager *_sharedManager;
 - (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID
 {
     __block typeof(self) bself = self;
-    Loan *result = [self addTransactionWithUpdateHandler:^(Loan *transaction) {
-        transaction.friendID = friendID;
+    Loan *result = [self addLoanWithUpdateHandler:^(Loan *loan) {
+        loan.friendID = friendID;
         
-        transaction.amount = [debt decimalNumberByNegating];
-        transaction.settledValue = YES;
+        loan.amount = [debt decimalNumberByNegating];
+        loan.settledValue = YES;
         
         if ([bself attachLocationValue] == YES) {
-            transaction.attachLocationValue = YES;
+            loan.attachLocationValue = YES;
             CLLocation *location = [bself.cachedLocationManager location];
             if (location != nil) {
-                [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+                [loan setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
             }
         }
     }];
@@ -131,18 +131,18 @@ static LoanManager *_sharedManager;
     return result;
 }
 
-- (void)updateLocationForQueuedTransactions:(CLLocation *)location
+- (void)updateLocationForQueuedLoans:(CLLocation *)location
 {
-    NSArray *transactions = [self loansWaitingForLocation];
+    NSArray *loans = [self loansWaitingForLocation];
     
-    for (Loan *transaction in transactions) {
-        [transaction setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+    for (Loan *loan in loans) {
+        [loan setLocationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     }
     
     [self saveContext];
 }
 
-- (NSUInteger)getTransactionRequestCount
+- (NSUInteger)getLoanRequestCount
 {
     // FIXME: Fix
     NSUInteger count = 0;//[NumberOfLoanRequestsFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
@@ -197,7 +197,7 @@ static LoanManager *_sharedManager;
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
     NSLog(@"%s", (char *)_cmd);
-    [self updateLocationForQueuedTransactions:location];
+    [self updateLocationForQueuedLoans:location];
     
 }
 

@@ -40,19 +40,16 @@
 //- (void)initiate/initialize // If there are some outstanding locations, start location services
 //- (void)terminate // Do something useful when quitting?
 
-// Transaction methods
-- (Loan *)addTransactionWithUpdateHandler:(void (^)(Loan *transaction))updateHandler;
-- (void)updateTransaction:(Loan *)transaction withUpdateHandler:(void (^)(Loan *transaction))updateHandler;
+// Loan methods
+- (Loan *)addLoanWithUpdateHandler:(void (^)(Loan *loan))updateHandler;
+- (void)updateLoan:(Loan *)loan withUpdateHandler:(void (^)(Loan *loan))updateHandler;
 - (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
-
-//- (BOOL)hasUnlocatedTransactions;
-//- (NSArray *)remainingTransactions;
 
 // Backing store proxy methods
 - (NSManagedObjectContext *)managedObjectContext;
 
 
-- (NSUInteger)getTransactionRequestCount;
+- (NSUInteger)getLoanRequestCount;
 
 // Fetched results controller
 //- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID;
