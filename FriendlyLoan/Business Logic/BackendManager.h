@@ -10,13 +10,6 @@
 #import <Parse/Parse.h>
 
 
-//extern NSString * const BMUserWillLogInNotification;
-//extern NSString * const BMUserDidLogInNotification;
-//extern NSString * const BMUserFailedToLogInNotification;
-//extern NSString * const BMUserWillLogOutNotification;
-//extern NSString * const BMUserDidLogOutNotification;
-
-
 @class LoanManager;
 @class Loan;
 
@@ -30,14 +23,12 @@
 @property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
 @property (nonatomic, weak) id<BackendManagerLoanRequestDelegate> loanRequestDelegate;
 
-@property (nonatomic, strong, readonly) NSString *userFullName;
-@property (nonatomic, readonly) NSUInteger loanRequestCount;
-@property (nonatomic, readonly) NSUInteger friendRequestCount;
 
-
+// Create backend manager
 + (id)sharedManager;
 - (id)initWithLoanManager:(LoanManager *)aLoanManager;
 
+// Application lifecycle
 - (void)handleApplicationDidFinishLaunching;
 - (void)handleApplicationDidBecomeActive;
 - (BOOL)handleOpenURL:(NSURL *)url;
@@ -49,13 +40,31 @@
 - (void)handleDidReceiveRemoteNotification:(NSDictionary *)userInfo;
 
 // User management
+@property (nonatomic, strong, readonly) NSString *userFullName;
+
 - (void)logIn;
 - (void)logOut;
 - (BOOL)isLoggedIn;
 
+// Friend management
+//- (void)findFriendByHashedEmail:(NSString *)hashedEmail;
+//- (void)findFriendByHashedFacebookId:(NSString *)hashedFacebookId;
+
 // Loan methods
+@property (nonatomic, readonly) NSUInteger loanRequestCount;
+
 - (void)shareLoanInBackground:(Loan *)loan;
-- (void)updateLoanRequests;
+- (void)updateLoanRequestsWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))completionHandler;
+
+// Friend methods
+@property (nonatomic, readonly) NSUInteger friendRequestCount;
 
 
 @end
+
+// Notifications
+extern NSString * const FLUserWillLogInNotification;
+extern NSString * const FLUserDidLogInNotification;
+extern NSString * const FLUserFailedToLogInNotification;
+extern NSString * const FLUserWillLogOutNotification;
+extern NSString * const FLUserDidLogOutNotification;

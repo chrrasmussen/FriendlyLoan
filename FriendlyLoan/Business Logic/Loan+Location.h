@@ -14,6 +14,7 @@
 
 - (void)setLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
 
-- (CLLocation *)location;
+- (BOOL)hasLocation;
+//- (CLLocation *)location;
 
 @end

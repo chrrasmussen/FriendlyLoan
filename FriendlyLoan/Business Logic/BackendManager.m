@@ -15,13 +15,6 @@
 #import "LoanManager.h"
 
 
-//NSString * const BMUserWillLogInNotification        = @"BMUserWillLogInNotification";
-//NSString * const BMUserDidLogInNotification         = @"BMUserDidLogInNotification";
-//NSString * const BMUserFailedToLogInNotification    = @"BMUserFailedToLogInNotification";
-//NSString * const BMUserWillLogOutNotification       = @"BMUserWillLogOutNotification";
-//NSString * const BMUserDidLogOutNotification        = @"BMUserDidLogOutNotification";
-
-
 @interface BackendManager ()
 
 @property (nonatomic, strong) NSString *userFullName;
@@ -82,7 +75,13 @@ static BackendManager *_sharedManager;
         [self setRemoteNotificationsEnabled:YES];
         
         [self updateLoanRequestCount];
-        [self updateLoanRequests];
+        
+        typeof(self) bself = self;
+        [self updateLoanRequestsWithCompletionHandler:^(BOOL succeeded, NSError *error) {
+            if ([bself.loanRequestDelegate respondsToSelector:@selector(backendManager:displayLoanRequest:)]) {
+                [bself.loanRequestDelegate backendManager:bself displayLoanRequest:nil];
+            }
+        }];
 //        [self updateFriendRequests];
     }
 }
@@ -104,14 +103,17 @@ static BackendManager *_sharedManager;
 
 - (void)handleDidFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"%s%@", (char *)_cmd, error);
+#if TARGET_IPHONE_SIMULATOR
+#else
+    NSLog(@"%@ %@", NSStringFromSelector(_cmd), error);
+#endif
 }
 
 - (void)handleDidReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (YES) { // TODO: Verify that notification is a loan request
         NSLog(@"%@", userInfo);
-        [self updateLoanRequests];
+//        [self updateLoanRequestsWithCompletionHandler:<#^(BOOL succeeded, NSError *error)completionHandler#>];
     }
 }
 
@@ -146,8 +148,9 @@ static BackendManager *_sharedManager;
 
 - (void)logIn
 {
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogIn:)])
+    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogIn:)]) {
         [self.loginDelegate backendManagerWillLogIn:self];
+    }
     
     // The permissions requested from the user
     NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", nil];
@@ -192,19 +195,21 @@ static BackendManager *_sharedManager;
 
 - (void)logOut
 {
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)])
+    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)]) {
         [self.loginDelegate backendManagerWillLogOut:self];
+    }
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:BMUserWillLogOutNotification object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserWillLogOutNotification object:self];
     
     [self setRemoteNotificationsEnabled:NO];
     
     [PFUser logOut];
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:BMUserDidLogOutNotification object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserDidLogOutNotification object:self];
     
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerDidLogOut:)])
+    if ([self.loginDelegate respondsToSelector:@selector(backendManagerDidLogOut:)]) {
         [self.loginDelegate backendManagerDidLogOut:self];
+    }
 }
 
 - (BOOL)isLoggedIn
@@ -271,7 +276,7 @@ static BackendManager *_sharedManager;
     
     // TODO: Check if recipient is matched
     
-    PFObject *serializedLoan = [loan PFObjectForValues];
+    PFObject *serializedLoan = [loan loanRequestForValues];
     [serializedLoan setValue:sender forKey:@"sender"];
     [serializedLoan setValue:recipient forKey:@"recipient"];
     serializedLoan.ACL = [PFACL ACLWithUser:recipient];
@@ -280,6 +285,7 @@ static BackendManager *_sharedManager;
         if (succeeded) {
             NSLog(@"Succeeded to save loan");
             
+            // TODO: Localize string using a dictionary as the alert
             NSString *message = [NSString stringWithFormat:@"%@ just shared a loan with you.", [sender objectForKey:@"fullName"]];
             [self notifyUser:recipient withMessage:message];
         }
@@ -302,29 +308,32 @@ static BackendManager *_sharedManager;
     }];
 }
 
-- (void)updateLoanRequests
+- (void)updateLoanRequestsWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))completionHandler
 {
     PFQuery *query = [PFQuery queryWithClassName:@"LoanRequest"];
-    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+//    query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query whereKey:@"recipient" equalTo:[PFUser currentUser]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (objects) {
             for (PFObject *object in objects) {
+                LoanRequest *loanRequest = [LoanRequest objectWithDataObject:object];
+                
                 [_loanManager addLoanWithUpdateHandler:^(Loan *loan) {
-                    [loan setValuesForPFObject:object];
-                    
-                    // TODO: Fix automatic friend ID
-                    loan.friendID = [NSNumber numberWithInt:3554];
+                    [loan setValuesForLoanRequest:loanRequest];
                 }];
                 
-                [object deleteEventually];
+                [loanRequest deleteEventually];
             }
             
             [self updateLoanRequestCount];
+            
+            completionHandler(YES, nil);
         }
         else {
             NSLog(@"Failed to retrieve loans:%@", error);
+            
+            completionHandler(NO, error);
         }
     }];
 }
@@ -340,101 +349,11 @@ static BackendManager *_sharedManager;
     return [PFUser currentUser];
 }
 
-
-#pragma mark - Temp methods
-
-//    [PFUser logOut];
-//    PFQuery *query = [PFQuery queryForUser];
-//    PFUser *user = [PFUser currentUser];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        NSLog(@"%@", objects);
-//        NSLog(@"%@", [((PFUser *)objects.lastObject).ACL getPublicReadAccess]);
-//    }];
-
-//    PFQuery *query = [PFQuery queryForUser];
-//    [query whereKey:@"email" equalTo:@"test@test.com"];
-//    PFUser *user = (PFUser *)[query getObjectWithId:@"CcV58vygkR"];
-//    NSLog(@"%@", [query getFirstObject]);
-
-//        [PFACL setDefaultACL:[PFACL ACL] withAccessForCurrentUser:YES];
-//        [PFUser currentUser].ACL = [PFACL ACL];
-//        user.ACL = [PFACL ACLWithUser:user];
-//        [user save];
-
-//                user.ACL = [PFACL ACLWithUser:user];
-//                user.ACL = [PFACL ACL];
-//                [user save];
-
-//        PFUser *user = [PFUser currentUser];
-//        
-//        PFQuery *query = [PFQuery queryForUser];
-//        PFUser *friendRef = (PFUser *)[query getObjectWithId:@"fvtdFpt7Sq"];
-//        
-//        NSDictionary *contact = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                 [NSNumber numberWithInt:5], @"friendId",
-//                                 @"iphone", @"deviceId", nil];
-//        NSArray *syncInfo = [NSArray arrayWithObject:contact];
-//        NSDictionary *friendInfo = [NSDictionary dictionaryWithObjectsAndKeys:user, @"friendRef",
-//                                 syncInfo, @"syncInfo", nil];
-//        NSArray *friends = [NSArray arrayWithObject:friendInfo];
-//        [user setValue:friends forKey:@"friends"];
-//        [user saveInBackground];
-
-- (void)generateParseClasses
-{
-//    PFObject *loan = [PFObject objectWithClassName:@"LoanRequest"];
-//    [loan setValue:[NSNumber numberWithInt:100] forKey:@"amount"];
-//    [loan setValue:[NSNumber numberWithInt:0] forKey:@"categoryId"];
-//    [loan setValue:@"Note" forKey:@"note"];
-//    
-//    [loan setValue:[NSNumber numberWithBool:YES] forKey:@"lentToRecipient"];
-//    [loan setValue:[NSNumber numberWithBool:NO] forKey:@"settledWithRecipient"];
-//    
-//    PFGeoPoint *location = [PFGeoPoint geoPointWithLatitude:0 longitude:0];
-//    [loan setValue:location forKey:@"location"];
-//    
-//    PFUser *sender = [PFUser currentUser];
-//    PFUser *recipient = [PFUser currentUser];
-//    
-//    PFObject *loanRequest = [PFObject objectWithClassName:@"LoanRequest"];
-//    [loanRequest setValue:sender forKey:@"sender"];
-//    [loanRequest setValue:recipient forKey:@"recipient"];
-//    [loanRequest setValue:loan forKey:@"loan"];
-//    loanRequest.ACL = [PFACL ACLWithUser:recipient];
-//    [loanRequest save];
-//    
-//    PFObject *friendInvitation = [PFObject objectWithClassName:@"FriendInvitation"];
-//    [friendInvitation setValue:@"cizza2k@hotmail.com" forKey:@"emailHash"];
-//    [friendInvitation setValue:@"787355064" forKey:@"facebookIdHash"];
-//    friendInvitation.ACL = [PFACL ACLWithUser:sender];
-//    [friendInvitation save];
-//    
-//    PFObject *friendRequest = [PFObject objectWithClassName:@"FriendRequest"];
-//    [friendRequest setValue:sender forKey:@"sender"];
-//    [friendRequest setValue:recipient forKey:@"recipient"];
-//    NSDictionary *identifiers = [NSDictionary dictionaryWithObjectsAndKeys:@"cizza2k@hotmail.com", @"emailHash",
-//                                 @"787355064", @"facebookIdHash", nil];
-//    [friendRequest setValue:identifiers forKey:@"identifiers"];
-//    PFACL *acl = [PFACL ACLWithUser:sender];
-//    [acl setReadAccess:YES forUser:recipient];
-//    friendRequest.ACL = acl;
-//    [friendRequest save];
-//    
-//    // Recipient
-//    
-//    PFObject *friendAccept = [PFObject objectWithClassName:@"FriendAccept"];
-//    [friendAccept setValue:friendRequest forKey:@"friendRequest"];
-//    friendAccept.ACL = [PFACL ACLWithUser:sender];
-//    [friendAccept save];
-//    
-//    PFObject *friendReject = [PFObject objectWithClassName:@"FriendReject"];
-//    [friendReject setValue:friendRequest forKey:@"friendRequest"];
-//    friendAccept.ACL = [PFACL ACLWithUser:recipient];
-//    [friendReject save];
-//    
-//    PFObject *friendList = [PFObject objectWithClassName:@"FriendList"];
-//    friendList.ACL = [PFACL ACLWithUser:sender];
-//    [friendList save];
-}
-
 @end
+
+// Notifications
+NSString * const FLUserWillLogInNotification        = @"FLUserWillLogInNotification";
+NSString * const FLUserDidLogInNotification         = @"FLUserDidLogInNotification";
+NSString * const FLUserFailedToLogInNotification    = @"FLUserFailedToLogInNotification";
+NSString * const FLUserWillLogOutNotification       = @"FLUserWillLogOutNotification";
+NSString * const FLUserDidLogOutNotification        = @"FLUserDidLogOutNotification";

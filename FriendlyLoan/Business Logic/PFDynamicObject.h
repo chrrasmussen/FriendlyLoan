@@ -13,12 +13,14 @@
 
 // Metadata for object creation
 + (NSString *)databaseClassName;
-//+ (NSDictionary *)databaseFieldToPropertyMappings;
 
 // Convenience methods for creating an object
 + (id)object;
 + (id)objectWithoutDataWithObjectId:(NSString *)objectId;
 - (id)init;
+
++ (id)objectWithDataObject:(PFObject *)object;
++ (void)addMethodsToClass:(Class)targetClass forPropertiesInClass:(Class)sourceClass;
 
 // TODO: Copy values from an existing PFObject? May I use objectWithoutDataWithObjectId?
 // TODO: How could I easily copy value from an PFDynamicObject to somewhere else? Like Loan

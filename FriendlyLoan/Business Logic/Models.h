@@ -15,6 +15,6 @@
 #import "Loan+Location.h"
 #import "Loan+Request.h"
 
-#import "Loan+PFObject.h"
+#import "Loan+LoanRequest.h"
 
 #endif

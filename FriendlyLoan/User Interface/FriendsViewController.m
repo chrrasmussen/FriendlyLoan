@@ -12,6 +12,7 @@
 #import "HistoryViewController.h"
 
 #import "FriendList.h"
+#import "CurrencyList.h"
 
 
 NSString * const kResultFriendID    = @"friendID";
@@ -90,6 +91,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
 #pragma mark - TableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -124,6 +126,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
     [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+
 
 #pragma mark - UITableViewDelegate methods
 
@@ -195,10 +198,11 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSNumber *friendID = [fetchedResult objectForKey:kResultFriendID];
     NSString *friendName = [fetchedResult objectForKey:kResultFriendName];
     NSDecimalNumber *debt = [fetchedResult objectForKey:kResultDebt];
+    NSString *debtPresentation = [[CurrencyList currentCurrencyFormatter] stringFromNumber:debt];
     
     // Set basic info
     cell.textLabel.text = friendName;
-    cell.detailTextLabel.text = [debt stringValue];
+    cell.detailTextLabel.text = debtPresentation;
     
     // Set image
     UIImage *friendImage = [FriendList friendImageForFriendID:friendID];
@@ -231,7 +235,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    // Set up friend ID-property
+    // Set up friendID-property
     NSExpression *friendIDKeyPath = [NSExpression expressionForKeyPath:@"friendID"];
     NSExpressionDescription *friendIDProperty = [[NSExpressionDescription alloc] init];
     [friendIDProperty setName:kResultFriendID];

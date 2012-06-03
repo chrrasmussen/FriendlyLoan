@@ -12,6 +12,8 @@
 #import "NSDecimalNumber+RIOAdditions.h"
 #import "RIORelativeDate.h"
 
+#import "CurrencyList.h"
+
 
 // TODO: Is this used?
 const float kLoanLocationTimeLimit = 10*60;
@@ -31,12 +33,19 @@ const float kLoanLocationTimeLimit = 10*60;
     return loan;
 }
 
+//- (void)setNote:(NSString *)note
+//{
+//    if ([note length] > 0) {
+//        [super setNote:note];
+//    }
+//}
+
 
 #pragma mark - History methods
 
 - (NSString *)historySectionName
 {
-    if (self.requestAcceptedValue == NO) {
+    if (self.requestAcceptedValue == YES) {
         return [self.createdAt relativeDate];
     }
     else {
@@ -55,6 +64,11 @@ const float kLoanLocationTimeLimit = 10*60;
 - (NSDecimalNumber *)absoluteAmount
 {
     return ([self lentValue] == YES) ? self.amount : [self.amount decimalNumberByNegating];
+}
+
+- (NSString *)amountPresentation
+{
+    return [[CurrencyList currentCurrencyFormatter] stringFromNumber:[self absoluteAmount]];
 }
 
 @end

@@ -18,5 +18,6 @@
 @property (nonatomic, strong) PFUser *recipient;
 @property (nonatomic, strong) PFUser *sender;
 @property (nonatomic, strong) NSNumber *settled;
+@property(getter=isIntReadOnlyGetter, readonly) int intReadonlyGetter;
 
 @end

@@ -14,6 +14,7 @@ const struct LoanAttributes LoanAttributes = {
 	.note = @"note",
 	.requestAccepted = @"requestAccepted",
 	.requestID = @"requestID",
+	.requestUnseen = @"requestUnseen",
 	.settled = @"settled",
 	.updatedAt = @"updatedAt",
 };
@@ -72,6 +73,10 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	}
 	if ([key isEqualToString:@"requestAcceptedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"requestAccepted"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"requestUnseenValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"requestUnseen"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"settledValue"]) {
@@ -269,6 +274,32 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
+@dynamic requestUnseen;
+
+
+
+- (BOOL)requestUnseenValue {
+	NSNumber *result = [self requestUnseen];
+	return [result boolValue];
+}
+
+- (void)setRequestUnseenValue:(BOOL)value_ {
+	[self setRequestUnseen:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveRequestUnseenValue {
+	NSNumber *result = [self primitiveRequestUnseen];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveRequestUnseenValue:(BOOL)value_ {
+	[self setPrimitiveRequestUnseen:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic settled;
 
 
@@ -307,9 +338,9 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
-+ (NSArray*)fetchLoansWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ {
++ (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ {
 	NSError *error = nil;
-	NSArray *result = [self fetchLoansWaitingForLocationFetchRequest:moc_ dateLimit:dateLimit_ error:&error];
+	NSArray *result = [self fetchLoansWaitingForLocation:moc_ dateLimit:dateLimit_ error:&error];
 	if (error) {
 #if TARGET_OS_IPHONE
 		NSLog(@"error: %@", error);
@@ -319,7 +350,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	}
 	return result;
 }
-+ (NSArray*)fetchLoansWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_ {
++ (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_ {
 	NSParameterAssert(moc_);
 	NSError *error = nil;
 	
@@ -331,9 +362,9 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 														
 														nil];
 										
-	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"LoansWaitingForLocationFetchRequest"
+	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"LoansWaitingForLocation"
 													 substitutionVariables:substitutionVariables];
-	NSAssert(fetchRequest, @"Can't find fetch request named \"LoansWaitingForLocationFetchRequest\".");
+	NSAssert(fetchRequest, @"Can't find fetch request named \"LoansWaitingForLocation\".");
 	
 	NSArray *result = [moc_ executeFetchRequest:fetchRequest error:&error];
 	if (error_) *error_ = error;
@@ -342,9 +373,9 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
-+ (NSArray*)fetchNumberOfLoanRequestsFetchRequest:(NSManagedObjectContext*)moc_ {
++ (NSArray*)fetchNumberOfLoanRequests:(NSManagedObjectContext*)moc_ {
 	NSError *error = nil;
-	NSArray *result = [self fetchNumberOfLoanRequestsFetchRequest:moc_ error:&error];
+	NSArray *result = [self fetchNumberOfLoanRequests:moc_ error:&error];
 	if (error) {
 #if TARGET_OS_IPHONE
 		NSLog(@"error: %@", error);
@@ -354,7 +385,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	}
 	return result;
 }
-+ (NSArray*)fetchNumberOfLoanRequestsFetchRequest:(NSManagedObjectContext*)moc_ error:(NSError**)error_ {
++ (NSArray*)fetchNumberOfLoanRequests:(NSManagedObjectContext*)moc_ error:(NSError**)error_ {
 	NSParameterAssert(moc_);
 	NSError *error = nil;
 	
@@ -362,9 +393,40 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	
 	NSDictionary *substitutionVariables = [NSDictionary dictionary];
 										
-	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfLoanRequestsFetchRequest"
+	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfLoanRequests"
 													 substitutionVariables:substitutionVariables];
-	NSAssert(fetchRequest, @"Can't find fetch request named \"NumberOfLoanRequestsFetchRequest\".");
+	NSAssert(fetchRequest, @"Can't find fetch request named \"NumberOfLoanRequests\".");
+	
+	NSArray *result = [moc_ executeFetchRequest:fetchRequest error:&error];
+	if (error_) *error_ = error;
+	return result;
+}
+
+
+
++ (NSArray*)fetchNumberOfUnseenLoanRequests:(NSManagedObjectContext*)moc_ {
+	NSError *error = nil;
+	NSArray *result = [self fetchNumberOfUnseenLoanRequests:moc_ error:&error];
+	if (error) {
+#if TARGET_OS_IPHONE
+		NSLog(@"error: %@", error);
+#else
+		[NSApp presentError:error];
+#endif
+	}
+	return result;
+}
++ (NSArray*)fetchNumberOfUnseenLoanRequests:(NSManagedObjectContext*)moc_ error:(NSError**)error_ {
+	NSParameterAssert(moc_);
+	NSError *error = nil;
+	
+	NSManagedObjectModel *model = [[moc_ persistentStoreCoordinator] managedObjectModel];
+	
+	NSDictionary *substitutionVariables = [NSDictionary dictionary];
+										
+	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfUnseenLoanRequests"
+													 substitutionVariables:substitutionVariables];
+	NSAssert(fetchRequest, @"Can't find fetch request named \"NumberOfUnseenLoanRequests\".");
 	
 	NSArray *result = [moc_ executeFetchRequest:fetchRequest error:&error];
 	if (error_) *error_ = error;

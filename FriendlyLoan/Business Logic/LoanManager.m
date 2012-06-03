@@ -7,17 +7,14 @@
 //
 
 #import "LoanManager.h"
-
-#import "PersistentStore.h"
-#import "RIOCachedLocationManager.h"
 #import <CoreLocation/CoreLocation.h>
+
+#import "RIOCachedLocationManager.h"
 
 #import "LoanManagerLocationServicesDelegate.h"
 
 #import "RIOComputedState.h"
 
-#import "LoansWaitingForLocationFetchRequest.h"
-#import "NumberOfLoanRequestsFetchRequest.h"
 #import "FetchedHistoryController.h"
 //#import "FetchedFriendsController.h"
 
@@ -36,7 +33,6 @@
 
 static LoanManager *_sharedManager;
 
-@synthesize persistentStore = _persistentStore;
 @synthesize cachedLocationManager = _cachedLocationManager;
 @synthesize locationServicesDelegate;
 @synthesize attachLocationState, shareLoanState;
@@ -49,13 +45,13 @@ static LoanManager *_sharedManager;
     return _sharedManager;
 }
 
-- (id)initWithPersistentStore:(PersistentStore *)aPersistentStore
+- (id)init
 {
     self = [super init];
     if (self) {
         _sharedManager = self;
         
-        _persistentStore = aPersistentStore;
+        [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"FriendlyLoan.sqlite"];
         [self setUpCachedLocationManager];
         
         [self setUpAttachLocationState];
@@ -131,6 +127,15 @@ static LoanManager *_sharedManager;
     return result;
 }
 
+- (void)deleteLoan:(Loan *)loan
+{
+    [self.managedObjectContext deleteObject:loan];
+    [self saveContext];
+}
+
+
+#pragma mark - Fetch requests
+
 - (void)updateLocationForQueuedLoans:(CLLocation *)location
 {
     NSArray *loans = [self loansWaitingForLocation];
@@ -151,11 +156,12 @@ static LoanManager *_sharedManager;
 
 - (NSArray *)loansWaitingForLocation
 {
-    return [LoansWaitingForLocationFetchRequest fetchFromManagedObjectContext:self.managedObjectContext];
+    NSDate *dateLimit = [NSDate dateWithTimeIntervalSinceNow:-kLoanLocationTimeLimit];
+    return [Loan fetchLoansWaitingForLocation:self.managedObjectContext dateLimit:dateLimit];
 }
 
 
-#pragma mark - RIOCachedLocationManagerDelegate methods
+#pragma mark - RIOCachedLocationManagerDele'gate methods
 
 // TODO: Move purpose to user interface?
 - (void)setUpCachedLocationManager
@@ -171,39 +177,33 @@ static LoanManager *_sharedManager;
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    NSLog(@"%s %d", (char *)_cmd, self.attachLocationValue);
-//    [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:self.attachLocationValue];
+//    NSLog(@"%@ %d", NSStringFromSelector(_cmd), self.attachLocationValue);
     self.attachLocationState.systemState = [NSNumber numberWithBool:(status == kCLAuthorizationStatusAuthorized)];
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didFailWithError:(NSError *)error
 {
-    NSLog(@"%s %@", (char *)_cmd, error);
+//    NSLog(@"%@ %@", NSStringFromSelector(_cmd), error);
+    
     if (error.domain == kCLErrorDomain) {
         if (error.code == kCLErrorLocationUnknown) {
             // TODO: Add code?
         }
         else if (error.code == kCLErrorDenied) {
             self.attachLocationState.systemState = [NSNumber numberWithBool:NO];
-//            [self.attachLocationDelegate loanManager:self didChangeAttachLocationValue:NO];
-//            
-//            if ([self.locationServicesDelegate respondsToSelector:@selector(loanManagerNeedLocationServices:)]) {
-//                [self.locationServicesDelegate loanManagerNeedLocationServices:self];
-//            }
         }
     }
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
-    NSLog(@"%s", (char *)_cmd);
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
     [self updateLocationForQueuedLoans:location];
-    
 }
 
 - (void)cachedLocationManagerDidExpireCachedLocation:(RIOCachedLocationManager *)locationManager
 {
-    NSLog(@"%s", (char *)_cmd);
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 
@@ -211,12 +211,12 @@ static LoanManager *_sharedManager;
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    return _persistentStore.managedObjectContext;
+    return [NSManagedObjectContext defaultContext];
 }
 
 - (void)saveContext
 {
-    [_persistentStore saveContext];
+    [[NSManagedObjectContext defaultContext] save];
 }
 
 

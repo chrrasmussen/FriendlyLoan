@@ -8,38 +8,88 @@
 
 #import "AppDelegate.h"
 
-#import "PersistentStore.h"
 #import "LoanManager.h"
 #import "BackendManager.h"
+
+#import "LoanRequest.h"
+#import "Test.h"
 
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 
-@synthesize persistentStore = _persistentStore;
 @synthesize loanManager = _loanManager;
 @synthesize backendManager = _backendManager;
 
 
+#pragma mark - Application lifecycle
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"%s", (char *)_cmd);
-    
     [self setUpManagers];
     [self.backendManager handleApplicationDidFinishLaunching];
     
+//    LoanRequest *lr = [LoanRequest object];
+//    lr.note = @"abc";
+    
+    Test *test = [[Test alloc] init];
+    test.test = @"Elg";
+    test.note = @"abc";
+    
+    LoanRequest *lr = [[LoanRequest alloc] init];
+    lr.note = @"note";
+    NSLog(@"Wee:%@ + %@ + %@", test.test, test.note, lr.note);
+    
     return YES;
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    NSLog(@"%@ = %@", keyPath, change);
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     return [self.backendManager handleOpenURL:url];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    /*
+     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+     */
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    /*
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+     */
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    /*
+     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+     */
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    /*
+     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+     */
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    [self.loanManager handleApplicationDidBecomeActive];
+    [self.backendManager handleApplicationDidBecomeActive];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    // Saves changes in the application's managed object context before the application terminates.
+//    [self saveContext];
+    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 
@@ -61,52 +111,6 @@
 }
 
 
-#pragma mark - Application life-time
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-    NSLog(@"%s", (char *)_cmd);
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
-    NSLog(@"%s", (char *)_cmd);
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-     */
-    NSLog(@"%s", (char *)_cmd);
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-    NSLog(@"%s", (char *)_cmd);
-    [self.loanManager handleApplicationDidBecomeActive];
-    [self.backendManager handleApplicationDidBecomeActive];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Saves changes in the application's managed object context before the application terminates.
-//    [self saveContext];
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-}
-
-
 #pragma mark - LoanManagerLocationServicesDelegate
 
 - (void)loanManagerNeedLocationServices:(LoanManager *)loanManager
@@ -124,20 +128,22 @@
 
 - (void)backendManager:(BackendManager *)backendManager displayLoanRequest:(Loan *)loan
 {
-    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
+//    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoanRequestNavigationController"];
+//    // TODO: Set loan on LoanRequestViewController
+//    [self.window.rootViewController presentModalViewController:navigationController animated:YES];
 }
+
 
 #pragma mark - Private methods
 
 - (void)setUpManagers
 {
-    _persistentStore = [[PersistentStore alloc] init];
-    
-    _loanManager = [[LoanManager alloc] initWithPersistentStore:self.persistentStore];
+    _loanManager = [[LoanManager alloc] init];
     _loanManager.locationServicesDelegate = self;
     
     _backendManager = [[BackendManager alloc] initWithLoanManager:self.loanManager];
-    // TODO: Set self as popup loanRequestDelegate
+    _backendManager.loanRequestDelegate = self;
 }
 
 - (void)displayLocationWarning

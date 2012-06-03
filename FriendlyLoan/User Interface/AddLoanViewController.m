@@ -13,7 +13,7 @@
 #import "BackendManager.h"
 
 #import "DetailsViewController.h"
-#import "CategoriesViewController.h"
+#import "CategoryViewController.h"
 
 
 @implementation AddLoanViewController
@@ -35,6 +35,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    //    UIWindow * alertWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+    //    alertWindow.windowLevel = UIWindowLevelAlert;
+    //    
+    //    alertWindow.rootViewController = [[UIViewController alloc] init];
+    //    
+    //    [alertWindow makeKeyAndVisible];
+    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
+//    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoanRequestNavigationController"];
+    //    UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+    //    UINavigationController *nc = (UINavigationController *)[tbc.viewControllers objectAtIndex:0];
+    //    AddLoanViewController *alvc = (AddLoanViewController *)nc.topViewController;
+//    [self presentModalViewController:navigationController animated:YES];
     
     [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedAttachLocationValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
     [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedShareLoanValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];

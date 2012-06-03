@@ -11,11 +11,13 @@
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="requestAccepted" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="requestID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="requestUnseen" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" elementID="modifiedTimestamp" syncable="YES"/>
     </entity>
-    <fetchRequest name="LoansWaitingForLocationFetchRequest" entity="Loan" predicateString="attachLocation == 0 AND locationLatitude == 0 AND locationLongitude == 0 AND createdAt > $dateLimit"/>
-    <fetchRequest name="NumberOfLoanRequestsFetchRequest" entity="Loan" predicateString="requestAccepted == 0"/>
+    <fetchRequest name="LoansWaitingForLocation" entity="Loan" predicateString="attachLocation == 0 AND locationLatitude == 0 AND locationLongitude == 0 AND createdAt > $dateLimit"/>
+    <fetchRequest name="NumberOfLoanRequests" entity="Loan" predicateString="requestAccepted == 0"/>
+    <fetchRequest name="NumberOfUnseenLoanRequests" entity="Loan" predicateString="requestAccepted == 0 AND requestUnseen == 0"/>
     <elements>
         <element name="Loan" positionX="124" positionY="3" width="128" height="225"/>
     </elements>

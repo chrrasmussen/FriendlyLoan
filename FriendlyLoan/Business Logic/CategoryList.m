@@ -19,11 +19,10 @@ static NSArray *_categoryIDs;
 
 + (NSDictionary *)categories
 {
-    if (_categories == nil)
-    {
+    if (_categories == nil) {
         NSURL *categoriesURL = [[NSBundle mainBundle] URLForResource:@"CategoryList" withExtension:@"plist"];
-        NSDictionary *categorList = [[NSDictionary alloc] initWithContentsOfURL:categoriesURL];
-        _categories = [categorList objectForKey:@"categories"];
+        NSDictionary *categoryList = [[NSDictionary alloc] initWithContentsOfURL:categoriesURL];
+        _categories = [categoryList objectForKey:@"categories"];
     }
     
     return _categories;
@@ -31,12 +30,10 @@ static NSArray *_categoryIDs;
 
 + (NSDictionary *)categoriesByID
 {
-    if (_categoriesByID == nil)
-    {
+    if (_categoriesByID == nil) {
         NSMutableDictionary *categoriesByID = [[NSMutableDictionary alloc] init];
         
-        for (NSDictionary *category in [self categories])
-        {
+        for (NSDictionary *category in [self categories]) {
             NSNumber *categoryID = [category objectForKey:@"categoryID"];
             [categoriesByID setValue:category forKey:[categoryID stringValue]];
         }
@@ -49,12 +46,10 @@ static NSArray *_categoryIDs;
 
 + (NSArray *)categoryIDs
 {
-    if (_categoryIDs == nil)
-    {
+    if (_categoryIDs == nil) {
         NSMutableArray *categoryIDs = [[NSMutableArray alloc] init];
         
-        for (NSDictionary *category in [self categories])
-        {
+        for (NSDictionary *category in [self categories]) {
             BOOL hidden = [[category objectForKey:@"hidden"] boolValue];
             if (!hidden) {
                 NSNumber *categoryID = [category objectForKey:@"categoryID"];

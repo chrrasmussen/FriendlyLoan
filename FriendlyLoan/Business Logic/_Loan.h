@@ -15,6 +15,7 @@ extern const struct LoanAttributes {
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *requestAccepted;
 	__unsafe_unretained NSString *requestID;
+	__unsafe_unretained NSString *requestUnseen;
 	__unsafe_unretained NSString *settled;
 	__unsafe_unretained NSString *updatedAt;
 } LoanAttributes;
@@ -24,6 +25,7 @@ extern const struct LoanRelationships {
 
 extern const struct LoanFetchedProperties {
 } LoanFetchedProperties;
+
 
 
 
@@ -155,6 +157,18 @@ extern const struct LoanFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber *requestUnseen;
+
+
+@property BOOL requestUnseenValue;
+- (BOOL)requestUnseenValue;
+- (void)setRequestUnseenValue:(BOOL)value_;
+
+//- (BOOL)validateRequestUnseen:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSNumber *settled;
 
 
@@ -176,13 +190,18 @@ extern const struct LoanFetchedProperties {
 
 
 
-+ (NSArray*)fetchLoansWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ ;
-+ (NSArray*)fetchLoansWaitingForLocationFetchRequest:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_;
++ (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ ;
++ (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_;
 
 
 
-+ (NSArray*)fetchNumberOfLoanRequestsFetchRequest:(NSManagedObjectContext*)moc_ ;
-+ (NSArray*)fetchNumberOfLoanRequestsFetchRequest:(NSManagedObjectContext*)moc_ error:(NSError**)error_;
++ (NSArray*)fetchNumberOfLoanRequests:(NSManagedObjectContext*)moc_ ;
++ (NSArray*)fetchNumberOfLoanRequests:(NSManagedObjectContext*)moc_ error:(NSError**)error_;
+
+
+
++ (NSArray*)fetchNumberOfUnseenLoanRequests:(NSManagedObjectContext*)moc_ ;
++ (NSArray*)fetchNumberOfUnseenLoanRequests:(NSManagedObjectContext*)moc_ error:(NSError**)error_;
 
 
 
@@ -270,6 +289,15 @@ extern const struct LoanFetchedProperties {
 
 - (NSString *)primitiveRequestID;
 - (void)setPrimitiveRequestID:(NSString *)value;
+
+
+
+
+- (NSNumber *)primitiveRequestUnseen;
+- (void)setPrimitiveRequestUnseen:(NSNumber *)value;
+
+- (BOOL)primitiveRequestUnseenValue;
+- (void)setPrimitiveRequestUnseenValue:(BOOL)value_;
 
 
 

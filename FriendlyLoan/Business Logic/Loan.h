@@ -23,5 +23,6 @@ extern const float kLoanLocationTimeLimit;
 // Lent methods
 - (BOOL)lentValue;
 - (NSDecimalNumber *)absoluteAmount;
+- (NSString *)amountPresentation;
 
 @end

@@ -23,23 +23,28 @@
 
 - (void)setLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
 {
-    //        [self willChangeValueForKey:@"locationStatus"];
-    //        self.location = [Location insertInManagedObjectContext:self.managedObjectContext];
-    //        [self didChangeValueForKey:@"locationStatus"];
+//        [self willChangeValueForKey:@"locationStatus"];
+//        self.location = [Location insertInManagedObjectContext:self.managedObjectContext];
+//        [self didChangeValueForKey:@"locationStatus"];
     self.locationLatitude = [NSNumber numberWithDouble:latitude];
     self.locationLongitude = [NSNumber numberWithDouble:longitude];
 }
 
-- (CLLocation *)location
+//- (CLLocation *)location
+//{
+//    CLLocationCoordinate2D coordinate = [self coordinate];
+//    if (CLLocationCoordinate2DIsValid(coordinate) == NO) {
+//        return nil;
+//    }
+//    
+//    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+//    
+//    return location;
+//}
+
+- (BOOL)hasLocation
 {
-    CLLocationCoordinate2D coordinate = [self coordinate];
-    if (CLLocationCoordinate2DIsValid(coordinate) == NO) {
-        return nil;
-    }
-    
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-    
-    return location;
+    return ([self locationLatitude] != nil && [self locationLongitude] != nil);
 }
 
 

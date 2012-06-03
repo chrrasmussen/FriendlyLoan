@@ -14,7 +14,7 @@
 #import "CategoryList.h"
 
 #import "DetailsViewController.h"
-#import "CategoriesViewController.h"
+#import "CategoryViewController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
@@ -86,7 +86,6 @@ const NSInteger kDefaultCategoryID = 0;
 {
     [super viewDidLoad];
     
-    // Reset fields
     [self resetFields];
 }
 
@@ -133,17 +132,13 @@ const NSInteger kDefaultCategoryID = 0;
 
 }
 
-- (void)updateLoanBasedOnViewInfo:(Loan *)theLoan
+- (void)updateLoanBasedOnViewInfo:(Loan *)loan
 {
     NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    theLoan.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
-    
-    theLoan.friendID = self.selectedFriendID;
-    
-    theLoan.categoryID = self.selectedCategoryID;
-    
-    NSString *note = (self.noteTextField.text) ? self.noteTextField.text : @"";
-    theLoan.note = note;
+    loan.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    loan.friendID = self.selectedFriendID;
+    loan.categoryID = self.selectedCategoryID;
+    loan.note = self.noteTextField.text;
 }
 
 - (void)resetFields
@@ -170,13 +165,13 @@ const NSInteger kDefaultCategoryID = 0;
 {
     [super prepareForSegue:segue sender:sender];
     
-    if ([[segue identifier] isEqualToString:@"CategoriesSegue"])
+    if ([[segue identifier] isEqualToString:@"CategorySegue"])
     {
         [self hideKeyboard];
         
-        CategoriesViewController *categoriesViewController = [segue destinationViewController];
-        categoriesViewController.delegate = self;
-        categoriesViewController.selectedCategoryID = self.selectedCategoryID;
+        CategoryViewController *categoryViewController = [segue destinationViewController];
+        categoryViewController.delegate = self;
+        categoryViewController.selectedCategoryID = self.selectedCategoryID;
     }
 }
 
@@ -201,9 +196,9 @@ const NSInteger kDefaultCategoryID = 0;
 }
 
 
-#pragma mark - CategoriesViewControllerDelegate methods
+#pragma mark - CategoryViewControllerDelegate methods
 
-- (void)categoriesViewController:(CategoriesViewController *)categoriesViewController didSelectCategoryID:(NSNumber *)categoryID
+- (void)categoryViewController:(CategoryViewController *)categoryViewController didSelectCategoryID:(NSNumber *)categoryID
 {
     [self.navigationController popViewControllerAnimated:YES];
     

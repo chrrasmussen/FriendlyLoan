@@ -11,7 +11,7 @@
 
 @protocol EditLoanViewControllerDelegate;
 
-@interface EditLoanViewController : AbstractLoanViewController
+@interface EditLoanViewController : AbstractLoanViewController <UIActionSheetDelegate>
 
 @property (nonatomic, weak) id<EditLoanViewControllerDelegate> delegate;
 
@@ -23,5 +23,6 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)changeLentState:(id)sender;
+- (IBAction)deleteLoan:(id)sender;
 
 @end

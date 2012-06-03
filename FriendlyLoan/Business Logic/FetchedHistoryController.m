@@ -46,7 +46,7 @@
 //- (void)performFetch
 //{
 //    // Remove cache if date has changed
-//    static NSDate *lastFetchDate;
+//    static NSDate *lastFetchDate = nil;
 //    if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]])
 //        [NSFetchedResultsController deleteCacheWithName:@"HistoryCache"];
 //    

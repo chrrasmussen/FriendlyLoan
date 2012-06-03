@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-#import "CategoriesViewControllerDelegate.h"
+#import "CategoryViewControllerDelegate.h"
 
 
 @class Loan;
 
-@interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoriesViewControllerDelegate>
+@interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoryViewControllerDelegate>
 
 @property (nonatomic) BOOL lentStatus;
 @property (nonatomic, strong) NSNumber *selectedFriendID;

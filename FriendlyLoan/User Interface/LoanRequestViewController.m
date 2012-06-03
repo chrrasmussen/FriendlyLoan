@@ -76,7 +76,7 @@ enum {
 
 - (IBAction)decideLater:(id)sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
@@ -97,7 +97,7 @@ enum {
 //    [self updateSelectedCategoryID:self.loan.categoryID];
 //    
 //    // Update GUI
-//    self.amountTextField.text = [self.loan.absoluteAmount stringValue];
+//    self.amountTextField.text = [[self.loan absoluteAmount] stringValue];
 //    self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
 //    self.noteTextField.text = self.loan.note;
 }

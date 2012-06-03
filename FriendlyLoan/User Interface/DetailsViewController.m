@@ -11,17 +11,20 @@
 
 #import "LoanManager.h"
 
+#import "LocationViewController.h"
 #import "EditLoanViewController.h"
 
 
-const CLLocationDistance kMapViewLocationDistance = 500;
+const int kNoteTableViewCellIndex = 2;
 
 
-@implementation DetailsViewController
+@implementation DetailsViewController {
+    BOOL _loanIsDeleted;
+}
 
 @synthesize loan;
-@synthesize lentDescriptionLabel, lentPrepositionLabel;
-@synthesize amountLabel, friendLabel, categoryLabel, noteLabel, timeStampLabel, mapView;
+@synthesize friendImageView, titleLabel, categoryLabel, noteLabel, timeStampLabel;
+@synthesize categoryImageView;
 
 
 - (void)didReceiveMemoryWarning
@@ -38,9 +41,6 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self clipMapView];
-    [self updateViewInfo];
 }
 
 - (void)viewDidUnload
@@ -53,6 +53,10 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    if (_loanIsDeleted == NO) {
+        [self updateViewInfo];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,6 +96,10 @@ const CLLocationDistance kMapViewLocationDistance = 500;
         editLoanViewController.delegate = self;
         editLoanViewController.loan = self.loan;
     }
+    else if ([[segue identifier] isEqualToString:@"LocationSegue"]) {
+        LocationViewController *locationViewController = [segue destinationViewController];
+        locationViewController.locationCoordinate = [self.loan coordinate];
+    }
 }
 
 
@@ -104,8 +112,15 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController
 {
-    [self updateViewInfo];
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)editLoanViewControllerDidDeleteLoan:(EditLoanViewController *)editLoanViewController
+{
+    _loanIsDeleted = YES;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 
@@ -113,9 +128,29 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Hide map view
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
-    return (self.loan.location != nil) ? rows : rows - 1;
+    rows -= ([self.loan.note length] == 0) ? 1 : 0;
+    rows -= ([self.loan hasLocation] == NO) ? 1 : 0;
+    
+    return rows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == kNoteTableViewCellIndex && [self.loan.note length] == 0) {
+        indexPath = [NSIndexPath indexPathForRow:(indexPath.row + 1) inSection:indexPath.section];
+    }
+    
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == kNoteTableViewCellIndex && [self.loan.note length] == 0) {
+        indexPath = [NSIndexPath indexPathForRow:(indexPath.row + 1) inSection:indexPath.section];
+    }
+    
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 //- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -130,53 +165,46 @@ const CLLocationDistance kMapViewLocationDistance = 500;
 
 - (void)updateViewInfo
 {
-    self.lentDescriptionLabel.text = ([loan lentValue] == YES) ? NSLocalizedString(@"Lent", nil) : NSLocalizedString(@"Borrowed", nil);
-    self.lentPrepositionLabel.text =  ([loan lentValue] == YES) ? NSLocalizedString(@"To", nil) : NSLocalizedString(@"From", nil);
+    NSString *amountText = [loan amountPresentation];
+    NSString *friendText = [loan friendFullName];
     
-    self.amountLabel.text = [[loan absoluteAmount] stringValue];
-    self.friendLabel.text = [loan friendFullName];
-    self.categoryLabel.text = [loan categoryName];
-    self.noteLabel.text = loan.note;
+    BOOL settled = [loan settledValue];
+    BOOL lent = [loan lentValue];
+    
+    NSString *format = nil;
+    if (settled == NO) {
+        if (lent == YES) {
+            format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
+        }
+        else {
+            format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
+        }
+    }
+    else {
+        if (lent == YES) {
+            format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
+        }
+        else {
+            format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");
+        }
+    }
+    
+    self.titleLabel.text = [NSString stringWithFormat:format, amountText, friendText];
+    
+    self.categoryLabel.text = [self.loan categoryName];
+    self.categoryImageView.image = [self.loan categoryImage];
+    
+    self.noteLabel.text = self.loan.note;
     
     // Display date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    NSString *formattedDateString = [dateFormatter stringFromDate:loan.createdAt];
+    NSString *formattedDateString = [dateFormatter stringFromDate:self.loan.createdAt];
     self.timeStampLabel.text = formattedDateString;
     
-    [self showLocationInfo];
-}
-
-- (void)clipMapView
-{
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    
-    CGRect rect = self.mapView.bounds;
-    CGFloat radius = 9;
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, NULL, CGRectGetMinX(rect), CGRectGetMinY(rect));
-    CGPathAddArcToPoint(path, NULL, CGRectGetMinX(rect), CGRectGetMaxY(rect), CGRectGetMidX(rect), CGRectGetMaxY(rect), radius);
-    CGPathAddArcToPoint(path, NULL, CGRectGetMaxX(rect), CGRectGetMaxY(rect), CGRectGetMaxX(rect), CGRectGetMidY(rect), radius);
-    CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(rect), CGRectGetMinY(rect));
-    CGPathCloseSubpath(path);
-    maskLayer.path = path;
-    CGPathRelease(path);
-    
-    self.mapView.layer.mask = maskLayer;
-}
-
-- (void)showLocationInfo
-{
-    if (loan.location != nil)
-    {
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([loan coordinate], kMapViewLocationDistance, kMapViewLocationDistance);
-        [self.mapView setRegion:region animated:NO];
-        
-        [self.mapView addAnnotation:loan];
-    }
+    [self.tableView reloadData];
 }
 
 @end

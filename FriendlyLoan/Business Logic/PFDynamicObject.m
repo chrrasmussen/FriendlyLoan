@@ -11,10 +11,10 @@
 
 
 // Prototypes
-NSString *propertyNameForSetter(NSString *method);
-BOOL resolvePropertyForClass(NSString *targetPropertyName, Class class);
-id accessorGetter(id self, SEL _cmd);
-void accessorSetter(id self, SEL _cmd, id value);
+void addMethodsToClassForPropertiesInClass(Class targetClass, Class sourceClass);
+void addMethodsToClassForProperty(Class targetClass, objc_property_t property);
+void addGetterMethodToClass(Class targetClass, NSString *method, NSString *propertyName);
+void addSetterMethodToClass(Class targetClass, NSString *method, NSString *propertyName);
 
 
 @implementation PFDynamicObject
@@ -26,17 +26,12 @@ void accessorSetter(id self, SEL _cmd, id value);
     return nil;
 }
 
-//+ (NSDictionary *)databaseFieldToPropertyMappings
-//{
-//    return [NSDictionary dictionary];
-//}
-
 
 #pragma mark - Convenience methods for creating an object
 
 + (id)object
 {
-    return [[[self class] alloc] init];
+    return [[self alloc] init];
 }
 
 + (id)objectWithoutDataWithObjectId:(NSString *)objectId
@@ -47,109 +42,127 @@ void accessorSetter(id self, SEL _cmd, id value);
     return object;
 }
 
+
 - (id)init
 {
     return [super initWithClassName:[[self class] databaseClassName]];
 }
 
 
-#pragma mark - Resolve property methods
+#pragma mark - Dynamically add methods for properties
 
-+ (BOOL)resolveInstanceMethod:(SEL)selector
++ (void)initialize
 {
-    // Use the existing implementation if it exists
-    if ([super resolveInstanceMethod:selector] == YES) {
-        return YES;
-    }
+//    NSLog(@"Initalizing class:%@", NSStringFromClass(self));
+    [self addMethodsToClass:self forPropertiesInClass:self];
+}
+
+// TODO: Potential problem: All methods are added to the PFObject class. What if a subclass has a specific implementation? It should actually not be a problem.
+// TODO: I addMethod-funksjonen, bør jeg sjekke om klassen allerede har en implementasjon?
++ (id)objectWithDataObject:(PFObject *)object
+{
+    [self addMethodsToClass:[object class] forPropertiesInClass:self];
     
-    // Get target property name
-    NSString *method = NSStringFromSelector(selector);
-    BOOL isSetter = [method hasPrefix:@"set"] && [method hasSuffix:@":"];
-    NSString *targetPropertyName = method;
-    if (isSetter) {
-        targetPropertyName = propertyNameForSetter(method);
-    }
-    
-    // Search for property in class and its superclasses
-    Class class = [self class];
-    while (class != [PFDynamicObject class]) {
-        if (resolvePropertyForClass(targetPropertyName, class)) {
-            // Add custom implementation
-            if (isSetter) {
-                class_addMethod(class, selector, (IMP)accessorSetter, "v@:@");
-            }
-            else {
-                class_addMethod(class, selector, (IMP)accessorGetter, "@@:");
-            }
-            
-            return YES;
-        }
-        
-        class = class_getSuperclass(class);
-    }
-    
-    return NO;
+    return object;
+}
+
+
++ (void)addMethodsToClass:(Class)targetClass forPropertiesInClass:(Class)sourceClass
+{
+    addMethodsToClassForPropertiesInClass(targetClass, sourceClass);
 }
 
 @end
 
 
-// TODO: Check if class responds to selector instead - May be problematic
-NSString *propertyNameForSetter(NSString *method)
+void addMethodsToClassForPropertiesInClass(Class targetClass, Class sourceClass)
 {
-    // Get name from setter method
-    NSString *name = [method substringWithRange:NSMakeRange(3, method.length - 4)];
-    
-    // Keep name if length is 2 or below
-    if (name.length <= 1) {
-        return name;
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList(sourceClass, &outCount);
+    for (i = 0; i < outCount; i++) {
+        objc_property_t property = properties[i];
+        addMethodsToClassForProperty(targetClass, property);
     }
-    
-    // Get letter casing for second and third letter
-    NSCharacterSet *uppercaseLetterCharacterSet = [NSCharacterSet uppercaseLetterCharacterSet];
-    BOOL isSecondLetterUppercase = [uppercaseLetterCharacterSet characterIsMember:[name characterAtIndex:1]];
-    BOOL isThirdLetterUppercase = [uppercaseLetterCharacterSet characterIsMember:[name characterAtIndex:2]];
-    
-    // Keep the first letter casing if the following two characters are uppercase
-    NSString *firstLetter = [name substringToIndex:1];
-    BOOL shouldKeepFirstLetterCasing = (isSecondLetterUppercase && isThirdLetterUppercase);
-    if (shouldKeepFirstLetterCasing == NO) {
-        firstLetter = [firstLetter lowercaseString];
-    }
-    
-    // Concatenate first letter with the rest of the string
-    NSString *restOfString = [name substringFromIndex:1];
-    NSString *concatenatedString = [firstLetter stringByAppendingString:restOfString];
-    return concatenatedString;
+    free(properties);
 }
 
-BOOL resolvePropertyForClass(NSString *targetPropertyName, Class class) {
-    unsigned int outCount, i;
-    objc_property_t *properties = class_copyPropertyList(class, &outCount);
-    for (i = 0; i < outCount; i++) {
-        // Get property name
-        objc_property_t property = properties[i];
-        NSString *propertyName = [NSString stringWithUTF8String:property_getName(property)];
-        
-        // Return if property is found
-        if ([targetPropertyName isEqualToString:propertyName]) {
-            return YES;
+void addMethodsToClassForProperty(Class targetClass, objc_property_t property)
+{
+    // Parse property attributes
+    NSString *propertyName = [NSString stringWithUTF8String:property_getName(property)];
+    NSString *propertyAttributes = [NSString stringWithUTF8String:property_getAttributes(property)];
+    
+    BOOL isObjectType = NO;
+    BOOL isDyamic = NO;
+    BOOL isReadOnly = NO;
+    BOOL isNonatomic = NO;
+    NSString *getter;
+    NSString *setter;
+    
+    NSArray *attributes = [propertyAttributes componentsSeparatedByString:@","];
+    for (NSString *attribute in attributes) {
+        if ([attribute hasPrefix:@"T"]) { // Type
+            isObjectType = [attribute hasPrefix:@"T@"];
+        }
+        else if ([attribute hasPrefix:@"R"]) { // Read-only
+            isReadOnly = YES;
+        }
+        else if ([attribute hasPrefix:@"D"]) { // Dynamic
+            isDyamic = YES;
+        }
+        else if ([attribute hasPrefix:@"N"]) { // Nonatomic
+            isNonatomic = YES;
+        }
+        else if ([attribute hasPrefix:@"G"]) { // Getter
+            getter = [attribute substringFromIndex:1];
+        }
+        else if ([attribute hasPrefix:@"S"]) { // Setter
+            setter = [attribute substringFromIndex:1];
         }
     }
     
-    return NO;
+    // Validate
+    if (!(isObjectType == YES && isDyamic == YES)) {
+        return;
+    }
+    
+    // Add getter
+    if (getter == nil) {
+        getter = propertyName;
+    }
+    
+    addGetterMethodToClass(targetClass, getter, propertyName);
+    
+    // Add setter
+    if (isReadOnly == YES) {
+        return;
+    }
+    
+    if (setter == nil) {
+        NSString *uppercaseFirstLetter = [[propertyName substringToIndex:1] uppercaseString];
+        NSString *restOfString = [propertyName substringFromIndex:1];
+        setter = [NSString stringWithFormat:@"set%@%@:", uppercaseFirstLetter, restOfString];
+    }
+    
+    addSetterMethodToClass(targetClass, setter, propertyName);
 }
 
-id accessorGetter(id self, SEL _cmd)
+void addGetterMethodToClass(Class targetClass, NSString *method, NSString *propertyName)
 {
-    NSString *key = NSStringFromSelector(_cmd);
-    
-    return [self objectForKey:key];
+    id getter = (id)^(id s) {
+//        NSLog(@"<%@> -%@ -- %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), propertyName);
+        return [s objectForKey:propertyName];
+    };
+    IMP imp = imp_implementationWithBlock((__bridge void *)getter);
+    class_addMethod(targetClass, NSSelectorFromString(method), imp, "@@:");
 }
 
-void accessorSetter(id self, SEL _cmd, id value)
+void addSetterMethodToClass(Class targetClass, NSString *method, NSString *propertyName)
 {
-    NSString *key = propertyNameForSetter(NSStringFromSelector(_cmd));
-    
-    [self setObject:value forKey:key];
+    id setter = ^(id s, id value) {
+//        NSLog(@"<%@> -%@ -- %@ = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), propertyName, value);
+        [s setObject:value forKey:propertyName];
+    };
+    IMP imp = imp_implementationWithBlock((__bridge void *)setter);
+    class_addMethod(targetClass, NSSelectorFromString(method), imp, "v@:@");
 }

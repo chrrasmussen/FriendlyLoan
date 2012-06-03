@@ -44,31 +44,27 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+    if ([viewController isKindOfClass:[UINavigationController class]] == NO) {
         return YES;
+    }
     
     UINavigationController *navigationController = (UINavigationController *)viewController;
     UIViewController *rootViewControllerInNavigationController = [navigationController.viewControllers objectAtIndex:0];
     UIViewController *visibleViewController = navigationController.visibleViewController;
     
     // Add Loan-tab
-    if ([rootViewControllerInNavigationController isKindOfClass:[AddLoanViewController class]])
-    {
+    if ([rootViewControllerInNavigationController isKindOfClass:[AddLoanViewController class]]) {
         AddLoanViewController *addLoanViewController = (AddLoanViewController *)rootViewControllerInNavigationController;
         
         // Add Loan View is visible
-        if (visibleViewController == addLoanViewController)
-        {
-//            if (addLoanViewController.hasChanges == NO)
-//            {
+        if (visibleViewController == addLoanViewController) {
+//            if (addLoanViewController.hasChanges == NO) {
 //                [addLoanViewController.amountTextField becomeFirstResponder];
 //            }
         }
         // Details View is visible
-        else if ([visibleViewController isKindOfClass:[DetailsViewController class]])
-        {
+        else {
             [addLoanViewController popToBlankViewControllerAnimated:YES];
-//            [addLoanViewController.amountTextField becomeFirstResponder];
         }
     }
     

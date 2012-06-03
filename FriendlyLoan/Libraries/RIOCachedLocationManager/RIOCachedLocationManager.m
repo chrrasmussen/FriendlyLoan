@@ -72,8 +72,9 @@
     if (status == kCLAuthorizationStatusAuthorized)
         [self updateLocationIfNecessary];
     
-    if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didChangeAuthorizationStatus:)])
+    if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didChangeAuthorizationStatus:)]) {
         [self.delegate cachedLocationManager:self didChangeAuthorizationStatus:status];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -87,15 +88,17 @@
         
         [self startExpirationTimer];
         
-        if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didRetrieveLocation:)])
+        if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didRetrieveLocation:)]) {
             [self.delegate cachedLocationManager:self didRetrieveLocation:newLocation];
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didFailWithError:)])
+    if ([self.delegate respondsToSelector:@selector(cachedLocationManager:didFailWithError:)]) {
         [self.delegate cachedLocationManager:self didFailWithError:error];
+    }
 }
 
 
@@ -172,8 +175,9 @@
 {
     [self updateLocationIfNecessary];
     
-    if ([self.delegate respondsToSelector:@selector(cachedLocationManagerDidExpireCachedLocation:)])
+    if ([self.delegate respondsToSelector:@selector(cachedLocationManagerDidExpireCachedLocation:)]) {
         [self.delegate cachedLocationManagerDidExpireCachedLocation:self];
+    }
 }
 
 

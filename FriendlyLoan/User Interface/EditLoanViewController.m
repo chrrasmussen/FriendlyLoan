@@ -17,6 +17,11 @@ enum {
     kLendSegmentIndex
 };
 
+enum {
+    kActionSheetDeleteLoanButtonIndex = 0,
+    kActionSheetCancelButtonIndex
+};
+
 
 @implementation EditLoanViewController
 
@@ -112,6 +117,28 @@ enum {
     self.lentStatus = ([self.lentSegmentedControl selectedSegmentIndex] == kLendSegmentIndex);
 }
 
+- (IBAction)deleteLoan:(id)sender
+{
+    NSString *cancelTitle = NSLocalizedString(@"Cancel", @"Cancel button title in action sheet in edit loan view controller");
+    NSString *deleteTitle = NSLocalizedString(@"Delete Loan", @"Delete button title in action sheet in edit loan view controller");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelTitle destructiveButtonTitle:deleteTitle otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+}
+
+
+#pragma mark - UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == kActionSheetDeleteLoanButtonIndex) {
+        [[LoanManager sharedManager] deleteLoan:self.loan];
+        
+        if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidDeleteLoan:)]) {
+            [self.delegate editLoanViewControllerDidDeleteLoan:self];
+        }
+    }
+}
+
 
 #pragma mark - Private methods
 
@@ -130,7 +157,7 @@ enum {
     [self updateSelectedCategoryID:self.loan.categoryID];
     
     // Update GUI
-    self.amountTextField.text = [self.loan.absoluteAmount stringValue];
+    self.amountTextField.text = [[self.loan absoluteAmount] stringValue];
     self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
     self.noteTextField.text = self.loan.note;
 }

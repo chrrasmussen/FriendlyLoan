@@ -18,13 +18,12 @@
 
 @property (nonatomic, strong) Loan *loan;
 
-@property (nonatomic, strong) IBOutlet UILabel *lentDescriptionLabel;
-@property (nonatomic, strong) IBOutlet UILabel *lentPrepositionLabel;
-@property (nonatomic, strong) IBOutlet UILabel *amountLabel;
-@property (nonatomic, strong) IBOutlet UILabel *friendLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *friendImageView;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, strong) IBOutlet UILabel *noteLabel;
 @property (nonatomic, strong) IBOutlet UILabel *timeStampLabel;
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+
+@property (nonatomic, strong) IBOutlet UIImageView *categoryImageView;
 
 @end

@@ -12,13 +12,11 @@
 #import "RIOCachedLocationManagerDelegate.h"
 
 
-@class PersistentStore;
 @class RIOCachedLocationManager;
 @protocol LoanManagerLocationServicesDelegate;
 
 @interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
 
-@property (nonatomic, strong, readonly) PersistentStore *persistentStore;
 @property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
 
 @property (nonatomic, weak) id locationServicesDelegate;
@@ -32,7 +30,6 @@
 
 // Create loan manager
 + (id)sharedManager;
-- (id)initWithPersistentStore:(PersistentStore *)persistentStore;
 
 // Controlling loan manager
 - (void)handleApplicationDidBecomeActive;
@@ -44,6 +41,7 @@
 - (Loan *)addLoanWithUpdateHandler:(void (^)(Loan *loan))updateHandler;
 - (void)updateLoan:(Loan *)loan withUpdateHandler:(void (^)(Loan *loan))updateHandler;
 - (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
+- (void)deleteLoan:(Loan *)loan;
 
 // Backing store proxy methods
 - (NSManagedObjectContext *)managedObjectContext;
@@ -57,3 +55,6 @@
 
 
 @end
+
+// Notifications
+

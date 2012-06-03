@@ -12,14 +12,13 @@
 #import "BackendManagerLoanRequestDelegate.h"
 
 
-@class PersistentStore, LoanManager, BackendManager;
+@class LoanManager, BackendManager;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LoanManagerLocationServicesDelegate, BackendManagerLoanRequestDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, strong, readonly) PersistentStore *persistentStore;
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
 @property (nonatomic, strong, readonly) BackendManager *backendManager;
 

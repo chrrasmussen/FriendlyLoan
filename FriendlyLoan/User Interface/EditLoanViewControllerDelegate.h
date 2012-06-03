@@ -16,5 +16,6 @@
 @optional
 - (void)editLoanViewControllerDidCancel:(EditLoanViewController *)editLoanViewController;
 - (void)editLoanViewControllerDidSave:(EditLoanViewController *)editLoanViewController;
+- (void)editLoanViewControllerDidDeleteLoan:(EditLoanViewController *)editLoanViewController;
 
 @end

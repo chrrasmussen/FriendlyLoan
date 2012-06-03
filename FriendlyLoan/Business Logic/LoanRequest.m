@@ -11,7 +11,7 @@
 
 @implementation LoanRequest
 
-@dynamic amount, categoryId, location, note, recipient, sender, settled;
+@dynamic amount, categoryId, location, note, recipient, sender, settled, intReadonlyGetter;
 
 + (NSString *)databaseClassName
 {

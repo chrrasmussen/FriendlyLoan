@@ -153,6 +153,13 @@
     }
 }
 
+#pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 54;
+}
+
 
 #pragma mark - Fetched results controller
 
@@ -160,7 +167,6 @@
 {
     if (__fetchedResultsController == nil)
     {
-        NSLog(@"FetchedResultsController");
         [self setUpFetchedResultsController];
         [self performFetch];
     }
@@ -224,29 +230,38 @@
 {
     Loan *loan = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    UIImage *image = [loan categoryImage];
-    UIImage *highlightedImage = [loan categoryHighlightedImage];
+    UIImage *lentImage = [UIImage imageNamed:@"UpArrow-Normal"];
+    UIImage *lentHighlightedImage = [UIImage imageNamed:@"UpArrow-Highlighted"];
+    UIImage *borrowedImage = [UIImage imageNamed:@"DownArrow-Normal"];
+    UIImage *borrowedHighlightedImage = [UIImage imageNamed:@"DownArrow-Highlighted"];
+//    UIImage *image = [loan categoryImage];
+//    UIImage *highlightedImage = [loan categoryHighlightedImage];
     
+    NSString *amountText = [loan amountPresentation];
     NSString *friendText = [loan friendFullName];
-    NSString *amountText = [loan.absoluteAmount stringValue];
     
     BOOL settled = [loan settledValue];
     BOOL lent = [loan lentValue];
     
+    UIImage *image = (lent == YES) ? lentImage : borrowedImage;
+    UIImage *highlightedImage = (lent == YES) ? lentHighlightedImage : borrowedHighlightedImage;
+    
     NSString *format = nil;
-    if (settled == NO)
-    {
-        if (lent == YES)
+    if (settled == NO) {
+        if (lent == YES) {
             format = NSLocalizedString(@"Lent %1$@ to %2$@", @"Outgoing loans in History-tab");
-        else
+        }
+        else {
             format = NSLocalizedString(@"Borrowed %1$@ from %2$@", @"Incoming loans in History-tab");
+        }
     }
-    else
-    {
-        if (lent == YES)
+    else {
+        if (lent == YES) {
             format = NSLocalizedString(@"Paid back %1$@ to %2$@", @"Settled incoming loans in History-tab");
-        else
+        }
+        else {
             format = NSLocalizedString(@"Got back %1$@ from %2$@", @"Settled outgoing loans in History-tab");
+        }
     }
     
     cell.textLabel.text = [NSString stringWithFormat:format, amountText, friendText];
@@ -264,7 +279,7 @@
     fetchRequest.fetchBatchSize = 20;
     
     // Add sort descriptor
-    NSSortDescriptor *acceptedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"requestAccepted" ascending:NO];
+    NSSortDescriptor *acceptedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"requestAccepted" ascending:YES];
     NSSortDescriptor *createdAtSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:acceptedSortDescriptor, createdAtSortDescriptor, nil];
     
@@ -291,7 +306,7 @@
 - (void)performFetch
 {
     // Remove cache if date has changed
-    static NSDate *lastFetchDate;
+    static NSDate *lastFetchDate = nil;
     if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]])
         [NSFetchedResultsController deleteCacheWithName:@"HistoryCache"];
     
