@@ -19,7 +19,7 @@ extern NSString * const kPlaceholderImageName;
 
 @class FriendsSearchResultsController;
 
-@interface FriendsViewController : UITableViewController <UISearchDisplayDelegate>;
+@interface FriendsViewController : UITableViewController <UISearchDisplayDelegate, UIAlertViewDelegate>;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *sortedResult;

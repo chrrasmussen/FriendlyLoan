@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BackendManagerLoginDelegate.h"
 
 
-@interface SettingsViewController : UITableViewController <BackendManagerLoginDelegate>
+@interface SettingsViewController : UITableViewController
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *logInTableViewCell;
 @property (nonatomic, strong) IBOutlet UITableViewCell *inviteFriendsTableViewCell;

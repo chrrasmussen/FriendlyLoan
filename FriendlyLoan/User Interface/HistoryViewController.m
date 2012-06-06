@@ -307,8 +307,9 @@
 {
     // Remove cache if date has changed
     static NSDate *lastFetchDate = nil;
-    if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]])
+    if (lastFetchDate == nil || ![lastFetchDate isEqualToDateIgnoringTime:[NSDate date]]) {
         [NSFetchedResultsController deleteCacheWithName:@"HistoryCache"];
+    }
     
     // Perform fetch and handle error
     NSError *error = nil;

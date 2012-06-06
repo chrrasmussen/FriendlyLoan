@@ -99,7 +99,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 - (void)setUpObservers
 {
     [[BackendManager sharedManager] addObserver:self forKeyPath:@"loanRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
-    [[BackendManager sharedManager] addObserver:self forKeyPath:@"friendRequestCount" options:NSKeyValueObservingOptionInitial |NSKeyValueObservingOptionNew context:NULL];
+    [[BackendManager sharedManager] addObserver:self forKeyPath:@"friendRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)tearDownObservers

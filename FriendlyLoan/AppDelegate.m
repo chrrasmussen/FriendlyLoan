@@ -29,17 +29,18 @@
 {
     [self setUpManagers];
     [self.backendManager handleApplicationDidFinishLaunching];
+    [self setUpNotificationObservers];
     
 //    LoanRequest *lr = [LoanRequest object];
 //    lr.note = @"abc";
     
-    Test *test = [[Test alloc] init];
-    test.test = @"Elg";
-    test.note = @"abc";
-    
-    LoanRequest *lr = [[LoanRequest alloc] init];
-    lr.note = @"note";
-    NSLog(@"Wee:%@ + %@ + %@", test.test, test.note, lr.note);
+//    Test *test = [[Test alloc] init];
+//    test.test = @"Elg";
+//    test.note = @"abc";
+//    
+//    LoanRequest *lr = [[LoanRequest alloc] init];
+//    lr.note = @"note";
+//    NSLog(@"Wee:%@ + %@ + %@", test.test, test.note, lr.note);
     
     return YES;
 }
@@ -111,45 +112,56 @@
 }
 
 
-#pragma mark - LoanManagerLocationServicesDelegate
-
-- (void)loanManagerNeedLocationServices:(LoanManager *)loanManager
-{
-    [self displayLocationWarning];
-}
-
-- (void)loanManagerNeedLocationServicesForThisApp:(LoanManager *)loanManager
-{
-    [self displayLocationWarning];
-}
-
-
-#pragma mark - BackendManagerLoanRequestDelegate
-
-- (void)backendManager:(BackendManager *)backendManager displayLoanRequest:(Loan *)loan
-{
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
-//    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoanRequestNavigationController"];
-//    // TODO: Set loan on LoanRequestViewController
-//    [self.window.rootViewController presentModalViewController:navigationController animated:YES];
-}
-
-
 #pragma mark - Private methods
 
 - (void)setUpManagers
 {
     _loanManager = [[LoanManager alloc] init];
-    _loanManager.locationServicesDelegate = self;
-    
     _backendManager = [[BackendManager alloc] initWithLoanManager:self.loanManager];
-    _backendManager.loanRequestDelegate = self;
 }
 
-- (void)displayLocationWarning
+- (void)setUpNotificationObservers
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Service Disabled", @"Title of location warning") message:NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Service for this app.", @"Message of location warning") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Button text on location warning") otherButtonTitles:nil];
+    typeof(self) bself = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLNeedsLocationServices object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself promptUserToEnableLocationServices];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLNeedsLocationServicesForThisApp object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself promptUserToEnableLocationServicesForThisApp];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLHasNewLoanRequests object:nil queue:nil usingBlock:^(NSNotification *note) {
+        Loan *loan = [note.userInfo objectForKey:@"loan"];
+        [bself presentLoanRequest:loan];
+    }];
+}
+
+- (void)promptUserToEnableLocationServices
+{
+    NSString *title = NSLocalizedString(@"Location Services Disabled", @"Title of alert view");
+    NSString *message = NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Services.", @"Message of alert view");
+    NSString *cancelButtonTitle = NSLocalizedString(@"OK", @"Cancel button text in alert view");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     [alertView show];
+}
+
+- (void)promptUserToEnableLocationServicesForThisApp
+{
+    NSString *title = NSLocalizedString(@"Location Services Disabled for this App", @"Title of alert view");
+    NSString *message = NSLocalizedString(@"To re-enable, please go to Settings and turn on Location Services for this app.", @"Message of alert view");
+    NSString *cancelButtonTitle = NSLocalizedString(@"OK", @"Cancel button text in alert view");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (void)presentLoanRequest:(Loan *)loan
+{
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
+//    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoanRequestNavigationController"];
+//    // TODO: Set loan on LoanRequestViewController
+//    [self.window.rootViewController presentModalViewController:navigationController animated:YES];
 }
 
 @end

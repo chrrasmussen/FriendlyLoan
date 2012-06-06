@@ -116,15 +116,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Clear debt
     [self settleDebtForIndexPath:indexPath];
-    
-    // Delete row from data source
-    [self.sortedResult removeObjectAtIndex:indexPath.row];
-    
-    // Delete row from table view
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -159,6 +151,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 //    return YES;
 //}
 
+
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -174,6 +167,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     }
 }
 
+
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -186,6 +180,15 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     
     return __fetchedResultsController;
 }
+
+
+#pragma mark - UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%@ %d", NSStringFromSelector(_cmd), buttonIndex);
+}
+
 
 #pragma mark - Private methods
 
@@ -318,6 +321,23 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
     
     [[LoanManager sharedManager] settleDebt:debt forFriendID:friendID];
+    
+    // Delete row from data source
+    [self.sortedResult removeObjectAtIndex:indexPath.row];
+    
+    // Delete row from table view
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)promptUserToConfirmSettle
+{
+    NSString *title = NSLocalizedString(@"Settle Loan", @"Title of alert view");
+    NSString *message = NSLocalizedString(@"When settling loans, the current settings for \"Attach Location\" and \"Share Loan with Friends\" in the Add Loan-tab are used. This message will only be displayed once.", @"Message of alert view");
+    NSString *confirmButtonTitle = NSLocalizedString(@"Settle", @"Confirm settle button in alert view");
+    NSString *cancelButtonTitle = NSLocalizedString(@"Cancel", @"Cancel button text in alert view");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:confirmButtonTitle, nil];
+    [alertView show];
 }
 
 @end

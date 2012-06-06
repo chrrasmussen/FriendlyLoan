@@ -9,9 +9,6 @@
 #import "BackendManager.h"
 #import <Parse/Parse.h>
 
-#import "BackendManagerLoginDelegate.h"
-#import "BackendManagerLoanRequestDelegate.h"
-
 #import "LoanManager.h"
 
 
@@ -29,9 +26,6 @@
 static BackendManager *_sharedManager;
 
 @synthesize loanManager = _loanManager;
-
-@synthesize loginDelegate;
-@synthesize loanRequestDelegate;
 
 @synthesize userFullName;
 
@@ -76,11 +70,10 @@ static BackendManager *_sharedManager;
         
         [self updateLoanRequestCount];
         
-        typeof(self) bself = self;
-        [self updateLoanRequestsWithCompletionHandler:^(BOOL succeeded, NSError *error) {
-            if ([bself.loanRequestDelegate respondsToSelector:@selector(backendManager:displayLoanRequest:)]) {
-                [bself.loanRequestDelegate backendManager:bself displayLoanRequest:nil];
-            }
+//        typeof(self) bself = self;
+        [self updateLoanRequestsWithCompletionHandler:^(NSError *error) {
+//            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:nil forKey:@"loan"]; // TODO: Populate
+//            [[NSNotificationCenter defaultCenter] postNotificationName:FLRecievedLoanRequest object:bself userInfo:userInfo];
         }];
 //        [self updateFriendRequests];
     }
@@ -148,9 +141,7 @@ static BackendManager *_sharedManager;
 
 - (void)logIn
 {
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogIn:)]) {
-        [self.loginDelegate backendManagerWillLogIn:self];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserWillLogInNotification object:self];
     
     // The permissions requested from the user
     NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", nil];
@@ -174,9 +165,7 @@ static BackendManager *_sharedManager;
             
             [self setRemoteNotificationsEnabled:YES];
             
-            if ([self.loginDelegate respondsToSelector:@selector(backendManagerDidSucceedToLogIn:)]) {
-                [self.loginDelegate backendManagerDidSucceedToLogIn:self];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:FLUserDidLogInNotification object:self];
         }
         else {
             if (!error) {
@@ -186,30 +175,21 @@ static BackendManager *_sharedManager;
                 NSLog(@"Uh oh. An error occurred: %@", error);
             }
             
-            if ([self.loginDelegate respondsToSelector:@selector(backendManager:didFailToLogInWithError:)]) {
-                [self.loginDelegate backendManager:self didFailToLogInWithError:error];
-            }
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:FLUserFailedToLogInNotification object:self userInfo:userInfo];
         }
     }];
 }
 
 - (void)logOut
 {
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerWillLogOut:)]) {
-        [self.loginDelegate backendManagerWillLogOut:self];
-    }
-    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserWillLogOutNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserWillLogOutNotification object:self];
     
     [self setRemoteNotificationsEnabled:NO];
     
     [PFUser logOut];
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserDidLogOutNotification object:self];
-    
-    if ([self.loginDelegate respondsToSelector:@selector(backendManagerDidLogOut:)]) {
-        [self.loginDelegate backendManagerDidLogOut:self];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:FLUserDidLogOutNotification object:self];
 }
 
 - (BOOL)isLoggedIn
@@ -240,9 +220,9 @@ static BackendManager *_sharedManager;
         PFUser *user = [PFUser currentUser];
         
         // FIXME: Wrong data type for facebookID?
-        [user setValue:facebookID forKey:@"facebookId"];
-        [user setValue:fullName forKey:@"fullName"];
-        [user setValue:email forKey:@"email"];
+        [user setObject:facebookID forKey:@"facebookId"];
+        [user setObject:fullName forKey:@"fullName"];
+        [user setObject:email forKey:@"email"];
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             NSLog(@"Successfully saved:%@, %@, %@", facebookID, fullName, email);
         }];
@@ -277,8 +257,8 @@ static BackendManager *_sharedManager;
     // TODO: Check if recipient is matched
     
     PFObject *serializedLoan = [loan loanRequestForValues];
-    [serializedLoan setValue:sender forKey:@"sender"];
-    [serializedLoan setValue:recipient forKey:@"recipient"];
+    [serializedLoan setObject:sender forKey:@"sender"];
+    [serializedLoan setObject:recipient forKey:@"recipient"];
     serializedLoan.ACL = [PFACL ACLWithUser:recipient];
     
     [serializedLoan saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -308,7 +288,7 @@ static BackendManager *_sharedManager;
     }];
 }
 
-- (void)updateLoanRequestsWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))completionHandler
+- (void)updateLoanRequestsWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
     PFQuery *query = [PFQuery queryWithClassName:@"LoanRequest"];
 //    query.cachePolicy = kPFCachePolicyNetworkElseCache;
@@ -328,12 +308,12 @@ static BackendManager *_sharedManager;
             
             [self updateLoanRequestCount];
             
-            completionHandler(YES, nil);
+            completionHandler(nil);
         }
         else {
             NSLog(@"Failed to retrieve loans:%@", error);
             
-            completionHandler(NO, error);
+            completionHandler(error);
         }
     }];
 }
@@ -352,6 +332,7 @@ static BackendManager *_sharedManager;
 @end
 
 // Notifications
+NSString * const FLHasNewLoanRequests              = @"FLRecievedLoanRequest";
 NSString * const FLUserWillLogInNotification        = @"FLUserWillLogInNotification";
 NSString * const FLUserDidLogInNotification         = @"FLUserDidLogInNotification";
 NSString * const FLUserFailedToLogInNotification    = @"FLUserFailedToLogInNotification";

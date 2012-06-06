@@ -35,7 +35,7 @@ const NSInteger kShareLoansSection = 0;
 {
     [super viewDidLoad];
     
-    [[BackendManager sharedManager] setLoginDelegate:self];
+    [self setUpNotificationObservers];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 }
@@ -122,40 +122,42 @@ const NSInteger kShareLoansSection = 0;
 }
 
 
-#pragma mark - Backend manager login delegate
-
-- (void)backendManagerWillLogIn:(BackendManager *)backendManager
-{
-    [self startLogIn];
-}
-
-- (void)backendManagerDidSucceedToLogIn:(BackendManager *)backendManager
-{
-    [self endLogIn];
-    
-    [self updateShareLoansSectionWithLogInAnimation:YES];
-}
-
-- (void)backendManager:(BackendManager *)backendManager didFailToLogInWithError:(NSError *)error
-{
-    [self endLogIn];
-    
-    if (error) {
-        NSString *title = NSLocalizedString(@"Failed to Log In", @"Title of alert when failed to log in");
-        NSString *message = NSLocalizedString(@"Please enter the correct username and password.", @"Message of alert when failed to log in");
-        NSString *cancel = NSLocalizedString(@"Close", @"Title of cancel button in alert when failed to log in");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancel otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
-- (void)backendManagerDidLogOut:(BackendManager *)backendManager
-{
-    [self updateShareLoansSectionWithLogInAnimation:NO];
-}
-     
-     
 #pragma mark - Private methods
+
+- (void)setUpNotificationObservers
+{
+    typeof(self) bself = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLUserWillLogInNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself startLogIn];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLUserDidLogInNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself endLogIn];
+        [bself updateShareLoansSectionWithLogInAnimation:YES];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLUserFailedToLogInNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself endLogIn];
+        
+        NSError *error = [note.userInfo objectForKey:@"error"];
+        if (error) {
+            NSString *title = NSLocalizedString(@"Failed to Log In", @"Title of alert when failed to log in");
+            NSString *message = NSLocalizedString(@"Please enter the correct username and password.", @"Message of alert when failed to log in");
+            NSString *cancel = NSLocalizedString(@"Close", @"Title of cancel button in alert when failed to log in");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancel otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLUserWillLogOutNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FLUserDidLogOutNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [bself updateShareLoansSectionWithLogInAnimation:NO];
+    }];
+}
 
 - (BOOL)shouldDisplayLogInSection
 {

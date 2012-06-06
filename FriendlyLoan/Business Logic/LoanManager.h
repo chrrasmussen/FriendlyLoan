@@ -13,13 +13,11 @@
 
 
 @class RIOCachedLocationManager;
-@protocol LoanManagerLocationServicesDelegate;
+
 
 @interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
 
 @property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
-
-@property (nonatomic, weak) id locationServicesDelegate;
 
 @property (nonatomic) BOOL attachLocationValue;
 @property (nonatomic, readonly) BOOL calculatedAttachLocationValue;
@@ -56,5 +54,7 @@
 
 @end
 
-// Notifications
 
+// Notifications
+extern NSString * const FLNeedsLocationServices;
+extern NSString * const FLNeedsLocationServicesForThisApp;

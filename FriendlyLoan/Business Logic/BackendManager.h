@@ -13,15 +13,10 @@
 @class LoanManager;
 @class Loan;
 
-@protocol BackendManagerLoginDelegate, BackendManagerLoanRequestDelegate;
-
 
 @interface BackendManager : NSObject <PF_FBRequestDelegate>
 
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
-
-@property (nonatomic, weak) id<BackendManagerLoginDelegate> loginDelegate;
-@property (nonatomic, weak) id<BackendManagerLoanRequestDelegate> loanRequestDelegate;
 
 
 // Create backend manager
@@ -54,7 +49,7 @@
 @property (nonatomic, readonly) NSUInteger loanRequestCount;
 
 - (void)shareLoanInBackground:(Loan *)loan;
-- (void)updateLoanRequestsWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))completionHandler;
+- (void)updateLoanRequestsWithCompletionHandler:(void (^)(NSError *error))completionHandler;
 
 // Friend methods
 @property (nonatomic, readonly) NSUInteger friendRequestCount;
@@ -63,6 +58,7 @@
 @end
 
 // Notifications
+extern NSString * const FLHasNewLoanRequests;
 extern NSString * const FLUserWillLogInNotification;
 extern NSString * const FLUserDidLogInNotification;
 extern NSString * const FLUserFailedToLogInNotification;

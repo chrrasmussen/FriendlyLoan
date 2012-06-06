@@ -11,8 +11,6 @@
 
 #import "RIOCachedLocationManager.h"
 
-#import "LoanManagerLocationServicesDelegate.h"
-
 #import "RIOComputedState.h"
 
 #import "FetchedHistoryController.h"
@@ -34,7 +32,6 @@
 static LoanManager *_sharedManager;
 
 @synthesize cachedLocationManager = _cachedLocationManager;
-@synthesize locationServicesDelegate;
 @synthesize attachLocationState, shareLoanState;
 
 
@@ -161,7 +158,7 @@ static LoanManager *_sharedManager;
 }
 
 
-#pragma mark - RIOCachedLocationManagerDele'gate methods
+#pragma mark - RIOCachedLocationManagerDelegate methods
 
 // TODO: Move purpose to user interface?
 - (void)setUpCachedLocationManager
@@ -194,7 +191,6 @@ static LoanManager *_sharedManager;
         }
     }
 }
-
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didRetrieveLocation:(CLLocation *)location
 {
 //    NSLog(@"%@", NSStringFromSelector(_cmd));
@@ -245,7 +241,15 @@ static LoanManager *_sharedManager;
     [userDefaults setBool:status forKey:@"attachLocation"];
     [userDefaults synchronize];
     
-    [self.cachedLocationManager setNeedsLocation:status];
+    if ([CLLocationManager locationServicesEnabled] == NO) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:FLNeedsLocationServices object:self];
+    }
+    else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:FLNeedsLocationServicesForThisApp object:self];
+    }
+    else {
+        [self.cachedLocationManager setNeedsLocation:status];
+    }
 }
 
 - (BOOL)calculatedAttachLocationValue
@@ -296,3 +300,8 @@ static LoanManager *_sharedManager;
 }
 
 @end
+
+
+// Notifications
+NSString * const FLNeedsLocationServices             = @"FLNeedsLocationServices";
+NSString * const FLNeedsLocationServicesForThisApp   = @"FLNeedsLocationServicesForThisApp";
