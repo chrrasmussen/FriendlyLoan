@@ -25,8 +25,6 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 @implementation FriendsViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize sortedResult;
-@synthesize friendsSearchResultsController;
 
 
 - (void)didReceiveMemoryWarning

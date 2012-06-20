@@ -13,9 +13,6 @@
     RIOComputedStateHandler _computedStateHandler; 
 }
 
-@synthesize userState = _userState;
-@synthesize systemState = _systemState;
-
 
 #pragma mark - Creating calculated state instance
 

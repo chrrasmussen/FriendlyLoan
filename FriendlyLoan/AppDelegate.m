@@ -13,10 +13,6 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
-
-@synthesize loanManager = _loanManager;
-
 
 #pragma mark - Application lifecycle
 

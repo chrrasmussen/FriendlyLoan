@@ -21,10 +21,6 @@
     NSTimer *_expirationTimer;
 }
 
-@synthesize delegate = _delegate;
-@synthesize accuracyFilter, timeIntervalFilter;
-@synthesize needsLocation = _needsLocation;
-
 
 #pragma mark - Creating location manager
 

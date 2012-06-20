@@ -25,9 +25,6 @@ const NSInteger kDefaultCategoryID = 0;
 
 @implementation AbstractLoanViewController
 
-@synthesize lentStatus, selectedFriendID, selectedCategoryID;
-@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField;
-
 
 #pragma mark - View lifecycle
 

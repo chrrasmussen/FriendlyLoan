@@ -13,9 +13,6 @@
 
 @implementation FriendsSearchResultsController
 
-@synthesize friendsViewController;
-@synthesize searchDisplayResult;
-
 
 - (NSArray *)sortedResult
 {

@@ -31,9 +31,6 @@
 
 static LoanManager *_sharedManager;
 
-@synthesize cachedLocationManager = _cachedLocationManager;
-@synthesize attachLocationState, shareLoanState;
-
 
 #pragma mark - Create loan manager
 

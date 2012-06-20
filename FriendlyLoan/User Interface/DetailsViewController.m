@@ -22,10 +22,6 @@ const int kNoteTableViewCellIndex = 2;
     BOOL _loanIsDeleted;
 }
 
-@synthesize loan;
-@synthesize friendImageView, titleLabel, categoryLabel, noteLabel, timeStampLabel;
-@synthesize categoryImageView;
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -152,11 +148,11 @@ const int kNoteTableViewCellIndex = 2;
 
 - (void)updateViewInfo
 {
-    NSString *amountText = [loan amountPresentation];
-    NSString *friendText = [loan friendFullName];
+    NSString *amountText = [self.loan amountPresentation];
+    NSString *friendText = [self.loan friendFullName];
     
-    BOOL settled = [loan settledValue];
-    BOOL lent = [loan lentValue];
+    BOOL settled = [self.loan settledValue];
+    BOOL lent = [self.loan lentValue];
     
     NSString *format = nil;
     if (settled == NO) {

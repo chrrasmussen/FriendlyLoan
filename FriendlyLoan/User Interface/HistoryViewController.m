@@ -17,7 +17,6 @@
 @implementation HistoryViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize friendID;
 
 
 - (void)didReceiveMemoryWarning

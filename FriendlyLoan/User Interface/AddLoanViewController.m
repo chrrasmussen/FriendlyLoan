@@ -17,8 +17,6 @@
 
 @implementation AddLoanViewController
 
-@synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch, shareLoanSwitch;
-
 
 #pragma mark - View lifecycle
 

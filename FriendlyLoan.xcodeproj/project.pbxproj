@@ -23,9 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		69054CD215753DA500B92A9E /* FriendLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 69054CD115753DA500B92A9E /* FriendLookup.m */; };
 		69054CD615753FCB00B92A9E /* NSString+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 69054CD515753FCB00B92A9E /* NSString+CommonCrypto.m */; };
-		69054CD9157578CB00B92A9E /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 69054CD8157578CB00B92A9E /* Test.m */; };
 		69078BC714E476210080EC68 /* CategoryList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69078BC814E476210080EC68 /* CategoryList.plist */; };
 		690AC9A1156716A000789174 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 690AC9A0156716A000789174 /* LocationViewController.m */; };
 		690AC9BC1567298100789174 /* UpArrow-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 690AC9B41567298100789174 /* UpArrow-Highlighted.png */; };
@@ -77,7 +75,6 @@
 		6940EEF11433CD81003361E6 /* Unknown-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EEC51433CD80003361E6 /* Unknown-Highlighted@2x.png */; };
 		6940EEF21433CD81003361E6 /* Unknown-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EEC61433CD80003361E6 /* Unknown-Normal.png */; };
 		6940EEF31433CD81003361E6 /* Unknown-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6940EEC71433CD80003361E6 /* Unknown-Normal@2x.png */; };
-		694120531429544D00270B2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 694120521429544D00270B2A /* QuartzCore.framework */; };
 		6941FF73141A6D6B00FB3A24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF72141A6D6B00FB3A24 /* UIKit.framework */; };
 		6941FF75141A6D6B00FB3A24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF74141A6D6B00FB3A24 /* Foundation.framework */; };
 		6941FF77141A6D6B00FB3A24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6941FF76141A6D6B00FB3A24 /* CoreGraphics.framework */; };
@@ -101,7 +98,6 @@
 		69497C6B155C72C0009E3EF6 /* RedButton-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C65155C72C0009E3EF6 /* RedButton-Normal@2x.png */; };
 		69497C6F155C77E3009E3EF6 /* MissingProfilePictureDetails.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C6D155C77E3009E3EF6 /* MissingProfilePictureDetails.png */; };
 		69497C70155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69497C6E155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png */; };
-		69497C73155C7BE4009E3EF6 /* LoanRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */; };
 		69515FEA14D39D4900C9569D /* Loan+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 69515FE914D39D4900C9569D /* Loan+Location.m */; };
 		6957B33614F8480B0059922D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B32F14F8480B0059922D /* Icon-72.png */; };
 		6957B33714F8480B0059922D /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B33014F8480B0059922D /* Icon-Small-50.png */; };
@@ -112,7 +108,6 @@
 		6957B33C14F8480B0059922D /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 6957B33514F8480B0059922D /* iTunesArtwork.png */; };
 		6967C4A514531FB500ADDEA1 /* NSCalendar+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6967C4A414531FB500ADDEA1 /* NSCalendar+RIOAdditions.m */; };
 		6971E4EF14E452FF00CBDEFC /* LoanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6971E4EE14E452FF00CBDEFC /* LoanManager.m */; };
-		6971E4F414E4570600CBDEFC /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6971E4F614E4570600CBDEFC /* FriendlyLoan.storyboard */; };
 		6971E50614E4622C00CBDEFC /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6971E50714E4622C00CBDEFC /* DetailsViewController.m */; };
 		6971E51314E46AC500CBDEFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6971E51114E46AC500CBDEFC /* Localizable.strings */; };
 		6971E52D14E4727100CBDEFC /* CategoryList.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6971E52F14E4727100CBDEFC /* CategoryList.strings */; };
@@ -121,7 +116,6 @@
 		697D8C9F141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 697D8C9D141D48E9007FAD86 /* FriendlyLoan.xcdatamodeld */; };
 		69872F82145238E400BA1FE6 /* RIORelativeDate.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69872F84145238E400BA1FE6 /* RIORelativeDate.strings */; };
 		69872F961452DD8E00BA1FE6 /* NSDate+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */; };
-		69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934734141BDCA6004DFEF1 /* AddressBookUI.framework */; };
 		69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69934738141BDD88004DFEF1 /* AddressBook.framework */; };
 		69934740141C19F7004DFEF1 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6993473F141C19F7004DFEF1 /* CategoryViewController.m */; };
 		69934750141C3821004DFEF1 /* AddLoan.png in Resources */ = {isa = PBXBuildFile; fileRef = 6993474E141C3821004DFEF1 /* AddLoan.png */; };
@@ -129,6 +123,7 @@
 		6993475A141C3F3B004DFEF1 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934758141C3F3B004DFEF1 /* Settings.png */; };
 		6993475B141C3F3B004DFEF1 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69934759141C3F3B004DFEF1 /* Settings@2x.png */; };
 		69934760141C6C85004DFEF1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6993475E141C6C6E004DFEF1 /* MapKit.framework */; };
+		699C72BE15926F2F00568900 /* FriendlyLoan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699C72BD15926F2F00568900 /* FriendlyLoan.storyboard */; };
 		69A67F821433FC7600AAEC35 /* FriendsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A67F811433FC7600AAEC35 /* FriendsSearchResultsController.m */; };
 		69A9B26514311F0D006A0D3F /* Loan+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A9B26414311F0D006A0D3F /* Loan+Category.m */; };
 		69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AE6352142929840016AF6F /* CoreLocation.framework */; };
@@ -141,7 +136,6 @@
 		69BA5DFC14E0920800021EAA /* Loan+Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFB14E0920800021EAA /* Loan+Friend.m */; };
 		69BA5DFF14E0922500021EAA /* Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA5DFE14E0922500021EAA /* Loan.m */; };
 		69BA69CA141AF5A2008C4384 /* AmountTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BA69C9141AF5A1008C4384 /* AmountTextField.m */; };
-		69C2450F15572DE90026D7AC /* Loan+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C2450C155720630026D7AC /* Loan+Request.m */; };
 		69C3CEB0141A7B4C00549213 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEAF141A7B4C00549213 /* FriendsViewController.m */; };
 		69C3CEB4141A7B6700549213 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEB3141A7B6700549213 /* HistoryViewController.m */; };
 		69C3CECA141A7EA600549213 /* AddLoanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3CEC9141A7EA600549213 /* AddLoanViewController.m */; };
@@ -149,11 +143,8 @@
 		69D3361014414E7800CB4E25 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360E14414E7800CB4E25 /* Default.png */; };
 		69D3361114414E7800CB4E25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360F14414E7800CB4E25 /* Default@2x.png */; };
 		69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC86154F597F00FA6207 /* SettingsViewController.m */; };
-		69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8A154F64D700FA6207 /* BackendManager.m */; };
-		69D5EC8F1550BE5F00FA6207 /* Loan+LoanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC8E1550BE5F00FA6207 /* Loan+LoanRequest.m */; };
+		69D9712315892900008D1F36 /* FriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D9712215892900008D1F36 /* FriendViewController.m */; };
 		69EC2E701558553D00970F47 /* FriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E6F1558553D00970F47 /* FriendList.m */; };
-		69EC2E7315586BA800970F47 /* LoanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7215586BA800970F47 /* LoanRequest.m */; };
-		69EC2E7715586F8900970F47 /* PFDynamicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E7615586F8900970F47 /* PFDynamicObject.m */; };
 		9E8E406098E847ADBC126ED7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758118084514C449E407911 /* libPods.a */; };
 		D480C0D1A60B49C4B94AAFE5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8758118084514C449E407911 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -170,12 +161,8 @@
 
 /* Begin PBXFileReference section */
 		5E8FD8BE75FD4410942369D6 /* Pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		69054CD015753DA500B92A9E /* FriendLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendLookup.h; sourceTree = "<group>"; };
-		69054CD115753DA500B92A9E /* FriendLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendLookup.m; sourceTree = "<group>"; };
 		69054CD415753FCB00B92A9E /* NSString+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CommonCrypto.h"; sourceTree = "<group>"; };
 		69054CD515753FCB00B92A9E /* NSString+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CommonCrypto.m"; sourceTree = "<group>"; };
-		69054CD7157578CB00B92A9E /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
-		69054CD8157578CB00B92A9E /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
 		69078BC814E476210080EC68 /* CategoryList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CategoryList.plist; sourceTree = "<group>"; };
 		690AC99F156716A000789174 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		690AC9A0156716A000789174 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
@@ -238,7 +225,6 @@
 		6940EEC51433CD80003361E6 /* Unknown-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unknown-Highlighted@2x.png"; sourceTree = "<group>"; };
 		6940EEC61433CD80003361E6 /* Unknown-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unknown-Normal.png"; sourceTree = "<group>"; };
 		6940EEC71433CD80003361E6 /* Unknown-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unknown-Normal@2x.png"; sourceTree = "<group>"; };
-		694120521429544D00270B2A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6941FF6E141A6D6B00FB3A24 /* FriendlyLoan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyLoan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6941FF72141A6D6B00FB3A24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6941FF74141A6D6B00FB3A24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -268,8 +254,6 @@
 		69497C65155C72C0009E3EF6 /* RedButton-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedButton-Normal@2x.png"; sourceTree = "<group>"; };
 		69497C6D155C77E3009E3EF6 /* MissingProfilePictureDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingProfilePictureDetails.png; sourceTree = "<group>"; };
 		69497C6E155C77E3009E3EF6 /* MissingProfilePictureDetails@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MissingProfilePictureDetails@2x.png"; sourceTree = "<group>"; };
-		69497C71155C7BE4009E3EF6 /* LoanRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanRequestViewController.h; sourceTree = "<group>"; };
-		69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanRequestViewController.m; sourceTree = "<group>"; };
 		69515FE814D39D4900C9569D /* Loan+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Location.h"; sourceTree = "<group>"; };
 		69515FE914D39D4900C9569D /* Loan+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Location.m"; sourceTree = "<group>"; };
 		6957B32F14F8480B0059922D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -284,12 +268,10 @@
 		6967C4A414531FB500ADDEA1 /* NSCalendar+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+RIOAdditions.m"; sourceTree = "<group>"; };
 		6971E4ED14E452FF00CBDEFC /* LoanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanManager.h; sourceTree = "<group>"; };
 		6971E4EE14E452FF00CBDEFC /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
-		6971E4F514E4570600CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6971E50314E4611D00CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = en; path = en.lproj/RIORelativeDate.h; sourceTree = "<group>"; };
 		6971E50714E4622C00CBDEFC /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		6971E51214E46AC500CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6971E51414E46AD700CBDEFC /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6971E51614E46D7400CBDEFC /* nb */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = nb; path = nb.lproj/FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		6971E52E14E4727100CBDEFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CategoryList.strings; sourceTree = "<group>"; };
 		6971E53014E4727600CBDEFC /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/CategoryList.strings; sourceTree = "<group>"; };
 		6972F0AF1426AB430047305C /* EditLoanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewController.h; sourceTree = "<group>"; };
@@ -302,7 +284,6 @@
 		69872F941452DD8D00BA1FE6 /* NSDate+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RIOAdditions.h"; sourceTree = "<group>"; };
 		69872F951452DD8D00BA1FE6 /* NSDate+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RIOAdditions.m"; sourceTree = "<group>"; };
 		698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLoanViewControllerDelegate.h; sourceTree = "<group>"; };
-		69934734141BDCA6004DFEF1 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		69934738141BDD88004DFEF1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6993473E141C19F7004DFEF1 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
 		6993473F141C19F7004DFEF1 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
@@ -311,6 +292,7 @@
 		69934758141C3F3B004DFEF1 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		69934759141C3F3B004DFEF1 /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
 		6993475E141C6C6E004DFEF1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		699C72BD15926F2F00568900 /* FriendlyLoan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendlyLoan.storyboard; sourceTree = "<group>"; };
 		69A67F801433FC7600AAEC35 /* FriendsSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsSearchResultsController.h; sourceTree = "<group>"; };
 		69A67F811433FC7600AAEC35 /* FriendsSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsSearchResultsController.m; sourceTree = "<group>"; };
 		69A9B26314311F0D006A0D3F /* Loan+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Category.h"; sourceTree = "<group>"; };
@@ -333,8 +315,6 @@
 		69BA5DFE14E0922500021EAA /* Loan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loan.m; sourceTree = "<group>"; };
 		69BA69C8141AF5A1008C4384 /* AmountTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmountTextField.h; sourceTree = "<group>"; };
 		69BA69C9141AF5A1008C4384 /* AmountTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmountTextField.m; sourceTree = "<group>"; };
-		69C2450B155720620026D7AC /* Loan+Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+Request.h"; sourceTree = "<group>"; };
-		69C2450C155720630026D7AC /* Loan+Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+Request.m"; sourceTree = "<group>"; };
 		69C3CEAE141A7B4C00549213 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		69C3CEAF141A7B4C00549213 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		69C3CEB2141A7B6700549213 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -348,17 +328,12 @@
 		69D3360F14414E7800CB4E25 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		69D5EC85154F597F00FA6207 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		69D5EC86154F597F00FA6207 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		69D5EC89154F64D700FA6207 /* BackendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendManager.h; sourceTree = "<group>"; };
-		69D5EC8A154F64D700FA6207 /* BackendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendManager.m; sourceTree = "<group>"; };
-		69D5EC8D1550BE5F00FA6207 /* Loan+LoanRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Loan+LoanRequest.h"; sourceTree = "<group>"; };
-		69D5EC8E1550BE5F00FA6207 /* Loan+LoanRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Loan+LoanRequest.m"; sourceTree = "<group>"; };
 		69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FriendlyLoan 3.xcdatamodel"; sourceTree = "<group>"; };
+		69D9712115892900008D1F36 /* FriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendViewController.h; sourceTree = "<group>"; };
+		69D9712215892900008D1F36 /* FriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendViewController.m; sourceTree = "<group>"; };
+		69D9712415892913008D1F36 /* FriendViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendViewControllerDelegate.h; sourceTree = "<group>"; };
 		69EC2E6E1558553D00970F47 /* FriendList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendList.h; sourceTree = "<group>"; };
 		69EC2E6F1558553D00970F47 /* FriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendList.m; sourceTree = "<group>"; };
-		69EC2E7115586BA700970F47 /* LoanRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanRequest.h; sourceTree = "<group>"; };
-		69EC2E7215586BA800970F47 /* LoanRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanRequest.m; sourceTree = "<group>"; };
-		69EC2E7515586F8900970F47 /* PFDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDynamicObject.h; sourceTree = "<group>"; };
-		69EC2E7615586F8900970F47 /* PFDynamicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFDynamicObject.m; sourceTree = "<group>"; };
 		8758118084514C449E407911 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -367,10 +342,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				694120531429544D00270B2A /* QuartzCore.framework in Frameworks */,
 				69934760141C6C85004DFEF1 /* MapKit.framework in Frameworks */,
 				69AE6353142929840016AF6F /* CoreLocation.framework in Frameworks */,
-				69934737141BDCBB004DFEF1 /* AddressBookUI.framework in Frameworks */,
 				69934739141BDD88004DFEF1 /* AddressBook.framework in Frameworks */,
 				6941FF73141A6D6B00FB3A24 /* UIKit.framework in Frameworks */,
 				6941FF75141A6D6B00FB3A24 /* Foundation.framework in Frameworks */,
@@ -418,7 +391,6 @@
 				690AC9D3156964A300789174 /* FriendlyLoan2-3.xcmappingmodel */,
 				69BA69C6141AE927008C4384 /* Generated Classes */,
 				69BA69C7141AE941008C4384 /* Custom Classes */,
-				69EC2E7415586C9500970F47 /* Backend */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -510,10 +482,8 @@
 			isa = PBXGroup;
 			children = (
 				8758118084514C449E407911 /* libPods.a */,
-				694120521429544D00270B2A /* QuartzCore.framework */,
 				6993475E141C6C6E004DFEF1 /* MapKit.framework */,
 				69AE6352142929840016AF6F /* CoreLocation.framework */,
-				69934734141BDCA6004DFEF1 /* AddressBookUI.framework */,
 				69934738141BDD88004DFEF1 /* AddressBook.framework */,
 				6941FF72141A6D6B00FB3A24 /* UIKit.framework */,
 				6941FF74141A6D6B00FB3A24 /* Foundation.framework */,
@@ -757,8 +727,6 @@
 				69A9B26414311F0D006A0D3F /* Loan+Category.m */,
 				69515FE814D39D4900C9569D /* Loan+Location.h */,
 				69515FE914D39D4900C9569D /* Loan+Location.m */,
-				69C2450B155720620026D7AC /* Loan+Request.h */,
-				69C2450C155720630026D7AC /* Loan+Request.m */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -787,7 +755,6 @@
 			isa = PBXGroup;
 			children = (
 				698EDBEA1426D4630028C16C /* Custom Text Field */,
-				694A59F31426C0D5000B5190 /* Category */,
 				6972F0B31426AE0E0047305C /* AbstractLoanViewController.h */,
 				6972F0B41426AE0E0047305C /* AbstractLoanViewController.m */,
 				69C3CEC8141A7EA600549213 /* AddLoanViewController.h */,
@@ -795,8 +762,6 @@
 				6972F0AF1426AB430047305C /* EditLoanViewController.h */,
 				6972F0B01426AB430047305C /* EditLoanViewController.m */,
 				698EDBE81426D0E30028C16C /* EditLoanViewControllerDelegate.h */,
-				69497C71155C7BE4009E3EF6 /* LoanRequestViewController.h */,
-				69497C72155C7BE4009E3EF6 /* LoanRequestViewController.m */,
 			);
 			name = "Add/Edit Loan";
 			sourceTree = "<group>";
@@ -833,7 +798,6 @@
 			isa = PBXGroup;
 			children = (
 				6971E4EB14E452EC00CBDEFC /* LoanManager */,
-				69D5EC88154F63E900FA6207 /* BackendManager */,
 				69149CB91457834C00566FB2 /* Fetch Requests */,
 				69149CB814577EB700566FB2 /* Model */,
 				69EC2E6D1558552800970F47 /* FriendList */,
@@ -846,7 +810,7 @@
 		69C3CEDB141AB07400549213 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				6971E4F614E4570600CBDEFC /* FriendlyLoan.storyboard */,
+				699C72BD15926F2F00568900 /* FriendlyLoan.storyboard */,
 				6914CC471440E00E0090FAA4 /* TabBarController.h */,
 				6914CC481440E00E0090FAA4 /* TabBarController.m */,
 				69C3CEBD141A7BA400549213 /* Add/Edit Loan */,
@@ -854,6 +818,7 @@
 				69C3CEB5141A7B6A00549213 /* History */,
 				69C3CEC1141A7BF600549213 /* Details */,
 				69D5EC84154F595200FA6207 /* Settings */,
+				69D97120158928E6008D1F36 /* Common */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -879,13 +844,23 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		69D5EC88154F63E900FA6207 /* BackendManager */ = {
+		69D9711E158928D4008D1F36 /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				69D5EC89154F64D700FA6207 /* BackendManager.h */,
-				69D5EC8A154F64D700FA6207 /* BackendManager.m */,
+				69D9712115892900008D1F36 /* FriendViewController.h */,
+				69D9712215892900008D1F36 /* FriendViewController.m */,
+				69D9712415892913008D1F36 /* FriendViewControllerDelegate.h */,
 			);
-			name = BackendManager;
+			name = Friend;
+			sourceTree = "<group>";
+		};
+		69D97120158928E6008D1F36 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				69D9711E158928D4008D1F36 /* Friend */,
+				694A59F31426C0D5000B5190 /* Category */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		69EC2E6D1558552800970F47 /* FriendList */ = {
@@ -895,23 +870,6 @@
 				69EC2E6F1558553D00970F47 /* FriendList.m */,
 			);
 			name = FriendList;
-			sourceTree = "<group>";
-		};
-		69EC2E7415586C9500970F47 /* Backend */ = {
-			isa = PBXGroup;
-			children = (
-				69EC2E7515586F8900970F47 /* PFDynamicObject.h */,
-				69EC2E7615586F8900970F47 /* PFDynamicObject.m */,
-				69EC2E7115586BA700970F47 /* LoanRequest.h */,
-				69EC2E7215586BA800970F47 /* LoanRequest.m */,
-				69D5EC8D1550BE5F00FA6207 /* Loan+LoanRequest.h */,
-				69D5EC8E1550BE5F00FA6207 /* Loan+LoanRequest.m */,
-				69054CD015753DA500B92A9E /* FriendLookup.h */,
-				69054CD115753DA500B92A9E /* FriendLookup.m */,
-				69054CD7157578CB00B92A9E /* Test.h */,
-				69054CD8157578CB00B92A9E /* Test.m */,
-			);
-			name = Backend;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -991,7 +949,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6941FF7F141A6D6B00FB3A24 /* InfoPlist.strings in Resources */,
-				6971E4F414E4570600CBDEFC /* FriendlyLoan.storyboard in Resources */,
 				69934750141C3821004DFEF1 /* AddLoan.png in Resources */,
 				69934757141C3A03004DFEF1 /* AddLoan@2x.png in Resources */,
 				6993475A141C3F3B004DFEF1 /* Settings.png in Resources */,
@@ -1060,6 +1017,7 @@
 				690AC9C915672A7100789174 /* DownArrow-Normal@2x.png in Resources */,
 				690AC9CA15672A7100789174 /* UpArrow-Normal@2x.png in Resources */,
 				690AC9CB15672A7100789174 /* DownArrow-Normal.png in Resources */,
+				699C72BE15926F2F00568900 /* FriendlyLoan.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,24 +1136,17 @@
 				69BA5DFF14E0922500021EAA /* Loan.m in Sources */,
 				6971E4EF14E452FF00CBDEFC /* LoanManager.m in Sources */,
 				69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */,
-				69D5EC8B154F64D700FA6207 /* BackendManager.m in Sources */,
-				69D5EC8F1550BE5F00FA6207 /* Loan+LoanRequest.m in Sources */,
-				69C2450F15572DE90026D7AC /* Loan+Request.m in Sources */,
 				69CFD7D61558469100053606 /* CategoryList.m in Sources */,
 				69EC2E701558553D00970F47 /* FriendList.m in Sources */,
-				69EC2E7315586BA800970F47 /* LoanRequest.m in Sources */,
-				69EC2E7715586F8900970F47 /* PFDynamicObject.m in Sources */,
 				69497C5A155C3D7E009E3EF6 /* _Loan.m in Sources */,
 				69497C5E155C444E009E3EF6 /* RIOComputedState.m in Sources */,
-				69497C73155C7BE4009E3EF6 /* LoanRequestViewController.m in Sources */,
 				69B0EF05155DBFE10029A66D /* CurrencyList.m in Sources */,
 				69B0EF0A155DC66F0029A66D /* CurrencyViewController.m in Sources */,
 				69B0EF0F155DCB530029A66D /* RIOPropertyListViewController.m in Sources */,
 				690AC9A1156716A000789174 /* LocationViewController.m in Sources */,
 				690AC9D4156964A400789174 /* FriendlyLoan2-3.xcmappingmodel in Sources */,
-				69054CD215753DA500B92A9E /* FriendLookup.m in Sources */,
 				69054CD615753FCB00B92A9E /* NSString+CommonCrypto.m in Sources */,
-				69054CD9157578CB00B92A9E /* Test.m in Sources */,
+				69D9712315892900008D1F36 /* FriendViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,15 +1183,6 @@
 				6941FF9A141A6D6B00FB3A24 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		6971E4F614E4570600CBDEFC /* FriendlyLoan.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6971E4F514E4570600CBDEFC /* en */,
-				6971E51614E46D7400CBDEFC /* nb */,
-			);
-			name = FriendlyLoan.storyboard;
 			sourceTree = "<group>";
 		};
 		6971E50414E4611D00CBDEFC /* RIORelativeDate.h */ = {
@@ -1315,7 +1257,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"PROVISIONING_PROFILE[sdk=*]" = "F34BE672-9954-44D9-AE83-C6A4A5F7FE3C";
 				SDKROOT = iphoneos;
 			};
@@ -1334,7 +1276,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21B4F31-35D5-4D6D-AA6A-CC07185FBF21";
 				SDKROOT = iphoneos;
@@ -1357,7 +1299,6 @@
 				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1377,7 +1318,6 @@
 				INFOPLIST_FILE = "FriendlyLoan/FriendlyLoan-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1397,7 +1337,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "FriendlyLoanTests/FriendlyLoanTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1418,7 +1357,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "FriendlyLoanTests/FriendlyLoanTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};

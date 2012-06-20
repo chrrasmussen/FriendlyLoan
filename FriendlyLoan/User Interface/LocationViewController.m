@@ -14,8 +14,6 @@ const CLLocationDistance kMapViewLocationDistance = 1000;
 
 @implementation LocationViewController
 
-@synthesize locationCoordinate;
-@synthesize mapView;
 
 #pragma mark - View lifecycle
 

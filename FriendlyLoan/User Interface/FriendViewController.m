@@ -15,9 +15,6 @@
     NSArray *_contacts;
 }
 
-@synthesize delegate;
-@synthesize selectedFriendID;
-
 
 #pragma mark - View lifecycle
 

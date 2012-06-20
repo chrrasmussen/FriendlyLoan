@@ -19,9 +19,6 @@ const NSInteger kUnknownCategoryCellSection = 1;
     NSIndexPath *_selectedIndexPath;
 }
 
-@synthesize delegate;
-@synthesize selectedCategoryID;
-
 
 #pragma mark - View lifecycle
 

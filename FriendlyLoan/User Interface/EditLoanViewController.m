@@ -25,10 +25,6 @@ enum {
 
 @implementation EditLoanViewController
 
-@synthesize delegate;
-@synthesize loan;
-@synthesize saveBarButtonItem, lentSegmentedControl;
-
 
 #pragma mark - View lifecycle
 

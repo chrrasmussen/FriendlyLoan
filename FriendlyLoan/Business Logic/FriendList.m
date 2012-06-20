@@ -17,7 +17,7 @@ const CGFloat kThumbnailImageSize = 43.0;
 
 @implementation FriendList
 
-static NSCache *_thumbnailImages;
+//static NSCache *_thumbnailImages;
 
 //- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
 //{
