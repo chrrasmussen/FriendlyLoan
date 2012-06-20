@@ -10,7 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "LoanManager.h"
-#import "BackendManager.h"
 
 #import "DetailsViewController.h"
 #import "CategoryViewController.h"
@@ -19,15 +18,6 @@
 @implementation AddLoanViewController
 
 @synthesize borrowBarButtonItem, lendBarButtonItem, attachLocationSwitch, shareLoanSwitch;
-
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 
 #pragma mark - View lifecycle
@@ -55,11 +45,12 @@
     [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedShareLoanValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 }
 
-- (void)viewDidUnload
+- (void)didReceiveMemoryWarning
 {
-    [super viewDidUnload];
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
     
-    [[LoanManager sharedManager] removeObserver:self];
+    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,12 +75,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
@@ -180,16 +165,18 @@
 }
 
 
-#pragma mark - LoanManagerAttachLocationDelegate methods
+#pragma mark - Observers
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
     if ([keyPath isEqualToString:@"calculatedAttachLocationValue"]) {
-        BOOL attachLocation = [[change objectForKey:@"new"] boolValue];
+        BOOL attachLocation = [change[@"new"] boolValue];
         [self.attachLocationSwitch setOn:attachLocation animated:YES];
     }
     else if ([keyPath isEqualToString:@"calculatedShareLoanValue"]) {
-        BOOL shareLoan = [[change objectForKey:@"new"] boolValue];
+        BOOL shareLoan = [change[@"new"] boolValue];
         [self.shareLoanSwitch setOn:shareLoan animated:YES];
     }
 }
@@ -202,10 +189,6 @@
     Loan *result = [[LoanManager sharedManager] addLoanWithUpdateHandler:^(Loan *loan) {
         [self updateLoanBasedOnViewInfo:loan];
     }];
-    
-    if (self.shareLoanSwitch.on) {
-        [[BackendManager sharedManager] shareLoanInBackground:result];
-    }
     
     return result;
 }

@@ -45,12 +45,12 @@ const float kLoanLocationTimeLimit = 10*60;
 
 - (NSString *)historySectionName
 {
-    if (self.requestAcceptedValue == YES) {
+//    if (self.requestAcceptedValue == YES) {
         return [self.createdAt relativeDate];
-    }
-    else {
-        return NSLocalizedString(@"Incoming Loans", @"Section name for loan requests in History tab");
-    }
+//    }
+//    else {
+//        return NSLocalizedString(@"Incoming Loans", @"Section name for loan requests in History tab");
+//    }
 }
 
 

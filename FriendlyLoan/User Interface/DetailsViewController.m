@@ -43,13 +43,6 @@ const int kNoteTableViewCellIndex = 2;
     [super viewDidLoad];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -76,12 +69,6 @@ const int kNoteTableViewCellIndex = 2;
     [super viewDidDisappear:animated];
     
 //    [self.loan removeObserver:self forKeyPath:@"locationStatus"];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 

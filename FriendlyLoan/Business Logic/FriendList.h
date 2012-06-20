@@ -11,7 +11,7 @@
 
 @interface FriendList : NSObject
 
-+ (NSString *)friendNameForFriendID:(NSNumber *)friendID;
-+ (UIImage *)friendImageForFriendID:(NSNumber *)friendID;
++ (NSString *)nameForFriendID:(NSNumber *)friendID;
++ (UIImage *)imageForFriendID:(NSNumber *)friendID;
 
 @end

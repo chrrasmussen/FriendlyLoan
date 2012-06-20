@@ -17,7 +17,7 @@
 //    NSDictionary *currencyDict = [[NSDictionary alloc] initWithContentsOfURL:currencyURL];
 //    
 //    return [currencyDict objectForKey:@"categories"];
-    return [NSArray arrayWithObject:@"Test"];
+    return @[ @"Test" ];
 }
 
 - (NSString *)tableViewPrototypeCellIdentifier

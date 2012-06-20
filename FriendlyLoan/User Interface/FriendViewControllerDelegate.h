@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class FriendViewController;
+
+
 @protocol FriendViewControllerDelegate <NSObject>
+
+@optional
+- (void)friendViewController:(FriendViewController *)friendViewController didSelectFriendID:(NSNumber *)friendID;
 
 @end

@@ -53,13 +53,6 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 // TODO: Optimize the fetch? Check when context was last updated
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -83,12 +76,6 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
@@ -162,7 +149,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [result objectForKey:kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
-        historyViewController.title = [FriendList friendNameForFriendID:friendID];
+        historyViewController.title = [FriendList nameForFriendID:friendID];
         historyViewController.friendID = friendID;
     }
 }
@@ -208,7 +195,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     cell.detailTextLabel.text = debtPresentation;
     
     // Set image
-    UIImage *friendImage = [FriendList friendImageForFriendID:friendID];
+    UIImage *friendImage = [FriendList imageForFriendID:friendID];
     if (friendImage == nil)
         friendImage = [UIImage imageNamed:kPlaceholderImageName];
     
@@ -231,11 +218,11 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     fetchRequest.fetchBatchSize = 20;
     
     // Predicate
-    NSPredicate *acceptedPredicate = [NSPredicate predicateWithFormat:@"requestAccepted == YES"];
+//    NSPredicate *acceptedPredicate = [NSPredicate predicateWithFormat:@"requestAccepted == YES"];
     
     // Set sort descriptors
     NSSortDescriptor *timeStampSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:timeStampSortDescriptor, nil];
+    NSArray *sortDescriptors = @[ timeStampSortDescriptor ];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Set up friendID-property
@@ -246,19 +233,20 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     [friendIDProperty setExpressionResultType:NSInteger32AttributeType];
     
     // Set up debt-property
-    NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"amount"]]];
+    NSArray *arguments = @[ [NSExpression expressionForKeyPath:@"amount"] ];
+    NSExpression *sumOfAmount = [NSExpression expressionForFunction:@"sum:" arguments:arguments];
     NSExpressionDescription *debtProperty = [[NSExpressionDescription alloc] init];
     [debtProperty setName:kResultDebt];
     [debtProperty setExpression:sumOfAmount];
     [debtProperty setExpressionResultType:NSDecimalAttributeType];
     
     // Combine properties
-    NSArray *fetchProperties = [NSArray arrayWithObjects:friendIDProperty, debtProperty, nil];
-    NSArray *groupByProperties = [NSArray arrayWithObject:friendIDProperty];
+    NSArray *fetchProperties = @[ friendIDProperty, debtProperty ];
+    NSArray *groupByProperties = @[ friendIDProperty ];
     
     // Set properties on fetch request
     [fetchRequest setResultType:NSDictionaryResultType];
-    [fetchRequest setPredicate:acceptedPredicate];
+//    [fetchRequest setPredicate:acceptedPredicate];
     [fetchRequest setPropertiesToFetch:fetchProperties];
     [fetchRequest setPropertiesToGroupBy:groupByProperties];
     
@@ -299,7 +287,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
         NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
         
         NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
-        [updatedFriendObject setValue:[FriendList friendNameForFriendID:friendID] forKey:kResultFriendName];
+        [updatedFriendObject setValue:[FriendList nameForFriendID:friendID] forKey:kResultFriendName];
         
         // Add friend to result
         [result addObject:updatedFriendObject];
@@ -307,7 +295,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     
     // Sort result
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kResultDebt ascending:NO];
-    [result sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [result sortUsingDescriptors:@[ sortDescriptor ]];
     
     self.sortedResult = result;
 }
@@ -326,7 +314,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     [self.sortedResult removeObjectAtIndex:indexPath.row];
     
     // Delete row from table view
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    NSArray *indexPaths = @[ indexPath ];
     [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 

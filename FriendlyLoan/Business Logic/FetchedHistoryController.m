@@ -21,7 +21,7 @@
 //    
 //    // Add sort descriptor
 //    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-//    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+//    NSArray *sortDescriptors = @[ sortDescriptor ];
 //    
 //    [fetchRequest setSortDescriptors:sortDescriptors];
 //    

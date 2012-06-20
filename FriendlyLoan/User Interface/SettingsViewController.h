@@ -11,9 +11,4 @@
 
 @interface SettingsViewController : UITableViewController
 
-@property (nonatomic, strong) IBOutlet UITableViewCell *logInTableViewCell;
-@property (nonatomic, strong) IBOutlet UITableViewCell *inviteFriendsTableViewCell;
-@property (nonatomic, strong) IBOutlet UITableViewCell *manageFriendsTableViewCell;
-@property (nonatomic, strong) IBOutlet UITableViewCell *logOutTableViewCell;
-
 @end

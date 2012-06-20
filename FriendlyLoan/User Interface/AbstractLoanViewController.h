@@ -7,30 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AddressBookUI/AddressBookUI.h>
 
+#import "FriendViewControllerDelegate.h"
 #import "CategoryViewControllerDelegate.h"
 
 
 @class Loan;
 
-@interface AbstractLoanViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, UITextFieldDelegate, CategoryViewControllerDelegate>
+
+@interface AbstractLoanViewController : UITableViewController <UITextFieldDelegate, FriendViewControllerDelegate, CategoryViewControllerDelegate>
 
 @property (nonatomic) BOOL lentStatus;
+//@property (nonatomic, strong) NSDecimalNumber *amount;
 @property (nonatomic, strong) NSNumber *selectedFriendID;
 @property (nonatomic, strong) NSNumber *selectedCategoryID;
+//@property (nonatomic, strong) NSString *note;
 
 @property (nonatomic, strong) IBOutlet UITextField *amountTextField;
 @property (nonatomic, strong) IBOutlet UILabel *friendValueLabel;
 @property (nonatomic, strong) IBOutlet UILabel *categoryValueLabel;
 @property (nonatomic, strong) IBOutlet UITextField *noteTextField;
-@property (nonatomic, strong) IBOutlet UITableViewCell *friendCell;
-
-- (void)updateSelectedFriendID:(NSNumber *)friendID;
-- (void)updateSelectedCategoryID:(NSNumber *)categoryID;
 
 - (void)hideKeyboard;
-- (void)showPeoplePickerController;
 - (void)validateAmountAndFriend;
 
 // Override methods

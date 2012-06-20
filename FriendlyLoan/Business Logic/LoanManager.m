@@ -169,7 +169,6 @@ static LoanManager *_sharedManager;
     _cachedLocationManager.distanceFilter = 500;
     _cachedLocationManager.accuracyFilter = 100;
     _cachedLocationManager.timeIntervalFilter = kLoanLocationTimeLimit;
-    _cachedLocationManager.purpose = NSLocalizedString(@"The location will help you remember where the loan took place.", @"The purpose of the location services");
 }
 
 - (void)cachedLocationManager:(RIOCachedLocationManager *)locationManager didChangeAuthorizationStatus:(CLAuthorizationStatus)status

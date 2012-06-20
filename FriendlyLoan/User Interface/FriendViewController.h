@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendViewController : UIViewController
+
+@protocol FriendViewControllerDelegate;
+
+
+@interface FriendViewController : UITableViewController
+
+@property (nonatomic, weak) id<FriendViewControllerDelegate> delegate;
+
+@property (nonatomic, strong) NSNumber *selectedFriendID;
 
 @end

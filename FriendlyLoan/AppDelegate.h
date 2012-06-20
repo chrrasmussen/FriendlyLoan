@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@class LoanManager, BackendManager;
+@class LoanManager;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -17,6 +17,5 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, strong, readonly) LoanManager *loanManager;
-@property (nonatomic, strong, readonly) BackendManager *backendManager;
 
 @end

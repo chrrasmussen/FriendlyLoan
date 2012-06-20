@@ -9,10 +9,6 @@
 #import "AppDelegate.h"
 
 #import "LoanManager.h"
-#import "BackendManager.h"
-
-#import "LoanRequest.h"
-#import "Test.h"
 
 
 @implementation AppDelegate
@@ -20,7 +16,6 @@
 @synthesize window = _window;
 
 @synthesize loanManager = _loanManager;
-@synthesize backendManager = _backendManager;
 
 
 #pragma mark - Application lifecycle
@@ -28,26 +23,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setUpManagers];
-    [self.backendManager handleApplicationDidFinishLaunching];
     [self setUpNotificationObservers];
-    
-//    LoanRequest *lr = [LoanRequest object];
-//    lr.note = @"abc";
-    
-//    Test *test = [[Test alloc] init];
-//    test.test = @"Elg";
-//    test.note = @"abc";
-//    
-//    LoanRequest *lr = [[LoanRequest alloc] init];
-//    lr.note = @"note";
-//    NSLog(@"Wee:%@ + %@ + %@", test.test, test.note, lr.note);
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [self.backendManager handleOpenURL:url];
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -83,7 +66,6 @@
      */
     NSLog(@"%@", NSStringFromSelector(_cmd));
     [self.loanManager handleApplicationDidBecomeActive];
-    [self.backendManager handleApplicationDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -98,17 +80,14 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [self.backendManager handleDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [self.backendManager handleDidFailToRegisterForRemoteNotificationsWithError:error];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self.backendManager handleDidReceiveRemoteNotification:userInfo];
 }
 
 
@@ -117,7 +96,6 @@
 - (void)setUpManagers
 {
     _loanManager = [[LoanManager alloc] init];
-    _backendManager = [[BackendManager alloc] initWithLoanManager:self.loanManager];
 }
 
 - (void)setUpNotificationObservers
@@ -130,11 +108,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FLNeedsLocationServicesForThisApp object:nil queue:nil usingBlock:^(NSNotification *note) {
         [bself promptUserToEnableLocationServicesForThisApp];
-    }];
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:FLHasNewLoanRequests object:nil queue:nil usingBlock:^(NSNotification *note) {
-        Loan *loan = [note.userInfo objectForKey:@"loan"];
-        [bself presentLoanRequest:loan];
     }];
 }
 
@@ -156,12 +129,12 @@
     [alertView show];
 }
 
-- (void)presentLoanRequest:(Loan *)loan
-{
+//- (void)presentLoanRequest:(Loan *)loan
+//{
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FriendlyLoan" bundle:nil];
 //    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoanRequestNavigationController"];
 //    // TODO: Set loan on LoanRequestViewController
 //    [self.window.rootViewController presentModalViewController:navigationController animated:YES];
-}
+//}
 
 @end

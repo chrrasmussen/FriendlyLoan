@@ -15,7 +15,7 @@
 
 - (NSString *)friendFullName
 {
-    return [FriendList friendNameForFriendID:self.friendID];
+    return [FriendList nameForFriendID:self.friendID];
 }
 
 @end

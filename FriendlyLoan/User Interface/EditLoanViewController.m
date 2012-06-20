@@ -30,27 +30,23 @@ enum {
 @synthesize saveBarButtonItem, lentSegmentedControl;
 
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self addObserver:self forKeyPath:@"lentStatus" options:NSKeyValueObservingOptionNew context:NULL];
+    
     [self updateViewInfo];
 }
 
-- (void)viewDidUnload
+- (void)didReceiveMemoryWarning
 {
-    [super viewDidUnload];
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -73,10 +69,15 @@ enum {
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+#pragma mark - Observers
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
+    if ([keyPath isEqualToString:@"lentStatus"]) {
+        self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
+    }
 }
 
 
@@ -153,12 +154,11 @@ enum {
 {
     // Update internal state
     self.lentStatus = [self.loan lentValue];
-    [self updateSelectedFriendID:self.loan.friendID];
-    [self updateSelectedCategoryID:self.loan.categoryID];
+    self.selectedFriendID = self.loan.friendID;
+    self.selectedCategoryID = self.loan.categoryID;
     
     // Update GUI
     self.amountTextField.text = [[self.loan absoluteAmount] stringValue];
-    self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
     self.noteTextField.text = self.loan.note;
 }
 

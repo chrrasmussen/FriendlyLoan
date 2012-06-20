@@ -29,9 +29,6 @@
 @property (nonatomic) CLLocationDistance distanceFilter;
 @property (nonatomic) NSTimeInterval timeIntervalFilter;
 
-// Purpose
-@property (nonatomic, copy) NSString *purpose;
-
 // Controlling the location
 @property (nonatomic, readonly) CLLocation *location;
 @property (nonatomic) BOOL needsLocation;

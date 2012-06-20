@@ -13,8 +13,9 @@
 #import "FriendList.h"
 #import "CategoryList.h"
 
-#import "DetailsViewController.h"
+#import "FriendViewController.h"
 #import "CategoryViewController.h"
+#import "DetailsViewController.h"
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
@@ -25,59 +26,7 @@ const NSInteger kDefaultCategoryID = 0;
 @implementation AbstractLoanViewController
 
 @synthesize lentStatus, selectedFriendID, selectedCategoryID;
-@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField, friendCell;
-
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-
-#pragma mark - Helper methods for subclasses
-
-- (void)updateSelectedFriendID:(NSNumber *)friendID
-{
-    self.selectedFriendID = friendID;
-    
-    // Update GUI
-    NSString *friendName = [FriendList friendNameForFriendID:friendID];
-    if (friendName == nil)
-        friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
-    
-    self.friendValueLabel.text = friendName;
-}
-
-- (void)updateSelectedCategoryID:(NSNumber *)categoryID
-{
-    self.selectedCategoryID = categoryID;
-    
-    // Update GUI
-    self.categoryValueLabel.text = [CategoryList nameForCategoryID:categoryID];
-}
-
-- (void)hideKeyboard
-{
-    [self.tableView endEditing:YES];
-}
-
-- (void)showPeoplePickerController
-{
-    [self hideKeyboard];
-    
-	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-	[self presentViewController:picker animated:YES completion:NULL];
-}
-
-- (void)validateAmountAndFriend
-{
-    BOOL enabled = (self.amountTextField.text.length > 0 && self.selectedFriendID > 0);
-    [self setSaveButtonsEnabledState:enabled];
-}
+@synthesize amountTextField, friendValueLabel, categoryValueLabel, noteTextField;
 
 
 #pragma mark - View lifecycle
@@ -86,14 +35,20 @@ const NSInteger kDefaultCategoryID = 0;
 {
     [super viewDidLoad];
     
+//    [self addObserver:self forKeyPath:@"amount" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"selectedFriendID" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"selectedCategoryID" options:NSKeyValueObservingOptionNew context:NULL];
+//    [self addObserver:self forKeyPath:@"" options:<#(NSKeyValueObservingOptions)#> context:<#(void *)#>]
+    
     [self resetFields];
 }
 
-- (void)viewDidUnload
+- (void)didReceiveMemoryWarning
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -118,10 +73,36 @@ const NSInteger kDefaultCategoryID = 0;
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+#pragma mark - Observers
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if ([keyPath isEqualToString:@"selectedFriendID"]) {
+        NSString *friendName = [FriendList nameForFriendID:self.selectedFriendID];
+        if (friendName == nil) {
+            friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
+        }
+        
+        self.friendValueLabel.text = friendName;
+    }
+    else if ([keyPath isEqualToString:@"selectedCategoryID"]) {
+        self.categoryValueLabel.text = [CategoryList nameForCategoryID:self.selectedCategoryID];
+    }
+}
+
+
+#pragma mark - Helper methods for subclasses
+
+- (void)hideKeyboard
+{
+    [self.tableView endEditing:YES];
+}
+
+- (void)validateAmountAndFriend
+{
+    BOOL enabled = (self.amountTextField.text.length > 0 && self.selectedFriendID != nil);
+    [self setSaveButtonsEnabledState:enabled];
 }
 
 
@@ -144,9 +125,9 @@ const NSInteger kDefaultCategoryID = 0;
 - (void)resetFields
 {
     self.amountTextField.text = nil;
-    [self updateSelectedFriendID:nil];
+    self.selectedFriendID = nil;
     
-    [self updateSelectedCategoryID:[NSNumber numberWithInt:kDefaultCategoryID]];
+    self.selectedCategoryID = @(kDefaultCategoryID);
     self.noteTextField.text = nil;
     
     [self validateAmountAndFriend];
@@ -159,14 +140,20 @@ const NSInteger kDefaultCategoryID = 0;
     [self validateAmountAndFriend];
 }
 
-#pragma mark - Storyboard methods
+#pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
     
-    if ([[segue identifier] isEqualToString:@"CategorySegue"])
-    {
+    if ([[segue identifier] isEqualToString:@"FriendSegue"]) {
+        [self hideKeyboard];
+        
+        FriendViewController *friendViewController = [segue destinationViewController];
+        friendViewController.delegate = self;
+        friendViewController.selectedFriendID = self.selectedFriendID;
+    }
+    else if ([[segue identifier] isEqualToString:@"CategorySegue"]) {
         [self hideKeyboard];
         
         CategoryViewController *categoryViewController = [segue destinationViewController];
@@ -175,15 +162,6 @@ const NSInteger kDefaultCategoryID = 0;
     }
 }
 
-#pragma mark - UITableViewDelegate methods
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-    if (selectedCell == self.friendCell) {
-        [self showPeoplePickerController];
-    }
-}
 
 #pragma mark - UITextFieldDelegate methods
 
@@ -196,41 +174,23 @@ const NSInteger kDefaultCategoryID = 0;
 }
 
 
+#pragma mark - FriendViewControllerDelegate methods
+
+- (void)friendViewController:(FriendViewController *)friendViewController didSelectFriendID:(NSNumber *)friendID
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    self.selectedFriendID = friendID;
+}
+
+
 #pragma mark - CategoryViewControllerDelegate methods
 
 - (void)categoryViewController:(CategoryViewController *)categoryViewController didSelectCategoryID:(NSNumber *)categoryID
 {
     [self.navigationController popViewControllerAnimated:YES];
     
-    [self updateSelectedCategoryID:categoryID];
-}
-
-
-#pragma mark - ABPeoplePickerNavigationControllerDelegate methods
-
-// Displays the information of a selected person
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)thePerson
-{
-    ABRecordID recordID = ABRecordGetRecordID(thePerson);
-    [self updateSelectedFriendID:[NSNumber numberWithInt:recordID]];
-    
-    [self validateAmountAndFriend];
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-	return NO;
-}
-
-// Does not allow users to perform default actions such as dialing a phone number, when they select a person property
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{
-	return NO;
-}
-
-// Dismisses the people picker and shows the application when users tap Cancel
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
-{
-	[self dismissViewControllerAnimated:YES completion:NULL];
+    self.selectedCategoryID = categoryID;
 }
 
 @end

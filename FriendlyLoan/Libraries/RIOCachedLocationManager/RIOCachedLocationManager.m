@@ -215,15 +215,4 @@
     _locationManager.desiredAccuracy = desiredAccuracy;
 }
 
-
-- (NSString *)purpose
-{
-    return _locationManager.purpose;
-}
-
-- (void)setPurpose:(NSString *)purpose
-{
-    _locationManager.purpose = purpose;
-}
-
 @end

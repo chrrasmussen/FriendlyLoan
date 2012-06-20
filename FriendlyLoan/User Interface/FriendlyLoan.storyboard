@@ -1106,9 +1106,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4Ju-4p-2Le"/>
         <segue reference="YO2-l3-GG7"/>
         <segue reference="m2j-Pw-0Bn"/>
-        <segue reference="wgt-lv-gQO"/>
+        <segue reference="4Ju-4p-2Le"/>
+        <segue reference="Ecp-wv-kKL"/>
     </inferredMetricsTieBreakers>
 </document>

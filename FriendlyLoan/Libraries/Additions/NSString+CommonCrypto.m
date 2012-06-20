@@ -12,7 +12,7 @@
 
 @implementation NSString (CommonCrypto)
 
--(NSString *)SHA1String
+- (NSString *)SHA1String
 {
     const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [NSData dataWithBytes:cstr length:self.length];

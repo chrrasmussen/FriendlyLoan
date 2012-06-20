@@ -12,9 +12,6 @@ const struct LoanAttributes LoanAttributes = {
 	.locationLatitude = @"locationLatitude",
 	.locationLongitude = @"locationLongitude",
 	.note = @"note",
-	.requestAccepted = @"requestAccepted",
-	.requestID = @"requestID",
-	.requestUnseen = @"requestUnseen",
 	.settled = @"settled",
 	.updatedAt = @"updatedAt",
 };
@@ -69,14 +66,6 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	}
 	if ([key isEqualToString:@"locationLongitudeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"locationLongitude"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"requestAcceptedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"requestAccepted"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"requestUnseenValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"requestUnseen"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"settledValue"]) {
@@ -236,65 +225,6 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 @dynamic note;
 
-
-
-
-
-
-@dynamic requestAccepted;
-
-
-
-- (BOOL)requestAcceptedValue {
-	NSNumber *result = [self requestAccepted];
-	return [result boolValue];
-}
-
-- (void)setRequestAcceptedValue:(BOOL)value_ {
-	[self setRequestAccepted:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveRequestAcceptedValue {
-	NSNumber *result = [self primitiveRequestAccepted];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveRequestAcceptedValue:(BOOL)value_ {
-	[self setPrimitiveRequestAccepted:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic requestID;
-
-
-
-
-
-
-@dynamic requestUnseen;
-
-
-
-- (BOOL)requestUnseenValue {
-	NSNumber *result = [self requestUnseen];
-	return [result boolValue];
-}
-
-- (void)setRequestUnseenValue:(BOOL)value_ {
-	[self setRequestUnseen:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveRequestUnseenValue {
-	NSNumber *result = [self primitiveRequestUnseen];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveRequestUnseenValue:(BOOL)value_ {
-	[self setPrimitiveRequestUnseen:[NSNumber numberWithBool:value_]];
-}
 
 
 

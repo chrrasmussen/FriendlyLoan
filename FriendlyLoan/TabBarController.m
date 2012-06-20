@@ -8,8 +8,6 @@
 
 #import "TabBarController.h"
 
-#import "BackendManager.h"
-
 #import "AddLoanViewController.h"
 #import "DetailsViewController.h"
 
@@ -31,12 +29,6 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
     self.delegate = self;
     
     [self setUpNavigationControllers];
-    [self setUpObservers];
-}
-
-- (void)viewDidUnload
-{
-    [self tearDownObservers];
 }
 
 
@@ -94,17 +86,6 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
     _historyNavigationController = [self.viewControllers objectAtIndex:kHistoryNavigationControllerIndex];
     _settingsNavigationController = [self.viewControllers objectAtIndex:kSettingsNavigationControllerIndex];
     
-}
-
-- (void)setUpObservers
-{
-    [[BackendManager sharedManager] addObserver:self forKeyPath:@"loanRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
-    [[BackendManager sharedManager] addObserver:self forKeyPath:@"friendRequestCount" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
-}
-
-- (void)tearDownObservers
-{
-    [[BackendManager sharedManager] removeObserver:self];
 }
 
 - (void)setLoanRequestCount:(NSUInteger)count

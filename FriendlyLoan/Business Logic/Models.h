@@ -13,8 +13,5 @@
 #import "Loan+Friend.h"
 #import "Loan+Category.h"
 #import "Loan+Location.h"
-#import "Loan+Request.h"
-
-#import "Loan+LoanRequest.h"
 
 #endif
