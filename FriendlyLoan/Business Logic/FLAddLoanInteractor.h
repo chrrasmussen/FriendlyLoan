@@ -1,5 +1,5 @@
 //
-//  FLAddLoan.h
+//  FLAddLoanInteractor.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 04.07.12.
@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLAddLoanRequestBoundary.h"
+#import "FLAddLoanResponseBoundary.h"
+#import "FLAddLoanRequestModel.h"
+#import "FLAddLoanResponseModel.h"
 
-@interface FLAddLoan : NSObject
+@interface FLAddLoanInteractor : NSObject <FLAddLoanRequestBoundary>
+
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

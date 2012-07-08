@@ -7,6 +7,7 @@
 //
 
 #import "FriendlyLoanTests.h"
+#import "Models.h"
 
 @implementation FriendlyLoanTests
 
@@ -14,19 +15,37 @@
 {
     [super setUp];
     
-    // Set-up code here.
+    [MagicalRecord setupCoreDataStackWithInMemoryStore];
 }
 
 - (void)tearDown
 {
-    // Tear-down code here.
+    [MagicalRecord cleanUp];
     
     [super tearDown];
 }
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in FriendlyLoanTests");
+    Loan *loan = [Loan createEntity];
+    loan.note = @"Test";
+    [loan.managedObjectContext saveErrorHandler:^(NSError *error) {
+        STAssertNil(error, @"Error");
+    }];
+    
+    STAssertEqualObjects(@"Test", loan.note, @"Mismatching note");
+//    STFail(@"Unit tests are not implemented yet in FriendlyLoanTests");
+}
+
+- (void)testExample2
+{
+    Loan *loan = [Loan createEntity];
+    loan.note = @"Test2";
+    [loan.managedObjectContext saveErrorHandler:^(NSError *error) {
+        STAssertNil(error, @"Error2");
+    }];
+    
+    STAssertEqualObjects(@"Test2", loan.note, @"Mismatching note2");
 }
 
 @end

@@ -72,14 +72,14 @@ const int kNoteTableViewCellIndex = 2;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"EditSegue"])
+    if ([segue.identifier isEqualToString:@"EditSegue"])
     {
         UINavigationController *navigationController = [segue destinationViewController];
         EditLoanViewController *editLoanViewController = (EditLoanViewController *)navigationController.topViewController;
         editLoanViewController.delegate = self;
         editLoanViewController.loan = self.loan;
     }
-    else if ([[segue identifier] isEqualToString:@"LocationSegue"]) {
+    else if ([segue.identifier isEqualToString:@"LocationSegue"]) {
         LocationViewController *locationViewController = [segue destinationViewController];
         locationViewController.locationCoordinate = [self.loan coordinate];
     }

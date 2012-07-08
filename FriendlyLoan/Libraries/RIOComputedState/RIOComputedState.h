@@ -18,7 +18,7 @@ typedef id (^RIOComputedStateHandler)(id userState, id systemState);
 @property (nonatomic) id systemState;
 @property (nonatomic, readonly) id computedState;
 
-- (id)initWithInitialUserState:(id)userState systemState:(id)systemState computedStateHandler:(RIOComputedStateHandler)computedStateHandler;
+- (id)initWithInitialUserState:(id)userState initialSystemState:(id)systemState computedStateHandler:(RIOComputedStateHandler)computedStateHandler;
 - (id)initWithComputedStateHandler:(RIOComputedStateHandler)computedStateHandler;
 
 @end

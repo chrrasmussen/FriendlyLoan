@@ -141,10 +141,10 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"FilteredHistorySegue"])
+    if ([segue.identifier isEqualToString:@"FilteredHistorySegue"])
     {
-        NSDictionary *result = [self.sortedResult objectAtIndex:[[self.tableView indexPathForSelectedRow] row]];
-        NSNumber *friendID = [result objectForKey:kResultFriendID];
+        NSDictionary *result = (self.sortedResult)[[[self.tableView indexPathForSelectedRow] row]];
+        NSNumber *friendID = result[kResultFriendID];
         
         HistoryViewController *historyViewController = [segue destinationViewController];
         historyViewController.title = [FriendList nameForFriendID:friendID];
@@ -181,11 +181,11 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     // Get data for cell
-    NSDictionary *fetchedResult = [self.sortedResult objectAtIndex:indexPath.row];
+    NSDictionary *fetchedResult = (self.sortedResult)[indexPath.row];
     
-    NSNumber *friendID = [fetchedResult objectForKey:kResultFriendID];
-    NSString *friendName = [fetchedResult objectForKey:kResultFriendName];
-    NSDecimalNumber *debt = [fetchedResult objectForKey:kResultDebt];
+    NSNumber *friendID = fetchedResult[kResultFriendID];
+    NSString *friendName = fetchedResult[kResultFriendName];
+    NSDecimalNumber *debt = fetchedResult[kResultDebt];
     NSString *debtPresentation = [[CurrencyList currentCurrencyFormatter] stringFromNumber:debt];
     
     // Set basic info
@@ -277,12 +277,12 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
     for (NSDictionary *friendObject in self.fetchedResultsController.fetchedObjects)
     {
         // Skip friends with no debt
-        NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
+        NSDecimalNumber *debt = friendObject[kResultDebt];
         if ([debt compare:[NSDecimalNumber zero]] == NSOrderedSame)
             continue;
         
         // Add friend name
-        NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
+        NSNumber *friendID = friendObject[kResultFriendID];
         
         NSMutableDictionary *updatedFriendObject = [NSMutableDictionary dictionaryWithDictionary:friendObject];
         [updatedFriendObject setValue:[FriendList nameForFriendID:friendID] forKey:kResultFriendName];
@@ -301,10 +301,10 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)settleDebtForIndexPath:(NSIndexPath *)indexPath
 {
     // Retrieve data
-    NSDictionary *friendObject = [self.sortedResult objectAtIndex:indexPath.row];
+    NSDictionary *friendObject = (self.sortedResult)[indexPath.row];
     
-    NSDecimalNumber *debt = [friendObject objectForKey:kResultDebt];
-    NSNumber *friendID = [friendObject objectForKey:kResultFriendID];
+    NSDecimalNumber *debt = friendObject[kResultDebt];
+    NSNumber *friendID = friendObject[kResultFriendID];
     
     [[LoanManager sharedManager] settleDebt:debt forFriendID:friendID];
     

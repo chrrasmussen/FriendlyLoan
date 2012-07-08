@@ -19,11 +19,16 @@
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
+// FIXME: Temporary
+#import "ABContactsHelper.h"
+
 
 const NSInteger kDefaultCategoryID = 0;
 
 
 @implementation AbstractLoanViewController
+
+@dynamic amount, note;
 
 
 #pragma mark - View lifecycle
@@ -32,12 +37,10 @@ const NSInteger kDefaultCategoryID = 0;
 {
     [super viewDidLoad];
     
-//    [self addObserver:self forKeyPath:@"amount" options:NSKeyValueObservingOptionNew context:NULL];
-    [self addObserver:self forKeyPath:@"selectedFriendID" options:NSKeyValueObservingOptionNew context:NULL];
-    [self addObserver:self forKeyPath:@"selectedCategoryID" options:NSKeyValueObservingOptionNew context:NULL];
-//    [self addObserver:self forKeyPath:@"" options:<#(NSKeyValueObservingOptions)#> context:<#(void *)#>]
-    
     [self resetFields];
+    
+    // FIXME: Temp
+    self.selectedFriendID = @1;
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,21 +74,53 @@ const NSInteger kDefaultCategoryID = 0;
 }
 
 
-#pragma mark - Observers
+#pragma mark - Accessors/mutators
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (NSDecimalNumber *)amount
 {
-    if ([keyPath isEqualToString:@"selectedFriendID"]) {
-        NSString *friendName = [FriendList nameForFriendID:self.selectedFriendID];
-        if (friendName == nil) {
-            friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
-        }
-        
-        self.friendValueLabel.text = friendName;
+    NSString *amountText = self.amountTextField.text;
+    
+    if (amountText == nil) {
+        return [NSDecimalNumber zero];
     }
-    else if ([keyPath isEqualToString:@"selectedCategoryID"]) {
-        self.categoryValueLabel.text = [CategoryList nameForCategoryID:self.selectedCategoryID];
+    
+    return [NSDecimalNumber decimalNumberWithString:amountText];
+}
+
+- (void)setAmount:(NSDecimalNumber *)amount
+{
+    self.amountTextField.text = [amount stringValue];
+}
+
+- (void)setSelectedFriendID:(NSNumber *)selectedFriendID
+{
+    _selectedFriendID = selectedFriendID;
+    
+    NSString *friendName = [FriendList nameForFriendID:self.selectedFriendID];
+    if (friendName == nil) {
+        friendName = NSLocalizedString(@"None Selected", @"Placeholder when no friends are selected in Add Loan-tab");
     }
+    
+    self.friendValueLabel.text = friendName;
+    
+    [self validateAmountAndFriend];
+}
+
+- (void)setSelectedCategoryID:(NSNumber *)selectedCategoryID
+{
+    _selectedCategoryID = selectedCategoryID;
+    
+    self.categoryValueLabel.text = [CategoryList nameForCategoryID:self.selectedCategoryID];
+}
+
+- (NSString *)note
+{
+    return self.noteTextField.text;
+}
+
+- (void)setNote:(NSString *)note
+{
+    self.noteTextField.text = note;
 }
 
 
@@ -98,7 +133,7 @@ const NSInteger kDefaultCategoryID = 0;
 
 - (void)validateAmountAndFriend
 {
-    BOOL enabled = (self.amountTextField.text.length > 0 && self.selectedFriendID != nil);
+    BOOL enabled = ([self.amount doubleValue] > 0 && self.selectedFriendID != nil);
     [self setSaveButtonsEnabledState:enabled];
 }
 
@@ -112,23 +147,21 @@ const NSInteger kDefaultCategoryID = 0;
 
 - (void)updateLoanBasedOnViewInfo:(Loan *)loan
 {
-    NSDecimalNumber *preliminaryAmount = [[NSDecimalNumber alloc] initWithString:self.amountTextField.text];
-    loan.amount = (self.lentStatus == YES) ? preliminaryAmount : [preliminaryAmount decimalNumberByNegating];
+    loan.amount = (self.lentStatus == YES) ? self.amount : [self.amount decimalNumberByNegating];
     loan.friendID = self.selectedFriendID;
     loan.categoryID = self.selectedCategoryID;
-    loan.note = self.noteTextField.text;
+    loan.note = self.note;
 }
 
 - (void)resetFields
 {
-    self.amountTextField.text = nil;
+    self.amount = nil;
     self.selectedFriendID = nil;
     
     self.selectedCategoryID = @(kDefaultCategoryID);
-    self.noteTextField.text = nil;
-    
-    [self validateAmountAndFriend];
+    self.note = nil;
 }
+
 
 #pragma mark - Actions
 
@@ -137,20 +170,21 @@ const NSInteger kDefaultCategoryID = 0;
     [self validateAmountAndFriend];
 }
 
+
 #pragma mark - Storyboard
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
     
-    if ([[segue identifier] isEqualToString:@"FriendSegue"]) {
+    if ([segue.identifier isEqualToString:@"FriendSegue"]) {
         [self hideKeyboard];
         
         FriendViewController *friendViewController = [segue destinationViewController];
         friendViewController.delegate = self;
         friendViewController.selectedFriendID = self.selectedFriendID;
     }
-    else if ([[segue identifier] isEqualToString:@"CategorySegue"]) {
+    else if ([segue.identifier isEqualToString:@"CategorySegue"]) {
         [self hideKeyboard];
         
         CategoryViewController *categoryViewController = [segue destinationViewController];

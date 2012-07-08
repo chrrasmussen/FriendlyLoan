@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2541" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="aSg-UJ-l3p">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2809" systemVersion="11E2620" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="aSg-UJ-l3p">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1875"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1884"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -25,7 +24,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYJ-Vj-ekV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="-801"/>
+            <point key="canvasLocation" x="156" y="-801"/>
         </scene>
         <!--Navigation Controller - Friends-->
         <scene sceneID="7B2-Ln-Hh1">
@@ -58,16 +57,8 @@
                             <rect key="frame" x="0.0" y="220" width="320" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="UXX-mq-TJm">
-                                    <segments>
-                                        <segment title="Borrow"/>
-                                        <segment title="Lend"/>
-                                    </segments>
-                                    <connections>
-                                        <action selector="changeLentState:" destination="BSf-lC-obf" eventType="valueChanged" id="ICL-Cg-Yqx"/>
-                                    </connections>
-                                </segmentedControl>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Rv2-cz-Z2w">
+                                    <rect key="frame" x="10" y="74" width="300" height="44"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <size key="titleShadowOffset" width="0.0" height="-1"/>
                                     <state key="normal" title="Delete Loan" backgroundImage="RedButton-Normal.png">
@@ -81,6 +72,17 @@
                                         <action selector="deleteLoan:" destination="BSf-lC-obf" eventType="touchUpInside" id="d8l-yC-GVx"/>
                                     </connections>
                                 </button>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="L8p-TG-8n2">
+                                    <rect key="frame" x="10" y="10" width="300" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <segments>
+                                        <segment title="Borrow"/>
+                                        <segment title="Lend"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="changeLentState:" destination="BSf-lC-obf" eventType="valueChanged" id="62d-wH-MvJ"/>
+                                    </connections>
+                                </segmentedControl>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -128,8 +130,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" text="None" textAlignment="right" autoshrinkMode="minimumScaleFactor" id="yEt-fp-XOO">
-                                                    <rect key="frame" x="229" y="11" width="41" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" text="None Selected" textAlignment="right" autoshrinkMode="minimumScaleFactor" id="yEt-fp-XOO">
+                                                    <rect key="frame" x="158" y="11" width="112" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -221,14 +223,14 @@
                         <outlet property="amountTextField" destination="9eV-FI-Hds" id="x5f-Oe-L2M"/>
                         <outlet property="categoryValueLabel" destination="eJl-4G-Cnb" id="HZh-vr-0lf"/>
                         <outlet property="friendValueLabel" destination="yEt-fp-XOO" id="Vr3-5o-YRl"/>
-                        <outlet property="lentSegmentedControl" destination="UXX-mq-TJm" id="TLI-zP-BHV"/>
+                        <outlet property="lentSegmentedControl" destination="L8p-TG-8n2" id="Zps-wS-sfk"/>
                         <outlet property="noteTextField" destination="MrZ-B7-VA0" id="HPe-dn-RaH"/>
                         <outlet property="saveBarButtonItem" destination="XOo-WE-kgT" id="609-7m-Mva"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yv4-EV-YqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3686" y="480"/>
+            <point key="canvasLocation" x="3678" y="480"/>
         </scene>
         <!--Friends View Controller - Friends-->
         <scene sceneID="cP2-rl-03g">
@@ -475,12 +477,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gp2-GP-y5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2588" y="480"/>
+            <point key="canvasLocation" x="2556" y="480"/>
         </scene>
         <!--Add Loan View Controller - Add Loan-->
         <scene sceneID="LuF-L8-Qku">
             <objects>
-                <tableViewController storyboardIdentifier="" id="BYs-JF-gLR" customClass="AddLoanViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddLoan" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYs-JF-gLR" customClass="AddLoanViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NpK-lb-17I">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -507,7 +509,7 @@
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <connections>
-                                                        <action selector="amountTextFieldDidChange:" destination="BYs-JF-gLR" eventType="editingChanged" id="7xJ-eP-cQB"/>
+                                                        <action selector="amountTextFieldDidChange:" destination="BYs-JF-gLR" eventType="editingChanged" id="ffS-x3-0YA"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -590,7 +592,6 @@
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <connections>
-                                                        <action selector="noteTextFieldDidChange:" destination="BYs-JF-gLR" eventType="editingChanged" id="H8r-SE-lMZ"/>
                                                         <outlet property="delegate" destination="BYs-JF-gLR" id="veh-jL-Fbq"/>
                                                     </connections>
                                                 </textField>
@@ -660,12 +661,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av5-52-Zbf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2011" y="-801"/>
+            <point key="canvasLocation" x="2003" y="-801"/>
         </scene>
         <!--Friend View Controller - Friend-->
         <scene sceneID="2Os-LU-tG0">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="Sql-TO-4O6" customClass="FriendViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Friend" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Sql-TO-4O6" customClass="FriendViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vUD-rR-gzH">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -711,12 +712,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="4243" y="-801"/>
+            <point key="canvasLocation" x="4235" y="-801"/>
         </scene>
         <!--Category View Controller - Category-->
         <scene sceneID="TaU-hE-xha">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="Rk5-tN-10S" customClass="CategoryViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Category" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Rk5-tN-10S" customClass="CategoryViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="6dl-57-123">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -757,7 +758,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tZ-Ao-Uuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4243" y="-159"/>
+            <point key="canvasLocation" x="4235" y="-159"/>
         </scene>
         <!--History View Controller - History-->
         <scene sceneID="Jfc-n5-Ibm">
@@ -803,7 +804,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FS-vD-e6T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2011" y="480"/>
+            <point key="canvasLocation" x="2003" y="480"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bIl-U3-UdY">
@@ -917,7 +918,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVo-7y-bgW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2011" y="1115"/>
+            <point key="canvasLocation" x="2003" y="1115"/>
         </scene>
         <!--Navigation Controller - Settings-->
         <scene sceneID="agH-Me-q2x">
@@ -938,7 +939,7 @@
         <!--Navigation Controller - Add Loan-->
         <scene sceneID="rY3-d5-GBX">
             <objects>
-                <navigationController storyboardIdentifier="" id="ZI5-bW-Wo6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddLoanNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZI5-bW-Wo6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Add Loan" image="AddLoan.png" id="XTh-hR-450"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="3rU-D1-oEe"/>
@@ -975,7 +976,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEH-YS-C9g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3160" y="480"/>
+            <point key="canvasLocation" x="3120" y="480"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="MLR-vO-isy">
@@ -1001,7 +1002,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ApJ-LG-mid" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4243" y="1115"/>
+            <point key="canvasLocation" x="4235" y="1115"/>
         </scene>
     </scenes>
     <resources>
@@ -1015,15 +1016,100 @@
         <image name="Unknown-Normal.png" width="29" height="29"/>
         <image name="UpArrow-Normal.png" width="23" height="26"/>
     </resources>
+    <classes>
+        <class className="AbstractLoanViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AbstractLoanViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="amountTextFieldDidChange:"/>
+                <relationship kind="outlet" name="amountTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="categoryValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="friendValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="noteTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="AddLoanViewController" superclassName="AbstractLoanViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLoanViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="borrow:"/>
+                <relationship kind="action" name="changeAttachLocationValue:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="changeShareLoanValue:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="detailsViewControllerAdd:"/>
+                <relationship kind="action" name="lend:"/>
+                <relationship kind="action" name="textFieldDidBeginEditing:"/>
+                <relationship kind="outlet" name="attachLocationSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="borrowBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="lendBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="shareLoanSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="AmountTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AmountTextField.h"/>
+        </class>
+        <class className="CategoryViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CategoryViewController.h"/>
+        </class>
+        <class className="DetailsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="categoryImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="friendImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="noteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeStampLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EditLoanViewController" superclassName="AbstractLoanViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLoanViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="changeLentState:"/>
+                <relationship kind="action" name="deleteLoan:"/>
+                <relationship kind="action" name="save:"/>
+                <relationship kind="outlet" name="lentSegmentedControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="saveBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="FriendViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendViewController.h"/>
+        </class>
+        <class className="FriendsSearchResultsController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsSearchResultsController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="friendsViewController" candidateClass="FriendsViewController"/>
+            </relationships>
+        </class>
+        <class className="FriendsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FriendsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="friendsSearchResultsController" candidateClass="FriendsSearchResultsController"/>
+            </relationships>
+        </class>
+        <class className="HistoryViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HistoryViewController.h"/>
+        </class>
+        <class className="LocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+        </class>
+        <class className="TabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabBarController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="YO2-l3-GG7"/>
-        <segue reference="m2j-Pw-0Bn"/>
-        <segue reference="wgt-lv-gQO"/>
         <segue reference="4Ju-4p-2Le"/>
+        <segue reference="Ecp-wv-kKL"/>
+        <segue reference="m2j-Pw-0Bn"/>
+        <segue reference="YO2-l3-GG7"/>
     </inferredMetricsTieBreakers>
 </document>

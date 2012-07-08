@@ -1,5 +1,5 @@
 //
-//  FLLoanRequestBoundary.h
+//  FLLoanDetailsRequestBoundary.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 04.07.12.
@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol FLLoanRequestBoundary <NSObject>
+@class FLLoanDetailsRequestModel;
+@protocol FLLoanDetailsResponseBoundary;
+
+@protocol FLLoanDetailsRequestBoundary <NSObject>
+
+- (void)getLoanWithRequest:(FLLoanDetailsRequestModel *)request delegate:(id<FLLoanDetailsResponseBoundary>)delegate;
 
 @end

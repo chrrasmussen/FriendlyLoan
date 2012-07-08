@@ -7,7 +7,9 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "FLAddLoanInteractor.h"
 
-@interface FLAddLoanTests : SenTestCase
+@interface FLAddLoanTests : SenTestCase <FLAddLoanResponseBoundary>
 
+@property (nonatomic, strong) id<FLAddLoanRequestBoundary> addLoanInteractor;
 @end

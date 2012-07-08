@@ -40,17 +40,17 @@ const float kLoanLocationTimeLimit = 10*60;
 //    }
 //}
 
++ (id)settleDebtForFriendID:(NSNumber *)friendID
+{
+    return nil;
+}
+
 
 #pragma mark - History methods
 
 - (NSString *)historySectionName
 {
-//    if (self.requestAcceptedValue == YES) {
-        return [self.createdAt relativeDate];
-//    }
-//    else {
-//        return NSLocalizedString(@"Incoming Loans", @"Section name for loan requests in History tab");
-//    }
+return [self.createdAt relativeDate];
 }
 
 

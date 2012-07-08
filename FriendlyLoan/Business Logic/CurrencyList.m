@@ -23,7 +23,7 @@ static NSArray *_currencyCodes;
     if (_currencies == nil) {
         NSURL *currenciesURL = [[NSBundle mainBundle] URLForResource:@"CurrencyList" withExtension:@"plist"];
         NSDictionary *currencyList = [[NSDictionary alloc] initWithContentsOfURL:currenciesURL];
-        _currencies = [currencyList objectForKey:@"currencies"];
+        _currencies = currencyList[@"currencies"];
     }
     
     return _currencies;
@@ -35,7 +35,7 @@ static NSArray *_currencyCodes;
         NSMutableDictionary *currenciesByCurrencyCode = [[NSMutableDictionary alloc] init];
         
         for (NSDictionary *currency in [self currencies]) {
-            NSString *currencyCode = [currency objectForKey:@"currencyCode"];
+            NSString *currencyCode = currency[@"currencyCode"];
             [currenciesByCurrencyCode setValue:currency forKey:currencyCode];
         }
         
@@ -51,7 +51,7 @@ static NSArray *_currencyCodes;
         NSMutableArray *currencyCodes = [[NSMutableArray alloc] init];
         
         for (NSDictionary *currency in [self currencies]) {
-            NSString *currencyCode = [currency objectForKey:@"currencyCode"];
+            NSString *currencyCode = currency[@"currencyCode"];
             [currencyCodes addObject:currencyCode];
         }
         
@@ -98,12 +98,12 @@ static NSArray *_currencyCodes;
 
 + (NSString *)currencySymbolForCurrencyCode:(NSString *)currencyCode
 {
-    return [[[self currenciesByCurrencyCode] objectForKey:currencyCode] objectForKey:@"currencySymbol"];
+    return [self currenciesByCurrencyCode][currencyCode][@"currencySymbol"];
 }
 
 + (NSString *)localeIdentifierForCurrencyCode:(NSString *)currencyCode
 {
-    return [[[self currenciesByCurrencyCode] objectForKey:currencyCode] objectForKey:@"localeIdentifier"];;
+    return [self currenciesByCurrencyCode][currencyCode][@"localeIdentifier"];;
 }
 
 + (NSLocale *)localeForCurrencyCode:(NSString *)currencyCode

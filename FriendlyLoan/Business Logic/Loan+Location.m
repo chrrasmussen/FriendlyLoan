@@ -26,8 +26,8 @@
 //        [self willChangeValueForKey:@"locationStatus"];
 //        self.location = [Location insertInManagedObjectContext:self.managedObjectContext];
 //        [self didChangeValueForKey:@"locationStatus"];
-    self.locationLatitude = [NSNumber numberWithDouble:latitude];
-    self.locationLongitude = [NSNumber numberWithDouble:longitude];
+    self.locationLatitude = @(latitude);
+    self.locationLongitude = @(longitude);
 }
 
 //- (CLLocation *)location

@@ -17,7 +17,7 @@
 #pragma mark - Creating calculated state instance
 
 // Designated initializer
-- (id)initWithInitialUserState:(id)userState systemState:(id)systemState computedStateHandler:(RIOComputedStateHandler)computedStateHandler
+- (id)initWithInitialUserState:(id)userState initialSystemState:(id)systemState computedStateHandler:(RIOComputedStateHandler)computedStateHandler
 {
     self = [super init];
     if (self) {
@@ -30,7 +30,7 @@
 
 - (id)initWithComputedStateHandler:(RIOComputedStateHandler)computedStateHandler
 {
-    return [self initWithInitialUserState:nil systemState:nil computedStateHandler:computedStateHandler];
+    return [self initWithInitialUserState:nil initialSystemState:nil computedStateHandler:computedStateHandler];
 }
 
 - (id)init

@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLLoanManager.h"
+#import "FLLoan.h"
 
 @interface FriendlyLoan : NSObject
+
+@property (nonatomic, strong, readonly) id<FLLoanManager> loanManager;
+@property (nonatomic, strong, readonly) id<FLHistoryController> history;
 
 @end

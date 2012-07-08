@@ -41,7 +41,7 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
     }
     
     UINavigationController *navigationController = (UINavigationController *)viewController;
-    UIViewController *rootViewControllerInNavigationController = [navigationController.viewControllers objectAtIndex:0];
+    UIViewController *rootViewControllerInNavigationController = (navigationController.viewControllers)[0];
     UIViewController *visibleViewController = navigationController.visibleViewController;
     
     // Add Loan-tab
@@ -69,11 +69,11 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"loanRequestCount"]) {
-        NSNumber *value = [change objectForKey:@"new"];
+        NSNumber *value = change[@"new"];
         [self setLoanRequestCount:[value unsignedIntegerValue]];
     }
     else if ([keyPath isEqualToString:@"friendRequestCount"]) {
-        NSNumber *value = [change objectForKey:@"new"];
+        NSNumber *value = change[@"new"];
         [self setFriendRequestCount:[value unsignedIntegerValue]];
     }
 }
@@ -83,8 +83,8 @@ const NSUInteger kSettingsNavigationControllerIndex = 3;
 
 - (void)setUpNavigationControllers
 {
-    _historyNavigationController = [self.viewControllers objectAtIndex:kHistoryNavigationControllerIndex];
-    _settingsNavigationController = [self.viewControllers objectAtIndex:kSettingsNavigationControllerIndex];
+    _historyNavigationController = (self.viewControllers)[kHistoryNavigationControllerIndex];
+    _settingsNavigationController = (self.viewControllers)[kSettingsNavigationControllerIndex];
     
 }
 

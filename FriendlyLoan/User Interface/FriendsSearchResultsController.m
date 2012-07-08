@@ -43,8 +43,8 @@
     }
     
     // Configure the cell...
-    NSDictionary *friend = [self.searchDisplayResult objectAtIndex:indexPath.row];
-    cell.textLabel.text = [friend objectForKey:kResultFriendName];
+    NSDictionary *friend = (self.searchDisplayResult)[indexPath.row];
+    cell.textLabel.text = friend[kResultFriendName];
     
     return cell;
 }
@@ -55,7 +55,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Convert index path from search display result to sorted result
-    id object = [self.searchDisplayResult objectAtIndex:indexPath.row]; 
+    id object = (self.searchDisplayResult)[indexPath.row]; 
     NSUInteger row = [self.sortedResult indexOfObject:object];
     NSIndexPath *sortedResultIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     

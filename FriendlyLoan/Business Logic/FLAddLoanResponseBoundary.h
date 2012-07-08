@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class FLAddLoanResponseModel;
+
 @protocol FLAddLoanResponseBoundary <NSObject>
+
+- (void)didAddLoanWithResponse:(FLAddLoanResponseModel *)response;
 
 @end

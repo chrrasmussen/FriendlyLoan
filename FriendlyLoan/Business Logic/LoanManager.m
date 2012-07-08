@@ -157,7 +157,6 @@ static LoanManager *_sharedManager;
 
 #pragma mark - RIOCachedLocationManagerDelegate methods
 
-// TODO: Move purpose to user interface?
 - (void)setUpCachedLocationManager
 {
     _cachedLocationManager = [[RIOCachedLocationManager alloc] init];
@@ -183,7 +182,7 @@ static LoanManager *_sharedManager;
             // TODO: Add code?
         }
         else if (error.code == kCLErrorDenied) {
-            self.attachLocationState.systemState = [NSNumber numberWithBool:NO];
+            self.attachLocationState.systemState = @NO;
         }
     }
 }
@@ -218,9 +217,9 @@ static LoanManager *_sharedManager;
 {
     NSNumber *userState = [[NSUserDefaults standardUserDefaults] objectForKey:@"attachLocation"];
     NSNumber *systemState = [NSNumber numberWithBool:([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)];
-    self.attachLocationState = [[RIOComputedState alloc] initWithInitialUserState:userState systemState:systemState computedStateHandler:^id(id userState, id systemState) {
+    self.attachLocationState = [[RIOComputedState alloc] initWithInitialUserState:userState initialSystemState:systemState computedStateHandler:^id(id userState, id systemState) {
         BOOL available = ([userState boolValue] == YES && [systemState boolValue] == YES);
-        return [NSNumber numberWithBool:available];
+        return @(available);
     }];
 }
 
@@ -231,7 +230,7 @@ static LoanManager *_sharedManager;
 
 - (void)setAttachLocationValue:(BOOL)status
 {
-    self.attachLocationState.userState = [NSNumber numberWithBool:status];
+    self.attachLocationState.userState = @(status);
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:status forKey:@"attachLocation"];
@@ -264,10 +263,10 @@ static LoanManager *_sharedManager;
 - (void)setUpShareLoanState
 {
     NSNumber *userState = [[NSUserDefaults standardUserDefaults] objectForKey:@"shareLoan"];
-    NSNumber *systemState = [NSNumber numberWithBool:YES]; // TODO: Fix this
-    self.shareLoanState = [[RIOComputedState alloc] initWithInitialUserState:userState systemState:systemState computedStateHandler:^id(id userState, id systemState) {
+    NSNumber *systemState = @YES; // TODO: Fix this
+    self.shareLoanState = [[RIOComputedState alloc] initWithInitialUserState:userState initialSystemState:systemState computedStateHandler:^id(id userState, id systemState) {
         BOOL available = ([userState boolValue] == YES && [systemState boolValue] == YES);
-        return [NSNumber numberWithBool:available];
+        return @(available);
     }];
 }
 
@@ -278,7 +277,7 @@ static LoanManager *_sharedManager;
 
 - (void)setShareLoanValue:(BOOL)status
 {
-    self.shareLoanState.userState = [NSNumber numberWithBool:status];
+    self.shareLoanState.userState = @(status);
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:status forKey:@"shareLoan"];

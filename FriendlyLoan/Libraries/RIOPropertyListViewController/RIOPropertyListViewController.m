@@ -63,7 +63,7 @@
 
 - (id)rowDataForIndexPath:(NSIndexPath *)indexPath
 {
-    return [[self tableViewRows] objectAtIndex:indexPath.row];
+    return [self tableViewRows][indexPath.row];
 }
 
 

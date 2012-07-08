@@ -10,4 +10,9 @@
 
 @implementation FLAddLoanResponseModel
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %x> loanID:%@ error:%@", NSStringFromClass([self class]), (NSUInteger)self, self.loanID, self.error];
+}
+
 @end

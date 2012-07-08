@@ -147,7 +147,7 @@
 {
     [super prepareForSegue:segue sender:sender];
     
-    if ([[segue identifier] isEqualToString:@"SaveSegue"])
+    if ([segue.identifier isEqualToString:@"SaveSegue"])
     {
         // Add loan
         Loan *loan = [self addLoan];
@@ -167,8 +167,6 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    
     if ([keyPath isEqualToString:@"calculatedAttachLocationValue"]) {
         BOOL attachLocation = [change[@"new"] boolValue];
         [self.attachLocationSwitch setOn:attachLocation animated:YES];

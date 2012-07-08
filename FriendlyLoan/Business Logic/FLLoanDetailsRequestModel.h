@@ -1,5 +1,5 @@
 //
-//  FLLoanRequestModel.h
+//  FLLoanDetailsRequestModel.h
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 04.07.12.
@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FLLoanRequestModel : NSObject
+@interface FLLoanDetailsRequestModel : NSObject
+
+@property (nonatomic, strong) NSManagedObjectID *loanID;
 
 @end

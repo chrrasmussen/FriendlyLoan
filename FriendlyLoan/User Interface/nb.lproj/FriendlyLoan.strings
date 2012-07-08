@@ -1,150 +1,150 @@
 
 /* Class = "IBUIBarButtonItem"; title = "Lend"; ObjectID = "18V-BQ-6fg"; */
-"18V-BQ-6fg.title" = "Lend";
+"18V-BQ-6fg.title" = "Lån til";
 
 /* Class = "IBUINavigationItem"; title = "Category"; ObjectID = "4ZZ-Bf-KES"; */
-"4ZZ-Bf-KES.title" = "Category";
+"4ZZ-Bf-KES.title" = "Kategori";
 
 /* Class = "IBUILabel"; text = "Category"; ObjectID = "4wR-8t-o6U"; */
-"4wR-8t-o6U.text" = "Category";
+"4wR-8t-o6U.text" = "Kategori";
 
 /* Class = "IBUINavigationItem"; title = "Currency"; ObjectID = "5pr-JW-qvk"; */
-"5pr-JW-qvk.title" = "Currency";
+"5pr-JW-qvk.title" = "Valuta";
 
 /* Class = "IBUILabel"; text = "Amount"; ObjectID = "8F9-fx-Dr6"; */
-"8F9-fx-Dr6.text" = "Amount";
+"8F9-fx-Dr6.text" = "Beløp";
 
 /* Class = "IBUILabel"; text = "None Selected"; ObjectID = "99g-uw-5h9"; */
-"99g-uw-5h9.text" = "None Selected";
+"99g-uw-5h9.text" = "Ingen valgt";
 
 /* Class = "IBUILabel"; text = "Currency"; ObjectID = "9aB-fk-HXg"; */
-"9aB-fk-HXg.text" = "Currency";
+"9aB-fk-HXg.text" = "Valuta";
 
 /* Class = "IBUITextField"; placeholder = "Value"; ObjectID = "9eV-FI-Hds"; */
-"9eV-FI-Hds.placeholder" = "Value";
+"9eV-FI-Hds.placeholder" = "Verdi";
 
 /* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "AlX-sf-TFh"; */
-"AlX-sf-TFh.title" = "Settings";
+"AlX-sf-TFh.title" = "Innstillinger";
 
 /* Class = "IBUILabel"; text = "USD"; ObjectID = "BVW-2r-WKp"; */
 "BVW-2r-WKp.text" = "USD";
 
 /* Class = "IBUILabel"; text = "Time"; ObjectID = "Bfk-ow-uOi"; */
-"Bfk-ow-uOi.text" = "Time";
+"Bfk-ow-uOi.text" = "Tid";
 
 /* Class = "IBUITabBarItem"; title = "Friends"; ObjectID = "Bgt-93-F4a"; */
-"Bgt-93-F4a.title" = "Friends";
+"Bgt-93-F4a.title" = "Venner";
 
 /* Class = "IBUITableViewSection"; headerTitle = "Display"; ObjectID = "BlU-5l-HC7"; */
 "BlU-5l-HC7.headerTitle" = "Display";
 
 /* Class = "IBUILabel"; text = "Location"; ObjectID = "Cre-ZE-oxi"; */
-"Cre-ZE-oxi.text" = "Location";
+"Cre-ZE-oxi.text" = "Lokasjon";
 
 /* Class = "IBUILabel"; text = "$1,000"; ObjectID = "HpF-IM-77c"; */
-"HpF-IM-77c.text" = "$1,000";
+"HpF-IM-77c.text" = "kr 1 000";
 
 /* Class = "IBUILabel"; text = "Friend"; ObjectID = "Hz5-yb-sWJ"; */
-"Hz5-yb-sWJ.text" = "Friend";
+"Hz5-yb-sWJ.text" = "Venn";
 
 /* Class = "IBUILabel"; text = "USD"; ObjectID = "M2X-zL-mcB"; */
 "M2X-zL-mcB.text" = "USD";
 
 /* Class = "IBUILabel"; text = "Lent $1,000 to John Doe"; ObjectID = "MTo-Sr-k0d"; */
-"MTo-Sr-k0d.text" = "Lent $1,000 to John Doe";
+"MTo-Sr-k0d.text" = "Lånte kr 1 000 til Ola Nordmann";
 
 /* Class = "IBUITextField"; placeholder = "Note"; ObjectID = "MrZ-B7-VA0"; */
-"MrZ-B7-VA0.placeholder" = "Note";
+"MrZ-B7-VA0.placeholder" = "Notat";
 
 /* Class = "IBUILabel"; text = "$1,000"; ObjectID = "Mv7-DS-Jsa"; */
-"Mv7-DS-Jsa.text" = "$1,000";
+"Mv7-DS-Jsa.text" = "kr 1 000";
 
 /* Class = "IBUILabel"; text = "No note"; ObjectID = "N1C-Rd-m1e"; */
-"N1C-Rd-m1e.text" = "No note";
+"N1C-Rd-m1e.text" = "Ingen notat";
 
 /* Class = "IBUINavigationItem"; title = "Friend"; ObjectID = "Naj-Xf-yaP"; */
-"Naj-Xf-yaP.title" = "Friend";
+"Naj-Xf-yaP.title" = "Venn";
 
 /* Class = "IBUINavigationItem"; title = "Details"; ObjectID = "NtF-LR-pja"; */
-"NtF-LR-pja.title" = "Details";
+"NtF-LR-pja.title" = "Detaljer";
 
 /* Class = "IBUILabel"; text = "Unknown"; ObjectID = "QLg-KM-2SR"; */
-"QLg-KM-2SR.text" = "Unknown";
+"QLg-KM-2SR.text" = "Ukjent";
 
 /* Class = "IBUIButton"; normalTitle = "Delete Loan"; ObjectID = "Rv2-cz-Z2w"; */
-"Rv2-cz-Z2w.normalTitle" = "Delete Loan";
+"Rv2-cz-Z2w.normalTitle" = "Fjern lån";
 
 /* Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "TwZ-Wi-cX0"; */
-"TwZ-Wi-cX0.title" = "Settings";
+"TwZ-Wi-cX0.title" = "Innstillinger";
 
-/* Class = "IBUISegmentedControl"; UXX-mq-TJm.segmentTitles[0] = "Borrow"; ObjectID = "UXX-mq-TJm"; */
-"UXX-mq-TJm.segmentTitles[0]" = "Borrow";
+/* Class = "IBUISegmentedControl"; L8p-TG-8n2.segmentTitles[0] = "Borrow"; ObjectID = "L8p-TG-8n2"; */
+"L8p-TG-8n2.segmentTitles[0]" = "Lån av";
 
-/* Class = "IBUISegmentedControl"; UXX-mq-TJm.segmentTitles[1] = "Lend"; ObjectID = "UXX-mq-TJm"; */
-"UXX-mq-TJm.segmentTitles[1]" = "Lend";
+/* Class = "IBUISegmentedControl"; L8p-TG-8n2.segmentTitles[1] = "Lend"; ObjectID = "L8p-TG-8n2"; */
+"L8p-TG-8n2.segmentTitles[1]" = "Lån til";
 
 /* Class = "IBUILabel"; text = "Category"; ObjectID = "XHM-Av-o2h"; */
-"XHM-Av-o2h.text" = "Category";
+"XHM-Av-o2h.text" = "Kategori";
 
 /* Class = "IBUITabBarItem"; title = "Add Loan"; ObjectID = "XTh-hR-450"; */
-"XTh-hR-450.title" = "Add Loan";
+"XTh-hR-450.title" = "Legg til lån";
 
 /* Class = "IBUILabel"; text = "Amount"; ObjectID = "cP7-59-8cc"; */
-"cP7-59-8cc.text" = "Amount";
+"cP7-59-8cc.text" = "Beløp";
 
 /* Class = "IBUILabel"; text = "Other"; ObjectID = "eJl-4G-Cnb"; */
-"eJl-4G-Cnb.text" = "Other";
+"eJl-4G-Cnb.text" = "Annet";
 
 /* Class = "IBUINavigationItem"; title = "Add Loan"; ObjectID = "fcA-sI-par"; */
-"fcA-sI-par.title" = "Add Loan";
+"fcA-sI-par.title" = "Legg til lån";
 
 /* Class = "IBUINavigationItem"; title = "History"; ObjectID = "gMT-bD-VkO"; */
-"gMT-bD-VkO.title" = "History";
+"gMT-bD-VkO.title" = "Historie";
 
 /* Class = "IBUIBarButtonItem"; title = "Borrow"; ObjectID = "gzN-y3-pBq"; */
-"gzN-y3-pBq.title" = "Borrow";
+"gzN-y3-pBq.title" = "Lån av";
 
 /* Class = "IBUILabel"; text = "Unknown"; ObjectID = "hMx-Nj-5Ob"; */
-"hMx-Nj-5Ob.text" = "Unknown";
+"hMx-Nj-5Ob.text" = "Ukjent";
 
 /* Class = "IBUILabel"; text = "Friend"; ObjectID = "hpn-pt-zu6"; */
-"hpn-pt-zu6.text" = "Friend";
+"hpn-pt-zu6.text" = "Venn";
 
 /* Class = "IBUINavigationItem"; title = "Friends"; ObjectID = "i7u-Cf-cEz"; */
-"i7u-Cf-cEz.title" = "Friends";
+"i7u-Cf-cEz.title" = "Venner";
 
 /* Class = "IBUITextField"; placeholder = "Value"; ObjectID = "jAi-bu-cqX"; */
-"jAi-bu-cqX.placeholder" = "Value";
+"jAi-bu-cqX.placeholder" = "Verdi";
 
 /* Class = "IBUITextField"; placeholder = "Note"; ObjectID = "jGV-bV-u9f"; */
-"jGV-bV-u9f.placeholder" = "Note";
+"jGV-bV-u9f.placeholder" = "Notat";
 
 /* Class = "IBUILabel"; text = "Lent $1,000 to John Doe"; ObjectID = "kiI-ya-EgT"; */
-"kiI-ya-EgT.text" = "Lent $1,000 to John Doe";
+"kiI-ya-EgT.text" = "Lånte kr 1 000 til Ola Nordmann";
 
 /* Class = "IBUILabel"; text = "May 1, 2012 12:17 PM"; ObjectID = "lfX-q8-8aC"; */
 "lfX-q8-8aC.text" = "May 1, 2012 12:17 PM";
 
 /* Class = "IBUILabel"; text = "Other"; ObjectID = "nxA-Iv-ttf"; */
-"nxA-Iv-ttf.text" = "Other";
+"nxA-Iv-ttf.text" = "Annet";
 
 /* Class = "IBUILabel"; text = "Note"; ObjectID = "sQ7-N2-s5n"; */
-"sQ7-N2-s5n.text" = "Note";
+"sQ7-N2-s5n.text" = "Notat";
 
 /* Class = "IBUILabel"; text = "Attach Location"; ObjectID = "tWo-rh-WwI"; */
-"tWo-rh-WwI.text" = "Attach Location";
+"tWo-rh-WwI.text" = "Legg ved lokasjon";
 
 /* Class = "IBUINavigationItem"; title = "Location"; ObjectID = "urC-Aw-9Cg"; */
-"urC-Aw-9Cg.title" = "Location";
+"urC-Aw-9Cg.title" = "Lokasjon";
 
 /* Class = "IBUILabel"; text = "Category"; ObjectID = "wVl-BY-NMF"; */
-"wVl-BY-NMF.text" = "Category";
+"wVl-BY-NMF.text" = "Kategori";
 
 /* Class = "IBUINavigationItem"; title = "Edit Loan"; ObjectID = "xFS-rl-dZh"; */
-"xFS-rl-dZh.title" = "Edit Loan";
+"xFS-rl-dZh.title" = "Endre lån";
 
-/* Class = "IBUILabel"; text = "None"; ObjectID = "yEt-fp-XOO"; */
-"yEt-fp-XOO.text" = "None";
+/* Class = "IBUILabel"; text = "None Selected"; ObjectID = "yEt-fp-XOO"; */
+"yEt-fp-XOO.text" = "Ingen valgt";
 
 /* Class = "IBUILabel"; text = "John Doe"; ObjectID = "zOw-h5-1Zm"; */
-"zOw-h5-1Zm.text" = "John Doe";
+"zOw-h5-1Zm.text" = "Ola Nordmann";

@@ -32,8 +32,6 @@ enum {
 {
     [super viewDidLoad];
     
-    [self addObserver:self forKeyPath:@"lentStatus" options:NSKeyValueObservingOptionNew context:NULL];
-    
     [self updateViewInfo];
 }
 
@@ -65,15 +63,14 @@ enum {
     [super viewDidDisappear:animated];
 }
 
-#pragma mark - Observers
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+#pragma mark - Accessors/mutators
+
+- (void)setLentStatus:(BOOL)lentStatus
 {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    [super setLentStatus:lentStatus];
     
-    if ([keyPath isEqualToString:@"lentStatus"]) {
-        self.lentSegmentedControl.selectedSegmentIndex = (self.lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
-    }
+    self.lentSegmentedControl.selectedSegmentIndex = (lentStatus == YES) ? kLendSegmentIndex : kBorrowSegmentIndex;
 }
 
 
@@ -150,12 +147,10 @@ enum {
 {
     // Update internal state
     self.lentStatus = [self.loan lentValue];
+    self.amount = [self.loan absoluteAmount];
     self.selectedFriendID = self.loan.friendID;
     self.selectedCategoryID = self.loan.categoryID;
-    
-    // Update GUI
-    self.amountTextField.text = [[self.loan absoluteAmount] stringValue];
-    self.noteTextField.text = self.loan.note;
+    self.note = self.loan.note;
 }
 
 @end

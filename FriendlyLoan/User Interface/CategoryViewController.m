@@ -96,7 +96,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
         categoryID = self.selectedCategoryID;
     }
     else {
-        categoryID = [[CategoryList categoryIDs] objectAtIndex:indexPath.row];
+        categoryID = [CategoryList categoryIDs][indexPath.row];
     }
     
     self.selectedCategoryID = categoryID;
@@ -126,7 +126,7 @@ const NSInteger kUnknownCategoryCellSection = 1;
         isSelected = YES;
     }
     else {
-        categoryID =[[CategoryList categoryIDs] objectAtIndex:indexPath.row];
+        categoryID =[CategoryList categoryIDs][indexPath.row];
         isSelected = [categoryID isEqualToNumber:self.selectedCategoryID];
     }
     

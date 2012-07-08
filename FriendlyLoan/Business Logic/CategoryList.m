@@ -22,7 +22,7 @@ static NSArray *_categoryIDs;
     if (_categories == nil) {
         NSURL *categoriesURL = [[NSBundle mainBundle] URLForResource:@"CategoryList" withExtension:@"plist"];
         NSDictionary *categoryList = [[NSDictionary alloc] initWithContentsOfURL:categoriesURL];
-        _categories = [categoryList objectForKey:@"categories"];
+        _categories = categoryList[@"categories"];
     }
     
     return _categories;
@@ -34,7 +34,7 @@ static NSArray *_categoryIDs;
         NSMutableDictionary *categoriesByID = [[NSMutableDictionary alloc] init];
         
         for (NSDictionary *category in [self categories]) {
-            NSNumber *categoryID = [category objectForKey:@"categoryID"];
+            NSNumber *categoryID = category[@"categoryID"];
             [categoriesByID setValue:category forKey:[categoryID stringValue]];
         }
         
@@ -50,9 +50,9 @@ static NSArray *_categoryIDs;
         NSMutableArray *categoryIDs = [[NSMutableArray alloc] init];
         
         for (NSDictionary *category in [self categories]) {
-            BOOL hidden = [[category objectForKey:@"hidden"] boolValue];
+            BOOL hidden = [category[@"hidden"] boolValue];
             if (!hidden) {
-                NSNumber *categoryID = [category objectForKey:@"categoryID"];
+                NSNumber *categoryID = category[@"categoryID"];
                 [categoryIDs addObject:categoryID];
             }
         }
@@ -104,17 +104,17 @@ static NSArray *_categoryIDs;
 
 + (NSString *)categoryKeyForCategoryID:(NSNumber *)categoryID
 {
-    return [[[self categoriesByID] objectForKey:[categoryID stringValue]] objectForKey:@"categoryKey"];
+    return [self categoriesByID][[categoryID stringValue]][@"categoryKey"];
 }
 
 + (NSString *)imageNameForCategoryID:(NSNumber *)categoryID
 {
-    return [[[self categoriesByID] objectForKey:[categoryID stringValue]] objectForKey:@"imageName"];
+    return [self categoriesByID][[categoryID stringValue]][@"imageName"];
 }
 
 + (NSString *)highlightedImageNameForCategoryID:(NSNumber *)categoryID
 {
-    return [[[self categoriesByID] objectForKey:[categoryID stringValue]] objectForKey:@"highlightedImageName"];
+    return [self categoriesByID][[categoryID stringValue]][@"highlightedImageName"];
 }
 
 @end

@@ -10,4 +10,40 @@
 
 @implementation FLAddLoanTests
 
+- (void)setUp
+{
+    [super setUp];
+    
+    [MagicalRecord setupCoreDataStackWithInMemoryStore];
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultContext];
+    
+    self.addLoanInteractor = [[FLAddLoanInteractor alloc] initWithManagedObjectContext:context];
+}
+
+- (void)tearDown
+{
+    self.addLoanInteractor = nil;
+    
+    [MagicalRecord cleanUp];
+    
+    [super tearDown];
+}
+
+- (void)testAddLoan
+{
+    FLAddLoanRequestModel *request = [[FLAddLoanRequestModel alloc] init];
+    request.amount = [NSDecimalNumber decimalNumberWithString:@"42.0"];
+    request.friendID = @"friend1";
+    request.categoryID = @1;
+    request.note = @"note";
+    
+    [self.addLoanInteractor addLoanWithRequest:request delegate:self];
+}
+
+- (void)didAddLoanWithResponse:(FLAddLoanResponseModel *)response
+{
+    NSLog(@"%@%@", NSStringFromSelector(_cmd), response);
+    STFail(@"Failes");
+}
+
 @end

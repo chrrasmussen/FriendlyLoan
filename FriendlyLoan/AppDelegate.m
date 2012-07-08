@@ -16,6 +16,11 @@
 
 #pragma mark - Application lifecycle
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setUpManagers];
@@ -68,6 +73,29 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
 //    [self saveContext];
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
+
+#pragma mark - State restoration
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
+{
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 

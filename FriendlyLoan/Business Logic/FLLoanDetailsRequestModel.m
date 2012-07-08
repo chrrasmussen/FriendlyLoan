@@ -1,13 +1,18 @@
 //
-//  FLLoanRequestModel.m
+//  FLLoanDetailsRequestModel.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 04.07.12.
 //  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
-#import "FLLoanRequestModel.h"
+#import "FLLoanDetailsRequestModel.h"
 
-@implementation FLLoanRequestModel
+@implementation FLLoanDetailsRequestModel
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %x> loanID:%@", NSStringFromClass([self class]), (NSUInteger)self, self.loanID];
+}
 
 @end

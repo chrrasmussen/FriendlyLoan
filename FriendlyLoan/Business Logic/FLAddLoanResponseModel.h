@@ -10,4 +10,7 @@
 
 @interface FLAddLoanResponseModel : NSObject
 
+@property (nonatomic, strong) NSManagedObjectID *loanID;
+@property (nonatomic, strong) NSError *error;
+
 @end

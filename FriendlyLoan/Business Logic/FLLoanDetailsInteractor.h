@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLLoanDetailsRequestBoundary.h"
 
-@interface FLLoanDetailsInteractor : NSObject
+@interface FLLoanDetailsInteractor : NSObject <FLLoanDetailsRequestBoundary>
+
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

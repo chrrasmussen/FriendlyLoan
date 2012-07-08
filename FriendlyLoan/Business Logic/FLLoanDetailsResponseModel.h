@@ -10,4 +10,12 @@
 
 @interface FLLoanDetailsResponseModel : NSObject
 
+@property (nonatomic, strong) NSNumber *lent;
+@property (nonatomic, strong) NSDecimalNumber *amount;
+@property (nonatomic, strong) NSString *friendID;
+@property (nonatomic, strong) NSNumber *categoryID;
+@property (nonatomic, strong) NSString *note;
+@property (nonatomic, strong) NSDate *createdAt;
+@property (nonatomic, strong) NSDate *updatedAt;
+
 @end
