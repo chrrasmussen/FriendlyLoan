@@ -131,7 +131,7 @@
 /* Class = "IBUILabel"; text = "Note"; ObjectID = "sQ7-N2-s5n"; */
 "sQ7-N2-s5n.text" = "Notat";
 
-/* Class = "IBUILabel"; text = "Attach Location"; ObjectID = "tWo-rh-WwI"; */
+/* Class = "IBUILabel"; text = "Add Location"; ObjectID = "tWo-rh-WwI"; */
 "tWo-rh-WwI.text" = "Legg ved lokasjon";
 
 /* Class = "IBUINavigationItem"; title = "Location"; ObjectID = "urC-Aw-9Cg"; */

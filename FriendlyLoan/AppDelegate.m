@@ -7,8 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
+
+#import "TabBarController.h"
+
+// TODO: Temp
+#define MR_SHORTHAND 1
+#define MR_ENABLE_ACTIVE_RECORD_LOGGING 0
+#import "CoreData+MagicalRecord.h"
 
 
 @implementation AppDelegate
@@ -23,8 +31,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setUpManagers];
-    [self setUpNotificationObservers];
+    [self setUpLoanManager];
+//    [self setUpNotificationObservers];
+    
+    TabBarController *tabBarController = (TabBarController *)self.window.rootViewController;
+    tabBarController.loanManager = self.loanManager;
+    
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     return YES;
 }
@@ -66,7 +79,7 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     NSLog(@"%@", NSStringFromSelector(_cmd));
-    [self.loanManager handleApplicationDidBecomeActive];
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -117,23 +130,28 @@
 
 #pragma mark - Private methods
 
-- (void)setUpManagers
+- (void)setUpLoanManager
 {
-    _loanManager = [[LoanManager alloc] init];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"FriendlyLoan.sqlite"];
+    _managedObjectContext = [NSManagedObjectContext defaultContext];
+    
+    _locationManager = [[CLLocationManager alloc] init]; // TODO: Use a subclass of CLLocationManager?
+    
+    _loanManager = [[LoanManager alloc] initWithManagedObjectContext:self.managedObjectContext];
 }
 
-- (void)setUpNotificationObservers
-{
-    typeof(self) bself = self;
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:FLNeedsLocationServices object:nil queue:nil usingBlock:^(NSNotification *note) {
-        [bself promptUserToEnableLocationServices];
-    }];
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:FLNeedsLocationServicesForThisApp object:nil queue:nil usingBlock:^(NSNotification *note) {
-        [bself promptUserToEnableLocationServicesForThisApp];
-    }];
-}
+//- (void)setUpNotificationObservers
+//{
+//    typeof(self) bself = self;
+//    
+//    [[NSNotificationCenter defaultCenter] addObserverForName:FLLoanManagerNeedsLocationServices object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        [bself promptUserToEnableLocationServices];
+//    }];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserverForName:FLLoanManagerNeedsLocationServicesForThisApp object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        [bself promptUserToEnableLocationServicesForThisApp];
+//    }];
+//}
 
 - (void)promptUserToEnableLocationServices
 {
@@ -162,3 +180,4 @@
 //}
 
 @end
+

@@ -7,8 +7,9 @@
 //
 
 #import "AbstractLoanViewController.h"
+#import <AddressBookUI/AddressBookUI.h>
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 
 #import "FriendList.h"
 #import "CategoryList.h"
@@ -19,11 +20,13 @@
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
-// FIXME: Temporary
-#import "ABContactsHelper.h"
-
 
 const NSInteger kDefaultCategoryID = 0;
+
+
+@interface AbstractLoanViewController () <ABPeoplePickerNavigationControllerDelegate>
+
+@end
 
 
 @implementation AbstractLoanViewController
@@ -38,9 +41,6 @@ const NSInteger kDefaultCategoryID = 0;
     [super viewDidLoad];
     
     [self resetFields];
-    
-    // FIXME: Temp
-    self.selectedFriendID = @1;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,19 +58,16 @@ const NSInteger kDefaultCategoryID = 0;
     [self validateAmountAndFriend];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
+#pragma mark - Table view
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super viewDidDisappear:animated];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell == self.friendCell) {
+        [self showFriends:tableView];
+    }
 }
 
 
@@ -145,11 +142,13 @@ const NSInteger kDefaultCategoryID = 0;
 
 }
 
-- (void)updateLoanBasedOnViewInfo:(Loan *)loan
+- (void)updateLoanBasedOnViewInfo:(id<FLLoan>)loan
 {
-    loan.amount = (self.lentStatus == YES) ? self.amount : [self.amount decimalNumberByNegating];
-    loan.friendID = self.selectedFriendID;
-    loan.categoryID = self.selectedCategoryID;
+    // FIXME: Fix code
+//    loan.amount = (self.lentStatus == YES) ? self.amount : [self.amount decimalNumberByNegating];
+    loan.absoluteAmount = self.amount;
+//    loan.friendID = self.selectedFriendID;
+//    loan.categoryID = self.selectedCategoryID;
     loan.note = self.note;
 }
 
@@ -170,6 +169,13 @@ const NSInteger kDefaultCategoryID = 0;
     [self validateAmountAndFriend];
 }
 
+- (IBAction)showFriends:(id)sender
+{
+    ABPeoplePickerNavigationController *peoplePickerNavigationController = [[ABPeoplePickerNavigationController alloc] init];
+    peoplePickerNavigationController.peoplePickerDelegate = self;
+    [self presentViewController:peoplePickerNavigationController animated:YES completion:NULL];
+}
+
 
 #pragma mark - Storyboard
 
@@ -177,14 +183,14 @@ const NSInteger kDefaultCategoryID = 0;
 {
     [super prepareForSegue:segue sender:sender];
     
-    if ([segue.identifier isEqualToString:@"FriendSegue"]) {
-        [self hideKeyboard];
-        
-        FriendViewController *friendViewController = [segue destinationViewController];
-        friendViewController.delegate = self;
-        friendViewController.selectedFriendID = self.selectedFriendID;
-    }
-    else if ([segue.identifier isEqualToString:@"CategorySegue"]) {
+//    if ([segue.identifier isEqualToString:@"FriendSegue"]) {
+//        [self hideKeyboard];
+//        
+//        FriendViewController *friendViewController = [segue destinationViewController];
+//        friendViewController.delegate = self;
+//        friendViewController.selectedFriendID = self.selectedFriendID;
+//    }
+    if ([segue.identifier isEqualToString:@"CategorySegue"]) {
         [self hideKeyboard];
         
         CategoryViewController *categoryViewController = [segue destinationViewController];
@@ -205,14 +211,37 @@ const NSInteger kDefaultCategoryID = 0;
 }
 
 
-#pragma mark - FriendViewControllerDelegate methods
+#pragma mark - ABPeoplePickerNavigationControllerDelegate
 
-- (void)friendViewController:(FriendViewController *)friendViewController didSelectFriendID:(NSNumber *)friendID
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    self.selectedFriendID = @(ABRecordGetRecordID(person));
+    [self dismissViewControllerAnimated:YES completion:NULL];
     
-    self.selectedFriendID = friendID;
+    return NO;
 }
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    return NO;
+}
+
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+//#pragma mark - FriendViewControllerDelegate methods
+//
+//- (void)friendViewController:(FriendViewController *)friendViewController didSelectFriendID:(NSNumber *)friendID
+//{
+//    [self.navigationController popViewControllerAnimated:YES];
+//    
+//    self.selectedFriendID = friendID;
+//}
 
 
 #pragma mark - CategoryViewControllerDelegate methods

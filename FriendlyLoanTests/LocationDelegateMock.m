@@ -1,13 +1,14 @@
 //
-//  FriendlyLoan.m
+//  LocationManagerMock.m
 //  FriendlyLoan
 //
 //  Created by Christian Rasmussen on 09.07.12.
 //  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
-#import "FriendlyLoan.h"
+#import "LocationDelegateMock.h"
 
-@implementation FriendlyLoan
+
+@implementation LocationDelegateMock
 
 @end

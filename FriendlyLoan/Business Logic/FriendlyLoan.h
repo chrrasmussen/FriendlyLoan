@@ -6,13 +6,14 @@
 //  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#ifndef FriendlyLoan_h
+#define FriendlyLoan_h
+
+// Interfaces
 #import "FLLoanManager.h"
 #import "FLLoan.h"
 
-@interface FriendlyLoan : NSObject
-
-@property (nonatomic, strong, readonly) id<FLLoanManager> loanManager;
-@property (nonatomic, strong, readonly) id<FLHistoryController> history;
-
-@end
+// Implementation
+#import "LoanManager.h"
+#import "Loan.h"
+#endif

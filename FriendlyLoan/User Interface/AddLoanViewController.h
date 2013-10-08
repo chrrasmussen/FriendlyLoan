@@ -10,12 +10,17 @@
 #import "AbstractLoanViewController.h"
 
 
+@protocol FLLoanManager;
+
+
 @interface AddLoanViewController : AbstractLoanViewController
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *borrowBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *lendBarButtonItem;
-@property (nonatomic, strong) IBOutlet UISwitch *attachLocationSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *addLocationSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *shareLoanSwitch;
+
+@property (nonatomic, strong) id<FLLoanManager> loanManager;
 
 - (void)popToBlankViewControllerAnimated:(BOOL)animated;
 
@@ -23,7 +28,7 @@
 - (IBAction)borrow:(id)sender;
 - (IBAction)lend:(id)sender;
 
-- (IBAction)changeAttachLocationValue:(UISwitch *)sender;
+- (IBAction)changeAddLocationValue:(UISwitch *)sender;
 - (IBAction)changeShareLoanValue:(UISwitch *)sender;
 - (IBAction)detailsViewControllerAdd:(id)sender;
 

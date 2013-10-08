@@ -17,9 +17,13 @@ extern NSString * const kResultDebt;
 extern NSString * const kPlaceholderImageName;
 
 
+@protocol FLLoanManager;
 @class FriendsSearchResultsController;
 
+
 @interface FriendsViewController : UITableViewController <UISearchDisplayDelegate, UIAlertViewDelegate>;
+
+@property (nonatomic, strong) id<FLLoanManager> loanManager;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *sortedResult;

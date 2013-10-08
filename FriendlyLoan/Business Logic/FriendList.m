@@ -7,7 +7,7 @@
 //
 
 #import "FriendList.h"
-#import "ABContactsHelper.h"
+#import <AddressBook/AddressBook.h>
 
 #import "UIImage+RIOAdditions.h"
 
@@ -17,7 +17,7 @@ const CGFloat kThumbnailImageSize = 43.0;
 
 @implementation FriendList
 
-//static NSCache *_thumbnailImages;
+static NSCache *_thumbnailImages;
 
 //- (void)populateFieldsWithFriendID:(NSNumber *)friendID;
 //{
@@ -44,96 +44,59 @@ const CGFloat kThumbnailImageSize = 43.0;
     //    CFArrayRef array = ABAddressBookCopyPeopleWithName(addressBook, @"b c");
     //    NSLog(@"%@", array);
     
-//    CFErrorRef error;
-//    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-//    if (addressBook == NULL) {
-//        return nil;
-//    }
-//    ABRecordID recordId = (ABRecordID)[friendID intValue];
-//    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
-//    
-//    NSString *friendName = (personRef != NULL) ? (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef) : nil;
-//    
-//    CFRelease(addressBook);
-//    
-//    return friendName;
-    
-    ABContact *contact = [self contactWithFriendID:friendID];
-    if (contact == nil) {
+    CFErrorRef error;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    if (addressBook == NULL) {
         return nil;
     }
+    ABRecordID recordId = (ABRecordID)[friendID intValue];
+    ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
     
-    NSString *composedName = [NSString stringWithFormat:@"%@ %@", contact.firstname, contact.lastname];
+    NSString *friendName = (personRef != NULL) ? (__bridge_transfer NSString *)ABRecordCopyCompositeName(personRef) : nil;
     
-    return composedName;
+    CFRelease(addressBook);
+    
+    return friendName;
 }
 
 + (UIImage *)imageForFriendID:(NSNumber *)friendID
 {
-//    // Create a cache
-//    if (_thumbnailImages == nil) {
-//        _thumbnailImages = [[NSCache alloc] init];
-//    }
-//    
-//    // Retreive thumbnail image from cache
-//    UIImage *thumbnailImage = [_thumbnailImages objectForKey:friendID];
-//    if (thumbnailImage == nil)
-//    {
-//        // Get person from address book
-//        CFErrorRef error;
-//        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-//        if (addressBook == NULL) {
-//            return nil;
-//        }
-//        ABRecordID recordId = (ABRecordID)[friendID intValue];
-//        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
-//        
-//        // Create a thumbnail image
-//        if (personRef != NULL && ABPersonHasImageData(personRef))
-//        {
-//            CGFloat scale = [[UIScreen mainScreen] scale];
-//            CGSize thumbnailSize = CGSizeMake(kThumbnailImageSize * scale, kThumbnailImageSize * scale);
-//            
-//            UIImage *originalImage = [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
-////            [[UIImage alloc] initWithData:<#(NSData *)#> scale:<#(CGFloat)#>]
-//            thumbnailImage = [originalImage scaledImageWithSize:thumbnailSize];
-//            
-//            // Save to cache
-//            [_thumbnailImages setObject:thumbnailImage forKey:friendID];
-//        }
-//        
-//        CFRelease(addressBook);
-//    }
-//    
-//    return thumbnailImage;
-    ABContact *contact = [self contactWithFriendID:friendID];
-    if (contact == nil) {
-        return nil;
+    // Create a cache
+    if (_thumbnailImages == nil) {
+        _thumbnailImages = [[NSCache alloc] init];
     }
     
-    UIImage *image = contact.image;
-    
-    CGSize size = image.size;
-    CGFloat scale = (size.width > size.height) ? (kThumbnailImageSize / size.width) : (kThumbnailImageSize / size.height);
-    
-    UIImage *thumbnailImage = [UIImage imageWithCGImage:[image CGImage] scale:scale orientation:UIImageOrientationUp];
+    // Retreive thumbnail image from cache
+    UIImage *thumbnailImage = [_thumbnailImages objectForKey:friendID];
+    if (thumbnailImage == nil)
+    {
+        // Get person from address book
+        CFErrorRef error;
+        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+        if (addressBook == NULL) {
+            return nil;
+        }
+        ABRecordID recordId = (ABRecordID)[friendID intValue];
+        ABRecordRef personRef = ABAddressBookGetPersonWithRecordID(addressBook, recordId);
+        
+        // Create a thumbnail image
+        if (personRef != NULL && ABPersonHasImageData(personRef))
+        {
+            CGFloat scale = [[UIScreen mainScreen] scale];
+            CGSize thumbnailSize = CGSizeMake(kThumbnailImageSize * scale, kThumbnailImageSize * scale);
+            
+            UIImage *originalImage = [UIImage imageWithData:(__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(personRef, kABPersonImageFormatThumbnail)];
+//            [[UIImage alloc] initWithData:<#(NSData *)#> scale:<#(CGFloat)#>]
+            thumbnailImage = [originalImage scaledImageWithSize:thumbnailSize];
+            
+            // Save to cache
+            [_thumbnailImages setObject:thumbnailImage forKey:friendID];
+        }
+        
+        CFRelease(addressBook);
+    }
     
     return thumbnailImage;
-}
-
-
-#pragma mark - Private methods
-
-+ (ABContact *)contactWithFriendID:(NSNumber *)friendID
-{
-    if (friendID == nil) {
-        return nil;
-    }
-    
-    ABRecordID recordID = (ABRecordID)[friendID intValue];
-    ABContact *contact = [ABContact contactWithRecordID:recordID];
-    
-    return contact;
 }
 
 @end

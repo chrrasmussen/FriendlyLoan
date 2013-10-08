@@ -9,7 +9,7 @@
 #import "DetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 
 #import "LocationViewController.h"
 #import "EditLoanViewController.h"
@@ -80,8 +80,9 @@ const int kNoteTableViewCellIndex = 2;
         editLoanViewController.loan = self.loan;
     }
     else if ([segue.identifier isEqualToString:@"LocationSegue"]) {
-        LocationViewController *locationViewController = [segue destinationViewController];
-        locationViewController.locationCoordinate = [self.loan coordinate];
+        // FIXME: Fix code
+//        LocationViewController *locationViewController = [segue destinationViewController];
+//        locationViewController.locationCoordinate = [self.loan coordinate];
     }
 }
 
@@ -113,7 +114,7 @@ const int kNoteTableViewCellIndex = 2;
 {
     NSInteger rows = [super tableView:tableView numberOfRowsInSection:section];
     rows -= ([self.loan.note length] == 0) ? 1 : 0;
-    rows -= ([self.loan hasLocation] == NO) ? 1 : 0;
+    rows -= (self.loan.location == nil) ? 1 : 0;
     
     return rows;
 }
@@ -148,11 +149,12 @@ const int kNoteTableViewCellIndex = 2;
 
 - (void)updateViewInfo
 {
-    NSString *amountText = [self.loan amountPresentation];
-    NSString *friendText = [self.loan friendFullName];
+    // FIXME: Fix code
+    NSString *amountText = @"FIXME";//self.loan.amountPresentation;
+    NSString *friendText = @"FIXME";//self.loan.friendFullName;
     
-    BOOL settled = [self.loan settledValue];
-    BOOL lent = [self.loan lentValue];
+    BOOL settled = [self.loan isSettled];
+    BOOL lent = NO;//[self.loan.lent boolValue];
     
     NSString *format = nil;
     if (settled == NO) {
@@ -174,8 +176,8 @@ const int kNoteTableViewCellIndex = 2;
     
     self.titleLabel.text = [NSString stringWithFormat:format, amountText, friendText];
     
-    self.categoryLabel.text = [self.loan categoryName];
-    self.categoryImageView.image = [self.loan categoryImage];
+    self.categoryLabel.text = [self.loan.category title];
+    self.categoryImageView.image = [self.loan.category image];
     
     self.noteLabel.text = self.loan.note;
     

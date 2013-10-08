@@ -5,27 +5,25 @@
 
 
 extern const struct LoanAttributes {
+	__unsafe_unretained NSString *addLocation;
 	__unsafe_unretained NSString *amount;
-	__unsafe_unretained NSString *attachLocation;
-	__unsafe_unretained NSString *categoryID;
+	__unsafe_unretained NSString *categoryUUID;
 	__unsafe_unretained NSString *createdAt;
-	__unsafe_unretained NSString *friendID;
-	__unsafe_unretained NSString *locationLatitude;
-	__unsafe_unretained NSString *locationLongitude;
 	__unsafe_unretained NSString *note;
 	__unsafe_unretained NSString *settled;
 	__unsafe_unretained NSString *updatedAt;
 } LoanAttributes;
 
 extern const struct LoanRelationships {
+	__unsafe_unretained NSString *location;
+	__unsafe_unretained NSString *person;
 } LoanRelationships;
 
 extern const struct LoanFetchedProperties {
 } LoanFetchedProperties;
 
-
-
-
+@class Location;
+@class Person;
 
 
 
@@ -47,6 +45,18 @@ extern const struct LoanFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber *addLocation;
+
+
+@property BOOL addLocationValue;
+- (BOOL)addLocationValue;
+- (void)setAddLocationValue:(BOOL)value_;
+
+//- (BOOL)validateAddLocation:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSDecimalNumber *amount;
 
 
@@ -55,26 +65,10 @@ extern const struct LoanFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber *attachLocation;
+@property (nonatomic, strong) NSString *categoryUUID;
 
 
-@property BOOL attachLocationValue;
-- (BOOL)attachLocationValue;
-- (void)setAttachLocationValue:(BOOL)value_;
-
-//- (BOOL)validateAttachLocation:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber *categoryID;
-
-
-@property int16_t categoryIDValue;
-- (int16_t)categoryIDValue;
-- (void)setCategoryIDValue:(int16_t)value_;
-
-//- (BOOL)validateCategoryID:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCategoryUUID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -83,42 +77,6 @@ extern const struct LoanFetchedProperties {
 
 
 //- (BOOL)validateCreatedAt:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber *friendID;
-
-
-@property int32_t friendIDValue;
-- (int32_t)friendIDValue;
-- (void)setFriendIDValue:(int32_t)value_;
-
-//- (BOOL)validateFriendID:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber *locationLatitude;
-
-
-@property double locationLatitudeValue;
-- (double)locationLatitudeValue;
-- (void)setLocationLatitudeValue:(double)value_;
-
-//- (BOOL)validateLocationLatitude:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber *locationLongitude;
-
-
-@property double locationLongitudeValue;
-- (double)locationLongitudeValue;
-- (void)setLocationLongitudeValue:(double)value_;
-
-//- (BOOL)validateLocationLongitude:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -152,6 +110,20 @@ extern const struct LoanFetchedProperties {
 
 
 
+@property (nonatomic, strong) Location* location;
+
+//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) Person* person;
+
+//- (BOOL)validatePerson:(id*)value_ error:(NSError**)error_;
+
+
+
+
 + (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ ;
 + (NSArray*)fetchLoansWaitingForLocation:(NSManagedObjectContext*)moc_ dateLimit:(NSDate*)dateLimit_ error:(NSError**)error_;
 
@@ -177,59 +149,29 @@ extern const struct LoanFetchedProperties {
 @interface _Loan (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSNumber *)primitiveAddLocation;
+- (void)setPrimitiveAddLocation:(NSNumber *)value;
+
+- (BOOL)primitiveAddLocationValue;
+- (void)setPrimitiveAddLocationValue:(BOOL)value_;
+
+
+
+
 - (NSDecimalNumber *)primitiveAmount;
 - (void)setPrimitiveAmount:(NSDecimalNumber *)value;
 
 
 
 
-- (NSNumber *)primitiveAttachLocation;
-- (void)setPrimitiveAttachLocation:(NSNumber *)value;
-
-- (BOOL)primitiveAttachLocationValue;
-- (void)setPrimitiveAttachLocationValue:(BOOL)value_;
-
-
-
-
-- (NSNumber *)primitiveCategoryID;
-- (void)setPrimitiveCategoryID:(NSNumber *)value;
-
-- (int16_t)primitiveCategoryIDValue;
-- (void)setPrimitiveCategoryIDValue:(int16_t)value_;
+- (NSString *)primitiveCategoryUUID;
+- (void)setPrimitiveCategoryUUID:(NSString *)value;
 
 
 
 
 - (NSDate *)primitiveCreatedAt;
 - (void)setPrimitiveCreatedAt:(NSDate *)value;
-
-
-
-
-- (NSNumber *)primitiveFriendID;
-- (void)setPrimitiveFriendID:(NSNumber *)value;
-
-- (int32_t)primitiveFriendIDValue;
-- (void)setPrimitiveFriendIDValue:(int32_t)value_;
-
-
-
-
-- (NSNumber *)primitiveLocationLatitude;
-- (void)setPrimitiveLocationLatitude:(NSNumber *)value;
-
-- (double)primitiveLocationLatitudeValue;
-- (void)setPrimitiveLocationLatitudeValue:(double)value_;
-
-
-
-
-- (NSNumber *)primitiveLocationLongitude;
-- (void)setPrimitiveLocationLongitude:(NSNumber *)value;
-
-- (double)primitiveLocationLongitudeValue;
-- (void)setPrimitiveLocationLongitudeValue:(double)value_;
 
 
 
@@ -253,6 +195,16 @@ extern const struct LoanFetchedProperties {
 - (void)setPrimitiveUpdatedAt:(NSDate *)value;
 
 
+
+
+
+- (Location*)primitiveLocation;
+- (void)setPrimitiveLocation:(Location*)value;
+
+
+
+- (Person*)primitivePerson;
+- (void)setPrimitivePerson:(Person*)value;
 
 
 @end

@@ -8,10 +8,12 @@
 
 #import "HistoryViewController.h"
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 
 #import "DetailsViewController.h"
 #import "NSDate+RIOAdditions.h"
+
+#import "CoreData+MagicalRecord.h" // TODO: Temp
 
 
 @implementation HistoryViewController
@@ -131,7 +133,7 @@
 {
     if ([segue.identifier isEqualToString:@"DetailsSegue"])
     {
-        Loan *loan = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        id<FLLoan> loan = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.loan = loan;
@@ -213,7 +215,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Loan *loan = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    id<FLLoan> loan = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     UIImage *lentImage = [UIImage imageNamed:@"UpArrow-Normal"];
     UIImage *lentHighlightedImage = [UIImage imageNamed:@"UpArrow-Highlighted"];
@@ -222,11 +224,12 @@
 //    UIImage *image = [loan categoryImage];
 //    UIImage *highlightedImage = [loan categoryHighlightedImage];
     
-    NSString *amountText = [loan amountPresentation];
-    NSString *friendText = [loan friendFullName];
+    // FIXME: Fix code
+    NSString *amountText = @"FIXME";//loan.amountPresentation;
+    NSString *friendText = @"FIXME";//loan.friendFullName;
     
-    BOOL settled = [loan settledValue];
-    BOOL lent = [loan lentValue];
+    BOOL settled = [loan isSettled];
+    BOOL lent = NO;//[loan.lent boolValue];
     
     UIImage *image = (lent == YES) ? lentImage : borrowedImage;
     UIImage *highlightedImage = (lent == YES) ? lentHighlightedImage : borrowedHighlightedImage;
@@ -257,7 +260,7 @@
 - (void)setUpFetchedResultsController
 {
     // Set up the fetch request
-    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_defaultContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Loan" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
     fetchRequest.includesSubentities = YES;

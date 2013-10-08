@@ -9,7 +9,7 @@
 #import "EditLoanViewController.h"
 #import "EditLoanViewControllerDelegate.h"
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 
 
 enum {
@@ -81,11 +81,9 @@ enum {
     self.saveBarButtonItem.enabled = enabled;
 }
 
-- (void)updateLoanBasedOnViewInfo:(Loan *)theLoan
+- (void)updateLoanBasedOnViewInfo:(id<FLLoan>)theLoan
 {
     [super updateLoanBasedOnViewInfo:theLoan];
-    
-    theLoan.updatedAt = [NSDate date];
 }
 
 #pragma mark - Actions
@@ -125,7 +123,7 @@ enum {
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == kActionSheetDeleteLoanButtonIndex) {
-        [[LoanManager sharedManager] deleteLoan:self.loan];
+        [self.loan remove];
         
         if ([self.delegate respondsToSelector:@selector(editLoanViewControllerDidDeleteLoan:)]) {
             [self.delegate editLoanViewControllerDidDeleteLoan:self];
@@ -138,18 +136,18 @@ enum {
 
 - (void)editLoan
 {
-    [[LoanManager sharedManager] updateLoan:self.loan withUpdateHandler:^(Loan *theLoan) {
-        [self updateLoanBasedOnViewInfo:theLoan];
-    }];
+    [self updateLoanBasedOnViewInfo:self.loan];
+    [self.loan save];
 }
 
 - (void)updateViewInfo
 {
+    // TODO: Fix method
     // Update internal state
-    self.lentStatus = [self.loan lentValue];
-    self.amount = [self.loan absoluteAmount];
-    self.selectedFriendID = self.loan.friendID;
-    self.selectedCategoryID = self.loan.categoryID;
+//    self.lentStatus = [self.loan.lent boolValue];
+//    self.amount = self.loan.absoluteAmount;
+//    self.selectedFriendID = self.loan.friendID;
+//    self.selectedCategoryID = self.loan.categoryID;
     self.note = self.loan.note;
 }
 

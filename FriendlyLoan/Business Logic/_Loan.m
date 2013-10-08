@@ -4,19 +4,18 @@
 #import "_Loan.h"
 
 const struct LoanAttributes LoanAttributes = {
+	.addLocation = @"addLocation",
 	.amount = @"amount",
-	.attachLocation = @"attachLocation",
-	.categoryID = @"categoryID",
+	.categoryUUID = @"categoryUUID",
 	.createdAt = @"createdAt",
-	.friendID = @"friendID",
-	.locationLatitude = @"locationLatitude",
-	.locationLongitude = @"locationLongitude",
 	.note = @"note",
 	.settled = @"settled",
 	.updatedAt = @"updatedAt",
 };
 
 const struct LoanRelationships LoanRelationships = {
+	.location = @"location",
+	.person = @"person",
 };
 
 const struct LoanFetchedProperties LoanFetchedProperties = {
@@ -48,24 +47,8 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"attachLocationValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"attachLocation"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"categoryIDValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"categoryID"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"friendIDValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"friendID"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"locationLatitudeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"locationLatitude"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"locationLongitudeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"locationLongitude"];
+	if ([key isEqualToString:@"addLocationValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"addLocation"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"settledValue"]) {
@@ -79,6 +62,32 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
+@dynamic addLocation;
+
+
+
+- (BOOL)addLocationValue {
+	NSNumber *result = [self addLocation];
+	return [result boolValue];
+}
+
+- (void)setAddLocationValue:(BOOL)value_ {
+	[self setAddLocation:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveAddLocationValue {
+	NSNumber *result = [self primitiveAddLocation];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveAddLocationValue:(BOOL)value_ {
+	[self setPrimitiveAddLocation:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic amount;
 
 
@@ -86,53 +95,8 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
-@dynamic attachLocation;
+@dynamic categoryUUID;
 
-
-
-- (BOOL)attachLocationValue {
-	NSNumber *result = [self attachLocation];
-	return [result boolValue];
-}
-
-- (void)setAttachLocationValue:(BOOL)value_ {
-	[self setAttachLocation:@(value_)];
-}
-
-- (BOOL)primitiveAttachLocationValue {
-	NSNumber *result = [self primitiveAttachLocation];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveAttachLocationValue:(BOOL)value_ {
-	[self setPrimitiveAttachLocation:@(value_)];
-}
-
-
-
-
-
-@dynamic categoryID;
-
-
-
-- (int16_t)categoryIDValue {
-	NSNumber *result = [self categoryID];
-	return [result shortValue];
-}
-
-- (void)setCategoryIDValue:(int16_t)value_ {
-	[self setCategoryID:@(value_)];
-}
-
-- (int16_t)primitiveCategoryIDValue {
-	NSNumber *result = [self primitiveCategoryID];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCategoryIDValue:(int16_t)value_ {
-	[self setPrimitiveCategoryID:@(value_)];
-}
 
 
 
@@ -140,84 +104,6 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 @dynamic createdAt;
 
-
-
-
-
-
-@dynamic friendID;
-
-
-
-- (int32_t)friendIDValue {
-	NSNumber *result = [self friendID];
-	return [result intValue];
-}
-
-- (void)setFriendIDValue:(int32_t)value_ {
-	[self setFriendID:@(value_)];
-}
-
-- (int32_t)primitiveFriendIDValue {
-	NSNumber *result = [self primitiveFriendID];
-	return [result intValue];
-}
-
-- (void)setPrimitiveFriendIDValue:(int32_t)value_ {
-	[self setPrimitiveFriendID:@(value_)];
-}
-
-
-
-
-
-@dynamic locationLatitude;
-
-
-
-- (double)locationLatitudeValue {
-	NSNumber *result = [self locationLatitude];
-	return [result doubleValue];
-}
-
-- (void)setLocationLatitudeValue:(double)value_ {
-	[self setLocationLatitude:@(value_)];
-}
-
-- (double)primitiveLocationLatitudeValue {
-	NSNumber *result = [self primitiveLocationLatitude];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveLocationLatitudeValue:(double)value_ {
-	[self setPrimitiveLocationLatitude:@(value_)];
-}
-
-
-
-
-
-@dynamic locationLongitude;
-
-
-
-- (double)locationLongitudeValue {
-	NSNumber *result = [self locationLongitude];
-	return [result doubleValue];
-}
-
-- (void)setLocationLongitudeValue:(double)value_ {
-	[self setLocationLongitude:@(value_)];
-}
-
-- (double)primitiveLocationLongitudeValue {
-	NSNumber *result = [self primitiveLocationLongitude];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveLocationLongitudeValue:(double)value_ {
-	[self setPrimitiveLocationLongitude:@(value_)];
-}
 
 
 
@@ -240,7 +126,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 }
 
 - (void)setSettledValue:(BOOL)value_ {
-	[self setSettled:@(value_)];
+	[self setSettled:[NSNumber numberWithBool:value_]];
 }
 
 - (BOOL)primitiveSettledValue {
@@ -249,7 +135,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 }
 
 - (void)setPrimitiveSettledValue:(BOOL)value_ {
-	[self setPrimitiveSettled:@(value_)];
+	[self setPrimitiveSettled:[NSNumber numberWithBool:value_]];
 }
 
 
@@ -262,6 +148,14 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 
 
 
+
+@dynamic location;
+
+	
+
+@dynamic person;
+
+	
 
 
 
@@ -286,7 +180,11 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	
 	NSManagedObjectModel *model = [[moc_ persistentStoreCoordinator] managedObjectModel];
 	
-	NSDictionary *substitutionVariables = @{@"dateLimit": dateLimit_};
+	NSDictionary *substitutionVariables = [NSDictionary dictionaryWithObjectsAndKeys:
+														
+														dateLimit_, @"dateLimit",
+														
+														nil];
 										
 	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"LoansWaitingForLocation"
 													 substitutionVariables:substitutionVariables];
@@ -317,7 +215,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	
 	NSManagedObjectModel *model = [[moc_ persistentStoreCoordinator] managedObjectModel];
 	
-	NSDictionary *substitutionVariables = @{};
+	NSDictionary *substitutionVariables = [NSDictionary dictionary];
 										
 	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfLoanRequests"
 													 substitutionVariables:substitutionVariables];
@@ -348,7 +246,7 @@ const struct LoanFetchedProperties LoanFetchedProperties = {
 	
 	NSManagedObjectModel *model = [[moc_ persistentStoreCoordinator] managedObjectModel];
 	
-	NSDictionary *substitutionVariables = @{};
+	NSDictionary *substitutionVariables = [NSDictionary dictionary];
 										
 	NSFetchRequest *fetchRequest = [model fetchRequestFromTemplateWithName:@"NumberOfUnseenLoanRequests"
 													 substitutionVariables:substitutionVariables];

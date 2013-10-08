@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 
+@protocol FLLoanManager;
+
+
 @interface TabBarController : UITabBarController <UITabBarControllerDelegate>
+
+@property (nonatomic, strong) id<FLLoanManager> loanManager;
 
 @end

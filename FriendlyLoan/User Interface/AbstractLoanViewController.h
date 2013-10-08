@@ -12,10 +12,13 @@
 #import "CategoryViewControllerDelegate.h"
 
 
-@class Loan;
+@protocol FLLoanManager;
+@protocol FLLoan;
 
 
 @interface AbstractLoanViewController : UITableViewController <UITextFieldDelegate, FriendViewControllerDelegate, CategoryViewControllerDelegate>
+
+@property (nonatomic, weak) IBOutlet UITableViewCell *friendCell;
 
 @property (nonatomic, strong) IBOutlet UITextField *amountTextField;
 @property (nonatomic, strong) IBOutlet UILabel *friendValueLabel;
@@ -34,7 +37,7 @@
 // Override methods
 //- (BOOL)isViewInfoEqualToLoan:(Loan *)loan;
 - (void)setSaveButtonsEnabledState:(BOOL)enabled;
-- (void)updateLoanBasedOnViewInfo:(Loan *)loan;
+- (void)updateLoanBasedOnViewInfo:(id<FLLoan>)loan;
 - (void)resetFields;
 
 @end

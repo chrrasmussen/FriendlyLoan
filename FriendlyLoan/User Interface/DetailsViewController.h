@@ -12,11 +12,11 @@
 #import "EditLoanViewControllerDelegate.h"
 
 
-@class Loan;
+@protocol FLLoan;
 
 @interface DetailsViewController : UITableViewController <MKMapViewDelegate, EditLoanViewControllerDelegate>
 
-@property (nonatomic, strong) Loan *loan;
+@property (nonatomic, strong) id<FLLoan> loan;
 
 @property (nonatomic, strong) IBOutlet UIImageView *friendImageView;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;

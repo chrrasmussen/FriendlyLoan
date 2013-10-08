@@ -8,11 +8,13 @@
 
 #import "FriendsViewController.h"
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 #import "HistoryViewController.h"
 
 #import "FriendList.h"
 #import "CurrencyList.h"
+
+#import "CoreData+MagicalRecord.h" // TODO: Temp
 
 
 NSString * const kResultFriendID    = @"friendID";
@@ -209,7 +211,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)setUpFetchedResultsController
 {
     // Set up fetch request
-    NSManagedObjectContext *managedObjectContext = [[LoanManager sharedManager] managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_defaultContext]; // TODO: Move to a subclass
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Loan" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
 //    fetchRequest.includesSubentities = YES;
@@ -301,12 +303,14 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)settleDebtForIndexPath:(NSIndexPath *)indexPath
 {
     // Retrieve data
-    NSDictionary *friendObject = (self.sortedResult)[indexPath.row];
+//    NSDictionary *friendObject = (self.sortedResult)[indexPath.row];
     
-    NSDecimalNumber *debt = friendObject[kResultDebt];
-    NSNumber *friendID = friendObject[kResultFriendID];
+//    NSDecimalNumber *debt = friendObject[kResultDebt];
+//    NSNumber *friendID = friendObject[kResultFriendID];
     
-    [[LoanManager sharedManager] settleDebt:debt forFriendID:friendID];
+    id<FLPerson> person = nil;
+    
+    [self.loanManager settleDebtForPerson:person];
     
     // Delete row from data source
     [self.sortedResult removeObjectAtIndex:indexPath.row];
@@ -319,7 +323,7 @@ NSString * const kPlaceholderImageName  = @"MissingProfilePicture";
 - (void)promptUserToConfirmSettle
 {
     NSString *title = NSLocalizedString(@"Settle Loan", @"Title of alert view");
-    NSString *message = NSLocalizedString(@"When settling loans, the current settings for \"Attach Location\" and \"Share Loan with Friends\" in the Add Loan-tab are used. This message will only be displayed once.", @"Message of alert view");
+    NSString *message = NSLocalizedString(@"When settling loans, the current settings for \"Add Location\" and \"Share Loan with Friends\" in the Add Loan-tab are used. This message will only be displayed once.", @"Message of alert view");
     NSString *confirmButtonTitle = NSLocalizedString(@"Settle", @"Confirm settle button in alert view");
     NSString *cancelButtonTitle = NSLocalizedString(@"Cancel", @"Cancel button text in alert view");
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:confirmButtonTitle, nil];

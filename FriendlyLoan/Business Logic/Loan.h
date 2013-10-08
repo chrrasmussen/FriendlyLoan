@@ -2,27 +2,22 @@
 //  Loan.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 10.09.11.
-//  Copyright (c) 2011 Rasmussen I/O. All rights reserved.
+//  Created by Christian Rasmussen on 15.07.12.
+//  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
 #import "_Loan.h"
+#import "FLLoan.h"
 
 
-extern const float kLoanLocationTimeLimit;
+@interface Loan : _Loan <FLLoan>
 
+//+ (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
 
-@interface Loan : _Loan
+//@property (nonatomic, readonly) NSDecimalNumber *absoluteAmount;
+//@property (nonatomic, readonly) NSString *amountPresentation;
+//@property (nonatomic, readonly) NSNumber *lent;
 
-// Creating and saving loans
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext *)context;
-
-// History methods
-- (NSString *)historySectionName;
-
-// Lent methods
-- (BOOL)lentValue;
-- (NSDecimalNumber *)absoluteAmount;
-- (NSString *)amountPresentation;
+//@property (nonatomic, readonly) NSString *historySectionName;
 
 @end

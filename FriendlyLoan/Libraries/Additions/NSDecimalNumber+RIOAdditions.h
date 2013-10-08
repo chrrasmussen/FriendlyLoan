@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSDecimalNumber (RIOAdditions)
 
+- (NSDecimalNumber *)absoluteDecimalNumber;
 - (NSDecimalNumber *)decimalNumberByNegating;
 - (BOOL)isNegative;
 

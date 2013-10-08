@@ -8,7 +8,6 @@
 
 #import "FriendViewController.h"
 #import "FriendViewControllerDelegate.h"
-#import "ABContactsHelper.h"
 
 
 @implementation FriendViewController {
@@ -22,10 +21,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    _contacts = [ABContactsHelper contacts];
-    
-    NSLog(@"%@", _contacts);
 }
 
 - (void)didReceiveMemoryWarning

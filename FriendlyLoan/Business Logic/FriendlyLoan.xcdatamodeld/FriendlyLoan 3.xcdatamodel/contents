@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="1.2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1800" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Friend" syncable="YES">
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordUUID" attributeType="String" syncable="YES"/>
-        <relationship name="friendSync" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="FriendSync" inverseName="friend" inverseEntity="FriendSync" syncable="YES"/>
-    </entity>
-    <entity name="FriendSync" syncable="YES">
+<model name="" userDefinedModelVersionIdentifier="1.2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1803" systemVersion="11E2620" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AddressBookRef" representedClassName="AddressBookRef" syncable="YES">
         <attribute name="deviceUUID" attributeType="String" syncable="YES"/>
         <attribute name="recordID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="friend" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friend" inverseName="friendSync" inverseEntity="Friend" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="addressBookRef" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="Loan" representedClassName="Loan" elementID="Transaction" syncable="YES">
+        <attribute name="addLocation" attributeType="Boolean" defaultValueString="NO" elementID="attachLocation" syncable="YES"/>
         <attribute name="amount" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="attachLocation" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="categoryID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="categoryUUID" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" attributeType="Date" elementID="createdTimestamp" syncable="YES"/>
-        <attribute name="friendID" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="locationLatitude" optional="YES" attributeType="Double" syncable="YES"/>
-        <attribute name="locationLongitude" optional="YES" attributeType="Double" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="settled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" elementID="modifiedTimestamp" syncable="YES"/>
+        <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="loan" inverseEntity="Location" syncable="YES"/>
+        <relationship name="person" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="loan" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
+        <attribute name="latitude" attributeType="Double" minValueString="0" maxValueString="90" syncable="YES"/>
+        <attribute name="longitude" attributeType="Double" minValueString="-180" maxValueString="180" defaultValueString="0" syncable="YES"/>
+        <relationship name="loan" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Loan" inverseName="location" inverseEntity="Loan" syncable="YES"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personUUID" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addressBookRef" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AddressBookRef" inverseName="person" inverseEntity="AddressBookRef" syncable="YES"/>
+        <relationship name="loan" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Loan" inverseName="person" inverseEntity="Loan" syncable="YES"/>
     </entity>
     <fetchRequest name="LoansWaitingForLocation" entity="Loan" predicateString="attachLocation == 0 AND locationLatitude == 0 AND locationLongitude == 0 AND createdAt > $dateLimit"/>
     <fetchRequest name="NumberOfLoanRequests" entity="Loan" predicateString="requestAccepted == 0"/>
     <fetchRequest name="NumberOfUnseenLoanRequests" entity="Loan" predicateString="requestAccepted == 0 AND requestUnseen == 0"/>
     <elements>
-        <element name="Loan" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="Friend" positionX="189" positionY="9" width="128" height="120"/>
-        <element name="FriendSync" positionX="394" positionY="36" width="128" height="90"/>
+        <element name="AddressBookRef" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Loan" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Location" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Person" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -9,7 +9,7 @@
 #import "AddLoanViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
-#import "LoanManager.h"
+#import "FriendlyLoan.h"
 
 #import "DetailsViewController.h"
 #import "CategoryViewController.h"
@@ -24,6 +24,7 @@
 {
     [super viewDidLoad];
     
+    [self setUpNotificationObservers];
     //    CGRect screenBounds = [[UIScreen mainScreen] bounds];
     //    UIWindow * alertWindow = [[UIWindow alloc] initWithFrame:screenBounds];
     //    alertWindow.windowLevel = UIWindowLevelAlert;
@@ -39,8 +40,8 @@
     //    AddLoanViewController *alvc = (AddLoanViewController *)nc.topViewController;
 //    [self presentModalViewController:navigationController animated:YES];
     
-    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedAttachLocationValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
-    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedShareLoanValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+//    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedAttachLocationValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+//    [[LoanManager sharedManager] addObserver:self forKeyPath:@"calculatedShareLoanValue" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,11 +85,12 @@
     self.lendBarButtonItem.enabled = enabled;
 }
 
-- (void)updateLoanBasedOnViewInfo:(Loan *)theLoan
+- (void)updateLoanBasedOnViewInfo:(id<FLLoan>)loan
 {
-    [super updateLoanBasedOnViewInfo:theLoan];
+    [super updateLoanBasedOnViewInfo:loan];
     
-    theLoan.attachLocationValue = [[LoanManager sharedManager] calculatedAttachLocationValue];
+    // FIXME: Fix code
+//    theLoan.attachLocationValue = [[LoanManager sharedManager] calculatedAttachLocationValue];
 }
 
 - (void)resetFields
@@ -126,14 +128,16 @@
     [self performSegueWithIdentifier:@"SaveSegue" sender:sender];
 }
 
-- (IBAction)changeAttachLocationValue:(UISwitch *)sender
+- (IBAction)changeAddLocationValue:(UISwitch *)sender
 {
-    [[LoanManager sharedManager] setAttachLocationValue:sender.on];
+    // FIXME: Fix code
+//    [[LoanManager sharedManager] setAttachLocationValue:sender.on];
 }
 
 - (IBAction)changeShareLoanValue:(UISwitch *)sender
 {
-    [[LoanManager sharedManager] setShareLoanValue:sender.on];
+    // FIXME: Fix code
+//    [[LoanManager sharedManager] setShareLoanValue:sender.on];
 }
 
 - (IBAction)detailsViewControllerAdd:(id)sender
@@ -150,7 +154,7 @@
     if ([segue.identifier isEqualToString:@"SaveSegue"])
     {
         // Add loan
-        Loan *loan = [self addLoan];
+        id<FLLoan> loan = [self addLoan];
         
         // Set up details view controller
         DetailsViewController *detailsViewController = [segue destinationViewController];
@@ -163,30 +167,26 @@
 }
 
 
-#pragma mark - Observers
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"calculatedAttachLocationValue"]) {
-        BOOL attachLocation = [change[@"new"] boolValue];
-        [self.attachLocationSwitch setOn:attachLocation animated:YES];
-    }
-    else if ([keyPath isEqualToString:@"calculatedShareLoanValue"]) {
-        BOOL shareLoan = [change[@"new"] boolValue];
-        [self.shareLoanSwitch setOn:shareLoan animated:YES];
-    }
-}
-
-
 #pragma mark - Private methods
 
-- (Loan *)addLoan
+- (void)setUpNotificationObservers
 {
-    Loan *result = [[LoanManager sharedManager] addLoanWithUpdateHandler:^(Loan *loan) {
-        [self updateLoanBasedOnViewInfo:loan];
-    }];
+//    typeof(self) bself = self;
+//
+//    [NSNotificationCenter.defaultCenter addObserverForName:FLLoanManagerDidUpdateAttachLocation object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        BOOL attachLocation = [note.userInfo[FLLoanManagerAttachLocationNotificationKey] boolValue];
+//        [bself.attachLocationSwitch setOn:attachLocation animated:YES];
+//    }];
+}
+
+- (id<FLLoan>)addLoan
+{
+    // TODO: Fix code
+//    id<FLLoan> loan = [self.loanManager addLoanWithAmount:self.amount friendID:self.selectedFriendID categoryID:self.selectedCategoryID note:self.note];//self.location];
     
-    return result;
+//    [self updateLoanBasedOnViewInfo:loan];
+    
+    return nil;
 }
 
 - (void)configureDetailsViewController:(DetailsViewController *)detailsViewController

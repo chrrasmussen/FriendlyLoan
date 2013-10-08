@@ -1,60 +1,20 @@
 //
-//  LoanManager.h
+//  FLCoreDataLoanManager.h
 //  FriendlyLoan
 //
-//  Created by Christian Rasmussen on 09.02.12.
+//  Created by Christian Rasmussen on 15.07.12.
 //  Copyright (c) 2012 Rasmussen I/O. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "Models.h"
-
-#import "RIOCachedLocationManagerDelegate.h"
+#import "FLLoanManager.h"
 
 
-@class RIOCachedLocationManager;
+@protocol FLLocationDelegate;
 
 
-@interface LoanManager : NSObject <RIOCachedLocationManagerDelegate>
+@interface LoanManager : NSObject <FLLoanManager>
 
-@property (nonatomic, strong, readonly) RIOCachedLocationManager *cachedLocationManager;
-
-@property (nonatomic) BOOL attachLocationValue;
-@property (nonatomic, readonly) BOOL calculatedAttachLocationValue;
-
-@property (nonatomic) BOOL shareLoanValue;
-@property (nonatomic, readonly) BOOL calculatedShareLoanValue;
-
-
-// Create loan manager
-+ (id)sharedManager;
-
-// Controlling loan manager
-- (void)handleApplicationDidBecomeActive;
-//- (void)start;
-//- (void)initiate/initialize // If there are some outstanding locations, start location services
-//- (void)terminate // Do something useful when quitting?
-
-// Loan methods
-- (Loan *)addLoanWithUpdateHandler:(void (^)(Loan *loan))updateHandler;
-- (void)updateLoan:(Loan *)loan withUpdateHandler:(void (^)(Loan *loan))updateHandler;
-- (Loan *)settleDebt:(NSDecimalNumber *)debt forFriendID:(NSNumber *)friendID;
-- (void)deleteLoan:(Loan *)loan;
-
-// Backing store proxy methods
-- (NSManagedObjectContext *)managedObjectContext;
-
-
-- (NSUInteger)getLoanRequestCount;
-
-// Fetched results controller
-//- (NSFetchedResultsController *)fetchedHistoryControllerWithFriendID:(NSNumber *)friendID;
-//- (NSFetchedResultsController *)fetchedFriendsController;
-
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end
-
-
-// Notifications
-extern NSString * const FLNeedsLocationServices;
-extern NSString * const FLNeedsLocationServicesForThisApp;

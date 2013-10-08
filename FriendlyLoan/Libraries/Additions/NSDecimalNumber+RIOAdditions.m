@@ -8,7 +8,17 @@
 
 #import "NSDecimalNumber+RIOAdditions.h"
 
+
 @implementation NSDecimalNumber (RIOAdditions)
+
+- (NSDecimalNumber *)absoluteDecimalNumber
+{
+    if ([self isNegative] == YES) {
+        return [self decimalNumberByNegating];
+    }
+    
+    return self;
+}
 
 - (NSDecimalNumber *)decimalNumberByNegating
 {

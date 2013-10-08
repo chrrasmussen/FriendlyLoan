@@ -10,12 +10,13 @@
 
 
 @protocol EditLoanViewControllerDelegate;
+@protocol FLLoan;
 
 @interface EditLoanViewController : AbstractLoanViewController <UIActionSheetDelegate>
 
 @property (nonatomic, weak) id<EditLoanViewControllerDelegate> delegate;
 
-@property (nonatomic, strong) Loan *loan;
+@property (nonatomic, strong) id<FLLoan> loan;
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *lentSegmentedControl;
