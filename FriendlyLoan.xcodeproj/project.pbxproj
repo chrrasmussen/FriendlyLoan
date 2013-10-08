@@ -46,7 +46,6 @@
 		691B063014588E4A00BBD460 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 691B062E14588E4A00BBD460 /* Friends.png */; };
 		691B063114588E4A00BBD460 /* Friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691B062F14588E4A00BBD460 /* Friends@2x.png */; };
 		69204A78141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */; };
-		692D0C281803BBBA00B220F5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D0C271803BBB900B220F5 /* Default-568h@2x.png */; };
 		692D0C2A1803BFE600B220F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 692D0C291803BFE600B220F5 /* AddressBookUI.framework */; };
 		6939C52814F93B6700C19DE5 /* Other-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 6939C52414F93B6700C19DE5 /* Other-Highlighted.png */; };
 		6939C52914F93B6700C19DE5 /* Other-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6939C52514F93B6700C19DE5 /* Other-Normal.png */; };
@@ -149,8 +148,6 @@
 		69CC0B9915B345B1002B736E /* Loan.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CC0B9815B345B1002B736E /* Loan.m */; };
 		69CC0B9C15B345BE002B736E /* LoanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CC0B9B15B345BE002B736E /* LoanManager.m */; };
 		69CFD7D61558469100053606 /* CategoryList.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CFD7D51558469100053606 /* CategoryList.m */; };
-		69D3361014414E7800CB4E25 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360E14414E7800CB4E25 /* Default.png */; };
-		69D3361114414E7800CB4E25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D3360F14414E7800CB4E25 /* Default@2x.png */; };
 		69D5EC87154F597F00FA6207 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5EC86154F597F00FA6207 /* SettingsViewController.m */; };
 		69D9712315892900008D1F36 /* FriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D9712215892900008D1F36 /* FriendViewController.m */; };
 		69EC2E701558553D00970F47 /* FriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2E6F1558553D00970F47 /* FriendList.m */; };
@@ -200,7 +197,6 @@
 		69204A76141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+RIOAdditions.h"; sourceTree = "<group>"; };
 		69204A77141FE9F600D6A075 /* NSDecimalNumber+RIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+RIOAdditions.m"; sourceTree = "<group>"; };
 		69204A9214200EB900D6A075 /* CategoryViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewControllerDelegate.h; sourceTree = "<group>"; };
-		692D0C271803BBB900B220F5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		692D0C291803BFE600B220F5 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		6935D457157EDACF0006CDF1 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		6939C52414F93B6700C19DE5 /* Other-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Other-Highlighted.png"; sourceTree = "<group>"; };
@@ -355,8 +351,6 @@
 		69CC0B9B15B345BE002B736E /* LoanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanManager.m; sourceTree = "<group>"; };
 		69CFD7D41558469100053606 /* CategoryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryList.h; sourceTree = "<group>"; };
 		69CFD7D51558469100053606 /* CategoryList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryList.m; sourceTree = "<group>"; };
-		69D3360E14414E7800CB4E25 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		69D3360F14414E7800CB4E25 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		69D5EC85154F597F00FA6207 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		69D5EC86154F597F00FA6207 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		69D5EC9B1551ECBA00FA6207 /* FriendlyLoan 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FriendlyLoan 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -896,9 +890,6 @@
 		69D3360D14414E6900CB4E25 /* Default */ = {
 			isa = PBXGroup;
 			children = (
-				692D0C271803BBB900B220F5 /* Default-568h@2x.png */,
-				69D3360E14414E7800CB4E25 /* Default.png */,
-				69D3360F14414E7800CB4E25 /* Default@2x.png */,
 			);
 			name = Default;
 			sourceTree = "<group>";
@@ -1033,7 +1024,6 @@
 				6940EEC81433CD81003361E6 /* Activities-Highlighted.png in Resources */,
 				6940EEC91433CD81003361E6 /* Activities-Highlighted@2x.png in Resources */,
 				6940EECA1433CD81003361E6 /* Activities-Normal.png in Resources */,
-				692D0C281803BBBA00B220F5 /* Default-568h@2x.png in Resources */,
 				6940EECB1433CD81003361E6 /* Activities-Normal@2x.png in Resources */,
 				6940EED01433CD81003361E6 /* FoodDrinks-Highlighted.png in Resources */,
 				6940EED11433CD81003361E6 /* FoodDrinks-Highlighted@2x.png in Resources */,
@@ -1054,8 +1044,6 @@
 				691292BB143E24700081DC09 /* KeyboardBackground-Normal@2x.png in Resources */,
 				6914CC3E1440C2830090FAA4 /* MissingProfilePicture.png in Resources */,
 				6914CC3F1440C2830090FAA4 /* MissingProfilePicture@2x.png in Resources */,
-				69D3361014414E7800CB4E25 /* Default.png in Resources */,
-				69D3361114414E7800CB4E25 /* Default@2x.png in Resources */,
 				691B063014588E4A00BBD460 /* Friends.png in Resources */,
 				691B063114588E4A00BBD460 /* Friends@2x.png in Resources */,
 				6971E51314E46AC500CBDEFC /* Localizable.strings in Resources */,
